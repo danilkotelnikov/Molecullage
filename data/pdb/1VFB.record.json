@@ -1,0 +1,52 @@
+{
+ "id": "1VFB",
+ "title": "BOUND WATER MOLECULES AND CONFORMATIONAL STABILIZATION HELP MEDIATE AN ANTIGEN-ANTIBODY ASSOCIATION",
+ "deposit_date": "1993-12-03",
+ "release_date": "1994-05-31",
+ "revision_date": "2024-11-20",
+ "method": [
+  "X-RAY DIFFRACTION"
+ ],
+ "resolution_A": [
+  1.8
+ ],
+ "entities": [
+  {
+   "entity": "1",
+   "description": "IGG1-KAPPA D1.3 FV (LIGHT CHAIN)",
+   "length": 107,
+   "auth_chains": [
+    "A"
+   ],
+   "label_chains": [
+    "A"
+   ],
+   "sequence": "DIVLTQSPASLSASVGETVTITCRASGNIHNYLAWYQQKQGKSPQLLVYYTTTLADGVPSRFSGSGSGTQYSLKINSLQPEDFGSYYCQHFWSTPRTFGGGTKLEIK"
+  },
+  {
+   "entity": "2",
+   "description": "IGG1-KAPPA D1.3 FV (HEAVY CHAIN)",
+   "length": 116,
+   "auth_chains": [
+    "B"
+   ],
+   "label_chains": [
+    "B"
+   ],
+   "sequence": "QVQLQESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGNTDYNSALKSRLSISKDNSKSQVFLKMNSLHTDDTARYYCARERDYRLDYWGQGTTLTVSS"
+  },
+  {
+   "entity": "3",
+   "description": "HEN EGG WHITE LYSOZYME",
+   "length": 129,
+   "auth_chains": [
+    "C"
+   ],
+   "label_chains": [
+    "C"
+   ],
+   "sequence": "KVFGRCELAAAMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL"
+  }
+ ],
+ "file": "1VFB.pdb"
+}

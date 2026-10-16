@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>separate structure panels</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Separate panels for separate objects: one object per panel, the same style and colour code, a label under each. Never splice two complexes into one picture.
+// a PDB 1MEL (single-domain antibody and lysozyme), b PDB 7Z0X (Fab and the S1 domain of a spike protein), c PDB 1IGT (intact IgG, four chains:
+// heavy chains rose, light chains periwinkle, the second copy of each in the pale tone). Art: struct/render.py, groups complex (mel, fab) and chains (igg).
+const P = [
+  { l: 'a', art: 'mel__full', title: 'Nanobody and lysozyme', sub: 'PDB 1MEL, chains A and L' },
+  { l: 'b', art: 'fab__full', title: 'Fab and spike S1 domain', sub: 'PDB 7Z0X, chains H, L and R' },
+  { l: 'c', art: 'igg__full', title: 'Intact IgG, four chains', sub: 'PDB 1IGT, chains A to D' },
+];
+const W = 178, gap = 3, pw = (W - 3 - 2 * gap) / 3;
+const ar = P.map((p) => window.ART[p.art].ar);
+const ph = Math.max(...ar.map((a) => (pw - 2) / a));
+const H = 9 + ph + 9.6;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+P.forEach((p, i) => {
+  const x = 1.5 + i * (pw + gap), h = (pw - 2) / ar[i];
+  f.letter(p.l, x, Tp(0.6));
+  R(x + 4.6, 2.2, p.title, { bold: true, fs: 7.5 });
+  R(x + 4.6, 5.6, p.sub, { fs: 7, color: SUB });
+  f.state({ x, y: Tp(9 + ph + 1), w: pw, h: ph + 1 });
+  f.image({ x: x + 1, y: Tp(9 + 0.5 + (ph + h) / 2), w: pw - 2, name: p.art });
+});
+f.legend(1.5, Tp(H - 4.7), [['mint', 'antigen'], ['rose', 'heavy chain'], ['peri', 'light chain'], ['palepink', 'second copy, heavy'], ['palelilac', 'second copy, light']], 34);
+f.boundary('Deposited structures from the PDB. Colours follow the role, not the entry.');
+</script></body></html>

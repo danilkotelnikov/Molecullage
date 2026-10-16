@@ -1,0 +1,27 @@
+{
+  "name": "structfig",
+  "version": "0.1.0",
+  "description": "Toolkit for structure-biology figures sized and typed for journals: HTML kit, PDF/PNG build, palette tools, ChimeraX renders, QA marks.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilkotelnikov/structfig.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "structfig-build": "build/build.mjs"
+  },
+  "scripts": {
+    "build": "node build/build.mjs",
+    "qa": "py -3 -I qa/qa_fig.py",
+    "test": "node --test",
+    "test:py": "py -3 -m pytest -q tests"
+  },
+  "dependencies": {
+    "@tabler/icons": "^3.0.0",
+    "playwright-core": "^1.40.0"
+  }
+}

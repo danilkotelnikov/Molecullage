@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>block pipeline</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Block pipeline in three columns: stage strips, saturated tool blocks with white bold names, pale data pills with placeholder sizes
+// ("d numbers"), numbered step badges, an enlarged block joined by two dashed zoom lines, a key for the pill colours.
+// The example is a screening pipeline of public tool types: Design (sequence design, structure prediction) -> Screen (docking, filters) -> Evaluate (scores).
+// The columns read as a snake: column 1 down, column 2 up, column 3 down, so that every hand-over is a short horizontal arrow.
+// Picture (struct/render.py, art folder): vhh__main = deposited structure 1MEL chain A, the candidate in the enlarged panel.
+// Replace names and sizes with your own; keep the grammar: strong colour computes, pale colour flows, every arrow says what flows.
+const W = 178, H = 151;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;                                   // top-down mm -> kit y
+const INK = '#0A0A0A', HAIR = '#777777';
+const art = (name) => window.ART[name];
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, mfs: 8.4, ...o });
+const rt = (pts, o = {}) => f.route(pts.map(([x, t]) => [x, Tp(t)]), o);
+const tool = (x, t, w, h, title, sub, o = {}) => f.tool({ x, y: Tp(t + h), w, h, title, sub, fam: 'indigo', ...o });
+const pill = (x, t, w, h, text, sub, fam) => f.pill({ x, y: Tp(t + h), w, h, text, sub, fam });
+const badge = (x, t, n) => f.badge({ x, y: Tp(t), n, fam: 'grey' });
+function strip(x, t, w, h, name, sub) {                    // stage strip laid flat over a column: name bold, a plain note below
+  f.stage({ x, y: Tp(t + h), w, h, text: '', fam: 'indigo' });
+  const s = f.el.lastElementChild.querySelector('span');
+  s.style.transform = 'none';
+  s.style.textAlign = 'center';
+  s.innerHTML = `${name}<br><i>${sub}</i>`;
+}
+const GL = 1.5, GR = 176.5;
+const SEQ = 'palemint', STRUCT = 'palepink', SCORE = 'palelilac', NEU = 'grey';   // data pills: sequences, structures and poses, scores, other
+const D = (i) => `${MS('d_' + i, 8.4)} numbers`;
+const TW = 34, TH = 13, PW = 36, PH = 8;                   // tool and pill sizes in the columns
+const ROW = [25, 45, 65, 85];                              // centre of each row, top-down mm
+
+// ================================================================ a: three columns
+f.letter('a', GL, Tp(2.0));
+const cols = [{ x0: 1.5, name: 'Design', sub: 'sequence design, structure prediction' }, { x0: 63, name: 'Screen', sub: 'docking, filters' }, { x0: 124.5, name: 'Evaluate', sub: 'scores' }];
+cols.forEach((c) => { strip(c.x0, 5, 52, 8.6, c.name, c.sub); c.cx = c.x0 + 26; });
+const T = (c, r, title, sub, n, o = {}) => { const x = c.cx - TW / 2, t = ROW[r] - TH / 2; tool(x, t, TW, TH, title, sub, o); badge(x + 0.3, t + 0.3, n); return { x, t, r: x + TW, c: ROW[r] }; };
+const P = (c, r, text, sub, fam) => { const x = c.cx - PW / 2, t = ROW[r] - PH / 2; pill(x, t, PW, PH, text, sub, fam); return { x, t, r: x + PW, c: ROW[r] }; };
+const [c1, c2, c3] = cols;
+const down = (c, r1, r2, h1, h2) => rt([[c.cx, ROW[r1] + h1 / 2 + 0.3], [c.cx, ROW[r2] - h2 / 2 - 0.3]]);   // arrow from row r1 to the row below
+const up = (c, r1, r2, h1, h2) => rt([[c.cx, ROW[r1] - h1 / 2 - 0.3], [c.cx, ROW[r2] + h2 / 2 + 0.3]]);     // arrow from row r1 to the row above
+
+// column 1, down
+P(c1, 0, 'Target', `${D(1)} per residue`, STRUCT);
+T(c1, 1, 'Sequence design', 'proposes sequences', 1);
+P(c1, 2, 'Sequences', D(2), SEQ);
+const struct = T(c1, 3, 'Structure prediction', 'folds each sequence', 2);
+down(c1, 0, 1, PH, TH); down(c1, 1, 2, TH, PH); down(c1, 2, 3, PH, TH);
+// column 2, up
+const dock = T(c2, 3, 'Docking', 'places each model', 3);
+P(c2, 2, 'Poses', D(3), STRUCT);
+T(c2, 1, 'Filters', 'drop poor poses', 4);
+const short = P(c2, 0, 'Shortlist', D(4), STRUCT);
+up(c2, 3, 2, TH, PH); up(c2, 2, 1, PH, TH); up(c2, 1, 0, TH, PH);
+// column 3, down
+const score = T(c3, 0, 'Scoring', 'rates each pose', 5);
+P(c3, 1, 'Scores', D(5), SCORE);
+T(c3, 2, 'Ranking', 'orders by score', 6);
+P(c3, 3, 'Ranked list', D(6), NEU);
+down(c3, 0, 1, TH, PH); down(c3, 1, 2, PH, TH); down(c3, 2, 3, TH, PH);
+// hand-overs between the columns
+rt([[struct.r + 0.3, ROW[3]], [dock.x - 0.3, ROW[3]]]);
+R((struct.r + dock.x) / 2, ROW[3] - 2.4, 'models', { ha: 'center' });
+rt([[short.r + 0.3, ROW[0]], [score.x - 0.3, ROW[0]]]);
+
+// ================================================================ b: one screening step, enlarged
+const F0 = 103, FH = 42, YC = F0 + 21.5;
+f.letter('b', GL, Tp(F0 - 3.9));
+rt([[dock.x + 0.4, ROW[3] + TH / 2 + 0.5], [62, F0 - 0.2]], { head: false, color: HAIR, dashed: true });
+rt([[dock.x + TW - 0.4, ROW[3] + TH / 2 + 0.5], [152, F0 - 0.2]], { head: false, color: HAIR, dashed: true });
+f.group({ x: GL, y: Tp(F0 + FH), w: GR - GL, h: FH, title: 'One screening step, enlarged: docking' });
+{ const w = 20.5, h = w / art('vhh__main').ar;
+  f.image({ x: 3.5, y: Tp(YC + h / 2), w, name: 'vhh__main' }); }
+const IX = 28, IW = 26.5, IH = 7.6, JI = 57.6;
+const ins = [[YC - 9.6, 'Candidate model', D(1), STRUCT], [YC, 'Binding site', D(2), NEU], [YC + 9.6, 'Settings', D(3), NEU]];
+ins.forEach(([y, a, b, fam]) => { pill(IX, y - IH / 2, IW, IH, a, b, fam); rt([[IX + IW, y], [JI, y]], { head: false }); });
+rt([[JI, ins[0][0]], [JI, ins[2][0]]], { head: false });
+const SX = 63, SW = 27, SH = 20, S2X = 113;
+rt([[JI, YC], [SX - 0.3, YC]]);
+tool(SX, YC - SH / 2, SW, SH, 'Sample poses', 'many placements', { repeat: 'n' });
+rt([[SX + SW + 2.6, YC], [S2X - 0.3, YC]]);
+R((SX + SW + 2.6 + S2X) / 2, YC - 2.4, '$n$ poses', { ha: 'center' });
+tool(S2X, YC - SH / 2, SW, SH, 'Score poses', 'rate placements');
+const JO = 144, OX = 147, OW = GR - 3.5 - OX;
+rt([[S2X + SW, YC], [JO, YC]], { head: false });
+rt([[JO, YC - 7], [JO, YC + 7]], { head: false });
+rt([[JO, YC - 7], [OX - 0.3, YC - 7]]);
+rt([[JO, YC + 7], [OX - 0.3, YC + 7]]);
+pill(OX, YC - 7 - IH / 2, OW, IH, 'Docked poses', D(4), STRUCT);
+pill(OX, YC + 7 - IH / 2, OW, IH, 'Pose scores', D(5), SCORE);
+
+f.legend(94, Tp(H - 2.6), [['palepink', 'structures'], ['palemint', 'sequences'], ['palelilac', 'scores'], ['grey', 'other data']], 21);
+f.boundary('Sizes are placeholders: d numbers per item, n poses. Structure: PDB 1MEL.');
+</script></body></html>

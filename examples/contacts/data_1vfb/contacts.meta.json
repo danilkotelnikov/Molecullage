@@ -1,0 +1,28 @@
+{
+ "tool": "PDBe Arpeggio 1.4.4 (hydrogens added by ChimeraX 1.10.dev202504170618)",
+ "entry_file": "1VFB.pdb",
+ "binder": [
+  "B",
+  "A"
+ ],
+ "antigen": [
+  "C"
+ ],
+ "cutoff_A": 4.5,
+ "pairs": 39,
+ "atom_pairs": 27,
+ "pairs_with_type": 14,
+ "types": {
+  "hbond": 9,
+  "polar": 10,
+  "weak_hbond": 4,
+  "carbonyl": 0,
+  "hydrophobic": 4,
+  "ring": 0
+ },
+ "hbond_pairs": 9,
+ "backbone_hbond_pairs": 7,
+ "binder_residues": 18,
+ "antigen_residues": 16,
+ "note": "pairs are listed by own heavy-atom geometry; types come from the tool; a pair with no type is drawn as 'no specific type'"
+}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>two-panel plot layer</title></head><body>
+<!--INLINE_JS ../examples/plots2/plots2_layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG ../examples/plots2/plots2_layer.svg--></div></div>
+<script>
+// Two-panel plot layer. matplotlib (plots/example_plots2.py) draws axes, ticks and data as a transparent SVG on a canvas of the same size as this page;
+// the kit draws panel letters, titles, axis captions and the key at the same millimetre boxes (window.DATA.a and .b, top-down mm).
+// a: C-alpha B-factors of PDB 1MEL, chain A and chain L. b: contacts per nanobody residue in PDB 4KRL (chain B against EGFR, chain A), 4.5 Å.
+const D = window.DATA, W = D.W, H = D.H;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+f.letter('a', 1.5, Tp(0.6));
+R(6.1, 2.2, 'B-factors along two chains', { bold: true, fs: 7.5 });
+R(6.1, 5.8, 'PDB 1MEL, C-alpha atoms; higher means more motion or disorder', { fs: 7, color: SUB });
+R(4.2, D.a.t + D.a.h / 2, 'B-factor (Å²)', { ha: 'center', rot: true });
+R(D.a.x + D.a.w / 2, D.a.t + D.a.h + 5.9, 'residue number', { ha: 'center' });
+R(D.a.x + D.a.w - 1, D.a.t + 2.5, 'chain A, antibody: mean ' + D.bfactor_mean.A, { ha: 'right', bold: true, color: D.colours.A, fs: 7 });
+R(D.a.x + D.a.w - 1, D.a.t + 6.3, 'chain L, lysozyme: mean ' + D.bfactor_mean.L, { ha: 'right', bold: true, color: D.colours.L, fs: 7 });
+const bx = D.b.x - 13.5;
+f.letter('b', bx, Tp(0.6));
+R(bx + 4.6, 2.2, 'Contacts per nanobody residue', { bold: true, fs: 7.5 });
+R(bx + 4.6, 5.8, 'PDB 4KRL, chain B against chain A within 4.5 Å', { fs: 7, color: SUB });
+R(D.b.x - 8.4, D.b.t + D.b.h / 2, 'antigen residues in contact', { ha: 'center', rot: true });
+R(D.b.x + D.b.w / 2, D.b.t + D.b.h + 5.9, 'nanobody residue number', { ha: 'center' });
+R(D.b.x + D.b.w - 1, D.b.t + 2.5, `${D.contact_residues} residues touch the antigen; most: residue ${D.max_residue} (${D.max_count})`, { ha: 'right', fs: 7 });
+f.boundary('Deposited structures PDB 1MEL and 4KRL; values computed from the coordinate files.');
+</script></body></html>

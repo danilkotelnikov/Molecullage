@@ -1,0 +1,236 @@
+{
+ "name": "structfig-base",
+ "version": "1.0.0",
+ "note": "Palette sampled from the flat fills of one open-access paper (see provenance). Fills are sampled; dark tones are derived.",
+ "color": {
+  "ink": "#0A0A0A",
+  "sub": "#2B2B2B",
+  "line": "#0A0A0A",
+  "rule": "#3A3A3A",
+  "guide": "#777777",
+  "white": "#FFFFFF",
+  "family": {
+   "mint": {
+    "fill": "#91D7AB",
+    "edge": "#317F45"
+   },
+   "rose": {
+    "fill": "#E16F6B",
+    "edge": "#AC3F3F"
+   },
+   "peri": {
+    "fill": "#9B51E1",
+    "edge": "#7A29BB"
+   },
+   "apricot": {
+    "fill": "#FBB153",
+    "edge": "#9A5600"
+   },
+   "indigo": {
+    "fill": "#1D397B",
+    "edge": "#1D397B"
+   },
+   "violet": {
+    "fill": "#F1C3DD",
+    "edge": "#9B2D61"
+   },
+   "grey": {
+    "fill": "#FFEDD1",
+    "edge": "#151515"
+   },
+   "full": {
+    "fill": "#FFFFFF",
+    "edge": "#151515",
+    "dash": true
+   },
+   "green": {
+    "fill": "#01B151",
+    "edge": "#317F45"
+   },
+   "purple": {
+    "fill": "#9B51E1",
+    "edge": "#7A29BB"
+   },
+   "maroon": {
+    "fill": "#9B2D61",
+    "edge": "#9B2D61"
+   },
+   "palemint": {
+    "fill": "#D1F1EB",
+    "edge": "#317F45"
+   },
+   "palelilac": {
+    "fill": "#EFCBFF",
+    "edge": "#7A29BB"
+   },
+   "palepink": {
+    "fill": "#FFD9D7",
+    "edge": "#AC3F3F"
+   },
+   "palesky": {
+    "fill": "#E9F3F9",
+    "edge": "#1D397B"
+   }
+  },
+  "alias": {
+   "antigen": "mint",
+   "target": "mint",
+   "binder": "rose",
+   "heavy": "rose",
+   "light": "peri",
+   "epitope": "apricot",
+   "model": "indigo",
+   "base": "indigo",
+   "complex": "violet",
+   "neutral": "grey",
+   "module": "grey",
+   "cream": "grey",
+   "ok": "mint"
+  },
+  "data": [
+   "#1D397B",
+   "#AC3F3F",
+   "#317F45",
+   "#7A29BB",
+   "#9A5600",
+   "#9B2D61"
+  ]
+ },
+ "render": {
+  "silhouette_px": 3.4
+ },
+ "meta": {
+  "source": "sampled from Fig. 8 of Int. J. Mol. Sci. 2025, 26, 9262 (doi 10.3390/ijms26199262, open access); plot colours from Figs 1, 4 and 7",
+  "method": "mode of exact pixel colours of a 300 dpi page render, colours grouped at 2 levels (palette/sample_palette.py)",
+  "core_six": [
+   "#91D7AB",
+   "#E16F6B",
+   "#9B51E1",
+   "#FBB153",
+   "#1D397B",
+   "#F1C3DD"
+  ],
+  "core_six_min_ciede2000": 11.5,
+  "core_six_worst_case": {
+   "vision": "tritan",
+   "pair": [
+    "#FBB153",
+    "#F1C3DD"
+   ]
+  },
+  "white_text_on": [
+   "peri",
+   "indigo",
+   "purple",
+   "maroon"
+  ]
+ },
+ "css": ".card,.state,.chipbox,.sw,.group,.bar{border-color:#0A0A0A!important}.card.fam-peri .t,.card.fam-peri .s,.band.fam-peri b,.band.fam-peri span,.bar.fam-peri b,.state.fam-peri .t,.card.fam-indigo .t,.card.fam-indigo .s,.band.fam-indigo b,.band.fam-indigo span,.bar.fam-indigo b,.state.fam-indigo .t,.card.fam-purple .t,.card.fam-purple .s,.band.fam-purple b,.band.fam-purple span,.bar.fam-purple b,.state.fam-purple .t,.card.fam-maroon .t,.card.fam-maroon .s,.band.fam-maroon b,.band.fam-maroon span,.bar.fam-maroon b,.state.fam-maroon .t{color:#fff!important}.stage.fam-peri,.badge.fam-peri,.stage.fam-indigo,.badge.fam-indigo,.stage.fam-purple,.badge.fam-purple,.stage.fam-maroon,.badge.fam-maroon{color:#fff!important}.stage.fam-mint,.badge.fam-mint,.stage.fam-rose,.badge.fam-rose,.stage.fam-apricot,.badge.fam-apricot,.stage.fam-violet,.badge.fam-violet,.stage.fam-grey,.badge.fam-grey,.stage.fam-full,.badge.fam-full,.stage.fam-green,.badge.fam-green,.stage.fam-palemint,.badge.fam-palemint,.stage.fam-palelilac,.badge.fam-palelilac,.stage.fam-palepink,.badge.fam-palepink,.stage.fam-palesky,.badge.fam-palesky{color:#0A0A0A!important}.stage,.badge{border-color:#0A0A0A!important}",
+ "provenance": {
+  "mint": {
+   "fill": "#91D7AB",
+   "edge": "#317F45",
+   "role": "antigen, target",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "rose": {
+   "fill": "#E16F6B",
+   "edge": "#AC3F3F",
+   "role": "binder, heavy chain",
+   "fill_origin": "sampled",
+   "edge_origin": "derived (OKLab lightness lowered)"
+  },
+  "peri": {
+   "fill": "#9B51E1",
+   "edge": "#7A29BB",
+   "role": "light chain",
+   "fill_origin": "sampled",
+   "edge_origin": "derived (OKLab lightness lowered)"
+  },
+  "apricot": {
+   "fill": "#FBB153",
+   "edge": "#9A5600",
+   "role": "contact patch, epitope",
+   "fill_origin": "sampled",
+   "edge_origin": "derived (OKLab lightness lowered)"
+  },
+  "indigo": {
+   "fill": "#1D397B",
+   "edge": "#1D397B",
+   "role": "implemented model, tool blocks",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "violet": {
+   "fill": "#F1C3DD",
+   "edge": "#9B2D61",
+   "role": "complexes",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "grey": {
+   "fill": "#FFEDD1",
+   "edge": "#151515",
+   "role": "neutral cards and inputs",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "full": {
+   "fill": "#FFFFFF",
+   "edge": "#151515",
+   "role": "designed, not implemented: white and dashed",
+   "fill_origin": "chosen",
+   "edge_origin": "sampled or chosen"
+  },
+  "green": {
+   "fill": "#01B151",
+   "edge": "#317F45",
+   "role": "stage hue: selection",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "purple": {
+   "fill": "#9B51E1",
+   "edge": "#7A29BB",
+   "role": "stage hue: dynamics",
+   "fill_origin": "sampled",
+   "edge_origin": "derived (OKLab lightness lowered)"
+  },
+  "maroon": {
+   "fill": "#9B2D61",
+   "edge": "#9B2D61",
+   "role": "stage hue: evaluation, held-out set",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "palemint": {
+   "fill": "#D1F1EB",
+   "edge": "#317F45",
+   "role": "data pill",
+   "fill_origin": "sampled",
+   "edge_origin": "sampled or chosen"
+  },
+  "palelilac": {
+   "fill": "#EFCBFF",
+   "edge": "#7A29BB",
+   "role": "data pill",
+   "fill_origin": "sampled",
+   "edge_origin": "derived (OKLab lightness lowered)"
+  },
+  "palepink": {
+   "fill": "#FFD9D7",
+   "edge": "#AC3F3F",
+   "role": "data pill",
+   "fill_origin": "sampled",
+   "edge_origin": "derived (OKLab lightness lowered)"
+  },
+  "palesky": {
+   "fill": "#E9F3F9",
+   "edge": "#1D397B",
+   "role": "pass zone, good-region shading",
+   "fill_origin": "chosen",
+   "edge_origin": "sampled or chosen"
+  }
+ }
+}

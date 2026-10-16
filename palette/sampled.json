@@ -1,0 +1,11 @@
+{
+ "source": "Int. J. Mol. Sci. 2025, 26, 9262, Fig. 8 (doi 10.3390/ijms26199262, open access); plot colours from Figs 1, 4 and 7 of the same paper",
+ "method": "page rendered at 300 dpi; each flat fill is the mode of exact pixel colours (colours quantised to 2 levels to group a fill, the exact most frequent value inside the group is kept); see palette/sample_palette.py",
+ "note": "Only hex values are shipped. No page image of the paper is part of this repository. Run palette/sample_palette.py on your own paper to get your own set.",
+ "colours": {
+  "navy": "#1D397B", "salmon": "#E16F6B", "green": "#01B151", "lightgreen": "#91D7AB", "forest": "#317F45",
+  "purple": "#9B51E1", "lilac": "#C79DED", "palelilac": "#EFCBFF", "maroon": "#9B2D61", "pink": "#F1C3DD",
+  "palepink": "#FFD9D7", "palemint": "#D1F1EB", "cream": "#FFEDD1", "teal": "#41AA89", "indigo": "#4146AA",
+  "orange": "#FF861B", "red": "#D72B2C", "amber": "#FBB153"
+ }
+}

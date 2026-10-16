@@ -1,0 +1,67 @@
+/* structfig kit styles. Type sizes come from the ladder in structfig.json (typeLadder), injected by build.mjs as --fs-* variables:
+   letter 9, title 7.5, label 7, floor 6.5 (written 6.55 so that the PDF reports at least 6.5), math 8.4. Arial only. */
+:root{--fs-letter:9pt;--fs-title:7.5pt;--fs-label:7pt;--fs-floor:6.55pt;--fs-math:8.4pt;--guide:#777777;--data0:#1D397B}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+.page{padding:0;display:inline-block}
+.card{position:absolute;border-width:1pt;border-style:solid;border-radius:.6mm;padding:1.8mm 2.2mm;display:flex;gap:2mm;align-items:center;overflow:hidden}
+.card .tx{min-width:0}
+.card .tx.center{width:100%;text-align:center}
+.card .t{font-size:var(--fs-title);font-weight:700;line-height:1.2;margin:0;color:var(--ink)}
+.card .s{font-size:var(--fs-label);line-height:1.2;margin:.4mm 0 0;color:var(--sub)}
+.chip{flex:none;width:6.4mm;height:6.4mm;border-radius:50%;background:#fff;border:.6pt solid var(--edge);display:flex;align-items:center;justify-content:center;font-size:11pt;color:var(--edge)}
+.ic{display:inline-flex}.ic svg{display:block}
+.dashed{border-style:dashed}
+.card.stack{flex-direction:column;align-items:flex-start;justify-content:center;gap:.9mm}
+.card .head{display:flex;gap:1.8mm;align-items:center}
+.card.stack .chip{width:5mm;height:5mm;font-size:9pt}
+.route{fill:none;stroke:var(--line);stroke-width:.3;stroke-linecap:butt;stroke-linejoin:miter}
+.route.dashed{stroke-dasharray:1.0 .7}
+.route.nohead{marker-end:none}
+.dot{fill:var(--line)}
+.node{fill:#fff;stroke:var(--line);stroke-width:.3}
+.mark{fill:none;stroke:var(--line);stroke-width:.3}
+.lab{position:absolute;white-space:pre;line-height:1.15}
+.sw{position:absolute;width:3.8mm;height:3mm;border-width:1pt;border-style:solid;border-radius:.6mm}
+.card.tile{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.8mm;padding:1.2mm 1mm}
+.card.tile .s{margin:0}
+.ic.big{font-size:15pt;color:var(--ink)}
+.group{position:absolute;border:.8pt solid var(--rule);border-radius:2mm}
+.group .gt{position:absolute;left:2mm;top:-1.9mm;background:#fff;padding:0 1mm;font-size:var(--fs-title);font-weight:700;color:var(--ink)}
+.tensor{position:absolute;display:flex;border:.4pt solid var(--rule);overflow:hidden}
+.tensor i{flex:1;display:block}
+.card.plain{align-items:center;gap:2.2mm;padding:1.6mm 2.4mm}
+.band{position:absolute;display:flex;align-items:center;gap:2.2mm;padding:0 5mm 0 2.4mm;border:0;clip-path:polygon(0 0,calc(100% - 2.6mm) 0,100% 50%,calc(100% - 2.6mm) 100%,0 100%)}
+.band b{font-size:var(--fs-title);font-weight:700;color:var(--ink)}.band span{font-size:var(--fs-floor);font-style:italic;color:var(--sub)}
+.band.dashed{background:#F2F2F2!important}
+.letter{position:absolute;display:flex;align-items:center;gap:1.2mm;line-height:1}
+.letter b{font-size:var(--fs-letter);font-weight:700;color:var(--ink)}
+.letter .mk{font-size:8.5pt;color:var(--sub)}
+.chipbox{position:absolute;display:flex;align-items:center;justify-content:center;border:.8pt solid var(--edge);border-radius:.8mm;color:var(--ink)}
+.picto{position:absolute;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.tbox{position:absolute;line-height:1.25}
+.plots svg{display:block}
+.group.dashed{border-style:dashed;background:transparent!important}
+.card.fam-full,.card.dashed{border-style:dashed}
+.sw.dashed,.sw.fam-full{border-style:dashed}
+.art{position:absolute;display:block}
+.mth{font-family:Arial,Helvetica,sans-serif;white-space:pre}
+.mth i{font-style:italic}.mth .up{font-style:normal}
+.mth sub,.mth sup{font-size:.78em;line-height:0;position:relative;vertical-align:baseline}
+.mth sub{top:.28em}.mth sup{top:-.42em}
+.state{position:absolute;border:1pt solid var(--rule);border-radius:1.2mm;background:#fff}
+.state.dashed{border-style:dashed}
+.state .st{position:absolute;left:1.8mm;top:1.3mm;font-size:var(--fs-title);font-weight:700;line-height:1.15;color:var(--ink);white-space:pre}
+.card.tool{padding:1mm 1.6mm;border-radius:1mm}
+.card.tool .t{font-size:var(--fs-title)}.card.tool .s{font-size:var(--fs-label);margin:.3mm 0 0}.card.tool .rep{font-weight:400}
+.pill{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-width:.8pt;border-style:solid;line-height:1.2;color:var(--ink);overflow:hidden;padding:0 1.4mm}
+.pill em{font-style:normal;font-size:var(--fs-floor);color:var(--sub)}
+.stage{position:absolute;display:flex;align-items:center;justify-content:center;border-width:.8pt;border-style:solid;border-radius:1mm;overflow:hidden}
+.stage span{display:block;transform:rotate(-90deg);white-space:nowrap;font-weight:700;line-height:1;color:inherit}
+.stage i{font-style:normal;font-weight:400;font-size:var(--fs-floor)}
+.badge{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;border-width:.8pt;border-style:solid;font-weight:700;line-height:1}
+.bar{position:absolute;border:.8pt solid var(--rule);border-radius:.4mm;background:#fff;overflow:hidden}
+.bar i{display:block;height:100%}
+/* small helpers that templates share */
+.cell{position:absolute;box-sizing:border-box}
+.fig{position:relative}

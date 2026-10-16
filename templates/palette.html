@@ -1,0 +1,90 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>palette sheet</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Palette sheet. Reads window.TOKENS (the token file the build used) and draws: a. every family with its fill, dark tone, contrast and role;
+// b. the worst-case colour-vision distance (CIEDE2000 after deuteranopia, protanopia, tritanopia, normal vision) for the core roles.
+// Nothing here is typed by hand: build it again after you change a token file.
+const W = 178, H = 150;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const T = window.TOKENS, FAMS = T.color.family, PROV = T.provenance || {};
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+
+// ---- colour maths (same method as palette/colour.py)
+const hex2 = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+const lin = (v) => v.map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+const MACH = {
+  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]],
+  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+  tritan: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.303900]],
+};
+const mul = (m, v) => m.map((r) => Math.min(1, Math.max(0, r[0] * v[0] + r[1] * v[1] + r[2] * v[2])));
+const lab = (l) => {
+  const X = (0.4124564 * l[0] + 0.3575761 * l[1] + 0.1804375 * l[2]) / 0.95047, Y = 0.2126729 * l[0] + 0.7151522 * l[1] + 0.072175 * l[2], Z = (0.0193339 * l[0] + 0.119192 * l[1] + 0.9503041 * l[2]) / 1.08883;
+  const g = (t) => (t > 216 / 24389 ? Math.cbrt(t) : (24389 / 27 * t + 16) / 116);
+  return [116 * g(Y) - 16, 500 * (g(X) - g(Y)), 200 * (g(Y) - g(Z))];
+};
+const rad = (d) => d * Math.PI / 180, deg = (r) => r * 180 / Math.PI;
+function de2000([L1, a1, b1], [L2, a2, b2]) {
+  const C1 = Math.hypot(a1, b1), C2 = Math.hypot(a2, b2), Cm = (C1 + C2) / 2, G = 0.5 * (1 - Math.sqrt(Cm ** 7 / (Cm ** 7 + 25 ** 7)));
+  const a1p = (1 + G) * a1, a2p = (1 + G) * a2, C1p = Math.hypot(a1p, b1), C2p = Math.hypot(a2p, b2);
+  const h1 = (deg(Math.atan2(b1, a1p)) + 360) % 360, h2 = (deg(Math.atan2(b2, a2p)) + 360) % 360;
+  const dL = L2 - L1, dC = C2p - C1p, dh = C1p * C2p === 0 ? 0 : ((h2 - h1 + 540) % 360) - 180, dH = 2 * Math.sqrt(C1p * C2p) * Math.sin(rad(dh / 2));
+  const Lm = (L1 + L2) / 2, Cpm = (C1p + C2p) / 2;
+  const hm = C1p * C2p === 0 ? h1 + h2 : Math.abs(h1 - h2) <= 180 ? (h1 + h2) / 2 : h1 + h2 < 360 ? (h1 + h2 + 360) / 2 : (h1 + h2 - 360) / 2;
+  const Tt = 1 - 0.17 * Math.cos(rad(hm - 30)) + 0.24 * Math.cos(rad(2 * hm)) + 0.32 * Math.cos(rad(3 * hm + 6)) - 0.2 * Math.cos(rad(4 * hm - 63));
+  const dth = 30 * Math.exp(-(((hm - 275) / 25) ** 2)), Rc = 2 * Math.sqrt(Cpm ** 7 / (Cpm ** 7 + 25 ** 7));
+  const Sl = 1 + 0.015 * (Lm - 50) ** 2 / Math.sqrt(20 + (Lm - 50) ** 2), Sc = 1 + 0.045 * Cpm, Sh = 1 + 0.015 * Cpm * Tt, Rt = -Math.sin(rad(2 * dth)) * Rc;
+  return Math.sqrt((dL / Sl) ** 2 + (dC / Sc) ** 2 + (dH / Sh) ** 2 + Rt * (dC / Sc) * (dH / Sh));
+}
+const seen = (h, k) => { const l = lin(hex2(h)); return lab(k === 'normal' ? l : mul(MACH[k], l)); };
+const worst = (a, b) => Math.min(...['normal', 'deutan', 'protan', 'tritan'].map((k) => de2000(seen(a, k), seen(b, k))));
+const lum = (h) => { const l = lin(hex2(h)); return 0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2]; };
+const contrast = (a, b = '#FFFFFF') => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+const textOn = (h) => (contrast(h) >= 4.4 ? '#FFFFFF' : INK);
+
+// ---- a: every family
+f.letter('a', 1.5, Tp(0.6));
+R(6.1, 2.2, 'Families: sampled fill, dark tone, contrast, role', { bold: true, fs: 7.5 });
+const COLS = { fill: 27, tone: 50, ctr: 74, role: 90 };
+['fill', 'dark tone', 'on white', 'role'].forEach((s, i) => R([COLS.fill, COLS.tone, COLS.ctr, COLS.role][i], 7.2, s, { fs: 6.55, color: SUB }));
+const names = Object.keys(FAMS);
+names.forEach((k, i) => {
+  const t = 9.6 + i * 5.7, v = FAMS[k];
+  R(1.5, t + 2.4, k, { bold: true });
+  const sw = (x, hexv) => { const d = document.createElement('div'); d.className = 'cell'; d.id = f.id('swatch'); d.style.cssText = `left:${x}mm;top:${t}mm;width:20.5mm;height:4.8mm;background:${hexv};border:.8pt ${k === 'full' ? 'dashed' : 'solid'} ${INK};display:flex;align-items:center;justify-content:center;font-size:6.55pt;color:${textOn(hexv)};font-weight:700`; d.textContent = hexv; f.el.appendChild(d); };
+  sw(COLS.fill, v.fill); sw(COLS.tone, v.edge);
+  R(COLS.ctr, t + 2.4, contrast(v.edge).toFixed(1) + ' : 1');
+  R(COLS.role, t + 2.4, (PROV[k] && PROV[k].role) || '', { fs: 7 });
+});
+
+// ---- b: colour-vision distances of the core roles
+const B0 = 9.6 + names.length * 5.7 + 5;
+f.letter('b', 1.5, Tp(B0));
+R(6.1, B0 + 1.6, 'Colour-vision distance of the core roles', { bold: true, fs: 7.5 });
+R(6.1, B0 + 5.2, 'CIEDE2000, worst case over normal vision, deuteranopia, protanopia, tritanopia', { fs: 7, color: SUB });
+const CORE = ['mint', 'rose', 'peri', 'apricot', 'indigo', 'violet'].filter((k) => FAMS[k]);
+const CX = 22, CY = B0 + 10.2, CW = 12.2, CH = 4.9;
+CORE.forEach((k, j) => R(CX + j * CW + CW / 2, CY - 1.4, k, { ha: 'center', fs: 6.55, color: SUB }));
+let minD = 1e9;
+CORE.forEach((a, i) => {
+  R(CX - 1.4, CY + i * CH + CH / 2 + 0.3, a, { ha: 'right', fs: 6.55, color: SUB });
+  CORE.forEach((b, j) => {
+    const d = document.createElement('div'); d.className = 'cell'; d.id = f.id('cell');
+    const v = i === j ? null : worst(FAMS[a].fill, FAMS[b].fill);
+    if (v !== null && i < j) minD = Math.min(minD, v);
+    d.style.cssText = `left:${CX + j * CW}mm;top:${CY + i * CH}mm;width:${CW}mm;height:${CH}mm;border:.4pt solid ${INK};display:flex;align-items:center;justify-content:center;font-size:7pt;color:${INK};background:${v === null ? '#fff' : v >= 10 ? '#fff' : v >= 8 ? '#FFEDD1' : '#FFD9D7'}`;
+    d.textContent = v === null ? '' : v.toFixed(1); f.el.appendChild(d);
+  });
+});
+const RX = CX + CORE.length * CW + 6;
+R(RX, CY + 2.4, 'Smallest value: ' + minD.toFixed(1), { bold: true, fs: 7.5 });
+R(RX, CY + 6.4, 'Cells under 10 are shaded.');
+R(RX, CY + 10.0, 'Never separate two things by red against');
+R(RX, CY + 13.2, 'green alone: add a label, a position or a shape.');
+R(RX, CY + 18.2, 'White text only where white on the fill reaches 4.4 : 1:');
+R(RX, CY + 21.4, ((T.meta && T.meta.white_text_on) || []).join(', '));
+f.boundary((T.meta && T.meta.source) ? 'Fills: ' + T.meta.source : '');
+</script></body></html>

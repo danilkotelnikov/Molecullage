@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>date matrix</title>
+<style>.dcell{position:absolute;box-sizing:border-box;border:.8pt solid #0A0A0A;display:flex;align-items:center;justify-content:center;font-size:7pt;color:#0A0A0A}
+.mk{position:absolute;box-sizing:border-box;transform:translate(-50%,-50%)}</style></head><body>
+<!--INLINE_JS ../examples/dates/data.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Date matrix against a cut-off. Rows are entries, columns are kinds of date (the same three in every row), cells hold the date and are filled by the side of the
+// cut-off they fall on (pale blue before, pale pink on or after). The strip on the right places the same dates on one time axis, with the cut-off band in maroon.
+// Data: window.DATA from examples/dates/data.js (make_data.py), dates from the RCSB data API. The cut-off is an example.
+const D = window.DATA, FAM = window.TOKENS.color.family;
+const W = 178, H = 52.1;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', MAROON = FAM.maroon.fill, INDIGO = FAM.indigo.fill;
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+const div = (cls, x, t, w, h, css = '') => { const d = document.createElement('div'); d.className = cls; d.style.cssText = `left:${x}mm;top:${t}mm;width:${w}mm;height:${h}mm;${css}`; f.el.appendChild(d); return d; };
+const NAMES = { deposited: 'Deposited', released: 'Released', revised: 'Last revised' };
+const X0 = 37.5, CWD = 25, GAP = 1.2, T0 = 9.6, RH = 8.2;
+const AX0 = 121, AX1 = 176, Y0 = 1990, Y1 = 2026;
+const days = (s) => Date.parse(s) / 864e5, ax = (s) => AX0 + (new Date(s).getUTCFullYear() + (days(s) - days(new Date(Date.UTC(new Date(s).getUTCFullYear(), 0, 1)).toISOString())) / 365.25 - Y0) / (Y1 - Y0) * (AX1 - AX0);
+
+f.letter('a', 1.5, Tp(0.6));
+R(6.1, 2.2, 'Which entries fall on which side of a date', { bold: true, fs: 7.5 });
+R(176.5, 2.2, 'cut-off ' + D.cutoff + ' (an example); dates from the RCSB data API', { fs: 7, color: SUB, ha: 'right' });
+D.kinds.forEach((k, j) => R(X0 + j * (CWD + GAP) + CWD / 2, T0 - 3.2, NAMES[k], { ha: 'center', bold: true, fs: 7.5 }));
+R((AX0 + AX1) / 2, T0 - 3.2, 'Same dates on one axis', { ha: 'center', bold: true, fs: 7.5 });
+// cut-off band on the axis
+const xc = ax(D.cutoff);
+div('cell', xc, T0 - 0.8, AX1 - xc, D.rows.length * RH + 0.4, `background:${MAROON};opacity:.16`);
+R(xc + 1, T0 + D.rows.length * RH + 3.0, 'on or after the cut-off', { fs: 6.55, color: MAROON, bold: true });
+D.rows.forEach((r, i) => {
+  const t = T0 + i * RH;
+  R(1.5, t + 2.1, r.id, { bold: true, fs: 7.5 });
+  R(1.5, t + 5.2, r.what, { fs: 6.55, color: SUB, mfs: 6.55 });
+  D.kinds.forEach((k, j) => {
+    const after = r[k] >= D.cutoff;
+    div('dcell', X0 + j * (CWD + GAP), t - 0.4, CWD, RH - 1.4, `background:${after ? FAM.palepink.fill : FAM.palesky.fill}${after ? ';border-color:' + MAROON : ''}`).textContent = r[k];
+  });
+  f.route([[AX0, Tp(t + RH / 2 - 0.7)], [AX1, Tp(t + RH / 2 - 0.7)]], { head: false, color: '#BBBBBB', width: 0.15 });
+  const y = t + RH / 2 - 0.7;
+  div('mk', ax(r.deposited), y, 2.2, 2.2, `background:${INDIGO};border-radius:50%`);
+  div('mk', ax(r.released), y, 2.2, 2.2, `background:#fff;border:.8pt solid ${INDIGO};border-radius:50%`);
+  div('mk', ax(r.revised), y, 0.5, 3.4, `background:${INK}`);
+});
+[1990, 2000, 2010, 2020].forEach((y) => R(AX0 + (y - Y0) / (Y1 - Y0) * (AX1 - AX0), T0 + D.rows.length * RH + 0.6, String(y), { ha: 'center', fs: 6.55, color: SUB }));
+{ const ky = T0 + D.rows.length * RH + 4.6;
+  div('mk', 3, ky, 2.2, 2.2, `background:${INDIGO};border-radius:50%`); R(5.5, ky, 'deposited', { fs: 6.55 });
+  div('mk', 24, ky, 2.2, 2.2, `background:#fff;border:.8pt solid ${INDIGO};border-radius:50%`); R(26.5, ky, 'released', { fs: 6.55 });
+  div('mk', 44, ky, 0.5, 3.4, `background:${INK}`); R(46, ky, 'last revised', { fs: 6.55 });
+  div('dcell', 70, ky - 1.6, 6, 3.2, `background:${FAM.palesky.fill}`); R(77.6, ky, 'before the cut-off', { fs: 6.55 });
+  div('dcell', 108, ky - 1.6, 6, 3.2, `background:${FAM.palepink.fill};border-color:${MAROON}`); R(115.6, ky, 'on or after', { fs: 6.55 }); }
+f.boundary('Entries and dates: RCSB PDB records. The cut-off is chosen for the example.');
+</script></body></html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>sequence viewer with tracks</title>
+<style>
+/* lane cells of the sequence viewer: hatch and dotted line for the observed track */
+.cell.hatch{background:#ffffff;border:.4pt solid #777777;overflow:hidden}.cell.hatch svg{position:absolute;left:0;top:0}
+.cell.dots{height:0;border-top:.8pt dotted #555555}
+.cell.loop{background:#ffffff;border:.5pt solid #0A0A0A;display:flex;align-items:center;justify-content:center;font-size:6.55pt;line-height:1;color:#0A0A0A}
+.cell.set{border:.5pt solid #0A0A0A}
+.nest{position:absolute;box-sizing:border-box;border:.8pt solid #0A0A0A;border-radius:1.6mm}
+</style></head><body>
+<!--INLINE_JS ../examples/sequence/data.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Sequence viewer with tracks (Jalview and ESPript style): a letter per cell at a fixed pitch, rows of about 50, tracks under each row.
+// Data: window.DATA from examples/sequence/data.js (make_data.py): entity sequence of PDB 1MEL chain A and four runs lists.
+// a: render of the chain (struct/render.py, group anatomy, art "vhh__main") with the loop names on real residues.
+// b: the viewer. Tracks: loops (chosen spans), observed (data: coordinates), and three nested sets drawn as letter shading:
+//    observed (pale), in a loop (rose), contact with the antigen (dark). Gaps have two kinds, and the key says which is which.
+// c: the nested sets with counts. Replace data.js with your own chain; the page asserts the counts it prints.
+const D = window.DATA, RUNS = D.runs, SEQ = D.seq, N = SEQ.length;
+const FAM = window.TOKENS.color.family;
+const W = 178, H = 147;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', HAIR = '#777777';
+const PALE = FAM.palepink.fill, ROSE = FAM.rose.fill, DARK = FAM.rose.edge;
+const GL = 1.5, GR = 176.5;
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, mfs: 8.4, ...o });
+const line = (a, b, color = HAIR, width = 0.14) => f.route([a, b], { head: false, color, width });
+const div = (cls, x, t, w, h, css = '') => { const d = document.createElement('div'); d.className = cls; d.style.cssText = `left:${x}mm;top:${t}mm;width:${w}mm;height:${h}mm;${css}`; f.el.appendChild(d); return d; };
+const hatchDiv = (x, t, w, h) => {
+  const d = div('cell hatch', x, t, w, h);
+  let ln = ''; for (let u = -h; u < w; u += 0.85) ln += `<line x1="${u}" y1="${h}" x2="${u + h}" y2="0"/>`;
+  d.innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}mm" height="${h}mm" style="overflow:hidden" stroke="#777777" stroke-width="0.2">${ln}</svg>`; return d; };
+const setOf = (runs) => new Set(runs.flatMap(([a, b]) => Array.from({ length: b - a + 1 }, (_, i) => a + i)));
+{ const S = Object.fromEntries(Object.entries(RUNS).map(([k, v]) => [k, setOf(v)]));
+  const n = Object.fromEntries(Object.entries(S).map(([k, v]) => [k, v.size]));
+  const ok = N === D.counts.length && n.observed === D.counts.observed && n.zero === D.counts.zero && n.absent === D.counts.absent
+    && n.observed + n.zero + n.absent === N && [...S.contact].every((k) => S.loop.has(k)) && [...S.loop].every((k) => S.observed.has(k));
+  if (!ok) throw new Error('data check failed ' + JSON.stringify(n)); }
+
+// ================================================================ a: the chain, loop names on real residues
+const art = window.ART[D.art];
+const AT = 8.2, AH = 54, AW = Math.min(74, AH * art.ar);   // the render fits a box 54 mm high above the viewer
+f.letter('a', GL, Tp(0.6));
+R(GL + 4.6, 2.2, 'Single-domain antibody, ' + D.entry, { bold: true, fs: 7.5 });
+R(GL + 4.6, 5.6, 'PDB ' + D.entry + ', chain ' + D.chain + ' (deposited structure)', { fs: 7, color: SUB });
+const im = f.image({ x: GL, y: Tp(AT + AW / art.ar), w: AW, name: D.art });
+{ const P = (n) => im.pt(n);
+  const lab = (n, name, lx, lt) => { const p = P(n); R(lx, lt, name, { ha: 'center' }); line([lx + 2.2, Tp(lt)], [p[0], p[1]]); };
+  lab('cdr_h2', 'H2', GL + 11, AT + 3.2);
+  lab('cdr_h1', 'H1', GL + 5, AT + 11.5);
+  lab('cdr_h3', 'H3', GL + 5, AT + 43.5); }
+
+// ================================================================ c: the nested sets
+const CX0 = 58, CW = GR - CX0;
+f.letter('c', CX0, Tp(0.6));
+R(CX0 + 4.6, 2.2, 'Three nested sets', { bold: true, fs: 7.5 });
+R(CX0 + 4.6, 5.6, 'not to scale; white: in no set', { fs: 7, color: SUB });
+const NT = 9.0, NWID = 44;
+[[0, PALE, 43], [5, ROSE, 33], [10, DARK, 23]].forEach(([ins, fill, h]) => div('nest', CX0 + ins, NT + ins, NWID - 2 * ins, h, `background:${fill}`));
+const TX = CX0 + 52;
+[
+  { t: NT + 2.4, dotX: CX0 + 41.5, name: 'observed', n: D.counts.observed, def: 'coordinates in the file, occupancy above 0' },
+  { t: NT + 16.5, dotX: CX0 + 36.5, name: 'in a loop', n: D.counts.loop, def: 'observed, inside a chosen loop span' },
+  { t: NT + 30.7, dotX: CX0 + 28.0, name: 'contact', n: D.counts.contact, def: 'loop residue within 4.5 Å of the antigen' },
+].forEach((e) => {
+  div('cell', e.dotX - 0.55, e.t - 0.55, 1.1, 1.1, `background:${INK};border-radius:50%`);
+  line([e.dotX, Tp(e.t)], [TX - 1.2, Tp(e.t)], INK, 0.15);
+  R(TX, e.t, e.name + ': ' + e.n, { bold: true, fs: 7.5 });
+  R(TX, e.t + 3.6, e.def, { fs: 7 });
+});
+f.band({ x: CX0, y: Tp(NT + 46.5 + 5.8), w: 54, h: 5.8, text: 'Data', sub: 'deposited file', fam: 'indigo' });
+f.band({ x: CX0 + 57, y: Tp(NT + 46.5 + 5.8), w: CW - 57, h: 5.8, text: 'Chosen', sub: 'loops, contact cut-off', fam: 'full', dashed: true });
+
+// ================================================================ b: the viewer
+const BTOP = 66;
+f.letter('b', GL, Tp(BTOP));
+R(GL + 4.6, BTOP + 1.6, 'The same chain as letters', { bold: true, fs: 7.5 });
+R(GL + 38, BTOP + 1.6, 'entity sequence of chain ' + D.chain + '; loop spans are chosen, not a numbering scheme', { fs: 7, color: SUB });
+const X0 = 18.5, PITCH = (GR - X0) / 50, LX = 17.4;
+const ROWS = [[1, 50], [51, 98], [99, N]];
+const BLK = 22.6, B0 = BTOP + 5.8, RULER = 2.6, LETT = 3.6, LANE_H = 2.5;
+const LANE = { loops: [6.4, 3.0], obs: [10.0, 2.5], loop: [13.3, 2.5], contact: [16.2, 2.5] };
+const NAMES = { loops: 'loops', obs: 'observed', loop: 'in a loop', contact: 'contact' };
+const SETS = [['observed', PALE], ['loop', ROSE], ['contact', DARK]];
+const S = Object.fromEntries(SETS.map(([k]) => [k, setOf(RUNS[k])]));
+ROWS.forEach(([r0, r1], ri) => {
+  const t0 = B0 + ri * BLK, cx = (k) => X0 + (k - r0 + 0.5) * PITCH, lx = (k) => X0 + (k - r0) * PITCH;
+  R(LX, t0 + RULER + LETT / 2, String(r0), { ha: 'right', fs: 6.55, color: SUB });
+  const clip = (a, b) => [Math.max(a, r0), Math.min(b, r1)];
+  const each = (runs, fn) => runs.forEach(([a, b]) => { const [c, d] = clip(a, b); if (c <= d) fn(c, d); });
+  SETS.forEach(([n, fill]) => each(RUNS[n], (c, d) => div('cell', lx(c), t0 + RULER, (d - c + 1) * PITCH, LETT, `background:${fill}`)));
+  for (let k = r0; k <= r1; k++) {
+    if (k % 10 === 0) R(cx(k), t0 + RULER / 2 - 0.2, String(k), { ha: 'center', fs: 6.55, color: SUB });
+    R(cx(k), t0 + RULER + LETT / 2, SEQ[k - 1], { ha: 'center', fs: 7, color: S.contact.has(k) ? '#FFFFFF' : INK });
+  }
+  Object.entries(NAMES).forEach(([k, name]) => R(LX, t0 + LANE[k][0] + LANE[k][1] / 2, name, { ha: 'right', fs: 6.55, color: k === 'obs' ? SUB : INK }));
+  D.loops.forEach(([n, a, b]) => { const [c, d] = clip(a, b); if (c <= d) { const el = div('cell loop', lx(c), t0 + LANE.loops[0], (d - c + 1) * PITCH, LANE.loops[1]); el.textContent = n; } });
+  each(RUNS.observed, (c, d) => div('cell', lx(c), t0 + LANE.obs[0], (d - c + 1) * PITCH, LANE_H, `background:${HAIR}`));
+  each(RUNS.zero, (c, d) => hatchDiv(lx(c), t0 + LANE.obs[0], (d - c + 1) * PITCH, LANE_H));
+  each(RUNS.absent, (c, d) => div('cell dots', lx(c) + 0.2, t0 + LANE.obs[0] + LANE_H / 2, (d - c + 1) * PITCH - 0.4, 0));
+  SETS.slice(1).forEach(([k, fill]) => each(RUNS[k], (c, d) => div('cell set', lx(c), t0 + LANE[k][0], (d - c + 1) * PITCH, LANE_H, `background:${fill}`)));
+});
+{ const kt = B0 + 3 * BLK - 1.2, ky = kt + 1.4;
+  const item = (x, cls, css, w, text) => { div(cls, x, kt, w, LANE_H, css); R(x + w + 1.6, ky, text, { fs: 7 }); };
+  item(X0, 'cell', `background:${HAIR}`, 6, 'coordinates, occupancy above 0: ' + D.counts.observed);
+  hatchDiv(X0 + 66, kt, 6, LANE_H); R(X0 + 66 + 7.6, ky, 'occupancy 0: ' + D.counts.zero, { fs: 7 });
+  div('cell dots', X0 + 100, kt + LANE_H / 2, 6, 0);
+  R(X0 + 100 + 6 + 1.6, ky, 'no coordinates: ' + D.counts.absent, { fs: 7 });
+}
+f.boundary('Structure: PDB ' + D.entry + '. Loop spans and the contact cut-off are chosen, not annotations.');
+</script></body></html>

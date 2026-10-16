@@ -1,0 +1,44 @@
+{
+ "id": "1MEL",
+ "title": "CRYSTAL STRUCTURE OF A CAMEL SINGLE-DOMAIN VH ANTIBODY FRAGMENT IN COMPLEX WITH LYSOZYME",
+ "deposit_date": "1996-06-06",
+ "release_date": "1997-06-16",
+ "revision_date": "2024-10-30",
+ "method": [
+  "X-RAY DIFFRACTION"
+ ],
+ "resolution_A": [
+  2.5
+ ],
+ "entities": [
+  {
+   "entity": "1",
+   "description": "VH SINGLE-DOMAIN ANTIBODY",
+   "length": 148,
+   "auth_chains": [
+    "A",
+    "B"
+   ],
+   "label_chains": [
+    "A",
+    "B"
+   ],
+   "sequence": "DVQLQASGGGSVQAGGSLRLSCAASGYTIGPYCMGWFRQAPGKEREGVAAINMGGGITYYADSVKGRFTISQDNAKNTVYLLMNSLEPEDTAIYYCAADSTIYASYYECGHGLSTGGYGYDSWGQGTQVTVSSGRYPYDVPDYGSGRA"
+  },
+  {
+   "entity": "2",
+   "description": "LYSOZYME",
+   "length": 129,
+   "auth_chains": [
+    "L",
+    "M"
+   ],
+   "label_chains": [
+    "C",
+    "D"
+   ],
+   "sequence": "KVFGRCELAAAMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL"
+  }
+ ],
+ "file": "1MEL.pdb"
+}

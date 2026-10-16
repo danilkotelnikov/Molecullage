@@ -1,0 +1,40 @@
+{
+ "id": "4KRL",
+ "title": "Nanobody/VHH domain 7D12 in complex with domain III of the extracellular region of EGFR, pH 6.0",
+ "deposit_date": "2013-05-16",
+ "release_date": "2013-08-28",
+ "revision_date": "2024-11-20",
+ "method": [
+  "X-RAY DIFFRACTION"
+ ],
+ "resolution_A": [
+  2.849
+ ],
+ "entities": [
+  {
+   "entity": "1",
+   "description": "Nanobody/VHH domain 7D12",
+   "length": 133,
+   "auth_chains": [
+    "B"
+   ],
+   "label_chains": [
+    "A"
+   ],
+   "sequence": "QVKLEESGGGSVQTGGSLRLTCAASGRTSRSYGMGWFRQAPGKEREFVSGISWRGDSTGYADSVKGRFTISRDNAKNTVDLQMNSLKPEDTAIYYCAAAAGSAWYGTLYEYDYWGQGTQVTVSSALEHHHHHH"
+  },
+  {
+   "entity": "2",
+   "description": "Epidermal growth factor receptor",
+   "length": 214,
+   "auth_chains": [
+    "A"
+   ],
+   "label_chains": [
+    "B"
+   ],
+   "sequence": "LEEKKVCNGIGIGEFKDSLSINATNIKHFKNCTSISGDLHILPVAFRGDSFTHTPPLDPQELDILKTVKEITGFLLIQAWPENRTDLHAFENLEIIRGRTKQHGQFSLAVVSLNITSLGLRSLKEISDGDVIISGNKNLCYANTINWKKLFGTSGQKTKIISNRGENSCKATGQVCHALCSPEGCWGPEPRDCVSCRNVSRGRECVDKHHHHHH"
+  }
+ ],
+ "file": "4KRL.pdb"
+}

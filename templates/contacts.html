@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>typed contacts with a structure close-up</title></head><body>
+<!--INLINE_JS ../examples/contacts/contacts_layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG ../examples/contacts/contacts_layer.svg--></div></div>
+<script>
+// Typed contact tile map with a structure close-up. Layer: plots/contact_tiles.py (tiles, loop strips, residue labels, key swatches) from
+// examples/contacts/data/contacts.csv (struct/contacts.py). Close-up: struct/render.py, group complex, art "mel__inset": contact residues as sticks,
+// hydrogen bonds dashed, same orientation as the full view. The leaders end on C-alpha atoms of contact residues (anchors of the render).
+// window.DATA holds the layout of the layer in mm (contacts_layer.js); change the files, not the numbers.
+const D = window.DATA;
+const W = D.W, H = D.H;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', HAIR = '#777777', SUB = '#2B2B2B';
+const FAM = window.TOKENS.color.family;
+const GL = 1.5;
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+const rt = (pts, o = {}) => f.route(pts.map(([x, t]) => [x, Tp(t)]), o);
+const ART = 'mel__inset', LEAD = [['ca_A_30', 'CDR-H1', 137.0], ['ca_A_54', 'CDR-H2', 157.0]];   // loop names on contact residues of this entry
+const art = window.ART[ART];
+
+f.letter('a', GL, Tp(0.6));
+R(GL + 5.0, 2.4, 'Typed contacts of the deposited complex (data)', { bold: true, fs: 7.5 });
+R(GL + 5.0, 6.0, `PDB 1MEL, chain A against chain L; residue pairs within ${D.cutoff} Å`, { fs: 7 });
+R(GL + 5.0, 9.4, 'types: ' + D.tool.replace(/ \(.*$/, ''), { fs: 7 });
+R(D.grid.x0, 12.7, 'Nanobody residues, by loop', { fs: 7 });
+R(3.6, (D.grid.t0 + D.grid.t1) / 2, 'Lysozyme residues in contact', { fs: 7, ha: 'center', rot: true });
+
+// the close-up
+{ const x = 99.5, t = 9.0, w = 77.0, h = w / art.ar;
+  f.state({ x, y: Tp(t + h), w, h });
+  const im = f.image({ x, y: Tp(t + h), w, name: ART });
+  const P = (n) => { const p = im.pt(n); return [p[0], H - p[1]]; };
+  const lead = (a, b, c = HAIR) => rt([a, b], { head: false, color: c, width: 0.17 });
+  R(x + 0.3, 7.0, 'Lysozyme', { bold: true, fs: 7.5, color: FAM.mint.edge });
+  R(x + w - 0.3, 7.0, 'Nanobody', { bold: true, fs: 7.5, color: FAM.rose.edge, ha: 'right' });
+  LEAD.forEach(([k, name, lx]) => { const p = P(k); R(lx, 7.0, name, { ha: 'center' }); lead([lx, 8.6], p); f.dot(p[0], Tp(p[1])); });
+  { const p = P('ca_A_108'); R(167.0, t + h + 3.4, 'CDR-H3', { ha: 'center' }); lead([165.5, t + h + 1.6], p); f.dot(p[0], Tp(p[1])); }
+  R(x, t + h + 3.4, `Sticks: contact residues. Dashed: ${D.hbond_pairs} hydrogen bonds`, { fs: 7 });
+}
+
+// key labels (swatches are in the layer)
+{ const K = D.key, off = 4.2 + 1.4;
+  R(K.x, K.t - 2.4, 'Interaction type', { bold: true, fs: 7 });
+  [['Hydrogen bond', 0, 0], ['Polar contact', 0, 1], ['Weak hydrogen bond', 0, 2], ['Carbonyl contact', 0, 3], ['Hydrophobic', 0, 4],
+   ['Aromatic ring', 1, 0], ['No specific type', 1, 1], ['Split: several types', 1, 2]].forEach(([s, c, r]) => R(K.x + c * K.dx + off, K.t + r * K.dy + 1.7, s));
+  R(K.x + K.dx + off, K.t + 3 * K.dy + 0.4, 'Star: backbone atom');
+  R(K.x + K.dx + off, K.t + 3 * K.dy + 3.0, 'on either side');
+  R(K.x, K.t + 5 * K.dy + 1.5, 'No specific type: within the cut-off, no interaction class reported.');
+  R(K.x, K.t + 5 * K.dy + 4.9, `Look for: ${D.n_pairs} residue pairs, ${D.hbond_pairs} with a hydrogen bond.`);
+}
+f.boundary('Contacts of a deposited complex, not predicted. ' + D.tool.replace(/ \(.*$/, '') + '.');
+</script></body></html>

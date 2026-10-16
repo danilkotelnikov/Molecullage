@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>noise-to-structure strip</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Noise-to-structure strip. Five frames of one real chain (PDB 1MEL chain A, C-alpha atoms as spheres), art "series__t0" to "series__t4"
+// (struct/render.py, group series, seed 7). The path is straight: x_t = (1 - t) x_0 + t x_1, x_0 drawn from N(0, sigma^2 I) with sigma = 10 angstrom,
+// x_1 the centred C-alpha coordinates. The last frame adds the real cartoon as a transparent tint. The value of t is written under every frame.
+const T = [0, 0.25, 0.5, 0.75, 1];
+const W = 178, H = 53;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, mfs: 8.4, ...o });
+f.letter('a', 1.5, Tp(0.6));
+R(6.1, 2.2, 'Noise to structure along a straight path', { bold: true, fs: 7.5 });
+R(71, 2.2, 'one chain, C-alpha atoms as spheres; $x_t$ = (1 − $t$) $x_0$ + $t$ $x_1$', { fs: 7, color: SUB });
+const n = T.length, gap = 2.2, cw = (W - 3 - gap * (n - 1)) / n, ty = 5;
+let ch = 0;
+T.forEach((t, i) => {
+  const name = 'series__t' + i, a = window.ART[name];
+  const x = 1.5 + i * (cw + gap);
+  const h = cw / a.ar; ch = Math.max(ch, h);
+  f.state({ x, y: Tp(ty + ch + 1.2), w: cw, h: ch + 1.2 });
+  f.el.lastElementChild.style.background = window.TOKENS.color.family.palesky.fill;   // a pale field: the noise has no outline of its own
+  f.image({ x: x + 0.5, y: Tp(ty + 0.6 + h), w: cw - 1, name });
+  R(x + cw / 2, ty + ch + 3.9, '$t$ = ' + t, { ha: 'center', bold: true, fs: 7.5 });
+  if (i < n - 1) f.route([[x + cw + 0.2, Tp(ty + ch / 2)], [x + cw + gap - 0.2, Tp(ty + ch / 2)]]);
+});
+R(1.5 + cw / 2, ty + ch + 7.4, 'noise $x_0$', { ha: 'center' });
+R(1.5 + (n - 1) * (cw + gap) + cw / 2, ty + ch + 7.4, 'structure $x_1$', { ha: 'center' });
+f.route([[1.5 + cw + 1, Tp(ty + ch + 7.4)], [1.5 + (n - 1) * (cw + gap) - 1, Tp(ty + ch + 7.4)]]);
+f.boundary('Illustration: noise of 10 Å per coordinate, seed 7, on the deposited chain A of PDB 1MEL.');
+</script></body></html>
