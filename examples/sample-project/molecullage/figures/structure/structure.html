@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>structure, redesigned</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Redesign of Figure 3 of the sample project (the black ChimeraX screenshot).
+// One object: PDB 1MEL, antibody fragment (chain A) and lysozyme (chain L), antigen left, binder right, loop 3 toward the antigen.
+// Art: render_structure, group complex, ChimeraX 1.10, flat style; art folder molecullage/art, name mel__full.
+const A = window.ART['mel__full'];
+const W = 178, IW = 168, IH = IW / A.ar, H = 9.3 + IH + 8.6 + 6;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+R(1.5, 2.2, 'Antibody fragment bound to lysozyme', { bold: true, fs: 7.5 });
+R(1.5, 5.8, 'PDB 1MEL, chains A and L. Darker red: the antibody loops that face the lysozyme.', { fs: 7, color: SUB });
+const T0 = 9.3;
+const pale = document.createElement('div');   // the picture sits on the palesky token of the project palette
+pale.style.cssText = `position:absolute;left:1.5mm;top:${f.Y(Tp(T0 + IH + 1.6) + IH + 1.6)}mm;width:${W - 3}mm;height:${IH + 1.6}mm;background:${window.TOKENS.color.family.palesky.fill};border-radius:1.2mm`;
+f.el.appendChild(pale);
+const im = f.image({ x: (W - IW) / 2, y: Tp(T0 + IH + 0.8), w: IW, name: 'mel__full' });
+// the key sits under the picture, in the same order as the picture reads: left to right
+f.legend(1.5, Tp(T0 + IH + 6.2), [['mint', 'lysozyme, chain L'], ['rose', 'antibody fragment, chain A'], ['apricot', 'lysozyme residues at the interface (darker sticks)']], 50);
+f.boundary('Deposited structure PDB 1MEL. Flat render, ChimeraX 1.10.');
+// build-time checks: the picture lies inside the page and above the key
+if (!(im.l >= 1.5 && im.r <= W - 1.5 && im.t <= H - T0 && im.b >= 13)) throw new Error('picture outside its box');
+</script></body></html>

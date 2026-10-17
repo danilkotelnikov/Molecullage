@@ -1,6 +1,6 @@
 # ChimeraX script: render groups in the flat journal style. Run through the lock wrapper from the repo root:
 #   py -3 -B struct/run_cx.py struct/render.py <group> key=value ...
-# Groups and their parameters (defaults can sit in structfig.json under "structures"):
+# Groups and their parameters (defaults can sit in molecullage.json under "structures"):
 #   complex   binder + antigen. entry, pdb, binder=A (or H,L: first chain is the heavy one), antigen=L, drop=B,M, cdr=<preset|h1:26-32,...>,
 #             light_cdr=, contacts=<contacts.csv from struct/contacts.py>, name=<output prefix>.  Layers: full, ag, ab, inset.
 #   poses     as complex; the binder moved as a rigid body to two decoy poses. Layers: native, decoy1, decoy2, ens.

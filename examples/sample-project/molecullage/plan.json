@@ -1,0 +1,55 @@
+{
+ "dir": "sample-project",
+ "targetWidthMm": 178,
+ "palette": {
+  "file": "tokens/tokens.base.json",
+  "worst_ciede2000": 11.5
+ },
+ "typeLadder": {
+  "letter": 9,
+  "title": 7.5,
+  "label": 7,
+  "floor": 6.5,
+  "math": 8.4
+ },
+ "items": [
+  {
+   "id": "bfactors",
+   "path": "figures/bfactors.png",
+   "kind": "plot",
+   "verdict": "RESTYLE",
+   "template": "plots2",
+   "units": 1,
+   "caption": "Figure 1. B-factors of the C-alpha atoms of chain A (antibody fragment) and chain L (lysozyme) in PDB 1MEL."
+  },
+  {
+   "id": "pipeline",
+   "path": "figures/pipeline.png",
+   "kind": "schematic",
+   "verdict": "REDRAW",
+   "template": "pipeline",
+   "units": 3,
+   "caption": "Figure 2. Screening pipeline: sequences are folded, docked to the antigen and scored; the best ones are kept."
+  },
+  {
+   "id": "structure",
+   "path": "figures/structure.png",
+   "kind": "structure",
+   "verdict": "REPLACE",
+   "template": "structures",
+   "units": 3,
+   "caption": "Figure 3. Structure of the antibody fragment bound to lysozyme, PDB 1MEL."
+  }
+ ],
+ "gate": [
+  "structure",
+  "pipeline"
+ ],
+ "order": [
+  "structure",
+  "pipeline",
+  "bfactors"
+ ],
+ "units": 7,
+ "unaudited": []
+}

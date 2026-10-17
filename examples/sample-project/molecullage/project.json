@@ -1,0 +1,8 @@
+{
+  "purpose": "paper",
+  "widthMm": 178,
+  "reference": null,
+  "palette": "tokens/tokens.base.json",
+  "askLevel": "every batch",
+  "note": "Answers given for the sample run. The workflow asks these four questions with AskUserQuestion."
+}

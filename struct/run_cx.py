@@ -3,7 +3,7 @@
     py -3 -B struct/run_cx.py struct/render.py complex entry=1MEL pdb=data/pdb/1MEL.pdb binder=A antigen=L drop=B,M cdr=1mel_vhh
     py -3 -B struct/run_cx.py --dry-run struct/render.py complex ...     # print the command, run nothing
 
-ChimeraX is read from $STRUCTFIG_CHIMERAX, else found under C:/Program Files, /Applications or /opt (pinned and tested: 1.10).
+ChimeraX is read from $MOLECULLAGE_CHIMERAX, else found under C:/Program Files, /Applications or /opt (pinned and tested: 1.10).
 Waits up to 25 minutes for the lock, runs ChimeraX with a 10 minute limit, prints the exit code and the script's error file.
 A ChimeraX window opens briefly. The renderer needs it: --offscreen has no OpenGL on Windows.
 """
@@ -18,14 +18,14 @@ LOCK = HERE / ".cx.lock"
 
 
 def find_exe():
-    env = os.environ.get("STRUCTFIG_CHIMERAX")
+    env = os.environ.get("MOLECULLAGE_CHIMERAX")
     if env and Path(env).exists():
         return env
     for root in ("C:/Program Files", "/Applications", "/usr/lib", "/opt"):
         r = Path(root)
         if not r.exists():
             continue
-        for d in sorted(r.glob("ChimeraX*"), reverse=True):
+        for d in sorted((p for p in r.iterdir() if "chimerax" in p.name.lower()), reverse=True):   # also /usr/lib/ucsf-chimerax
             for rel in ("bin/ChimeraX.exe", "Contents/MacOS/ChimeraX", "bin/ChimeraX"):
                 if (d / rel).exists():
                     return str(d / rel)
@@ -62,7 +62,7 @@ def main(argv):
         argv = argv[1:]
     exe = find_exe()
     if not exe and not dry:
-        sys.exit("ChimeraX not found. Install ChimeraX 1.10 and set STRUCTFIG_CHIMERAX to its executable.")
+        sys.exit("ChimeraX not found. Install ChimeraX 1.10 and set MOLECULLAGE_CHIMERAX to its executable.")
     cmd = command(argv, exe or "ChimeraX")
     if dry:
         print(" ".join(cmd))

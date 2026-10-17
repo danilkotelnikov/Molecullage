@@ -6,13 +6,18 @@ __pycache__/
 out/
 .cx.lock/
 last_error_*.txt
-.pytest_cache/
 tmp/
-art/c1mel*
 art/*.png
 !art/*_t.png
 examples/*/*.html
 examples/contacts/data/_arpeggio/
 examples/contacts/data/_cx/
-examples/contacts/data_1vfb/_arpeggio/
-examples/contacts/data_1vfb/_cx/
+examples/sample-project/molecullage/art/*.png
+!examples/sample-project/molecullage/art/*_t.png
+# downloads the gallery fetch scripts make again (PDB files, publisher source data)
+gallery/*/data/**/*.cif
+gallery/*/data/**/*.pdb
+gallery/*/data/**/*.xlsx
+.env
+.DS_Store
+Thumbs.db

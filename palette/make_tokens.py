@@ -60,7 +60,7 @@ def build() -> dict:
     core = [FAM[k]["fill"] for k in ("mint", "rose", "peri", "apricot", "indigo", "violet")]
     d, kind, pair = C.min_de(core)
     return {
-        "name": "structfig-base",
+        "name": "molecullage-base",
         "version": "1.0.0",
         "note": "Palette sampled from the flat fills of one open-access paper (see provenance). Fills are sampled; dark tones are derived.",
         "color": {

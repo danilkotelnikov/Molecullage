@@ -1,0 +1,222 @@
+{
+ "figures": [
+  {
+   "path": "figures/bfactors.png",
+   "width_mm_target": 178,
+   "format": "png",
+   "vector": false,
+   "width_px": 640,
+   "height_px": 480,
+   "file_dpi": 100,
+   "page_mm": null,
+   "notes": [],
+   "measured": true,
+   "kind": "plot",
+   "marks": {
+    "ink": 7.91,
+    "cells": 32.92,
+    "band": 7.29,
+    "blank": 9.38
+   },
+   "colours": {
+    "dominant": [
+     {
+      "hex": "#1F77B4",
+      "share": 0.194,
+      "chromatic": true
+     },
+     {
+      "hex": "#FF7F0E",
+      "share": 0.164,
+      "chromatic": true
+     },
+     {
+      "hex": "#000000",
+      "share": 0.089,
+      "chromatic": false
+     },
+     {
+      "hex": "#D5D5D5",
+      "share": 0.011,
+      "chromatic": false
+     },
+     {
+      "hex": "#84B4D5",
+      "share": 0.011,
+      "chromatic": true
+     },
+     {
+      "hex": "#C4DBEB",
+      "share": 0.021,
+      "chromatic": true
+     }
+    ],
+    "chromatic": 4,
+    "neutral": 2,
+    "worst_distance": 18.1,
+    "worst_vision": "tritan",
+    "worst_pair": [
+     "#1F77B4",
+     "#84B4D5"
+    ]
+   },
+   "size_mm": [
+    178,
+    133.5
+   ],
+   "effective_dpi": 91,
+   "flags": {
+    "layout": [
+     "ink 7.9 % below 9 %",
+     "cells 32.9 % above 25 %",
+     "band 7.3 % above 4 %",
+     "blank 9.4 % above 6 %"
+    ],
+    "resolution": [
+     "91 dpi at 178 mm, under 300"
+    ],
+    "colour": [],
+    "type": []
+   },
+   "verdict": "RESTYLE",
+   "reason": "Same data, new palette and type: raw axis names, no units, a title that says nothing, legend on the data, 91 dpi, empty space.",
+   "id": "bfactors",
+   "suggested_verdict": "RESTYLE",
+   "suggested_reason": "Same data, new palette and type. Marks: ink 7.9 % below 9 %; cells 32.9 % above 25 %; band 7.3 % above 4 %; blank 9.4 % above 6 %; 91 dpi at 178 mm, under 300.",
+   "blind_read": "Reader saw a line plot of two chains but not the point; could not read bfac, res, A and L; flagged the empty title, no units, legend on the data, no marked regions."
+  },
+  {
+   "path": "figures/pipeline.png",
+   "width_mm_target": 178,
+   "format": "png",
+   "vector": false,
+   "width_px": 800,
+   "height_px": 320,
+   "file_dpi": 100,
+   "page_mm": null,
+   "notes": [],
+   "measured": true,
+   "kind": "schematic",
+   "marks": {
+    "ink": 30.55,
+    "cells": 51.25,
+    "band": 17.19,
+    "blank": 22.95
+   },
+   "colours": {
+    "dominant": [
+     {
+      "hex": "#FFBE86",
+      "share": 0.333,
+      "chromatic": true
+     },
+     {
+      "hex": "#FFFF7F",
+      "share": 0.164,
+      "chromatic": true
+     },
+     {
+      "hex": "#C7F6C7",
+      "share": 0.164,
+      "chromatic": true
+     },
+     {
+      "hex": "#8EBAD9",
+      "share": 0.161,
+      "chromatic": true
+     },
+     {
+      "hex": "#000000",
+      "share": 0.071,
+      "chromatic": false
+     }
+    ],
+    "chromatic": 4,
+    "neutral": 1,
+    "worst_distance": 35.4,
+    "worst_vision": "protan",
+    "worst_pair": [
+     "#FFBE86",
+     "#8EBAD9"
+    ]
+   },
+   "size_mm": [
+    178,
+    71.2
+   ],
+   "effective_dpi": 114,
+   "flags": {
+    "layout": [
+     "cells 51.2 % above 25 %",
+     "band 17.2 % above 4 %",
+     "blank 22.9 % above 6 %"
+    ],
+    "resolution": [
+     "114 dpi at 178 mm, under 300"
+    ],
+    "colour": [],
+    "type": []
+   },
+   "verdict": "REDRAW",
+   "reason": "Five plain boxes with no data between them, mixed type sizes, comic font, colours without meaning, half the page empty.",
+   "id": "pipeline",
+   "suggested_verdict": "REDRAW",
+   "suggested_reason": "Draw it again from a template. Marks: cells 51.2 % above 25 %; band 17.2 % above 4 %; blank 22.9 % above 6 %; 114 dpi at 178 mm, under 300.",
+   "blind_read": "Reader got the flow Sequences, Fold, dock, SCORE, best ones; could not say what flows between steps or what the colours mean; flagged informal title, comic font, uneven boxes, tiny arrows, empty space."
+  },
+  {
+   "path": "figures/structure.png",
+   "width_mm_target": 178,
+   "format": "png",
+   "vector": false,
+   "width_px": 960,
+   "height_px": 620,
+   "file_dpi": 144,
+   "page_mm": null,
+   "notes": [],
+   "measured": true,
+   "kind": "structure",
+   "marks": {
+    "ink": 99.96,
+    "cells": 0,
+    "band": 0,
+    "blank": 0
+   },
+   "colours": {
+    "dominant": [
+     {
+      "hex": "#000000",
+      "share": 0.92,
+      "chromatic": false
+     }
+    ],
+    "chromatic": 0,
+    "neutral": 1,
+    "worst_distance": null,
+    "worst_vision": null,
+    "worst_pair": null
+   },
+   "size_mm": [
+    178,
+    115
+   ],
+   "effective_dpi": 137,
+   "flags": {
+    "layout": [
+     "dark background (ink 100 %); journals print on white and the empty-space marks cannot be read"
+    ],
+    "resolution": [
+     "137 dpi at 178 mm, under 300"
+    ],
+    "colour": [],
+    "type": []
+   },
+   "verdict": "REPLACE",
+   "reason": "A black-background screenshot, one colour for all chains, no labels, 137 dpi: make a flat render with the role colours.",
+   "id": "structure",
+   "suggested_verdict": "REPLACE",
+   "suggested_reason": "A raster picture of a structure; make a real render in the flat style. Marks: dark background (ink 100 %); journals print on white and the empty-space marks cannot be read; 137 dpi at 178 mm, under 300.",
+   "blind_read": "Reader saw ribbons on black and could not say which protein, how many chains or where the interface is; flagged the single colour, black background, no labels, wide empty margins."
+  }
+ ]
+}

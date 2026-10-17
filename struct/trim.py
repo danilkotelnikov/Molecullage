@@ -5,7 +5,7 @@ position; the layer "inset" has its own box. Anchors written by render.py (pixel
 converted to fractions of the cropped image, (0, 0) = top left. Anchor files: <group>_<layer>.anchors.json, else <group>.anchors.json.
 The "ab" layer also gets a smoothed silhouette polygon ("outline") for dashed missing-partner drawings.
 
-    py -3 -I struct/trim.py [group ...]          # art folder: $STRUCTFIG_ART, else "art" of structfig.json
+    py -3 -I struct/trim.py [group ...]          # art folder: $MOLECULLAGE_ART, else "art" of molecullage.json
 """
 import json
 import sys

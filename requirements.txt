@@ -1,7 +1,6 @@
 numpy>=1.26
 pillow>=10
-pymupdf>=1.24
+pymupdf>=1.24.3
 scipy>=1.11
 scikit-image>=0.22
 matplotlib>=3.8
-pytest>=8

@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>pipeline, redesigned</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Redesign of Figure 2 of the sample project (five hand-drawn boxes). Template: templates/pipeline.html.
+// Same content, in the Molecullage grammar: three stage strips, three tool blocks with numbered badges, pale pills for the data that flow, a key.
+// The columns read as a snake (column 1 down, column 2 up, column 3 down), so every hand-over is a short horizontal arrow.
+// Counts under the pills are plain-word examples; the project has no numbers to show.
+const W = 178, H = 55.5;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;                                   // top-down mm -> kit y
+const INK = '#0A0A0A';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, mfs: 8.4, ...o });
+const rt = (pts, o = {}) => f.route(pts.map(([x, t]) => [x, Tp(t)]), o);
+const tool = (x, t, w, h, title, sub) => f.tool({ x, y: Tp(t + h), w, h, title, sub, fam: 'indigo' });
+const pill = (x, t, w, h, text, sub, fam) => f.pill({ x, y: Tp(t + h), w, h, text, sub, fam });
+const badge = (x, t, n) => f.badge({ x, y: Tp(t), n, fam: 'grey' });
+function strip(x, t, w, h, name, sub) {
+  f.stage({ x, y: Tp(t + h), w, h, text: '', fam: 'indigo' });
+  const s = f.el.lastElementChild.querySelector('span');
+  s.style.transform = 'none'; s.style.textAlign = 'center'; s.innerHTML = `${name}<br><i>${sub}</i>`;
+}
+// one grid: three columns of 52 mm, two rows; every block is centred on its column and its row
+const TW = 34, TH = 13, PW = 36, PH = 8, SW = 52;
+const COLX = [1.5, 63, 124.5], ROW = [22.5, 42.5];
+const cx = (c) => COLX[c] + SW / 2;
+COLX.forEach((x) => {                                      // a pale panel under each column, from the palesky token
+  const d = document.createElement('div');
+  d.style.cssText = `position:absolute;left:${x}mm;top:11.7mm;width:${SW}mm;height:38.6mm;background:${window.TOKENS.color.family.palesky.fill};border-radius:1.2mm`;
+  f.el.appendChild(d);
+});
+const D = (i) => ['one per design', 'several per design', 'a short list'][i - 1];
+[['Design', 'sequences to models'], ['Screen', 'docking'], ['Evaluate', 'scores and ranking']].forEach(([n, s], c) => strip(COLX[c], 1.5, SW, 8.6, n, s));
+const T = (c, r, title, sub, n) => { const x = cx(c) - TW / 2, t = ROW[r] - TH / 2; tool(x, t, TW, TH, title, sub); badge(x + 0.3, t + 0.3, n); return { x, t, r: x + TW }; };
+const P = (c, r, text, sub, fam) => { const x = cx(c) - PW / 2, t = ROW[r] - PH / 2; pill(x, t, PW, PH, text, sub, fam); return { x, t, r: x + PW }; };
+// column 1, down
+P(0, 0, 'Sequences', D(1), 'palemint');
+const fold = T(0, 1, 'Structure prediction', 'folds each sequence', 1);
+rt([[cx(0), ROW[0] + PH / 2 + 0.3], [cx(0), ROW[1] - TH / 2 - 0.3]]);
+// column 2, up
+const dock = T(1, 1, 'Docking', 'places each model', 2);
+const poses = P(1, 0, 'Poses', D(2), 'palepink');
+rt([[cx(1), ROW[1] - TH / 2 - 0.3], [cx(1), ROW[0] + PH / 2 + 0.3]]);
+// column 3, down
+const score = T(2, 0, 'Scoring and ranking', 'rates each pose', 3);
+const best = P(2, 1, 'Best candidates', D(3), 'grey');
+rt([[cx(2), ROW[0] + TH / 2 + 0.3], [cx(2), ROW[1] - PH / 2 - 0.3]]);
+// hand-overs, each says what flows
+rt([[fold.r + 0.3, ROW[1]], [dock.x - 0.3, ROW[1]]]);
+R((fold.r + dock.x) / 2, ROW[1] - 2.4, 'models', { ha: 'center' });
+rt([[poses.r + 0.3, ROW[0]], [score.x - 0.3, ROW[0]]]);
+R((poses.r + score.x) / 2, ROW[0] - 2.4, 'poses', { ha: 'center' });
+f.legend(94, Tp(H - 2.6), [['palemint', 'sequences'], ['palepink', 'models and poses'], ['grey', 'ranked list']], 28);
+f.boundary('Counts are examples; the project has no numbers to show.');
+// build-time checks: tools and pills of one column share an axis; the two hand-over arrows lie on row centres
+[[fold.x, cx(0)], [dock.x, cx(1)], [score.x, cx(2)], [poses.x, cx(1)], [best.x, cx(2)]].forEach(([x, c], i) => {
+  if (Math.abs(x + (i < 3 ? TW : PW) / 2 - c) > 0.01) throw new Error('block ' + i + ' is off its column axis');
+});
+if (dock.t + TH / 2 !== ROW[1] || fold.t + TH / 2 !== ROW[1]) throw new Error('hand-over row differs');
+</script></body></html>

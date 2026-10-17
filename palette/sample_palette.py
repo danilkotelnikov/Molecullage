@@ -22,7 +22,7 @@ from PIL import Image
 def load(path: str, page: int = 1, dpi: int = 300) -> np.ndarray:
     p = Path(path)
     if p.suffix.lower() == ".pdf":
-        import fitz
+        import pymupdf as fitz
 
         doc = fitz.open(p)
         pix = doc[page - 1].get_pixmap(dpi=dpi, alpha=False)

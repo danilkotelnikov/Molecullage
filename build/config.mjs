@@ -1,4 +1,4 @@
-// Shared by build.mjs, the hook and the MCP server: find and read structfig.json, locate Chrome and the Python launcher.
+// Shared by build.mjs, the hook and the MCP server: find and read molecullage.json, locate Chrome and the Python launcher.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,19 +13,20 @@ export const DEFAULTS = {
   widthMm: [178, 89],
   review: 'none',
   claimBoundary: '',
-  chimerax: 'auto',
   art: 'art',
   hook: true,
   hookBlocks: false,
+  autotrigger: true,
+  ignore: [],
 };
 
-/** Walk up from `start` (a file or folder) to the nearest structfig.json, or figpilot.json (same keys, written by the companion repository). Returns { file, dir, cfg } or null. */
+/** Walk up from `start` (a file or folder) to the nearest molecullage.json. Returns { file, dir, cfg } or null. */
 export function findConfig(start) {
   let dir = path.resolve(start);
   if (fs.existsSync(dir) && fs.statSync(dir).isFile()) dir = path.dirname(dir);
   for (;;) {
-    const f = ['structfig.json', 'figpilot.json'].map((n) => path.join(dir, n)).find((p) => fs.existsSync(p));
-    if (f) return { file: f, dir, cfg: { ...DEFAULTS, ...JSON.parse(fs.readFileSync(f, 'utf8')) } };
+    const f = path.join(dir, 'molecullage.json');
+    if (fs.existsSync(f)) return { file: f, dir, cfg: { ...DEFAULTS, ...JSON.parse(fs.readFileSync(f, 'utf8')) } };
     const up = path.dirname(dir);
     if (up === dir) return null;
     dir = up;
@@ -39,7 +40,7 @@ export function resolveIn(base, p) {
 }
 
 export function findChrome() {
-  const env = process.env.STRUCTFIG_CHROME;
+  const env = process.env.MOLECULLAGE_CHROME;
   if (env && fs.existsSync(env)) return env;
   const c = [
     'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -52,21 +53,21 @@ export function findChrome() {
   return c.find((p) => fs.existsSync(p)) || null;
 }
 
-/** [command, ...leading args] for Python 3. $STRUCTFIG_PYTHON wins; Windows uses the py launcher. */
+/** [command, ...leading args] for Python 3. $MOLECULLAGE_PYTHON wins; Windows uses the py launcher. */
 export function pythonCmd() {
-  if (process.env.STRUCTFIG_PYTHON) return [process.env.STRUCTFIG_PYTHON];
+  if (process.env.MOLECULLAGE_PYTHON) return [process.env.MOLECULLAGE_PYTHON];
   return process.platform === 'win32' ? ['py', '-3'] : ['python3'];
 }
 
 export function findChimeraX(cfgValue = 'auto') {
-  const env = process.env.STRUCTFIG_CHIMERAX;
+  const env = process.env.MOLECULLAGE_CHIMERAX;
   if (env && fs.existsSync(env)) return env;
   if (cfgValue && cfgValue !== 'auto' && fs.existsSync(cfgValue)) return cfgValue;
   const roots = ['C:/Program Files', '/Applications', '/usr/lib', '/opt'];
   for (const r of roots) {
     if (!fs.existsSync(r)) continue;
     for (const d of fs.readdirSync(r)) {
-      if (!/^ChimeraX/i.test(d)) continue;
+      if (!/chimerax/i.test(d)) continue;   // ChimeraX 1.10 (Windows), ChimeraX-1.10.app (macOS), ucsf-chimerax (Linux)
       for (const rel of ['bin/ChimeraX.exe', 'Contents/MacOS/ChimeraX', 'bin/ChimeraX']) {
         const f = path.join(r, d, rel);
         if (fs.existsSync(f)) return f;

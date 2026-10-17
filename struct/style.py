@@ -1,7 +1,7 @@
-"""Style and parameters of the ChimeraX renders, without any ChimeraX import (so tests and --dry-run can use it).
+"""Style and parameters of the ChimeraX renders, without any ChimeraX import (so --dry-run can use it).
 
-Colours come from the token file: $STRUCTFIG_TOKENS, else the "palette" of structfig.json, else tokens/tokens.base.json.
-Parameters of a render group come from structfig.json ("structures": {group: {...}}) and are overridden by key=value words
+Colours come from the token file: $MOLECULLAGE_TOKENS, else the "palette" of molecullage.json, else tokens/tokens.base.json.
+Parameters of a render group come from molecullage.json ("structures": {group: {...}}) and are overridden by key=value words
 on the command line:  render.py complex entry=1MEL pdb=data/pdb/1MEL.pdb binder=A antigen=L drop=/B,M cdr=1mel_vhh
 """
 from __future__ import annotations
@@ -27,14 +27,14 @@ CDR_PRESETS = {
 
 
 def config() -> dict:
-    for p in (os.environ.get("STRUCTFIG_CONFIG"), Path.cwd() / "structfig.json", ROOT / "structfig.json", ROOT / "structfig.example.json"):
+    for p in (os.environ.get("MOLECULLAGE_CONFIG"), Path.cwd() / "molecullage.json", ROOT / "molecullage.json", ROOT / "molecullage.example.json"):
         if p and Path(p).exists():
             return json.loads(Path(p).read_text(encoding="utf-8"))
     return {}
 
 
 def token_path() -> Path:
-    env = os.environ.get("STRUCTFIG_TOKENS")
+    env = os.environ.get("MOLECULLAGE_TOKENS")
     if env:
         return Path(env)
     p = config().get("palette")
@@ -46,7 +46,7 @@ def tokens() -> dict:
 
 
 def art_dir() -> Path:
-    env = os.environ.get("STRUCTFIG_ART")
+    env = os.environ.get("MOLECULLAGE_ART")
     return Path(env) if env else ROOT / config().get("art", "art")
 
 

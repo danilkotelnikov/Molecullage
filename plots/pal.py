@@ -6,7 +6,7 @@
 FILL["rose"], EDGE["rose"], and so on, for every family of the token file (see docs/palette.md). DATA is the ordered
 categorical list for lines and markers on white. RAMP is the heat-map ramp: white, pale lilac, navy.
 
-The token file is $STRUCTFIG_TOKENS, else the "palette" key of the nearest structfig.json, else tokens/tokens.base.json.
+The token file is $MOLECULLAGE_TOKENS, else the "palette" key of the molecullage.json at the repository root, else tokens/tokens.base.json.
 """
 from __future__ import annotations
 
@@ -18,10 +18,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def token_path() -> Path:
-    env = os.environ.get("STRUCTFIG_TOKENS")
+    env = os.environ.get("MOLECULLAGE_TOKENS")
     if env:
         return Path(env)
-    cfg = ROOT / "structfig.json"
+    cfg = ROOT / "molecullage.json"
     if cfg.exists():
         p = json.loads(cfg.read_text(encoding="utf-8")).get("palette")
         if p and (ROOT / p).exists():

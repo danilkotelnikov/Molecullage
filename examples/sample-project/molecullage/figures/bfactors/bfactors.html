@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>B-factor plot, redesigned</title></head><body>
+<!--INLINE_JS bfactors_layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG bfactors_layer.svg--></div></div>
+<script>
+// Redesign of Figure 1 of the sample project (the default matplotlib line plot). Template: templates/plots2.html, one panel.
+// matplotlib (make_bfactors.py) draws axes, ticks and the two lines as a transparent SVG at the size of this page; the kit draws the title,
+// the axis captions and the labels at the same millimetre boxes (window.DATA.a, top-down mm).
+const D = window.DATA, W = D.W, H = D.H;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+R(1.5, 2.2, 'B-factors along the two chains', { bold: true, fs: 7.5 });
+R(1.5, 5.8, 'PDB 1MEL, C-alpha atoms; a higher value means more motion or disorder', { fs: 7, color: SUB });
+R(3.4, D.a.t + D.a.h / 2, 'B-factor (Å²)', { ha: 'center', rot: true });
+R(D.a.x + D.a.w / 2, D.a.t + D.a.h + 5.2, 'residue number', { ha: 'center' });
+// the two labels at the top right name the lines; the solid line is chain A, the dashed line is chain L
+R(D.a.x + D.a.w - 1, 2.2, `chain A, antibody fragment, solid line: mean ${D.bfactor_mean.A.toFixed(1)}`, { ha: 'right', bold: true, color: D.colours.A, fs: 7 });
+R(D.a.x + D.a.w - 1, 5.8, `chain L, lysozyme, dashed line: mean ${D.bfactor_mean.L.toFixed(1)}`, { ha: 'right', bold: true, color: D.colours.L, fs: 7 });
+f.boundary('Deposited structure PDB 1MEL; values read from the coordinate file.');
+// build-time check: the plot box and its labels stay inside the page
+if (D.a.x < 9 || D.a.x + D.a.w > W - 1 || D.a.t + D.a.h + 8 > H) throw new Error('plot box leaves the page');
+</script></body></html>

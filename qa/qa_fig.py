@@ -1,24 +1,24 @@
-"""Measure a built figure against the figure grammar.
+"""Measure a built figure against the drawing rules.
 
     py -3 -I qa/qa_fig.py out/sequence                 # key: reads out/sequence.png and out/sequence.pdf
-    py -3 -I qa/qa_fig.py out/sequence.png --quick     # PNG marks only (ink, cells, band, blank): fast, used by the hook
+    py -3 -I qa/qa_fig.py out/sequence.png --quick     # PNG checks only (ink, cells, band, blank): fast, used by the hook
     py -3 -I qa/qa_fig.py out/sequence --strictness strict --json
 
-Marks (limits close to what we measured on a set of published antibody-design figures; use them as a guide):
+Checks (limits close to what we measured on a set of published antibody-design figures; use them as a guide):
   ink      share of pixels darker than 235 of 255 in any channel
   cells    share of the cells of a 20-column, 12-row grid with less than 1 % ink (empty cells)
   band     longest run of empty pixel rows, share of the height
   blank    largest empty axis-aligned rectangle of tiles (tile = 1/60 of the width), share of the area
   type     smallest text in the PDF, pt (the PDF page is the figure at final size)
   render   smallest embedded raster width, mm (structure renders; under 15 mm is an icon)
-  words    words in the PDF against the budget of structfig.json (schematic or plate)
-  fonts    Arial only; pages: one; width: one of structfig.json "widthMm"
+  words    words in the PDF against the budget of molecullage.json (schematic or plate)
+  fonts    Arial only; pages: one; width: one of molecullage.json "widthMm"
 
-Strictness (structfig.json "strictness", or --strictness):
-  normal   ink >= 9, cells <= 25, band <= 4, blank <= 6, type >= 6.5, render >= 20. A failed mark is FAIL; words, fonts and width are warnings.
+Strictness (molecullage.json "strictness", or --strictness):
+  normal   ink >= 9, cells <= 25, band <= 4, blank <= 6, type >= 6.5, render >= 20. A failed check is FAIL; words, fonts and width are warnings.
   strict   tighter limits: ink >= 20, cells <= 20, band <= 2.5, blank <= 4; type, render as normal. Words, fonts, width are FAIL too.
-  loose    the normal limits, but every failed mark is only a warning. The exit code stays 0.
-A mark that fails is reported with its reason. Nothing is changed.
+  loose    the normal limits, but every failed check is only a warning. The exit code stays 0.
+A check that fails is reported with its reason. Nothing is changed.
 """
 from __future__ import annotations
 
@@ -44,9 +44,8 @@ def find_config(start: Path) -> dict:
     d = start.resolve()
     d = d if d.is_dir() else d.parent
     for p in [d, *d.parents]:
-        for name in ("structfig.json", "figpilot.json"):   # figpilot.json has the same keys
-            if (p / name).exists():
-                return json.loads((p / name).read_text(encoding="utf-8"))
+        if (p / "molecullage.json").exists():
+            return json.loads((p / "molecullage.json").read_text(encoding="utf-8"))
     return {}
 
 
@@ -68,7 +67,11 @@ def largest_empty_rect(empty: np.ndarray) -> int:
 
 
 def png_metrics(png: Path) -> dict:
-    im = np.asarray(Image.open(png).convert("RGB")).astype(np.uint8)
+    return array_metrics(np.asarray(Image.open(png).convert("RGB")).astype(np.uint8))
+
+
+def array_metrics(im: np.ndarray) -> dict:
+    """The four raster marks of an RGB uint8 array (qa/audit_raster.py reuses this)."""
     H, W, _ = im.shape
     dark235 = (im < 235).any(axis=2)
     gh, gw = H // 12, W // 20
@@ -86,7 +89,7 @@ def png_metrics(png: Path) -> dict:
 
 
 def pdf_metrics(pdf: Path) -> dict:
-    import fitz
+    import pymupdf as fitz
 
     doc = fitz.open(pdf)
     p = doc[0]
@@ -152,7 +155,7 @@ def run(target: str, outdir: str | None = None, strictness: str | None = None, k
 def line(r: dict) -> str:
     ms = r["marks"]
     cols = " ".join(f"{n} {ms[n]['value']}{UNIT.get(n, '')} {ms[n]['status']}" for n in ("ink", "cells", "band", "blank", "type", "render", "words") if n in ms and ms[n]["value"] is not None)
-    return f"structfig QA {r['key']} [{r['strictness']}]: {'ok' if r['ok'] else 'FAIL'} | {cols}" + ("" if not r["failures"] else " | " + "; ".join(r["failures"]))
+    return f"Molecullage QA {r['key']} [{r['strictness']}]: {'ok' if r['ok'] else 'FAIL'} | {cols}" + ("" if not r["failures"] else " | " + "; ".join(r["failures"]))
 
 
 def main(argv=None) -> int:

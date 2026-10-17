@@ -1,4 +1,4 @@
-/* structfig kit, block grammar of a stage-coded pipeline figure: tool blocks, data pills, stage strips, step badges.
+/* Molecullage kit, block grammar of a stage-coded pipeline figure: tool blocks, data pills, stage strips, step badges.
    Loaded after kit.js by build.mjs. Coordinates in millimetres, origin bottom-left (y up), as in kit.js. Text colour on dark families comes from the tokens CSS.
      f.tool({x,y,w,h,title,sub,fam,dashed,repeat})  saturated block with a bold name and one plain line; repeat: n draws n-1 offset copies behind it and a x n badge
      f.pill({x,y,w,h,text,sub,fam,dashed})            rounded data object (pale family): what flows between the blocks

@@ -1,0 +1,10 @@
+{
+  "strictness": "normal",
+  "palette": "tokens/tokens.base.json",
+  "widthMm": [178, 89],
+  "review": "blind",
+  "claimBoundary": "Deposited structure PDB 1MEL; values computed from the coordinate file.",
+  "art": "molecullage/art",
+  "autotrigger": true,
+  "ignore": ["before", "after"]
+}

@@ -1,9 +1,9 @@
-/* structfig kit. Coordinates are millimetres, origin bottom-left, like a plotting canvas.
+/* Molecullage kit. Coordinates are millimetres, origin bottom-left, like a plotting canvas.
    Cards are HTML (real text layout, Tabler icon SVGs); connectors are one SVG overlay.
    Usage: const f = new Fig(document.getElementById('fig'), 100, 92, { svgTop: true });
           f.module({x,y,w,h,title,sub:[...],icon:'database',fam:'indigo',dashed:false});
           f.route([[x,y],...],{dashed}); f.plus(x,y); f.dot(x,y); f.bracket(x,y0,y1,'x N'); f.label(x,y,'text');
-          f.boundary('one-line claim boundary');   // no argument: the claimBoundary of structfig.json
+          f.boundary('one-line claim boundary');   // no argument: the claimBoundary of molecullage.json
    Family names (fam:) come from the token file; see docs/palette.md. */
 (function () {
   const NS = 'http://www.w3.org/2000/svg';
@@ -65,7 +65,7 @@
       }
       return id;
     }
-    // The claim-boundary line: one short line at the bottom edge, in the floor size. Text defaults to structfig.json "claimBoundary".
+    // The claim-boundary line: one short line at the bottom edge, in the floor size. Text defaults to molecullage.json "claimBoundary".
     boundary(text, { x = 1.5, color = 'var(--sub)' } = {}) {
       const s = text || (window.CONFIG || {}).claimBoundary || '';
       if (s) this.label(x, 1.6, s, { fs: (window.CONFIG || {}).floorPt || 6.55, color });

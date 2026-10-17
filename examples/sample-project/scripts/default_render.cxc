@@ -1,0 +1,6 @@
+# The poor structure figure: ChimeraX with its default look, as a screenshot of the window.
+# Run from examples/sample-project:  ChimeraX --nostatus --script scripts/default_render.cxc
+open ../../data/pdb/1MEL.pdb
+view
+save figures/structure.png width 960 height 620 supersample 1
+exit

@@ -33,7 +33,7 @@ def _setup() -> list[str]:
         "lines.linewidth": 0.9, "axes.spines.top": False, "axes.spines.right": False, "axes.edgecolor": LINE,
         "axes.labelcolor": INK, "text.color": INK, "xtick.color": INK, "ytick.color": INK,
         "figure.facecolor": "none", "axes.facecolor": "none", "savefig.facecolor": "none",
-        "svg.fonttype": "none", "svg.hashsalt": "structfig", "pdf.fonttype": 42,
+        "svg.fonttype": "none", "svg.hashsalt": "molecullage", "pdf.fonttype": 42,
         "mathtext.fontset": "custom", "mathtext.rm": fams[0], "mathtext.it": fams[0] + ":italic", "mathtext.bf": fams[0] + ":bold",
     })
     return fams

@@ -3,7 +3,7 @@
 //   node build/build.mjs <page.html> [widthMm] [tokens.json] [--out dir] [--art dir]
 //
 // The page holds an element with class "fig" and uses the kit (Fig, f.tool, f.pill, ...). Settings come from the nearest
-// structfig.json above the page (palette, type ladder, claim boundary); arguments win over the file.
+// molecullage.json above the page (palette, type ladder, claim boundary); arguments win over the file.
 // Icons written as icon:'name' or <i data-icon="name"></i> are inlined from @tabler/icons (outline, MIT).
 // <!--INLINE_SVG relative/path.svg--> inlines a plot layer. Structure renders come from the art folder (struct/trim.py output).
 // A token file with meta.remapFrom recolours a page written against another palette: every family fill and edge hex is replaced.
@@ -39,12 +39,14 @@ export function assemble({ html, pageDir, tokens, cfg, tokenDir, artDir, outDir,
   html = html.replace(/<i data-icon="([\w-]+)"([^>]*)><\/i>/g, (_, icon, rest) => `<span class="ic"${rest}>${svgOf(iconDir, icon)}</span>`);
   html = html.replace(/<!--INLINE_SVG ([^>]+?)-->/g, (_, p) => {
     const f = path.resolve(pageDir, p.trim());
+    if (!/\.svg$/i.test(f)) throw new Error(`INLINE_SVG takes an .svg file: ${p.trim()}`);
     if (!fs.existsSync(f)) throw new Error(`INLINE_SVG not found: ${p.trim()}`);
     const s = read(f).replace(/<\?xml[^>]*\?>\s*/g, '').replace(/<!DOCTYPE[^>]*>\s*/g, '');
     return `<div class="plots" style="position:absolute;left:0;top:0;pointer-events:none">${s}</div>`;
   });
   html = html.replace(/<!--INLINE_JS ([^>]+?)-->/g, (_, p) => {   // a data file the page reads (window.DATA = ...), path relative to the page
     const f = path.resolve(pageDir, p.trim());
+    if (!/\.js$/i.test(f)) throw new Error(`INLINE_JS takes a .js file: ${p.trim()}`);
     if (!fs.existsSync(f)) throw new Error(`INLINE_JS not found: ${p.trim()}`);
     return `<script>${read(f)}</script>`;
   });
@@ -96,12 +98,13 @@ export async function build({ page, widthMm, tokensFile, outDir, artDir }) {
   fs.writeFileSync(outHtml, html);
 
   const exe = findChrome();
-  if (!exe) throw new Error('No Chrome, Edge or Chromium found. Install one or set STRUCTFIG_CHROME to its executable.');
+  if (!exe) throw new Error('No Chrome, Edge or Chromium found. Install one or set MOLECULLAGE_CHROME to its executable.');
   const browser = await chromium.launch({ executablePath: exe, headless: true });
   try {
     const pg = await browser.newPage({ viewport: { width: Math.round(width * MM), height: 800 }, deviceScaleFactor: 600 / 96 });
     const errors = [];
     pg.on('pageerror', (e) => errors.push(String(e)));
+    await pg.route(/^(https?|wss?|ftp):/i, (r) => r.abort());   // a figure page is built offline: no request leaves the machine
     await pg.goto(pathToFileURL(outHtml).href);
     await pg.evaluate(() => document.fonts.ready);
     const box = await pg.evaluate(() => { const r = document.querySelector('.fig').getBoundingClientRect(); return { w: r.width, h: r.height }; });

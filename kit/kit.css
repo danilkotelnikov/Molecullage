@@ -1,4 +1,4 @@
-/* structfig kit styles. Type sizes come from the ladder in structfig.json (typeLadder), injected by build.mjs as --fs-* variables:
+/* Molecullage kit styles. Type sizes come from the ladder in molecullage.json (typeLadder), injected by build.mjs as --fs-* variables:
    letter 9, title 7.5, label 7, floor 6.5 (written 6.55 so that the PDF reports at least 6.5), math 8.4. Arial only. */
 :root{--fs-letter:9pt;--fs-title:7.5pt;--fs-label:7pt;--fs-floor:6.55pt;--fs-math:8.4pt;--guide:#777777;--data0:#1D397B}
 *{box-sizing:border-box}
