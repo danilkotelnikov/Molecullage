@@ -1,0 +1,27 @@
+{
+ "key": {
+  "spread": 30.0,
+  "gap": 2.4,
+  "big": 38.0,
+  "rb": 15.5,
+  "rp": 44.0,
+  "n": 433,
+  "v": 2
+ },
+ "span": 31285.520554272513,
+ "vm_rev": false,
+ "nvf_rev": false,
+ "rho": -42,
+ "order": [
+  "vfil",
+  "virion_vfil",
+  "nucleoid_vfil",
+  "none",
+  "nucleoid",
+  "virion",
+  "membrane_out",
+  "membrane_in"
+ ],
+ "crossings": 7337,
+ "crossings_alpha": 52625
+}

@@ -1,0 +1,11 @@
+# read from data.rcsb.org on 2026-10-17 (fetch_data.py); labels only
+pdb_id,title,first_release
+6RFL,Structure of the complete Vaccinia DNA-dependent RNA polymerase complex,2019-12-11
+7AMV,Atomic structure of the poxvirus transcription pre-initiation complex in the initially melted state,2021-10-06
+8Q3K,The open state of the ASFV apo-RNA polymerase,2024-02-14
+7UND,Pol II-DSIF-SPT6-PAF1c-TFIIS-nucleosome complex (stalled at +38),2022-10-19
+7NVU,RNA polymerase II core pre-initiation complex with open promoter DNA,2021-05-05
+7ENA,TFIID-based PIC-Mediator holo-complex in pre-assembled state (pre-hPIC-MED),2021-05-26
+7DVQ,Cryo-EM Structure of the Activated Human Minor Spliceosome (minor Bact Complex),2021-03-31
+7A09,Structure of a human ABCE1-bound 43S pre-initiation complex - State III,2020-10-14
+6ZJ3,Cryo-EM structure of the highly atypical cytoplasmic ribosome of Euglena gracilis,2020-10-07

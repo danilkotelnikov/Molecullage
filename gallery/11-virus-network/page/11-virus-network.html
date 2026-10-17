@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>11-virus-network</title></head><body>
+<!--INLINE_JS layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG layer.svg--></div></div>
+<script>
+// Redesign of Fig. 3 of Safi et al. 2026, The EMBO Journal. matplotlib (src/make_layer.py) draws spokes, dots, strips, nodes, bars, cells, rings as one SVG layer;
+// this page draws every text at the millimetre position in window.DATA (top-down, origin top-left) and, at the end, measures the rendered page:
+// checkAlign() throws one Error that lists every anchor, node, leader end or column that is off its computed position by more than TOL (0.25 mm).
+const D = window.DATA, W = D.W, H = D.H, TOL = D.TOL;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const REC = {}, LAB = {};
+D.labels.forEach((L) => { LAB[L.id] = L; REC[L.id] = f.rich(L.x, Tp(L.t), L.s, { fs: L.fs, ha: L.ha, bold: L.bold, color: L.color }); REC[L.id].style.lineHeight = '1'; if (L.bg) { REC[L.id].style.background = '#fff'; REC[L.id].style.zIndex = 6; } });
+D.letters.forEach((L) => f.letter(L.ch, L.x, Tp(L.t - 1.6)));
+D.badges.forEach((b) => f.badge({ x: b.x, y: Tp(b.t), n: b.n, fam: 'grey', r: 1.5 }));
+</script>
+<script>
+// badge elements, in the order of D.badges (the document order is the creation order)
+const badgeEls = [...document.querySelectorAll('.badge')];
+
+// ================================================================ alignment checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [];
+  const near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const svgEl = (id) => { const e = document.getElementById(id); if (!e) { fails.push('missing layer element ' + id); return null; } return M(e); };
+  // 1. every label sits on its anchor: left, right or centre edge on x, vertical centre on t
+  const m = {};
+  Object.entries(REC).forEach(([k, el]) => { m[k] = M(el); const L = LAB[k], e = m[k];
+    near(L.ha === 'left' ? e.l : L.ha === 'right' ? e.r : e.cx, L.x, `label ${k}: anchor x`, 0.3); near(e.cy, L.t, `label ${k}: anchor row`, 0.5); });
+  // 2. nodes, cells, bars, swatches, leaders on the numbers DATA computed
+  D.checks.forEach((c) => {
+    if (c.badge !== undefined) return;
+    const e = svgEl(c.gid); if (!e) return; const tol = c.tol || TOL;
+    if (c.box) { near(e.l, c.box[0], `${c.gid}: left`, tol); near(e.r, c.box[1], `${c.gid}: right`, tol); near(e.t, c.box[2], `${c.gid}: top`, tol); near(e.b, c.box[3], `${c.gid}: bottom`, tol); return; }
+    if (c.cx !== null && c.cx !== undefined) near(e.cx, c.cx, `${c.gid}: centre x`, tol);
+    if (c.t !== null && c.t !== undefined) near(e.cy, c.t, `${c.gid}: centre row`, tol);
+    if (c.l !== null && c.l !== undefined) near(e.l, c.l, `${c.gid}: left edge`, tol);
+    if (c.r !== null && c.r !== undefined) near(e.r, c.r, `${c.gid}: right edge`, tol);
+  });
+  D.badges.forEach((b, i) => { const e = M(badgeEls[i]); near(e.cx, b.x, `badge ${b.n}: x`); near(e.cy, b.t, `badge ${b.n}: row`); });
+  // 3. bait names on their nodes, bar numbers in three columns, matrix numbers in cell centres
+  D.labels.filter((L) => L.ref).forEach((L) => { const e = svgEl(L.ref), t = m[L.id]; if (e && t) { near(t.cx, e.cx, `${L.id}: centred on ${L.ref}`, 0.3); near(t.cy, e.cy, `${L.id}: row of ${L.ref}`, 0.5); } });
+  D.labels.filter((L) => L.refx).forEach((L) => { const e = svgEl(L.refx), t = m[L.id]; if (e && t) near(t.cx, e.cx, `${L.id}: centred on ${L.refx}`, 0.3); });
+  const colx = {}; D.labels.filter((L) => /^b-num-/.test(L.id)).forEach((L) => { (colx[L.x.toFixed(2)] = colx[L.x.toFixed(2)] || []).push(m[L.id].r); });
+  Object.entries(colx).forEach(([x, arr]) => arr.forEach((r) => near(r, +x, `bar numbers: column ${x}`, 0.3)));
+  // 4. bait-to-bait lines (measured on the rendered paths) keep 1.5 mm from the edge of every bait that is not one of their two ends
+  D.bblinks.forEach((q) => {
+    const p = document.getElementById(q.gid).querySelector('path'), len = p.getTotalLength(), ctm = p.getScreenCTM(), svg = p.ownerSVGElement;
+    const centres = {}; Object.keys(D.bait_ids).forEach((b) => { const e = svgEl('bait_' + b); centres[b] = [e.cx, e.cy]; });
+    let dmin = 1e9;
+    for (let s = 0; s <= 80; s++) { const pt = p.getPointAtLength(len * s / 80), sp = svg.createSVGPoint(); sp.x = pt.x; sp.y = pt.y; const g = sp.matrixTransform(ctm), x = (g.x - o.left) * K, t = (g.y - o.top) * K;
+      Object.entries(centres).forEach(([b, c]) => { if (b !== q.a && b !== q.b) dmin = Math.min(dmin, Math.hypot(x - c[0], t - c[1])); }); }
+    if (dmin < D.node_d / 2 + 1.5 - 0.05) fails.push(`bait link ${q.a}-${q.b} passes ${dmin.toFixed(2)} mm from the centre of another bait (needs ${D.node_d / 2 + 1.5})`);
+  });
+  // 5. no text on text, no text on a badge, nothing within 1 mm of the page edge
+  const T = [...Object.entries(m).map(([k, e]) => [k, e]), ...badgeEls.map((el, i) => ['badge' + i, M(el)])];
+  for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) { const a = T[i][1], b = T[j][1], pad = 0.06;
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${T[i][0]} and ${T[j][0]}`); }
+  T.forEach(([k, e]) => { if (e.l < 1.0 || e.t < 1.0 || e.r > W - 1.0 || e.b > H - 0.8) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

@@ -1,0 +1,12 @@
+# a bait found in the pull-down of another bait (Fig. 3B direct connections), directed: first column pulled down the second; computed from Zenodo 10.5281/zenodo.17313812 (Mimivirus_coip_fun_categories.cys, Merged Network_3) by src/derive.py
+bait,found_bait
+L323,R387
+L323,R443
+L323,L330
+R443,L323
+R443,R387
+R443,R595
+R595,R443
+R595,R387
+R252,L274
+R252,L410

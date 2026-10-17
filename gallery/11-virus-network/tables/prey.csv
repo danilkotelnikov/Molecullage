@@ -1,0 +1,435 @@
+# one row per prey protein (433), computed from Zenodo 10.5281/zenodo.17313812 (Mimivirus_coip_fun_categories.cys, Merged Network_3) by src/derive.py
+id,short,organism,region,membrane_tmd,function,baits,n_baits,subnetworks,pdb_complexes,annotation
+AccaoMp04,AccaoMp04,viral,none,0,,R561,1,NVF,,-
+BAESF_00044.mRNA.1,00044,host,vfil,0,,R252,1,NVF,,Protein HGH1 homolog UniRef50_L8H6S9
+BAESF_00104.mRNA.1,00104,host,vfil,0,,R252,1,NVF,7a09,Elongation factor Tu UniRef50_A0A498IQ37
+BAESF_00115.mRNA.1,00115,host,none,0,,R561,1,NVF,,Histone H3 UniRef50_A0A0D3B0H1
+BAESF_00163.mRNA.1,00163,host,none,0,,L274,1,NVF,,Endoplasmic reticulum-Golgi intermediate compartment protein 3 UniRef50_Q803I2
+BAESF_00169.mRNA.1,00169,host,none,0,,L330;L274,2,NVF+VM,,protein disulfide-isomerase UniRef50_L8H2W3
+BAESF_00176.mRNA.1,00176,host,vfil,0,,R252,1,NVF,,Mitochondrial glycoprotein UniRef50_L8GDW2
+BAESF_00186.mRNA.1,00186,host,none,0,,L274,1,NVF,,Protein disulfideisomerase domain containing protein UniRef50_L8GE28
+BAESF_00212.mRNA.1,00212,host,none,0,,R595,1,VM,,Transmembrane protein UniRef50_L8HER2
+BAESF_00253.mRNA.1,00253,host,none,0,,R721;L410,2,NVF,,CHAT domain-containing protein UniRef50_A0A1Q3GKP1
+BAESF_00297.mRNA.1,00297,host,none,0,,R561,1,NVF,,Mitochondrial-processing peptidase subunit beta UniRef50_A7S9Y6
+BAESF_00299.mRNA.1,00299,host,none,0,,R721,1,NVF,,Dynamin domain containing protein UniRef50_L8HLM2
+BAESF_00307.mRNA.1,00307,host,vfil,0,,R252,1,NVF,,Ubiquitin carboxyl-terminal hydrolase UniRef50_L8HLL6
+BAESF_00336.mRNA.1,00336,host,none,0,,L330,1,VM,,Actophorin UniRef50_P37167
+BAESF_00351.mRNA.1,00351,host,none,0,,R721;L410,2,NVF,,
+BAESF_00412.mRNA.1,00412,host,none,0,,L274,1,NVF,,peptidylprolyl isomerase UniRef50_L8HM22
+BAESF_00453.mRNA.1,00453,host,none,0,,L330,1,VM,,AMP-dependent synthetase and ligase UniRef50_L8HIJ4
+BAESF_00588.mRNA.1,00588,host,none,0,,R561,1,NVF,,Ribosome-interacting GTPase 2 UniRef50_A0A7C8QEE6
+BAESF_00619.mRNA.1,00619,host,vfil,0,,R252,1,NVF,,T-complex protein 1 subunit delta UniRef50_Q54CL2
+BAESF_00682.mRNA.1,00682,host,none,0,,L274,1,NVF,,Peptide-methionine (R)-S-oxide reductase UniRef50_A0A061HGH2
+BAESF_00709.mRNA.1,00709,host,none,0,,R561,1,NVF,7a09;6zj3,40S ribosomal protein S8 UniRef50_A0A251V7G6
+BAESF_00765.mRNA.1,00765,host,none,0,,R561,1,NVF,6zj3,60S ribosomal L4-1 UniRef50_A0A2P6V5D7
+BAESF_00798.mRNA.1,00798,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_L8HHP1
+BAESF_00937.mRNA.1,00937,host,vfil,0,,R252,1,NVF,,
+BAESF_01057.mRNA.1,01057,host,none,0,,L274,1,NVF,,Uncharacterized protein UniRef50_L8HC66
+BAESF_01228.mRNA.1,01228,host,none,0,,R721,1,NVF,,60s Acidic ribosomal protein UniRef50_L8HCT7
+BAESF_01264.mRNA.1,01264,host,none,0,,L323,1,VM,6zj3,60S ribosomal protein L29 UniRef50_A0A9Q0H297
+BAESF_01313.mRNA.1,01313,host,none,0,,R561,1,NVF,,RNA recognition motif domain containing protein UniRef50_L8H825
+BAESF_01359.mRNA.1,01359,host,none,0,,L274,1,NVF,,DnaJ domain containing protein UniRef50_L8H8X3
+BAESF_01366.mRNA.1,01366,host,none,0,,L274,1,NVF,,"Chain a, 4ank: a designed ankyrin repeat protein UniRef50_L8H8W4"
+BAESF_01368.mRNA.1,01368,host,none,0,,R721;L410,2,NVF,,RWD domain containing protein UniRef50_L8HB44
+BAESF_01371.mRNA.1,01371,host,vfil,0,,R252,1,NVF,,
+BAESF_01394.mRNA.1,01394,host,vfil,0,,R252,1,NVF,,peptidylprolyl isomerase UniRef50_A0A9W8BI14
+BAESF_01414.mRNA.1,01414,host,vfil,0,,R252,1,NVF,,START domain-containing protein 10-like UniRef50_UPI00211F020A
+BAESF_01537.mRNA.1,01537,host,vfil,0,,R252,1,NVF,,Omethyltransferase UniRef50_L8GHV7
+BAESF_01630.mRNA.1,01630,host,none,0,,L274,1,NVF,,Glutaredoxin-C8 UniRef50_A0A443N9V1
+BAESF_01869.mRNA.1,01869,host,none,0,,L274,1,NVF,,"Dual specificity phosphatase, catalytic domain containing protein UniRef50_L8GL97"
+BAESF_01910.mRNA.1,01910,host,none,0,,L274,1,NVF,,"NADH cytochrome b reductase, putative UniRef50_L8GJL0"
+BAESF_01911.mRNA.1,01911,host,vfil,0,,R252,1,NVF,,Serine/threonine protein kinase UniRef50_L8GIW4
+BAESF_02205.mRNA.1,02205,host,vfil,0,,R252,1,NVF,7a09,S1 motif domain-containing protein UniRef50_A0A1Y2BD21
+BAESF_02309.mRNA.1,02309,host,none,0,,L274,1,NVF,,Profilin UniRef50_L8GDQ2
+BAESF_02317.mRNA.1,02317,host,none,0,,R561,1,NVF,,Nucleolar protein 56 UniRef50_A0A261Y1U7
+BAESF_02337.mRNA.1,02337,host,vfil,0,,R252,1,NVF,,EF1 guanine nucleotide exchange domain containing protein UniRef50_L8GSZ9
+BAESF_02356.mRNA.1,02356,host,none,0,,R561,1,NVF,,NEDD8-activating enzyme E1 regulatory subunit UniRef50_L8GCR5
+BAESF_02395.mRNA.1,02395,host,vfil,0,,R252,1,NVF,,Myosin head (Motor domain) domain containing protein UniRef50_L8GSY9
+BAESF_02419.mRNA.1,02419,host,none,0,,R721,1,NVF,,"Prefoldin subunit 2, putative UniRef50_L8GFE5"
+BAESF_02440.mRNA.1,02440,host,none,0,,L274,1,NVF,,Legumelike lectin family protein UniRef50_L8GDX5
+BAESF_02487.mRNA.1,02487,host,vfil,0,,R252,1,NVF,,DNA 3'phosphatase UniRef50_L8HIQ5
+BAESF_02505.mRNA.1,02505,host,none,0,,R721,1,NVF,,RhoGEF domain containing protein UniRef50_L8H1S4
+BAESF_02515.mRNA.1,02515,host,vfil,0,,R252,1,NVF,6zj3,40S ribosomal protein S10 UniRef50_A0A2B4SAA1
+BAESF_02624.mRNA.1,02624,host,vfil,0,,R252;R721;L410,3,NVF,7a09,Domain found in if2b/if5 domain containing protein UniRef50_L8GZJ8
+BAESF_02722.mRNA.1,02722,host,vfil,0,,R252,1,NVF,,LIM domain containing protein UniRef50_L8HHL9
+BAESF_02724.mRNA.1,02724,host,none,0,,R561,1,NVF,,Histone H4 UniRef50_A0A6P3GP69
+BAESF_02725.mRNA.1,02725,host,none,0,,R561,1,NVF,6zj3,Large ribosomal subunit protein uL15 UniRef50_Q6P2M0
+BAESF_02752.mRNA.1,02752,host,none,0,,L274,1,NVF,7dvq,GPI-GlcNAc transferase complex PIG-H component conserved domain-containing protein UniRef50_A0A7R9BK76
+BAESF_02811.mRNA.1,02811,host,none,0,,L274,1,NVF,,N-acetylglucosamine-1-phosphate transferase UniRef50_A0A0D2VFF6
+BAESF_02837.mRNA.1,02837,host,none,0,,L274,1,NVF,,
+BAESF_02870.mRNA.1,02870,host,none,0,,R561,1,NVF,,Subtilisin-like serine proteinase UniRef50_Q9NHN3
+BAESF_02931.mRNA.1,02931,host,none,0,,R561,1,NVF,,S-adenosylmethionine decarboxylase proenzyme UniRef50_L8GRS6
+BAESF_02939.mRNA.1,02939,host,none,0,,L274,1,NVF,,Calcium binding egf domain containing protein UniRef50_L8GSC1
+BAESF_03072.mRNA.1,03072,host,vfil,0,,R252,1,NVF,,Pyruvate carboxylase UniRef50_A0A8B7PN64
+BAESF_03135.mRNA.1,03135,host,none,0,,R561,1,NVF,,rRNA 2'-O-methyltransferase fibrillarin UniRef50_A9TM73
+BAESF_03143.mRNA.1,03143,host,none,0,,R721,1,NVF,,V-type proton ATPase subunit G UniRef50_L8H9M3
+BAESF_03171.mRNA.1,03171,host,vfil,0,,R252;R721,2,NVF,,Threonyl/alanyl tRNA synthetase SAD domain-containing protein UniRef50_A0A8J4V1F8
+BAESF_03173.mRNA.1,03173,host,none,0,,L330;R561,2,NVF+VM,,Major vault protein alpha UniRef50_P34118
+BAESF_03183.mRNA.1,03183,host,vfil,0,,R252,1,NVF,,IPT/TIG domain-containing protein UniRef50_A0A2P6NWU3
+BAESF_03184.mRNA.1,03184,host,vfil,0,,R252,1,NVF,7dvq,Vesicle docking family protein (Fragment) UniRef50_L8GJF5
+BAESF_03198.mRNA.1,03198,host,vfil,0,,R252,1,NVF,,"Fidipidine, putative (Fragment) UniRef50_L8GID5"
+BAESF_03238.mRNA.1,03238,host,none,0,,L330,1,VM,7dvq,N-acetyltransferase domain-containing protein UniRef50_A0A0D6R3U3
+BAESF_03257.mRNA.1,03257,host,none,0,,R561,1,NVF,,
+BAESF_03263.mRNA.1,03263,host,none,0,,L274,1,NVF,,ERp19 domain containing protein UniRef50_L8HCQ3
+BAESF_03277.mRNA.1,03277,host,vfil,0,,R252,1,NVF,,Translation initiation factor IF-3 UniRef50_A0A0S8E995
+BAESF_03280.mRNA.1,03280,host,vfil,0,,R252,1,NVF,,
+BAESF_03333.mRNA.1,03333,host,none,0,,R561,1,NVF,,START domain containing protein UniRef50_L8HDV7
+BAESF_03425.mRNA.1,03425,host,none,0,,R721,1,NVF,6zj3,"Zinc finger, zz type domain containing protein UniRef50_L8GS84"
+BAESF_03472.mRNA.1,03472,host,none,0,,L274,1,NVF,,Endoplasmic reticulum oxidoreductin-1 UniRef50_Q54IC1
+BAESF_03635.mRNA.1,03635,host,none,0,,R561,1,NVF,,Casein kinase II subunit alpha-2 UniRef50_Q08466
+BAESF_03652.mRNA.1,03652,host,vfil,0,,R252,1,NVF,7dvq,Coatomer subunit beta UniRef50_A0A7I8LIK1
+BAESF_03712.mRNA.1,03712,host,none,0,,R561,1,NVF,,RNA helicase UniRef50_M2PRF8
+BAESF_03811.mRNA.1,03811,host,none,0,,R721,1,NVF,,LIM zinc-binding domain-containing protein UniRef50_L8GP44
+BAESF_03882.mRNA.1,03882,host,none,0,,L323,1,VM,,dolichyl-phosphate-mannose--protein mannosyltransferase UniRef50_A0A0L0G360
+BAESF_03899.mRNA.1,03899,host,none,0,,R561,1,NVF,,60S ribosomal protein L32 UniRef50_A0A6P5JRL1
+BAESF_03961.mRNA.1,03961,host,vfil,0,,R252,1,NVF,,Ankyrin repeat-containing protein UniRef50_L8GIW9
+BAESF_04113.mRNA.1,04113,host,none,0,,R561,1,NVF,,Tyrosine-protein kinase ephrin type A/B receptor-like domain-containing protein UniRef50_L8H225
+BAESF_04159.mRNA.1,04159,host,none,0,,R561,1,NVF,6zj3,60S ribosomal protein L17-2 UniRef50_W9S0F4
+BAESF_04200.mRNA.1,04200,host,vfil,0,,R252,1,NVF,,Nin one binding (NOB1) Zn-ribbon family protein UniRef50_L8H2I1
+BAESF_04427.mRNA.1,04427,host,none,0,,R561,1,NVF,,Prismane cluster-containing protein (Fragment) UniRef50_Q27PT1
+BAESF_04499.mRNA.1,04499,host,vfil,0,,R252,1,NVF,,HECT-type E3 ubiquitin transferase UniRef50_L8H3W1
+BAESF_04568.mRNA.1,04568,host,none,0,,R721;L410,2,NVF,,EF hand domain containing protein UniRef50_L8H4N4
+BAESF_04600.mRNA.1,04600,host,vfil,0,,R252,1,NVF,,non-specific serine/threonine protein kinase UniRef50_L8H5U8
+BAESF_04605.mRNA.1,04605,host,vfil,0,,R252,1,NVF,,Hyaluronan / mrna binding family protein UniRef50_L8H3M3
+BAESF_04641.mRNA.1,04641,host,none,0,,L274,1,NVF,,peptide-methionine (S)-S-oxide reductase UniRef50_A0A1Q5SS66
+BAESF_04690.mRNA.1,04690,host,vfil,0,,R252,1,NVF,,Tetratricopeptide repeat domain containing protein UniRef50_L8H686
+BAESF_04743.mRNA.1,04743,host,none,0,,R721;L410,2,NVF,,COMM domain-containing protein UniRef50_L8H411
+BAESF_04802.mRNA.1,04802,host,vfil,0,,R252,1,NVF,,Eukaryotic translation initiation factor 3 subunit 1like protein UniRef50_L8HGU2
+BAESF_04809.mRNA.1,04809,host,vfil,0,,R252,1,NVF,,Alpha-ketoglutarate-dependent dioxygenase AlkB-like domain-containing protein UniRef50_A0A6B2LB70
+BAESF_04827.mRNA.1,04827,host,vfil,0,,R252,1,NVF,,Ribosomal protein l7/l12 cterminal domain containing protein UniRef50_L8HHG6
+BAESF_04841.mRNA.1,04841,host,vfil,0,,R252,1,NVF,,C2 calcium/lipidbinding (CaLB) region-containing protein UniRef50_L8HF58
+BAESF_04920.mRNA.1,04920,host,vfil,0,,R252;R721,2,NVF,,FYVE zinc finger domain/Ankyrin repeatcontaining protein UniRef50_L8HM44
+BAESF_05012.mRNA.1,05012,host,none,0,,L274,1,NVF,,Flavocytochrome c subfamily protein UniRef50_L8HEV0
+BAESF_05046.mRNA.1,05046,host,vfil,0,,R252,1,NVF,,U2A'/phosphoprotein 32 family A C-terminal domain-containing protein UniRef50_A0A068TQR7
+BAESF_05086.mRNA.1,05086,host,vfil,0,,R252,1,NVF,,
+BAESF_05233.mRNA.1,05233,host,vfil,0,,R252,1,NVF,,"Homoserine kinase, putative UniRef50_L8GH67"
+BAESF_05256.mRNA.1,05256,host,vfil,0,,R252,1,NVF,,Actobindin UniRef50_P18281
+BAESF_05327.mRNA.1,05327,host,vfil,0,,R252,1,NVF,,"Phosphate ABC transporter, putative UniRef50_L8HDX0"
+BAESF_05382.mRNA.1,05382,host,vfil,0,,R252,1,NVF,,Poly [ADP-ribose] polymerase UniRef50_L8GYJ3
+BAESF_05469.mRNA.1,05469,host,none,0,,R561,1,NVF,,"Oxysterolbinding protein-like protein 8 isoform b, putative UniRef50_L8GK41"
+BAESF_05494.mRNA.1,05494,host,none,0,,R561,1,NVF,,Eukaryotic translation initiation factor 3 subunit I UniRef50_A0A261Y2Y0
+BAESF_05511.mRNA.1,05511,host,none,0,,L274,1,NVF,,DnaJ homolog subfamily C member 16 UniRef50_L8H437
+BAESF_05597.mRNA.1,05597,host,none,0,,R721;L410,2,NVF,,Talin-B UniRef50_Q54K81
+BAESF_05640.mRNA.1,05640,host,none,0,,R561,1,NVF,,HMA domain-containing protein UniRef50_A0A0D2VPF7
+BAESF_05685.mRNA.1,05685,host,none,0,,L274,1,NVF,,Dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit 1 UniRef50_A0A8B8B998
+BAESF_05782.mRNA.1,05782,host,vfil,0,,R252,1,NVF,,Universal stress domain containing protein UniRef50_L8H061
+BAESF_05808.mRNA.1,05808,host,none,0,,R561,1,NVF,6zj3,40S ribosomal protein S15a UniRef50_A0A3M6TYB3
+BAESF_05824.mRNA.2,BAESF_05824.mRNA.2,host,none,0,,L274,1,NVF,,"Glutaredoxin, putative UniRef50_L8GXM1"
+BAESF_05889.mRNA.1,05889,host,vfil,0,,R252,1,NVF,,60S ribosomal export protein NMD3 UniRef50_A0A2Z6RZA5
+BAESF_05903.mRNA.1,05903,host,vfil,0,,R252,1,NVF,,CYFIP-related Rac1 interactor homolog UniRef50_Q8T2H0
+BAESF_05982.mRNA.1,05982,host,none,0,,R561,1,NVF,7a09;6zj3,Large ribosomal subunit protein eL30 UniRef50_A0A6P8GXA6
+BAESF_06067.mRNA.1,06067,host,none,0,,L274,1,NVF,,Glia maturation factor family protein UniRef50_L8GY68
+BAESF_06190.mRNA.1,06190,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_A0A9D5DBD3
+BAESF_06220.mRNA.1,06220,host,vfil,0,,R252,1,NVF,,Transmembrane protein UniRef50_L8GXQ2
+BAESF_06227.mRNA.1,06227,host,none,0,,L274,1,NVF,,4Fe4S ferredoxin iron-sulfur binding domain containing protein UniRef50_L8GYZ7
+BAESF_06283.mRNA.1,06283,host,none,0,,L274,1,NVF,,MIR domain containing protein UniRef50_L8GVK6
+BAESF_06317.mRNA.1,06317,host,none,0,,R561,1,NVF,6zj3,60S ribosomal protein L13 UniRef50_L8GVI2
+BAESF_06338.mRNA.1,06338,host,vfil,0,,R252;L274,2,NVF,,"Heat shock protein gp96, putative UniRef50_L8GXB7"
+BAESF_06351.mRNA.1,06351,host,none,0,,L274,1,NVF,,Uncharacterized protein UniRef50_L8GYM0
+BAESF_06352.mRNA.1,06352,host,none,0,,R387;R721;L410,3,NVF+VM,,SCF ubiquitin ligase complex protein SKP1b UniRef50_Q557E4
+BAESF_06430.mRNA.1,06430,host,vfil,0,,R252,1,NVF,,"Phosphatase, putative UniRef50_L8GW34"
+BAESF_06582.mRNA.1,06582,host,none,0,,L274,1,NVF,,DnaK family superfamily protein UniRef50_L8HI09
+BAESF_06602.mRNA.1,06602,host,none,0,,R443,1,VM,,V-type proton ATPase subunit a UniRef50_A0A2P6NQ44
+BAESF_06607.mRNA.1,06607,host,none,0,,R561,1,NVF,6zj3,Ribosomal protein L19 UniRef50_A0A804HMP4
+BAESF_06637.mRNA.1,06637,host,vfil,0,,R252,1,NVF,,GTP-binding protein Rheb homolog UniRef50_Q550Q4
+BAESF_06646.mRNA.1,06646,host,vfil,0,,R252,1,NVF,,"Syntaxin protein, putative UniRef50_L8HHV3"
+BAESF_06653.mRNA.1,06653,host,none,0,,R561,1,NVF,,"Zinc finger, C3HC4 type (RING finger) domain containing protein UniRef50_L8HHW8"
+BAESF_06681.mRNA.1,06681,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_L8HK36
+BAESF_06698.mRNA.1,06698,host,none,0,,R561,1,NVF,,Serine/threonine-protein phosphatase UniRef50_A0A2P6NS61
+BAESF_06744.mRNA.1,06744,host,vfil,0,,R252,1,NVF,,Poly [ADP-ribose] polymerase UniRef50_L8HJY8
+BAESF_06778.mRNA.1,06778,host,none,0,,R721;L410,2,NVF,,carbonyl reductase (NADPH) UniRef50_L8HHL8
+BAESF_06809.mRNA.1,06809,host,vfil,0,,R252,1,NVF,,Diacylglycerol kinase UniRef50_L8HIX5
+BAESF_06845.mRNA.1,06845,host,vfil,0,,R252,1,NVF,,NAD binding oxidoreductase UniRef50_L8HHD0
+BAESF_06870.mRNA.1,06870,host,none,0,,R721,1,NVF,,"COMM domain containing protein 8, putative UniRef50_L8HGA6"
+BAESF_06994.mRNA.1,06994,host,vfil,0,,R252,1,NVF,,DNA repair protein RAD51 homolog 1 UniRef50_Q06609
+BAESF_07113.mRNA.1,07113,host,none,0,,R561,1,NVF,,TolAlike protein UniRef50_L8H5F3
+BAESF_07138.mRNA.1,07138,host,none,0,,L274,1,NVF,,SnoaL-like domain-containing protein UniRef50_L8H4J9
+BAESF_07147.mRNA.1,07147,host,none,0,,R561,1,NVF,,14-3-3 protein epsilon UniRef50_A0A8S1CQ93
+BAESF_07159.mRNA.1,07159,host,none,0,,R721,1,NVF,,YEATS family protein UniRef50_A0A9Q8SHK9
+BAESF_07417.mRNA.1,07417,host,none,0,,R561,1,NVF,,Uncharacterized protein UniRef50_A0A9P6PH26
+BAESF_07487.mRNA.1,07487,host,vfil,0,,R252,1,NVF,,WH2 domain-containing protein UniRef50_L8HAS1
+BAESF_07558.mRNA.1,07558,host,vfil,0,,R252,1,NVF,,Bifunctional purine synthesis protein purC/E UniRef50_Q54QE4
+BAESF_07614.mRNA.1,07614,host,vfil,0,,R252,1,NVF,,protein acetyllysine N-acetyltransferase UniRef50_L8HF60
+BAESF_07825.mRNA.1,07825,host,none,0,,R561,1,NVF,,inorganic diphosphatase UniRef50_L8GQA5
+BAESF_07884.mRNA.1,07884,host,vfil,0,,R252,1,NVF,7dvq,MIF4G domain containing protein UniRef50_L8GQI1
+BAESF_07951.mRNA.1,07951,host,none,0,,R561,1,NVF,7a09,Eukaryotic translation initiation factor 3 subunit A UniRef50_L8GSV9
+BAESF_07957.mRNA.1,07957,host,vfil,0,,R252,1,NVF,,Complex 1 LYR protein domain-containing protein UniRef50_A0A507CBC0
+BAESF_07993.mRNA.1,07993,host,none,0,,R561,1,NVF,,WASH complex subunit 5 UniRef50_Q54IR8
+BAESF_08026.mRNA.1,08026,host,none,0,,R561,1,NVF,,FI19310p1 UniRef50_Q8IRH1
+BAESF_08072.mRNA.1,08072,host,vfil,0,,R252,1,NVF,,
+BAESF_08099.mRNA.1,08099,host,vfil,0,,R252,1,NVF,,RNA recognition motif domain containing protein UniRef50_L8H0M8
+BAESF_08147.mRNA.1,08147,host,none,0,,R561,1,NVF,,"Oxidoreductase, short chain dehydrogenase/reductase superfamily protein UniRef50_L8H980"
+BAESF_08209.mRNA.1,08209,host,none,0,,R561,1,NVF,,Hydroxylamine reductase UniRef50_A0A660Y9K0
+BAESF_08348.mRNA.1,08348,host,vfil,0,,R252,1,NVF,,CS domain containing protein (Fragment) UniRef50_L8GMZ3
+BAESF_08371.mRNA.1,08371,host,vfil,0,,R252,1,NVF,7a09,PCI domain containing protein UniRef50_L8GQR2
+BAESF_08509.mRNA.1,08509,host,none,0,,L274,1,NVF,,Selenoprotein F UniRef50_L8GQW0
+BAESF_08603.mRNA.1,08603,host,none,0,,L274,1,NVF,,Anchor domain containing protein UniRef50_L8GJG1
+BAESF_08613.mRNA.1,08613,host,none,0,,L330;L274,2,NVF+VM,,Protein disulfide-isomerase UniRef50_L8GH71
+BAESF_08616.mRNA.1,08616,host,none,0,,L274,1,NVF,,Protein disulfide-isomerase UniRef50_L8GGX4
+BAESF_08658.mRNA.1,08658,host,vfil,0,,R252,1,NVF,,BTB/POZ domain containing protein UniRef50_L8GHB1
+BAESF_08748.mRNA.1,08748,host,vfil,0,,R252,1,NVF,,SPRY domain containing protein UniRef50_L8GXZ5
+BAESF_08783.mRNA.1,08783,host,none,0,,R561,1,NVF,,Small ribosomal subunit protein uS7c UniRef50_K3XM55
+BAESF_08793.mRNA.1,08793,host,none,0,,L274,1,NVF,,Protein disulfideisomerase domain containing protein UniRef50_L8HC71
+BAESF_08830.mRNA.1,08830,host,none,0,,R561,1,NVF,,Actin-related protein 2/3 complex subunit 3 UniRef50_L8HDC1
+BAESF_08850.mRNA.1,08850,host,none,0,,R595,1,VM,,Thioredoxin domain containing protein UniRef50_L8HEB1
+BAESF_08934.mRNA.1,08934,host,vfil,0,,R252,1,NVF,,Choline/Carnitine oacyltransferase superfamily protein UniRef50_L8GJ57
+BAESF_09043.mRNA.1,09043,host,none,0,,R561,1,NVF,,"Phosphoinositide 3kinase family, accessory domain (Pik domain) domain containing protein UniRef50_L8H982"
+BAESF_09090.mRNA.1,09090,host,none,0,,L274,1,NVF,,"Glycosyltransferase, group 1 domain containing protein UniRef50_L8H7W7"
+BAESF_09207.mRNA.1,09207,host,none,0,,L274,1,NVF,,Uncharacterized protein UniRef50_L8HAI4
+BAESF_09254.mRNA.1,09254,host,none,0,,L274,1,NVF,,Transmembrane protein UniRef50_L8H8C0
+BAESF_09338.mRNA.1,09338,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_L8GJK0
+BAESF_09472.mRNA.1,09472,host,vfil,0,,R252,1,NVF,,"TNF receptor-associated protein 1, putative UniRef50_L8H601"
+BAESF_09547.mRNA.1,09547,host,vfil,0,,R252,1,NVF,,G domain-containing protein UniRef50_L8H6E0
+BAESF_09595.mRNA.1,09595,host,vfil,0,,R252,1,NVF,,Formin domain containing protein UniRef50_L8H6I2
+BAESF_09664.mRNA.1,09664,host,vfil,0,,R252,1,NVF,,"Presequence protease, mitochondrial UniRef50_A0A6P5ANN6"
+BAESF_09800.mRNA.1,09800,host,vfil,0,,R252,1,NVF,,Calponin domain containing protein UniRef50_L8GTR4
+BAESF_09807.mRNA.1,09807,host,none,0,,R561,1,NVF,,SRPBCC family protein UniRef50_L8GUW6
+BAESF_09824.mRNA.1,09824,host,vfil,0,,R252,1,NVF,,T-complex protein 1 subunit beta UniRef50_Q54ES9
+BAESF_09846.mRNA.1,09846,host,none,0,,L330,1,VM,,Nuclease domain containing protein UniRef50_L8GSF0
+BAESF_09847.mRNA.1,09847,host,none,0,,R721,1,NVF,,Dynamin-binding protein UniRef50_A0A0B7NG94
+BAESF_09946.mRNA.1,09946,host,vfil,0,,R252,1,NVF,,10 kDa chaperonin UniRef50_A0A6V2QIY9
+BAESF_10160.mRNA.1,10160,host,none,0,,L274,1,NVF,7dvq,peptidylprolyl isomerase UniRef50_A0A2P6NGQ5
+BAESF_10161.mRNA.1,10161,host,none,0,,R561,1,NVF,7dvq,Polyadenylate-binding protein UniRef50_L8H0I0
+BAESF_10352.mRNA.1,10352,host,none,0,,L323,1,VM,,
+BAESF_10396.mRNA.1,10396,host,none,0,,R561,1,NVF,7a09,Small ribosomal subunit protein eS6 UniRef50_T1IMV1
+BAESF_10413.mRNA.1,10413,host,none,0,,L274,1,NVF,,Signal sequence receptor subunit delta UniRef50_A0A7S4MM02
+BAESF_10471.mRNA.1,10471,host,vfil,0,,R252,1,NVF,,
+BAESF_10490.mRNA.1,10490,host,vfil,0,,R252,1,NVF,,ubiquitinyl hydrolase 1 UniRef50_A0A3P3YPG6
+BAESF_10512.mRNA.1,10512,host,none,0,,R721;L410,2,NVF,,Large ribosomal subunit protein eL38 UniRef50_A0A443RRA2
+BAESF_10514.mRNA.1,10514,host,vfil,0,,R252,1,NVF,,Predicted protein (Fragment) UniRef50_D2UYJ3
+BAESF_10523.mRNA.1,10523,host,vfil,0,,R252,1,NVF,,
+BAESF_10554.mRNA.1,10554,host,vfil,0,,R252,1,NVF,,STI1 domain-containing protein UniRef50_I1J9Y0
+BAESF_10580.mRNA.1,10580,host,vfil,0,,R252,1,NVF,7a09,ABC transporter E family member 2 UniRef50_A0A218VWV7
+BAESF_10588.mRNA.1,10588,host,none,0,,R561;R721;L410,3,NVF,,peptidylprolyl isomerase UniRef50_L8GPH9
+BAESF_10627.mRNA.1,10627,host,none,0,,L330,1,VM,,Probable glutamine--tRNA ligase UniRef50_P14325
+BAESF_10666.mRNA.1,10666,host,vfil,0,,R252,1,NVF,,NAC-A/B domain-containing protein UniRef50_G4YZX8
+BAESF_10696.mRNA.1,10696,host,none,0,,R561,1,NVF,,DNA/RNA-binding protein Alba-like domain-containing protein UniRef50_A0A8X7SBY5
+BAESF_10719.mRNA.1,10719,host,none,0,,R721,1,NVF,,
+BAESF_10746.mRNA.1,10746,host,none,0,,L274,1,NVF,,"Xtp3transactivated protein, putative UniRef50_L8H6W1"
+BAESF_10808.mRNA.1,10808,host,vfil,0,,R252,1,NVF,,RNA-splicing ligase RtcB homolog UniRef50_A0A315VIM7
+BAESF_10833.mRNA.1,10833,host,vfil,0,,R252,1,NVF,,Pre-rRNA-processing protein PNO1 UniRef50_A0A1Y1XYB7
+BAESF_10873.mRNA.1,10873,host,vfil,0,,R252,1,NVF,,Eukaryotic translation initiation factor 3 subunit C UniRef50_A0A6D2L1L5
+BAESF_10897.mRNA.1,10897,host,vfil,0,,R252,1,NVF,,Eukaryotic translation initiation factor SUI1 family protein UniRef50_L8H1M7
+BAESF_11020.mRNA.1,11020,host,none,0,,L274,1,NVF,,SnoaL-like domain-containing protein UniRef50_L8H009
+BAESF_11090.mRNA.1,11090,host,none,0,,R721;L410,2,NVF,,"COMM domain containing 9, putative UniRef50_L8HBC8"
+BAESF_11122.mRNA.1,11122,host,vfil,0,,R252,1,NVF,7dvq,Eukaryotic translation initiation factor 2A UniRef50_L8H989
+BAESF_11139.mRNA.1,11139,host,none,0,,L274,1,NVF,,Peroxiredoxin UniRef50_A8I2V3
+BAESF_11167.mRNA.1,11167,host,none,0,,L274,1,NVF,,Uncharacterized protein UniRef50_L8H9F4
+BAESF_11210.mRNA.1,11210,host,none,0,,R721,1,NVF,,"Acetyltransferase, putative UniRef50_L8H168"
+BAESF_11219.mRNA.1,11219,host,vfil,0,,R252;R561;R721,3,NVF,7a09,Eukaryotic translation initiation factor 3 subunit F UniRef50_L8H161
+BAESF_11397.mRNA.1,11397,host,none,0,,R561,1,NVF,,Probable phosphoglycerate mutase UniRef50_Q54NE6
+BAESF_11447.mRNA.1,11447,host,none,0,,R561,1,NVF,7a09;6zj3,S5 DRBM domain-containing protein UniRef50_A0A7R9BSX9
+BAESF_11471.mRNA.1,11471,host,vfil,0,,R252;R721;L410,3,NVF,,RNA recognition motif domain containing protein UniRef50_L8HKC8
+BAESF_11488.mRNA.1,11488,host,none,0,,R561,1,NVF,6zj3,Aminoacyl-transfer RNA synthetases class-II family profile domain-containing protein UniRef50_A0A3R7DHK4
+BAESF_11529.mRNA.1,11529,host,none,0,,R721,1,NVF,,LIM domain containing protein UniRef50_L8GZ99
+BAESF_11776.mRNA.1,11776,host,vfil,0,,R252;R561,2,NVF,7a09,Eukaryotic translation initiation factor 3 subunit D UniRef50_L8HC00
+BAESF_11891.mRNA.1,11891,host,vfil,0,,R252,1,NVF,,"Oxidoreductase, zincbinding dehydrogenase superfamily protein UniRef50_L8GFQ0"
+BAESF_12090.mRNA.1,12090,host,vfil,0,,R252,1,NVF,7dvq,RNA helicase (Fragment) UniRef50_L8GYV4
+BAESF_12111.mRNA.1,12111,host,none,0,,L274,1,NVF,,UDPglucose:Glycoprotein Glucosyltransferase containing protein UniRef50_L8H1D6
+BAESF_12142.mRNA.1,12142,host,none,0,,R561,1,NVF,6zj3,60S ribosomal protein L6 UniRef50_A0A068RQE6
+BAESF_12185.mRNA.1,12185,host,none,0,,R561,1,NVF,7dvq,"Telomeraseassociated protein 1, putative UniRef50_L8H0G0"
+BAESF_12240.mRNA.1,12240,host,none,0,,R721;L410,2,NVF,,BAR domain containing protein UniRef50_L8GZ90
+BAESF_12280.mRNA.1,12280,host,none,0,,L274,1,NVF,,"EnoylCoA hydratase/isomerase, putative UniRef50_L8H8U0"
+BAESF_12345.mRNA.1,12345,host,none,0,,L274;R721,2,NVF,,Peptidyl-prolyl cis-trans isomerase UniRef50_A8XTM3
+BAESF_12398.mRNA.1,12398,host,none,0,,L274,1,NVF,,"alpha-1,2-Mannosidase UniRef50_L8GR22"
+BAESF_12423.mRNA.1,12423,host,none,0,,R561,1,NVF,,Major vault protein alpha UniRef50_P34118
+BAESF_12804.mRNA.1,12804,host,vfil,0,,R252,1,NVF,,LIM domain containing protein UniRef50_L8GNN8
+BAESF_12826.mRNA.1,12826,host,none,0,,R561,1,NVF,,aconitate hydratase UniRef50_A0A2R6XIC1
+BAESF_12940.mRNA.1,12940,host,none,0,,R561,1,NVF,,WD40 repeat-containing protein UniRef50_L8HIV6
+BAESF_12967.mRNA.1,12967,host,none,0,,R561,1,NVF,7a09;7dvq,Eukaryotic translation initiation factor 3 subunit B UniRef50_L8H3E1
+BAESF_12992.mRNA.1,12992,host,none,0,,R561,1,NVF,,SIT4 phosphataseassociated protein UniRef50_L8H0Y3
+BAESF_13050.mRNA.1,13050,host,vfil,0,,R252,1,NVF,7dvq,Eukaryotic translation initiation factor 5B UniRef50_L8HB34
+BAESF_13064.mRNA.1,13064,host,vfil,0,,R252,1,NVF,,Signal recognition particle subunit SRP68 UniRef50_L8HKJ5
+BAESF_13141.mRNA.1,13141,host,none,0,,L330;L274,2,NVF+VM,,Uncharacterized protein UniRef50_B9I1Y2
+BAESF_13266.mRNA.1,13266,host,none,0,,L274,1,NVF,,Glucosidase II beta subunit N-terminal domain-containing protein (Fragment) UniRef50_L8H6X8
+BAESF_13402.mRNA.1,13402,host,vfil,0,,R252,1,NVF,,DNA ligase IIIlike protein UniRef50_L8H728
+BAESF_13468.mRNA.1,13468,host,vfil,0,,R252,1,NVF,,PH domain/RhoGEF domain containing protein UniRef50_L8H790
+BAESF_13537.mRNA.1,13537,host,none,0,,R721,1,NVF,,COMM domain-containing protein 3 UniRef50_A0A6P8J936
+BAESF_13542.mRNA.1,13542,host,none,0,,R721;L410,2,NVF,,EF hand domain containing protein UniRef50_L8H6I5
+BAESF_13689.mRNA.1,13689,host,none,0,,R721,1,NVF,7a09,Eukaryotic translation initiation factor 3 subunit K UniRef50_L8GVU4
+BAESF_13935.mRNA.1,13935,host,vfil,0,,R252,1,NVF,,Methylthioribose-1-phosphate isomerase UniRef50_A0A8J4QGR6
+BAESF_13972.mRNA.1,13972,host,vfil,0,,R252,1,NVF,,Polymerase nucleotidyl transferase domain-containing protein UniRef50_A0A0L0DMX1
+BAESF_14028.mRNA.1,14028,host,vfil,0,,R252,1,NVF,,Ornithine decarboxylase UniRef50_A0A5J4YHE8
+BAESF_14062.mRNA.1,14062,host,vfil,0,,R252,1,NVF,,Mitochondrial genome maintenance protein UniRef50_L8HBS3
+BAESF_14071.mRNA.1,14071,host,none,0,,R721,1,NVF,,Ankyrin repeat containing protein UniRef50_L8HE67
+BAESF_14076.mRNA.1,14076,host,vfil,0,,R252,1,NVF,,Nucleosome assembly protein family UniRef50_L8HAZ3
+BAESF_14082.mRNA.1,14082,host,none,0,,R721,1,NVF,,"Syntaxin7A, putative UniRef50_L8HBP6"
+BAESF_14091.mRNA.1,14091,host,none,0,,L274,1,NVF,,"Methyltransferase, FkbM subfamily protein UniRef50_L8GSL2"
+BAESF_14112.mRNA.1,14112,host,vfil,0,,R252,1,NVF,,DnaJ domain containing protein UniRef50_L8GYA2
+BAESF_14113.mRNA.1,14113,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_L8GZH7
+BAESF_14138.mRNA.1,14138,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_L8H0R1
+BAESF_14191.mRNA.1,14191,host,vfil,0,,R252,1,NVF,,"ROCO family protein kinase, putative UniRef50_L8GYH9"
+BAESF_14201.mRNA.1,14201,host,vfil,0,,R252,1,NVF,,BTB/POZ domain containing protein UniRef50_L8GJT8
+BAESF_14241.mRNA.1,14241,host,vfil,0,,R252,1,NVF,,Cytochrome c oxidase copper chaperone UniRef50_A0A8J2AH91
+BAESF_14366.mRNA.1,14366,host,none,0,,L274,1,NVF,,Thioredoxin domain containing protein UniRef50_L8GL39
+BAESF_14370.mRNA.1,14370,host,vfil,0,,R252,1,NVF,,Transmembrane protein UniRef50_L8H1S8
+BAESF_14376.mRNA.1,14376,host,vfil,0,,R252,1,NVF,,ATP-dependent protease ATPase subunit UniRef50_A0A2P6VHR3
+BAESF_14388.mRNA.1,14388,host,vfil,0,,R252;R561,2,NVF,6zj3,RRM domain-containing protein UniRef50_A0A2P6MPF1
+BAESF_14493.mRNA.1,14493,host,vfil,0,,R252,1,NVF,,RNA recognition motif domain containing protein UniRef50_L8HEN3
+BAESF_14610.mRNA.1,14610,host,none,0,,R561,1,NVF,,C2 domain containing protein UniRef50_L8HE57
+BAESF_14750.mRNA.1,14750,host,none,0,,L274,1,NVF,,L-type lectin-like domain-containing protein UniRef50_L8HFA0
+BAESF_14797.mRNA.1,14797,host,none,0,,L330,1,VM,,Fattyacid synthase complex protein UniRef50_L8HCV7
+BAESF_14809.mRNA.1,14809,host,none,0,,L274,1,NVF,,Peptide deformylase UniRef50_A0A7W1RZK5
+BAESF_14831.mRNA.1,14831,host,none,0,,R561,1,NVF,7a09;6zj3,Kinesin-related protein 11 UniRef50_A0A2J8A9J1
+BAESF_14860.mRNA.1,14860,host,vfil,0,,R252,1,NVF,,MRPL25 domain-containing protein UniRef50_L8HDP9
+BAESF_14931.mRNA.1,14931,host,none,0,,L274,1,NVF,,Uncharacterized protein UniRef50_L8HDD5
+BAESF_14936.mRNA.1,14936,host,vfil,0,,R252,1,NVF,,Dual specificity protein kinase UniRef50_L8HDH5
+BAESF_14943.mRNA.1,14943,host,none,0,,L274,1,NVF,,peptidylprolyl isomerase UniRef50_L8HDB8
+BAESF_15015.mRNA.1,15015,host,none,0,,R721,1,NVF,,Large ribosomal subunit protein P2 UniRef50_A4FVF5
+BAESF_15062.mRNA.1,15062,host,none,0,,R561,1,NVF,,p53 inducible protein UniRef50_L8H6F1
+BAESF_15124.mRNA.1,15124,host,none,0,,L274,1,NVF,,EGF domain-specific O-linked N-acetylglucosamine transferase UniRef50_L8GTH4
+BAESF_15129.mRNA.1,15129,host,vfil,0,,R252,1,NVF,,Coatomer subunit delta UniRef50_L8GW47
+BAESF_15231.mRNA.1,15231,host,none,0,,R561,1,NVF,,Znfinger in Ran binding protein and others domain containing protein UniRef50_L8HBD8
+BAESF_15250.mRNA.1,15250,host,none,0,,L410,1,NVF,,t-SNARE coiled-coil homology domain-containing protein UniRef50_L8HDS5
+BAESF_15253.mRNA.1,15253,host,none,0,,L330;L274,2,NVF+VM,,Calreticulin UniRef50_L8HAK1
+BAESF_15269.mRNA.1,15269,host,none,0,,L410,1,NVF,,Villin headpiece domain containing protein UniRef50_L8HBE7
+BAESF_15384.mRNA.1,15384,host,none,0,,R721,1,NVF,,Glutathione peroxidase UniRef50_Q6FWZ5
+BAESF_15386.mRNA.1,15386,host,none,0,,R561,1,NVF,7a09;6zj3,BTB domain-containing protein UniRef50_A0A3M7I102
+BAESF_15423.mRNA.1,15423,host,vfil,0,,R252,1,NVF,,Uncharacterized protein UniRef50_L8GPH0
+BAESF_15438.mRNA.1,15438,host,vfil,0,,R252,1,NVF,,Protein kinase C22 UniRef50_H9C898
+BAESF_15451.mRNA.1,15451,host,vfil,0,,R252,1,NVF,,DNAbinding protein HU superfamily protein UniRef50_L8GMK2
+BAESF_15452.mRNA.1,15452,host,vfil,0,,R252;R721;L410,3,NVF,,M protein repeat-containing protein UniRef50_L8GLV7
+BAESF_15506.mRNA.1,15506,host,vfil,0,,R252,1,NVF,,DnaK family superfamily protein UniRef50_L8GMB3
+L100,L100,viral,vfil,0,Uncharacterized,R252,1,NVF,,-
+L124,L124,viral,vfil,0,Translation and Ribosome Function,R252,1,NVF,,tyrosyl-tRNA synthetase
+L128,L128,viral,none,0,Oxidation-Reduction,L274,1,NVF,,GMC-type oxidoreductase
+L143,L143,viral,vfil,0,Carbohydrate Metabolism,R252,1,NVF,,polysaccharide pyruvyl transferase
+L152,L152,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+L201,L201,viral,vfil,0,Uncharacterized,R252;R561,2,NVF,,
+L205,L205,viral,vfil,0,Protein Modification and Folding,R252;R561,2,NVF,,putative serine-threonine protein kinase
+L230,L230,viral,vfil,0,Carbohydrate Metabolism,R252,1,NVF,,glycosyltransferase
+L235,L235,viral,nucleoid_vfil,0,Transcription,R252,1,NVF,rnap_core;rnap_other,DNA-directed RNA polymerase subunit rpb5
+L236,L236,viral,virion,0,Uncharacterized,L274,1,NVF,,
+L237,L237,viral,none,0,Uncharacterized,L323;R721,2,NVF+VM,,
+L243,L243,viral,none,0,Uncharacterized,L274,1,NVF,,
+L244,L244,viral,nucleoid_vfil,0,Transcription,R252,1,NVF,rnap_core;rnap_other,DNA-directed RNA polymerase subunit rpb2
+L247,L247,viral,vfil,0,DNA Replication and Repair,R252,1,NVF,,intron HNH endonuclease
+L249,L249,viral,none,0,DNA Replication and Repair,R561,1,NVF,,uracil-DNA glycosylase
+L250b,L250b,viral,virion,0,Uncharacterized,L274,1,NVF,,
+L265,L265,viral,none,0,Uncharacterized,R721;L410,2,NVF,,
+L278,L278,viral,virion,0,Uncharacterized,L274,1,NVF,,
+L285,L285,viral,none,0,Uncharacterized,L274,1,NVF,,hypothetical signal peptide protein
+L288,L288,viral,membrane_in,1,Carbohydrate Metabolism,L323,1,VM,,cyanovirin-N domain-containing protein
+L294,L294,viral,nucleoid,0,Nucleotide Metabolism,L410,1,NVF,,P-loop containing nucleoside triphosphate hydrolase domain-containing protein
+L309b,L309b,viral,membrane_in,1,Uncharacterized,L323;R595,2,VM,,
+L309c,L309c,viral,membrane_in,1,Uncharacterized,L323;R595,2,VM,,-
+L324,L324,viral,nucleoid,0,Uncharacterized,L410,1,NVF,,
+L373,L373,viral,membrane_in,1,Carbohydrate Metabolism,L323;R443,2,VM,,glycosyltransferase
+L384,L384,viral,none,0,Uncharacterized,R721,1,NVF,,
+L385,L385,viral,none,0,Uncharacterized,R721;L410,2,NVF,,-
+L397,L397,viral,virion_vfil,0,Uncharacterized,L323;L330;R252;R721;L410,5,NVF+VM,,
+L399,L399,viral,nucleoid,0,Uncharacterized,R721;L410,2,NVF,,
+L4,L4,viral,none,0,Structural/Motifs/DNA binding,R561,1,NVF,,KilA-N and DUF3627 domain-containing protein
+L416,L416,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+L417,L417,viral,virion,0,Uncharacterized,L323;R595;R721;L410,4,NVF+VM,,DUF5764 domain-containing protein
+L425,L425,viral,virion_vfil,0,Morphogenesis,R252,1,NVF,,major capsid protein 1
+L442,L442,viral,nucleoid_vfil,0,Uncharacterized,R252;R721;L410,3,NVF,,
+L446,L446,viral,none,0,Lipid Metabolism,R443,1,VM,,patatin-like phospholipase
+L448,L448,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+L479,L479,viral,none,0,Hydrolases,R721,1,NVF,,putative pyrophosphohydrolase
+L487,L487,viral,membrane_out,1,Uncharacterized,L323;R595;R443,3,VM,,hypothetical transmembrane domain protein
+L488,L488,viral,nucleoid,0,Structural/Motifs/Protein binding,L410,1,NVF,,ankyrin repeat protein
+L490,L490,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+L492,L492,viral,nucleoid,0,Uncharacterized,L410,1,NVF,rnap_other,
+L494,L494,viral,none,0,Uncharacterized,L410,1,NVF,,DUF5886 domain-containing protein
+L496,L496,viral,none,0,Translation and Ribosome Function,R561;R721,2,NVF,,eukaryotic translation initiation factor 4E
+L499,L499,viral,vfil,0,DNA Replication and Repair,R252,1,NVF,,replication factor C small subunit
+L504,L504,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+L520,L520,viral,none,0,Structural/Motifs/Protein binding,R443,1,VM,,BTB-POZ domain-containing protein
+L56,L56,viral,vfil,0,Structural/Motifs/Protein binding,R252,1,NVF,,ankyrin repeat protein
+L567,L567,viral,nucleoid,0,Uncharacterized,R387;L410,2,NVF+VM,,DUF2935 domain-containing protein
+L573_L572,L573_L572,viral,membrane_out,1,Uncharacterized,R252,1,NVF,,AAA-type ATPase
+L577b,L577b,viral,membrane_out,1,Uncharacterized,L323;R595,2,VM,,
+L59,L59,viral,vfil,0,Uncharacterized,R252,1,NVF,,-
+L593,L593,viral,membrane_in,1,Protein Modification and Folding,L323;R595;R443,3,VM,,prolyl 4-hydroxylase
+L629,L629,viral,virion,0,Uncharacterized,L323;R595,2,VM,,
+L65,L65,viral,membrane_in,1,Morphogenesis,L323,1,VM,,virion-associated membrane
+L672,L672,viral,none,0,Uncharacterized,R721,1,NVF,,
+L686,L686,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+L690,L690,viral,virion,0,Uncharacterized,L410,1,NVF,,
+L701,L701,viral,membrane_in,1,Uncharacterized,L323,1,VM,,-
+L709,L709,viral,vfil,0,Protein Modification and Folding,R252;L410,2,NVF,,ubiquitin-conjugating enzyme E2
+L711,L711,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+L724,L724,viral,nucleoid,0,Uncharacterized,L274,1,NVF,,
+L725,L725,viral,virion,0,Uncharacterized,L274,1,NVF,,
+L728,L728,viral,vfil,0,Uncharacterized,R252,1,NVF,,vWA domain-containing protein
+L737,L737,viral,none,0,Uncharacterized,L330;L274,2,NVF+VM,,hypothetical signal peptide protein and DUF5881 domain-containing protein
+L74,L74,viral,vfil,0,Uncharacterized,R252,1,NVF,,-
+L775,L775,viral,membrane_in,1,,L323,1,VM,,PAN domain-containing protein
+L778,L778,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+L780,L780,viral,none,0,Carbohydrate Metabolism,R721;L410,2,NVF,,RmlD-like substrate binding domain
+L792,L792,viral,vfil,0,Uncharacterized,R252;R721;L410,3,NVF,,-
+L817,L817,viral,membrane_out,1,Uncharacterized,R595,1,VM,,-
+L82,L82,viral,none,0,Uncharacterized,L274,1,NVF,,-
+L87,L87,viral,vfil,0,Uncharacterized,R252,1,NVF,,-
+L871b,L871b,viral,none,0,Uncharacterized,L274,1,NVF,,-
+L906,L906,viral,none,0,Hydrolases,L274,1,NVF,,carboxylesterase
+L99,L99,viral,none,0,Uncharacterized,L274,1,NVF,,-
+R106,R106,viral,none,0,Uncharacterized,R561,1,NVF,,-
+R118,R118,viral,vfil,0,Uncharacterized,R252;L274,2,NVF,,hypothetical signal peptide protein
+R132,R132,viral,vfil,0,Transferases,R252,1,NVF,,macrocin O-methyltransferase
+R133,R133,viral,none,0,Uncharacterized,L274,1,NVF,,-
+R253,R253,viral,nucleoid,0,Uncharacterized,R721;L410,2,NVF,,
+R255,R255,viral,vfil,0,Uncharacterized,R252;R721;L410,3,NVF,,
+R260,R260,viral,vfil,0,Protein Modification and Folding,R443;L330;R252,3,NVF+VM,,DnaJ-like protein
+R297,R297,viral,vfil,0,Uncharacterized,R252,1,NVF,,RNA-binding domain-containing protein
+R305,R305,viral,membrane_in,1,Uncharacterized,L323;R595,2,VM,,hypothetical transmembrane domain protein
+R306_R307,R306_R307,viral,nucleoid,0,Protein Modification and Folding,R561,1,NVF,,putative protein phosphatase 2C
+R317,R317,viral,none,0,Uncharacterized,L323;R443,2,VM,,
+R319,R319,viral,none,0,Protein Modification and Folding,R561,1,NVF,,ubiquitin carboxyl-terminal hydrolase
+R321,R321,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+R335,R335,viral,membrane_out,1,Uncharacterized,R443,1,VM,,hypothetical transmembrane domain protein
+R336_R337,R336_R337,viral,none,0,Protein Modification and Folding,R561,1,NVF,,uncharacterized cullin-like protein
+R338,R338,viral,vfil,0,Uncharacterized,R252;R561,2,NVF,,
+R362,R362,viral,nucleoid,0,Oxidation-Reduction,R721;L410,2,NVF,,thioredoxin domain-containing protein
+R369,R369,viral,none,0,Uncharacterized,R443;L330,2,VM,,
+R370,R370,viral,none,0,Uncharacterized,L274;R721;L410,3,NVF,,
+R402,R402,viral,nucleoid,0,Uncharacterized,L410,1,NVF,,
+R435,R435,viral,none,0,Uncharacterized,R721;L410,2,NVF,,DUF5832 domain-containing protein
+R445,R445,viral,virion_vfil,0,Protein Modification and Folding,L323;R595;R252;R721;L410,5,NVF+VM,,DnaJ domain-containing protein
+R449,R449,viral,none,0,Uncharacterized,L323,1,VM,,DUF5767 domain-containing protein
+R458,R458,viral,vfil,0,Translation and Ribosome Function,R252,1,NVF,,translation initiation factor 4a
+R465,R465,viral,vfil,0,Uncharacterized,R252;L410,2,NVF,,
+R466,R466,viral,vfil,0,Uncharacterized,L323;R595;R252;R721;L410,5,NVF+VM,,
+R470,R470,viral,nucleoid_vfil,0,Transcription,R252,1,NVF,rnap_core;rnap_other,DNA-directed RNA polymerase subunit rpb11
+R474,R474,viral,membrane_out,1,Uncharacterized,L323;R595;L274;R721;L410,5,NVF+VM,,
+R476,R476,viral,vfil,0,Uncharacterized,R252,1,NVF,,AAA-type ATPase
+R480,R480,viral,vfil,0,DNA Replication and Repair,R252;R561,2,NVF,,DNA topoisomerase 2
+R486,R486,viral,membrane_in,1,,L323,1,VM,,PAN domain-containing protein
+R489,R489,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+R501,R501,viral,nucleoid_vfil,0,Transcription,R252,1,NVF,rnap_core;rnap_other,DNA-directed RNA polymerase subunit rpb1
+R505,R505,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+R506,R506,viral,nucleoid_vfil,0,Uncharacterized,R252,1,NVF,,
+R508,R508,viral,none,0,Uncharacterized,L323;R595,2,VM,,SWIB-MDM2 domain-containing protein
+R512,R512,viral,vfil,0,Nucleotide Metabolism,R252,1,NVF,,deoxynucleoside monophosphate kinase
+R513,R513,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+R513b,R513b,viral,membrane_in,1,Uncharacterized,L323;R443;R387,3,VM,,hypothetical transmembrane domain protein
+R521,R521,viral,vfil,0,Protein Modification and Folding,R443;R252;R721,3,NVF+VM,,ubiquitin-conjugating enzyme E2
+R525,R525,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+R553,R553,viral,nucleoid,0,Uncharacterized,R721,1,NVF,,
+R554,R554,viral,vfil,0,Uncharacterized,R252;R561;R721,3,NVF,,
+R556,R556,viral,none,0,Uncharacterized,R561,1,NVF,,-
+R557,R557,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+R559,R559,viral,vfil,0,Transcription,R252,1,NVF,,uncharacterized HTH-type transcriptional regulator
+R562,R562,viral,vfil,0,Uncharacterized,R252;R561;R721;L410,4,NVF,,
+R565,R565,viral,vfil,0,Amino Acid Metabolism,R252,1,NVF,,glutamine synthetase
+R588,R588,viral,virion_vfil,0,Uncharacterized,R252,1,NVF,,
+R592,R592,viral,vfil,0,DNA Replication and Repair,R252,1,NVF,,DEAD-SNF2 helicase with RING-HC zinc finger domain
+R600,R600,viral,none,0,Uncharacterized,R561,1,NVF,,-
+R616,R616,viral,none,0,Uncharacterized,R561,1,NVF,,
+R624,R624,viral,vfil,0,Uncharacterized,R252,1,NVF,,GTP binding translation elongation-initiation factor
+R648,R648,viral,virion,0,Uncharacterized,R721;L410,2,NVF,,NHL repeat protein
+R656,R656,viral,none,0,Amino Acid Metabolism,L274,1,NVF,,putative amine oxidase
+R659,R659,viral,none,0,Uncharacterized,L274,1,NVF,,hypothetical signal peptide protein and EGF-like domain-containing protein
+R676b,R676b,viral,membrane_out,1,Uncharacterized,L323;R595,2,VM,,-
+R692,R692,viral,nucleoid_vfil,0,Uncharacterized,R252;L410,2,NVF,,
+R699,R699,viral,vfil,0,Morphogenesis,R252,1,NVF,,multifunctional procollagen lysine hydroxylase and glycosyltransferase LH3
+R710,R710,viral,membrane_in,1,Uncharacterized,L323,1,VM,,hypothetical transmembrane domain protein
+R746,R746,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+R762,R762,viral,vfil,0,Uncharacterized,R252,1,NVF,,
+R802,R802,viral,vfil,0,Nucleotide Metabolism,R252,1,NVF,,purine-nucleoside phosphorylase
+R816,R816,viral,virion,0,Uncharacterized,R561,1,NVF,,
+R827,R827,viral,none,0,Uncharacterized,L274,1,NVF,,hypothetical signal peptide protein
+R832_R833,R832_R833,viral,none,0,Uncharacterized,L274,1,NVF,,-
+R844_R845,R844_R845,viral,vfil,0,Uncharacterized,R252,1,NVF,,-
+R857,R857,viral,vfil,0,Uncharacterized,R252,1,NVF,,

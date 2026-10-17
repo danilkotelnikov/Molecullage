@@ -1,0 +1,10 @@
+# prey per region class; computed from Zenodo 10.5281/zenodo.17313812 (Mimivirus_coip_fun_categories.cys, Merged Network_3) by src/derive.py
+region,viral,host
+VF-IL only,48,123
+Virion and VF-IL,4,0
+"Nucleoid, virion and VF-IL",7,0
+"Nucleoid, not VF-IL",12,0
+Virion only,9,0
+"Membrane, in virion",18,0
+"Membrane, not in virion",7,0
+No region listed,39,166

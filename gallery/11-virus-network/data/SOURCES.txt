@@ -1,0 +1,16 @@
+44318_2026_770_MOESM13_ESM.zip	https://static-content.springer.com/esm/art%3A10.1038%2Fs44318-026-00770-8/MediaObjects/44318_2026_770_MOESM13_ESM.zip	7762 bytes	sha256 8037a16391065a8c2dc7a5228f0087f631f311216d44a45dd57fa869f2dac3ea	pinned, matches
+44318_2026_770_MOESM6_ESM.xlsx	https://static-content.springer.com/esm/art%3A10.1038%2Fs44318-026-00770-8/MediaObjects/44318_2026_770_MOESM6_ESM.xlsx	874663 bytes	sha256 99c7f56398a991dd6b54fd634b2e33ec01cffabb95a4120c2deef3bdc1a57bd4	pinned, matches
+44318_2026_770_MOESM7_ESM.xlsx	https://static-content.springer.com/esm/art%3A10.1038%2Fs44318-026-00770-8/MediaObjects/44318_2026_770_MOESM7_ESM.xlsx	23070 bytes	sha256 a663705aee64c5ee37c14185eda0e5f43dd25d0248d22f944776e64681782534	pinned, matches
+44318_2026_770_MOESM8_ESM.xlsx	https://static-content.springer.com/esm/art%3A10.1038%2Fs44318-026-00770-8/MediaObjects/44318_2026_770_MOESM8_ESM.xlsx	86823 bytes	sha256 c4ed0c8a2afa14d037ae9c619b961a4c9362cf8394897fc3e9ed08682b463589	pinned, matches
+44318_2026_770_MOESM9_ESM.xlsx	https://static-content.springer.com/esm/art%3A10.1038%2Fs44318-026-00770-8/MediaObjects/44318_2026_770_MOESM9_ESM.xlsx	53063 bytes	sha256 9fc988de71f36aca533114794e3bb40d1d16160944d36421fc993d32faf5105e	pinned, matches
+44318_2026_770_MOESM10_ESM.xlsx	https://static-content.springer.com/esm/art%3A10.1038%2Fs44318-026-00770-8/MediaObjects/44318_2026_770_MOESM10_ESM.xlsx	15826 bytes	sha256 09fde5becf2f1aa07d254009acedb9356aa215791cd1ee26078896276a3ddb9c	pinned, matches
+Mimivirus_coip_fun_categories.cys	https://zenodo.org/api/records/17313812/files/Mimivirus_coip_fun_categories.cys/content	650095 bytes	sha256 5131bf0308fcc1645ba418f88626091e11a3eb99fa07b6aad76ed3d31b4a84b2	pinned, matches
+pdb 6rfl	https://data.rcsb.org/rest/v1/core/entry/6rfl	2019-12-11	Structure of the complete Vaccinia DNA-dependent RNA polymerase complex	pinned, matches
+pdb 7amv	https://data.rcsb.org/rest/v1/core/entry/7amv	2021-10-06	Atomic structure of the poxvirus transcription pre-initiation complex in the initially melted state	pinned, matches
+pdb 8q3k	https://data.rcsb.org/rest/v1/core/entry/8q3k	2024-02-14	The open state of the ASFV apo-RNA polymerase	pinned, matches
+pdb 7und	https://data.rcsb.org/rest/v1/core/entry/7und	2022-10-19	Pol II-DSIF-SPT6-PAF1c-TFIIS-nucleosome complex (stalled at +38)	pinned, matches
+pdb 7nvu	https://data.rcsb.org/rest/v1/core/entry/7nvu	2021-05-05	RNA polymerase II core pre-initiation complex with open promoter DNA	pinned, matches
+pdb 7ena	https://data.rcsb.org/rest/v1/core/entry/7ena	2021-05-26	TFIID-based PIC-Mediator holo-complex in pre-assembled state (pre-hPIC-MED)	pinned, matches
+pdb 7dvq	https://data.rcsb.org/rest/v1/core/entry/7dvq	2021-03-31	Cryo-EM Structure of the Activated Human Minor Spliceosome (minor Bact Complex)	pinned, matches
+pdb 7a09	https://data.rcsb.org/rest/v1/core/entry/7a09	2020-10-14	Structure of a human ABCE1-bound 43S pre-initiation complex - State III	pinned, matches
+pdb 6zj3	https://data.rcsb.org/rest/v1/core/entry/6zj3	2020-10-07	Cryo-EM structure of the highly atypical cytoplasmic ribosome of Euglena gracilis	pinned, matches

@@ -5,7 +5,7 @@ Molecullage makes figures of protein structures, sequences, contact maps, pipeli
 <!-- gallery:start -->
 ![Molecullage: a title and five figures made with it](gallery/hero/hero.png)
 
-The [gallery](gallery/) holds eleven figures from published open-access papers, redrawn with Molecullage from the papers' own data and from PDB entries. A few of them:
+The [gallery](gallery/) holds twelve figures from published open-access papers, redrawn with Molecullage from the papers' own data and from PDB entries. A few of them:
 
 | | | |
 |---|---|---|
@@ -27,7 +27,7 @@ The [gallery](gallery/) holds eleven figures from published open-access papers, 
 | `claude/` | Install the Claude Code skill, the MCP server and the two optional hooks. |
 | `examples/` | See each template built, most of them on public PDB entries, each with a `how-made.md`. |
 | `docs/` | Read the drawing rules, the palette notes, the ChimeraX notes, the kit reference, a glossary and field notes. |
-| `gallery/` | Look at eleven published figures redrawn with Molecullage, each with a script that fetches its data and a note on how it was made. |
+| `gallery/` | Look at twelve published figures redrawn with Molecullage, each with a script that fetches its data and a note on how it was made. |
 
 The other folders hold what these use: `art/` the cropped renders of the examples, `data/pdb/` the coordinate files with their RCSB records, `tokens/` the palette as a token file, and `scripts/` the install, check and example scripts.
 

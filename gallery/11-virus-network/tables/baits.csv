@@ -1,0 +1,12 @@
+# partners per bait; computed from Zenodo 10.5281/zenodo.17313812 (Mimivirus_coip_fun_categories.cys, Merged Network_3) by src/derive.py; EV1 column from Dataset EV1 (log2FC>=1, p<0.01)
+bait,subnetwork,viral,host,total,enriched_EV1_excluding_bait
+L323,VM,34,3,37,37
+R595,VM,16,2,18,18
+R443,VM,14,1,15,15
+L330,VM,4,11,15,15
+R387,VM,2,1,3,3
+R252,NVF,62,123,185,
+R561,NVF,18,66,84,
+L274,NVF,21,59,80,80
+R721,NVF,26,39,65,65
+L410,NVF,29,18,47,47

@@ -81,7 +81,6 @@
   },
   {
     "slug": "11-virus-network",
-    "hold": true,
     "kind": "Interaction network",
     "paper": "Safi et al., The EMBO Journal 2026, 45:3514",
     "doi": "10.1038/s44318-026-00770-8",
