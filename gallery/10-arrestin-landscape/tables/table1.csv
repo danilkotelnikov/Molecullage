@@ -1,0 +1,38 @@
+# Table 1 of He Q, Zhao LH, Xu HE. 2026. Cell Discovery 12:61, doi 10.1038/s41421-026-00909-1 (CC BY 4.0), parsed from the Europe PMC full-text XML (PMC13503860) by src/table1.py. One row per PDB entry; 'row' is the row of the table (27 rows, 36 entries). 'mode' is the first word of the Conformation entry.
+row,receptor,arrestin,technique,resolution_A,pdb,conformation_as_in_table,mode,ref
+1,Rhodopsin,Arr1,XFEL,3.30,4ZWJ,Core,Core,15
+2,Rhodopsin,Arr1,XFEL,7.70,5DGY,Core,Core,22
+3,Rhodopsin,Arr1,XFEL,3.01,5W0P,Core,Core,21
+4,NTSR1,βarr1,Cryo-EM,4.90,6PWC,Core,Core,23
+5,NTSR1,βarr1,Cryo-EM,4.20,6UP7,Core,Core,24
+6,M2R,βarr1,Cryo-EM,4.00,6U1N,Core,Core,25
+7,Turkey β1AR,βarr1,Cryo-EM,3.30,6TKO,Core,Core,26
+8,V2R,βarr1,Cryo-EM,4.73,7R0C,Core,Core,27
+9,5-HT2BR,βarr1,Cryo-EM,3.30,7SRS,Core,Core,28
+10,GCGR,βarr1,Cryo-EM,3.30,8JRV,Tail,Tail,29
+10,GCGR,βarr1,Cryo-EM,3.50,8JRU,Tail and ligand-free,Tail,29
+11,CB1R,βarr1,Cryo-EM,3.60,8WRZ,Core,Core,30
+12,CB1R,βarr1,Cryo-EM,3.20,8WU1,Core,Core,31
+13,mGlu3R,βarr1,Cryo-EM,3.70,9II2,Core and dimer-2:2,Core,32
+13,mGlu3R,βarr1,Cryo-EM,3.90,9II3,Core and dimer-2:1,Core,32
+14,NTSR1,βarr1,Cryo-EM,2.65,8ZYT,Core,Core,33
+14,NTSR1,βarr1,Cryo-EM,3.41,9M0D,Core,Core,33
+15,NTSR1,βarr1,Cryo-EM,2.65,8ZYU,Loop-engaged,Loop-engaged,33
+15,NTSR1,βarr1,Cryo-EM,2.83,8ZYY,Loop-engaged,Loop-engaged,33
+16,ACKR3,βarr1,Cryo-EM,3.40,9E82,Membrane-anchored,Membrane-anchored,34
+17,GPR52,βarr1,Cryo-EM,3.86,9IJR,Side-engaged,Side-engaged,35
+17,GPR52,βarr1,Cryo-EM,3.64,9IJS,Side-engaged and ligand-free,Side-engaged,35
+18,APJR,βarr1,Cryo-EM,3.21,9KUV,Core and monomer,Core,36
+18,APJR,βarr1,Cryo-EM,3.49,9KUW,Core and dimer-2:2,Core,36
+18,APJR,βarr1,Cryo-EM,3.57,9KUX,Core and dimer-2:1,Core,36
+19,mGlu8R,βarr1,Cryo-EM,3.14,9MBA,Core and dimer-2:2,Core,37
+20,GPR1,βarr1,Cryo-EM,3.30,9UYH,Core conformation 1,Core,38
+21,GPR1,βarr1,Cryo-EM,3.20,9UYI,Core conformation 2,Core,38
+22,GPR1,βarr1,Cryo-EM,3.30,9UYJ,Core conformation 3,Core,38
+23,GPR1,βarr1,Cryo-EM,3.30,9UYL,Core conformation 4,Core,38
+24,GPR1,βarr1,Cryo-EM,2.90,9UYN,Core and ligand-free,Core,38
+25,GPR1,βarr2,Cryo-EM,3.50,9UYM,Core conformation 1-like,Core,38
+26,MOR,βarr1,Cryo-EM,2.80,9WSV,Core,Core,39
+26,MOR,βarr1,Cryo-EM,2.80,9WSX,Core,Core,39
+27,PTH1R,βarr1,Cryo-EM,3.07,9LXR,Core,Core,40
+27,PTH1R,βarr1,Cryo-EM,3.20,9LXP,Core,Core,40

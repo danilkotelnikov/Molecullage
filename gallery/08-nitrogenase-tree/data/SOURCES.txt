@@ -1,0 +1,11 @@
+elife-105613-fig4-data1-v1.zip	https://cdn.elifesciences.org/articles/105613/elife-105613-fig4-data1-v1.zip	43444 bytes	sha256 ce9ea9229154a59567941f56c951b010f046aedaeafd30415c06d78dda601273	pinned, matches
+elife-105613-fig4-data2-v1.zip	https://cdn.elifesciences.org/articles/105613/elife-105613-fig4-data2-v1.zip	200383 bytes	sha256 c9ab4e28b5bf617837fb95536adb7008c7a2321655b0f784540ea75263dffdf9	pinned, matches
+elife-105613-fig4-data3-v1.zip	https://cdn.elifesciences.org/articles/105613/elife-105613-fig4-data3-v1.zip	410548 bytes	sha256 42d73148a8f11d20b1e2efff95939d72f5b198c76286e2f5d0ef0e704627a0d8	pinned, matches
+elife-105613-supp6-v1.docx	https://cdn.elifesciences.org/articles/105613/elife-105613-supp6-v1.docx	19106 bytes	sha256 cf315caaab22c2570a67625d7923f694238b96a00686e9bda0c4104cfb7e2388	pinned, matches
+zenodo_13351063_index.csv	https://zenodo.org/api/records/13351063/files/index.csv/content	171000 bytes	sha256 e5b73cac653a82337ebd47f075bb1c9646f701e58572b5c29e8a918eac23b2dc	pinned, matches
+3U7Q.cif	https://files.rcsb.org/download/3U7Q.cif	3840467 bytes	sha256 4021acb1765da9070528f0013f09d598d962c025d6d0b96ec8aa62143ea8bfb2	pinned, matches
+4WES.cif	https://files.rcsb.org/download/4WES.cif	3596809 bytes	sha256 98bf60be81495bd750cdf263a0bf1dd25d9d50615f9d393ea2f46ca0843d1f88	pinned, matches
+8BOQ.cif	https://files.rcsb.org/download/8BOQ.cif	2140216 bytes	sha256 338ef628f137c94835f4705ecfe7224e37676fd7cd0427119580613a066fea42	pinned, matches
+record check	Europe PMC PMC12425478: licence ali:license_ref https://creativecommons.org/licenses/by/4.0/; publication-state version of record; text: '5378 protein structures', '769 tree nodes'
+record check	eLife API: status vor, doiVersion 10.7554/eLife.105613.4, published 2025-09-11, licence CC-BY-4.0
+record check	Zenodo 13351063: licence cc-by-4.0, 24 files, 966995066 bytes in all, record file list read only

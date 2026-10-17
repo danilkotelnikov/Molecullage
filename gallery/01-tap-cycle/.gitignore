@@ -1,0 +1,6 @@
+data/
+art/*.png
+!art/*_t.png
+art/probe_*
+/01-tap-cycle.html
+__pycache__/

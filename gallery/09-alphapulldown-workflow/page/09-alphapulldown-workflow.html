@@ -1,0 +1,222 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>09-alphapulldown-workflow</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Redesign of Fig. 1 of Yu, Chojnowski, Rosenthal and Kosinski 2023, Bioinformatics 39(1):btac749 (CC BY 4.0). No data: every step, file name and arrow
+// comes from the legend and text of the paper (src/check_support.py lists the sentence behind each one and checks it against the Europe PMC full text).
+// Grammar: stage strips (colour = hardware), tool blocks (strong colour = a program), pills (pale colour = what a step makes; cream = what you supply;
+// white with a purple edge = a request, the complexes to model), numbered badges (order of the steps).
+// Layout (top-down mm): three columns, one spine row SP at the foot where the hand-overs run left to right: pickle files -> step 2 -> predicted structures -> step 3.
+// Column 1 flows down into the spine, column 3 flows up out of it. The four modes sit in one frame, the user's input to step 2, above step 2.
+// All geometry is computed first (text widths are measured), then drawn. At the end checkAlign() measures the rendered page and throws one Error
+// that lists every block, arrow, row or label that is off its grid by more than TOL.
+const W = 178, TOL = 0.25;
+const GL = 1.5, GR = 176.5, G = 0.3;                       // outer margins, gap between an arrow end and a block edge
+const cv = document.createElement('canvas').getContext('2d');
+const tw = (s, pt, bold = false) => { cv.font = `${bold ? 'bold ' : ''}${pt * 96 / 72}px Arial`; return cv.measureText(s.replace(/<[^>]*>/g, '').replace(/\$/g, '')).width * 25.4 / 96; };   // text width in mm
+const FL = (window.CONFIG || {}).floorPt || 6.55;
+function wrap(s, pt, maxW) { const out = []; let cur = ''; s.split(' ').forEach((w) => { const t = cur ? cur + ' ' + w : w; if (cur && tw(t, pt) > maxW) { out.push(cur); cur = w; } else cur = t; }); if (cur) out.push(cur); return out; }
+
+// ---------------------------------------------------------------- grid (columns, rows, notes), computed before anything is drawn
+const C1 = { x: GL, w: 40 }, C2 = { x: 44, w: 91.5 }, C3 = { x: 138, w: GR - 138 };   // step 1, step 2, step 3; equal gaps of 2.5 mm
+C1.cx = C1.x + C1.w / 2; C2.cx = C2.x + C2.w / 2; C3.cx = C3.x + C3.w / 2;
+const STRIP_T = 15.6, STRIP_H = 8.6;
+const FT = 28.8;                                           // top of both frames (modes, outputs)
+const RP = 10.9, RH = 8.6, R0 = FT + 8.2 + RH / 2;         // mode rows: pitch, input-pill height, centre of the first row
+const NOTE_P = 3.3;                                        // pitch of the note lines
+const MODE_NOTES = [                                       // notes at the foot of the modes frame; $..$ is maths
+  'A + B: modelled together. A × $n$: $n$ copies of A, an oligomeric state.',
+  'Bait: protein used to find partners. Candidates: tested with each bait.',
+  'All versus all: each pair once; the paper says "all pairwise combinations".',
+  'Regions of a protein can be used; models keep full-length residue numbers.',
+].flatMap((s) => wrap(s, FL, C2.w - 4.2));
+const NOTE0 = R0 + 3 * RP + RH / 2 + 3.4;                  // centre of the first note line
+const FRAME_H = NOTE0 + NOTE_P * (MODE_NOTES.length - 1) + 2.4 - FT;
+const T2H = 14.4, T3H = 17.5, T1H = 18;
+const SP = FT + FRAME_H + 6.4 + T2H / 2;                   // spine row: centre line of pickle files, step 2, predicted structures, step 3
+const H = Math.ceil((SP + T3H / 2 + 1.3 + 6.9) * 2) / 2;   // page height: the claim lines sit under the lowest block
+const OPW = C3.w - 3.0;                                    // output pills
+const OUT_NOTES = wrap('Notebook: only models below a user-set cut-off of the inter-chain predicted alignment error (the model’s own error estimate between two chains).', FL, C3.w - 3.0);
+const NB_H = 10.6, TB_H = 13.4;
+const OUT_NOTE0 = FT + 5.6 + NB_H + 2.2 + TB_H + 3.6;      // centre of the first note line in the outputs frame
+const OUT_H = OUT_NOTE0 + 2.9 * (OUT_NOTES.length - 1) + 3.0 - FT;
+
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;                                   // top-down mm -> kit y
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const REC = {}, BLK = {}, ARR = [], ROWS = [];
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, mfs: 8.4, ...o }); if (name) REC[name] = el; return el; };
+const SUBC = { color: SUB, fs: FL };                       // small notes: floor size, sub colour
+const N = (i) => MS('n_' + i, 8.4);                        // the symbol n with an index, for oligomeric states
+
+// ---------------------------------------------------------------- block helpers (all positions: x, top t, width, height; top-down)
+function tool(name, x, t, w, h, title, sub, fam, n) {
+  f.tool({ x, y: Tp(t + h), w, h, title, sub, fam });
+  const el = f.el.lastElementChild; BLK[name] = { el, x, t, w, h, kind: 'tool', cx: x + w / 2 };
+  f.badge({ x: x + 0.3, y: Tp(t + 0.3), n, fam: 'grey' }); BLK[name].badge = f.el.lastElementChild;
+  return BLK[name];
+}
+function pill(name, x, t, w, h, text, sub, fam, bg) {
+  f.pill({ x, y: Tp(t + h), w, h, text, sub, fam });
+  const el = f.el.lastElementChild; if (bg) el.style.background = bg;
+  BLK[name] = { el, x, t, w, h, kind: 'pill', cx: x + w / 2 }; return BLK[name];
+}
+const PADW = 3.36 + 0.15;                                  // pill border and side padding (kit.css), plus slack
+function strip(name, x, w, text, sub, fam) {
+  f.stage({ x, y: Tp(STRIP_T + STRIP_H), w, h: STRIP_H, text: '', fam });
+  const el = f.el.lastElementChild, s = el.querySelector('span');
+  s.style.transform = 'none'; s.style.textAlign = 'center'; s.innerHTML = `${text}<br><i>${sub}</i>`;
+  BLK[name] = { el, x, t: STRIP_T, w, h: STRIP_H, kind: 'strip', cx: x + w / 2 };
+}
+function frame(name, x, t, w, h, title) {
+  f.group({ x, y: Tp(t + h), w, h, title }); BLK[name] = { el: f.el.lastElementChild, x, t, w, h, kind: 'frame', cx: x + w / 2 };
+}
+const edge = (b, s, k = 0.5) => s === 'r' ? [b.x + b.w, b.t + b.h * k] : s === 'l' ? [b.x, b.t + b.h * k] : s === 't' ? [b.x + b.w * k, b.t] : [b.x + b.w * k, b.t + b.h];
+const OUT = { r: [G, 0], l: [-G, 0], t: [0, -G], b: [0, G] };
+function arrow(a, sa, b, sb, o = {}) {                     // straight arrow from a side of block a to a side of block b, 0.3 mm clear of both
+  const [x0, t0] = edge(a, sa, o.ka), [x1, t1] = edge(b, sb, o.kb);
+  const p0 = [x0 + OUT[sa][0], t0 + OUT[sa][1]], p1 = [x1 + OUT[sb][0], t1 + OUT[sb][1]];
+  if (Math.abs(p0[0] - p1[0]) > 0.02 && Math.abs(p0[1] - p1[1]) > 0.02) throw new Error('an arrow is not straight');
+  f.route([p0, p1].map(([x, t]) => [x, Tp(t)]), { head: o.head !== false });
+  ARR.push({ el: f.svg.lastElementChild, a, sa, b, sb, p0, p1 });
+}
+
+// ---------------------------------------------------------------- head and key
+R('head', GL, 3.0, 'Three steps: features on CPUs, structures on GPUs, then analysis', { bold: true, fs: 7.5 });
+const KEY1 = 8.0, KEY2 = 12.3;
+const swatch = (x, t, fam, bg) => { const d = document.createElement('div'); d.className = `sw fam-${fam}`; d.style.cssText = `left:${x}mm;top:${t - 1.5}mm;width:3.4mm;height:3mm${bg ? ';background:' + bg : ''}`; f.el.appendChild(d); return d; };
+{ let x = GL; const gap = 5;                               // row 1: the hardware colours, strong block and pale pill of each
+  [['green', 'palemint', 'CPU: central processing unit'], ['purple', 'palelilac', 'GPU: graphics processing unit'], ['indigo', 'palesky', 'hardware not named in the text']].forEach(([a, b, s], i) => {
+    REC['ksw-' + i] = swatch(x, KEY1, a); REC['ksw2-' + i] = swatch(x + 4.6, KEY1, b);
+    const lx = x + 4.6 + 3.4 + 1.2; R('key-' + i, lx, KEY1, s); x = lx + tw(s, 7) + gap; });
+  x = GL;                                                  // row 2: what you supply, a request, and the meaning of strong, pale and number
+  REC['ksw-3'] = swatch(x, KEY2, 'grey'); R('key-3', x + 4.6, KEY2, 'what you supply'); x += 4.6 + tw('what you supply', 7) + gap;
+  REC['ksw-4'] = swatch(x, KEY2, 'palelilac', '#FFFFFF');
+  REC['ksw-4'].style.setProperty('border-color', '#7A29BB', 'important');   // the request pills have a purple edge
+  R('key-4', x + 4.6, KEY2, 'complexes to model: a request', {}); x += 4.6 + tw('complexes to model: a request', 7) + gap;
+  R('key-rule', x, KEY2, 'Strong block: a program. Pale pill: a file or table it makes. Number: order of the steps.', SUBC);
+}
+
+// ---------------------------------------------------------------- stage strips: colour = hardware, named in words
+strip('s1', C1.x, C1.w, 'On CPUs', 'many proteins in parallel', 'green');
+strip('s2', C2.x, C2.w, 'On GPUs', 'structure prediction', 'purple');
+strip('s3', C3.x, C3.w, 'Analysis', 'hardware not named', 'indigo');
+
+// ---------------------------------------------------------------- column 1: sequences -> create_individual_features.py -> pickle files (all three share both column edges)
+const seq = pill('seq', C1.x, R0 - RH / 2, C1.w, RH, 'protein sequences', 'A, B, C (examples)', 'grey');
+const t1 = tool('t1', C1.x, (R0 + SP) / 2 - T1H / 2, C1.w, T1H, '<span style="white-space:nowrap">create_individual_features.py</span>', 'multiple sequence<br>alignments (MSAs) and<br>structural templates', 'green', 1);
+t1.el.style.padding = '1mm 0.9mm';
+const PKL_H = 11;
+const pkl = pill('pkl', C1.x, SP - PKL_H / 2, C1.w, PKL_H, 'pickle files', 'Python data files, reusable<br>for many predictions', 'palemint');
+arrow(seq, 'b', t1, 't'); arrow(t1, 'b', pkl, 't');
+
+// ---------------------------------------------------------------- column 2: the four modes in one frame (your input to step 2), step 2 on the spine
+const NAME_X = C2.x + 1.8 + 0.2, IN_X = NAME_X + 20.6, IN_W = 25.6, OUT_X = IN_X + IN_W + 3.8, OUT_R = C2.x + C2.w - 1.5, MINI = 4.8;
+frame('modes', C2.x, FT, C2.w, FRAME_H, 'Step 2 input: you choose a mode');
+R('hd-in', IN_X, FT + 4.7, 'Your input', SUBC); R('hd-out', OUT_X, FT + 4.7, 'Complexes to model', SUBC);
+const MODES = [
+  { id: 'pulldown', name: 'pulldown', text: 'baits: A', sub: 'candidates: B, C', outs: ['A + B', 'A + C'] },
+  { id: 'homo', name: 'homo-oligomer', text: 'protein A', sub: `states: ${N(1)}, ${N(2)}`, outs: [`A × ${N(1)}`, `A × ${N(2)}`] },
+  { id: 'custom', name: 'custom', text: 'any combinations of', sub: 'proteins, fragments', outs: ['A + B + C', 'A (fragment) + B'] },
+  { id: 'all', name: 'all versus all', text: 'one list', sub: 'A, B, C', outs: ['A + B', 'A + C', 'B + C'] },
+];
+MODES.forEach((m, i) => {
+  const c = R0 + i * RP;
+  R('mode-' + m.id, NAME_X, c, m.name, { bold: true, fs: 7.5 });
+  const inp = pill('in-' + m.id, IN_X, c - RH / 2, IN_W, RH, m.text, m.sub, 'grey');
+  if (m.sub.includes('class="mth"')) inp.el.querySelector('em').style.lineHeight = '0.95';   // the maths line is taller; keep the two lines as close as in the other pills
+  let x = OUT_X; const outs = m.outs.map((s, k) => { const w = tw(s, 7) + PADW; const p = pill(`out-${m.id}-${k}`, x, c - MINI / 2, w, MINI, s, '', 'palelilac', '#FFFFFF'); x += w + 1.2; return p; });
+  arrow(inp, 'r', outs[0], 'l');
+  ROWS.push({ id: m.id, c, inp, outs });
+});
+MODE_NOTES.forEach((s, k) => R('leg-' + k, C2.x + 2.0, NOTE0 + NOTE_P * k, s, SUBC));
+const frm = BLK.modes;
+const T2W = 32;
+const t2 = tool('t2', C2.x + 2.5, SP - T2H / 2, T2W, T2H, 'AlphaFold-Multimer', 'predicts each<br>listed complex', 'purple', 2);
+const strc = pill('strc', t2.x + T2W + 6, SP - RH / 2, 31, RH, 'predicted structures', 'of protein complexes', 'palelilac');
+arrow(pkl, 'r', t2, 'l'); arrow(frm, 'b', t2, 't', { ka: (t2.cx - frm.x) / frm.w }); arrow(t2, 'r', strc, 'l');
+R('into-2', t2.cx + 2.0, (frm.t + frm.h + t2.t) / 2, 'complexes to model (the chosen mode)', SUBC);
+
+// ---------------------------------------------------------------- column 3: step 3 on the spine, outputs above it (block, strip and frame share both column edges)
+const t3 = tool('t3', C3.x, SP - T3H / 2, C3.w, T3H, 'Analysis pipeline', 'alpha-analysis.sif,<br>a Singularity image<br>(a packaged program)', 'indigo', 3);
+arrow(strc, 'r', t3, 'l');
+R('after-1', (strc.x + strc.w + t3.x) / 2, SP + 3.4, 'when all predictions', { ha: 'center', ...SUBC });
+R('after-2', (strc.x + strc.w + t3.x) / 2, SP + 6.2, 'have finished', { ha: 'center', ...SUBC });
+const nb = pill('nb', C3.x + 1.5, FT + 5.6, OPW, NB_H, 'Jupyter notebook', 'graphical summary<br>of the models', 'palesky');
+const tb = pill('tb', C3.x + 1.5, FT + 5.6 + NB_H + 2.2, OPW, TB_H, 'score table (CSV file)', 'model quality scores and<br>interface properties, such as<br>area and hydrogen bonds', 'palesky');
+OUT_NOTES.forEach((s, k) => R('cut-' + k, C3.x + 1.5, OUT_NOTE0 + 2.9 * k, s, SUBC));
+frame('outs', C3.x, FT, C3.w, OUT_H, 'Outputs of step 3');
+const KA = 0.25;                                           // the arrow up leaves the block a quarter of the way in, so that its label has room on the right
+arrow(t3, 't', BLK.outs, 'b', { ka: KA, kb: KA });
+['analysis pipeline', 'assesses the', 'predicted interfaces'].forEach((s, k) => R('assess-' + k, C3.x + C3.w * KA + 2.0, (BLK.outs.t + BLK.outs.h + t3.t) / 2 - 2.8 + 2.8 * k, s, SUBC));
+
+// ---------------------------------------------------------------- foot
+R('boundary', GL, H - 5.6, 'A, B, C are example proteins; steps, files and modes follow the paper.', SUBC);
+R('credit', GL, H - 2.3, 'After Fig. 1 of Yu et al., Bioinformatics 2023, doi:10.1093/bioinformatics/btac749, CC BY 4.0. Data: none. Redesigned from the paper’s text and legend; no data values.', SUBC);
+
+// ================================================================ alignment checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  // 1. every block is where the grid says it is, and its text fits
+  Object.entries(BLK).forEach(([k, b]) => {
+    const m = M(b.el); near(m.l, b.x, `${k}: left`, 0.12); near(m.t, b.t, `${k}: top`, 0.12); near(m.w, b.w, `${k}: width`, 0.12); near(m.h, b.h, `${k}: height`, 0.12);
+    if ((b.kind === 'pill' || b.kind === 'tool') && (b.el.scrollWidth > b.el.clientWidth + 1 || b.el.scrollHeight > b.el.clientHeight + 1)) fails.push(`${k}: text does not fit`);
+    if (b.kind === 'tool') { const tx = M(b.el.querySelector('.tx')); if (tx.t < m.t + 0.8 || tx.b > m.b - 0.8) fails.push(`${k}: tool text touches the block edge`); }
+    if (b.kind === 'tool' || b.kind === 'pill') b.el.querySelectorAll('p, span, em').forEach((e) => { const rg = document.createRange(); rg.selectNodeContents(e); const q = rg.getBoundingClientRect(); const qm = { l: (q.left - o.left) * K, r: (q.right - o.left) * K };
+      if (q.width && (qm.l < m.l + 0.45 || qm.r > m.r - 0.45)) fails.push(`${k}: text touches the side of the block (${(qm.l - m.l).toFixed(2)}, ${(m.r - qm.r).toFixed(2)} mm clear)`); });
+  });
+  // 2. columns: blocks of one column share an axis and the column edges; the spine blocks share the row; strips sit on the column edges
+  [['C1', C1, ['s1', 'seq', 'pkl', 't1']], ['C3', C3, ['s3', 't3', 'outs']]].forEach(([n, c, ks]) => ks.forEach((k) => { near(M(BLK[k].el).l, c.x, `${n}: ${k} left on the column edge`, 0.12); near(M(BLK[k].el).r, c.x + c.w, `${n}: ${k} right on the column edge`, 0.12); }));
+  [['C3', C3, ['nb', 'tb']]].forEach(([n, c, ks]) => ks.forEach((k) => { near(M(BLK[k].el).cx, c.cx, `${n}: ${k} on the column axis`, 0.12); }));
+  ['pkl', 't2', 'strc', 't3'].forEach((k) => near(M(BLK[k].el).cy, SP, `spine: ${k} on the spine row`, 0.12));
+  near(M(BLK.seq.el).cy, R0, 'seq on the first mode row', 0.12);
+  near(M(BLK.s2.el).l, C2.x, 's2: strip left', 0.12); near(M(BLK.s2.el).r, C2.x + C2.w, 's2: strip right', 0.12);
+  near(M(BLK.modes.el).l, C2.x, 'modes frame left', 0.12); near(M(BLK.modes.el).r, C2.x + C2.w, 'modes frame right', 0.12); near(M(BLK.modes.el).t, M(BLK.outs.el).t, 'the two frames share the top', 0.12);
+  near(C2.x - (C1.x + C1.w), C3.x - (C2.x + C2.w), 'equal gaps between the columns', 0.01);
+  // 3. arrows start and end 0.3 mm clear of the edges they name
+  ARR.forEach((a, i) => {
+    const L = a.el.getTotalLength(), s = a.el.getPointAtLength(0), e = a.el.getPointAtLength(L);
+    const chk = (pt, b, side, name) => { const m = M(b.el); const d = side === 'r' ? pt.x - m.r : side === 'l' ? m.l - pt.x : side === 't' ? m.t - pt.y : pt.y - m.b;
+      near(d, G, `arrow ${i + 1} ${name}: clearance`, 0.12);
+      const along = side === 'r' || side === 'l' ? pt.y : pt.x, lo = side === 'r' || side === 'l' ? m.t : m.l, hi = side === 'r' || side === 'l' ? m.b : m.r;
+      if (along < lo - 0.05 || along > hi + 0.05) fails.push(`arrow ${i + 1} ${name}: ends beside the block, not on it`); };
+    chk(s, a.a, a.sa, 'start'); chk(e, a.b, a.sb, 'end');
+  });
+  // 4. mode rows: name, input pill, arrow and output pills share the row centre; outputs inside the frame
+  ROWS.forEach((r) => {
+    near(M(REC['mode-' + r.id]).cy, r.c, `row ${r.id}: name on the row centre`, 0.3); near(M(r.inp.el).cy, r.c, `row ${r.id}: input on the row centre`, 0.12);
+    r.outs.forEach((p, k) => { near(M(p.el).cy, r.c, `row ${r.id}: output ${k + 1} on the row centre`, 0.12); if (M(p.el).r > OUT_R + 0.05) fails.push(`row ${r.id}: output ${k + 1} runs past the frame (${M(p.el).r.toFixed(2)} > ${OUT_R.toFixed(2)})`); });
+    near(M(REC['mode-' + r.id]).l, NAME_X, `row ${r.id}: name column`); near(M(r.inp.el).l, IN_X, `row ${r.id}: input column`, 0.12); near(M(r.outs[0].el).l, OUT_X, `row ${r.id}: output column`, 0.12);
+    if (M(REC['mode-' + r.id]).r > IN_X - 0.5) fails.push(`row ${r.id}: name runs into the input column`);
+  });
+  near(M(REC['hd-in']).l, IN_X, 'header: your input on the input column'); near(M(REC['hd-out']).l, OUT_X, 'header: output on the output column');
+  [0, 1, 2].forEach((i) => near(M(ROWS[i + 1].inp.el).t - M(ROWS[i].inp.el).t, RP, `row pitch ${i + 1}`, 0.12));
+  // 5. notes on their frame edges and inside their frames
+  MODE_NOTES.forEach((_, k) => { const m = M(REC['leg-' + k]); near(m.l, C2.x + 2.0, `frame note ${k + 1} on the frame edge`); if (m.r > C2.x + C2.w - 1.0) fails.push(`frame note ${k + 1} runs to the frame edge`); });
+  OUT_NOTES.forEach((_, k) => { const m = M(REC['cut-' + k]); near(m.l, C3.x + 1.5, `cut-${k}: on the outputs pill edge`); if (m.r > C3.x + C3.w - 0.8) fails.push(`cut-${k} runs to the outputs frame edge`); });
+  // 6. key: swatches sit on their rows with their labels
+  Object.keys(REC).filter((k) => /^key-\d$/.test(k)).forEach((k) => near(M(REC[k]).cy, +k.slice(4) < 3 ? KEY1 : KEY2, `${k}: on the key row`, 0.35));
+  Object.keys(REC).filter((k) => k.startsWith('ksw')).forEach((k) => near(M(REC[k]).cy, +k.slice(-1) < 3 ? KEY1 : KEY2, `${k}: swatch on the key row`, 0.2));
+  { const r = M(REC['key-rule']); if (r.r > W - 1.0) fails.push('key rule runs past the page edge'); }
+  ['key-0', 'key-1', 'key-2', 'key-3', 'key-4', 'key-rule', 'ksw-0', 'ksw-1', 'ksw-2', 'ksw-3', 'ksw-4', 'ksw2-0', 'ksw2-1', 'ksw2-2'].forEach((k) => { if (!REC[k]) fails.push('missing key element ' + k); });
+  Object.keys(REC).filter((k) => k.startsWith('ksw')).forEach((k) => { const m = M(REC[k]);   // no label sits on a key swatch
+    Object.keys(REC).filter((q) => !q.startsWith('ksw')).forEach((q) => { const a = M(REC[q]); if (a.l < m.r - 0.02 && m.l < a.r - 0.02 && a.t < m.b - 0.02 && m.t < a.b - 0.02) fails.push(`text ${q} sits on swatch ${k}`); }); });
+  // 7. text: nothing on a block, nothing on other text, nothing within 1 mm of the page edge
+  const labs = Object.entries(REC).filter(([k]) => !k.startsWith('ksw')).map(([k, el]) => [k, M(el)]);
+  labs.forEach(([k, a]) => Object.entries(BLK).forEach(([n, b]) => { const m = M(b.el); if (b.kind === 'pill' || b.kind === 'tool' || b.kind === 'strip') { if (a.l < m.r - 0.05 && m.l < a.r - 0.05 && a.t < m.b - 0.05 && m.t < a.b - 0.05) fails.push(`text ${k} sits on block ${n}`); } }));
+  for (let i = 0; i < labs.length; i++) for (let j = i + 1; j < labs.length; j++) { const a = labs[i][1], b = labs[j][1], pad = 0.08;
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${labs[i][0]} and ${labs[j][0]}`); }
+  labs.forEach(([k, e]) => { if (e.l < 1.0 || e.t < 1.0 || e.r > W - 1.0 || e.b > H - 0.8) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`); });
+  Object.entries(BLK).forEach(([n, b]) => { if (!b.badge) return; const m = M(b.badge);   // step badges overlap no label
+    labs.forEach(([k, a]) => { if (a.l < m.r + 0.2 && m.l < a.r + 0.2 && a.t < m.b + 0.2 && m.t < a.b + 0.2) fails.push(`text ${k} touches the badge of ${n}`); }); });
+  // 8. labels that name an arrow sit beside it, not on it
+  ARR.forEach((a, i) => { const s = a.el.getBoundingClientRect(); const lo = { l: (s.left - o.left) * K, t: (s.top - o.top) * K, r: (s.right - o.left) * K, b: (s.bottom - o.top) * K };
+    labs.forEach(([k, e]) => { if (e.l < lo.r + 0.02 && lo.l - 0.02 < e.r && e.t < lo.b + 0.02 && lo.t - 0.02 < e.b) fails.push(`text ${k} touches arrow ${i + 1}`); }); });
+  // 9. the lowest block clears the claim lines
+  if (!(M(BLK.t3.el).b + 1.0 < M(REC.boundary).t)) fails.push('the lowest block touches the claim line');
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

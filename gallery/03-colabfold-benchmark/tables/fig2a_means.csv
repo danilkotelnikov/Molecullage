@@ -1,0 +1,7 @@
+# Mirdita et al. 2022, Nature Methods 19:679-682, doi 10.1038/s41592-022-01488-1 (CC BY 4.0), Source Data Fig. 2, sheet fig2a. Paper columns are the numbers printed in the paper's text; computed columns are plain means of the sheet values. Only the 63-domain means are not in the paper.
+setup,free_modelling_28_paper,free_modelling_28_computed,other_63_computed,all_91_paper,all_91_computed
+AlphaFold2,0.79,0.78999,0.93171,0.888,0.88811
+AlphaFold-Colab,0.744,0.74396,,,
+ColabFold-AlphaFold2-BFD/MGnify,0.826,0.82639,0.91447,0.887,0.88737
+ColabFold-AlphaFold2-ColabFoldDB,0.818,0.81831,0.91537,0.886,0.88550
+ColabFold-RoseTTAFold-BFD/MGnify,0.62,0.61953,0.81308,0.754,0.75353

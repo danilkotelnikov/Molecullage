@@ -1,0 +1,174 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>03-colabfold-benchmark</title></head><body>
+<!--INLINE_JS plots_layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG plots_layer.svg--></div></div>
+<script>
+// Redesign of Fig. 2 of Mirdita et al. 2022, Nature Methods 19:679-682. matplotlib (src/make_plots.py) draws plot areas, axes, ticks and data marks as one SVG layer;
+// this page draws every title, axis caption, key text and printed number at the millimetre positions in window.DATA (top-down mm, origin top-left)
+// and, at the end, measures the rendered page: checkAlign() throws one Error that lists every position that is off its grid line by more than TOL.
+const D = window.DATA, W = D.W, H = D.H, TOL = 0.25;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', FL = (window.CONFIG || {}).floorPt || 6.55;
+const REC = {};
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+const X0 = D.X0, X1 = D.X1, CW = D.CW, T1 = D.T1, T2 = D.T2;
+const TITLE_DX = 4.6, TITLE_DT = 2.2, SUB_DT = [5.8, 9.0, 12.2];
+
+// ---------------------------------------------------------------- key (one key for all four panels)
+R('key-head', X0, D.key.heading_t, 'Same colour = same software and sequence database in every panel.', { bold: true });
+const KT = { af2: 'AlphaFold2 (panels a, b, d)', afmm: 'AlphaFold-multimer (panel c)', afcolab: 'AlphaFold-Colab', bfd: 'ColabFold, BFD/MGnify search',
+  db: 'ColabFold, ColabFoldDB search', rf: 'ColabFold with RoseTTAFold, BFD/MGnify search' };
+D.keyglyphs.forEach((g, i) => R('key-' + i, g.x + (D.key.text_dx - D.key.glyph_dx), g.t, KT[g.id]));
+R('key-def', X0, D.key.rows_t[3], 'BFD/MGnify, ColabFoldDB: databases of protein sequences.', { fs: FL, color: SUB });
+
+// ---------------------------------------------------------------- panel heads
+const head = (ch, x, T, title, subs, o1 = {}) => {
+  f.letter(ch, x, Tp(T + 0.6));
+  R('title-' + ch, x + TITLE_DX, T + TITLE_DT, title, { bold: true, fs: 7.5 });
+  subs.forEach((s, k) => R(`sub${k + 1}-${ch}`, x + TITLE_DX, T + SUB_DT[k], s, { color: SUB, ...(k === 0 ? o1 : {}) }));
+};
+const ytitle = (name, x, b, s) => R(name, x, b.t + b.h / 2, s, { ha: 'center', rot: true });
+
+// ---------------------------------------------------------------- a: TM-score
+head('a', X0, T1, 'Fold accuracy: higher is better', ['Each dot: one domain of CASP14, a protein folding contest.', 'TM-score 1 = perfect. AlphaFold2 used templates, others none.']);
+const BA = D.box.a;
+ytitle('yt-a', X0 + 3.4, BA, 'TM-score (axis starts at 0.2)');
+const blk = Object.fromEntries(D.a.blocks.map((b) => [b.key, b]));
+R('bh-fm', blk.fm.x, T1 + 12.7, '28 free-modelling domains', { bold: true });
+R('bh-ot', blk.ot.x, T1 + 12.7, '63 other domains', { bold: true });
+const A_N1 = T1 + 56.5, A_C1 = T1 + 59.6, A_N2 = T1 + 62.7, A_C2 = T1 + 65.8;
+D.a.cols.forEach((c, i) => { R('num-' + i, c.x, A_N1, c.mean, { ha: 'center', fs: FL }); if (c.mean91) R('num91-' + i, c.x, A_N2, c.mean91, { ha: 'center', fs: FL }); });
+R('cap-fm', blk.fm.x, A_C1, 'paper’s mean (bar)', { fs: FL, color: SUB });
+R('cap-ot', blk.ot.x, A_C1, 'computed mean (bar)', { fs: FL, color: SUB });
+R('def-fm', blk.fm.x, A_N2, 'Free-modelling: no known template.', { fs: FL, color: SUB });
+R('tune-fm', blk.fm.x, A_C2, 'ColabFold search tuned on these.', { fs: FL, color: SUB });
+R('cap91', blk.ot.x, A_C2, 'paper’s mean, all 91 domains', { fs: FL, color: SUB });
+['No AlphaFold-Colab', 'values for these 63'].forEach((s, k) => R('nocolab-' + k, blk.ot.x + 1.0, D.a.box_bottom - 4.5 + 2.7 * k, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- b: search time
+const BB = D.box.b;
+head('b', X1, T1, 'Search time: lower is better', ['Time to build the multiple sequence alignment (MSA), per target.', 'One point per target, joined in order of length.']);
+ytitle('yt-b', X1 + 3.4, BB, 'search time (minutes, log scale)');
+R('xt-b', BB.x + BB.w / 2, BB.t + BB.h + 7.0, 'protein length (amino acids, log scale)', { ha: 'center' });
+['ColabFold with RoseTTAFold shares', 'the diamonds’ search: no line of its own.'].forEach((s, k) => R('note-b' + (k + 1), BB.x + 1.6, BB.t + 2.2 + 2.7 * k, s, { fs: FL, color: SUB }));
+R('stat-b1', X1 + TITLE_DX, T1 + 61.2, 'Median of 20 targets, computed from the source data:', { fs: FL });
+R('stat-b2', X1 + TITLE_DX, T1 + 64.0, `AlphaFold2 takes ${D.b.ratio_af2} times, AlphaFold-Colab ${D.b.ratio_colab} times, as long`, { fs: FL });
+R('stat-b3', X1 + TITLE_DX, T1 + 66.8, 'as ColabFold (BFD/MGnify). No model run times in the data.', { fs: FL });
+
+// ---------------------------------------------------------------- c: DockQ
+head('c', X0, T2, 'Complex accuracy: higher is better', ['DockQ: match to the real complex; short bar = low DockQ.', 'Bars sorted by the AlphaFold-multimer score.', 'Residue-index mode: chains kept apart by an index offset.']);
+const BC = D.cbox;
+[['AlphaFold-multimer', 'values from its authors'], ['ColabFold', 'multimer mode'], ['ColabFold', 'residue-index mode']].forEach(([a, b], j) => {
+  R('ch1-' + j, BC[j].x + BC[j].w / 2, T2 + 15.4, a, { ha: 'center', bold: true });
+  R('ch2-' + j, BC[j].x + BC[j].w / 2, T2 + 18.2, b, { ha: 'center', fs: FL, color: SUB });
+});
+R('ch-id', BC[0].x - 2.2, T2 + 18.2, 'id', { ha: 'right', fs: FL, color: SUB });
+R('xt-c', BC[1].x + BC[1].w / 2, BC[0].t + BC[0].h + 6.6, 'DockQ (0 to 1)', { ha: 'center' });
+
+// ---------------------------------------------------------------- d: proteome run time
+const BD = D.box.d;
+head('d', X1, T2, 'Proteome run time: lower is better', ['Elapsed time while folding 1,762 proteins of $M. jannaschii$.', 'pLDDT: the model’s confidence per residue.'], { mfs: 7 });
+ytitle('yt-d', X1 + 3.4, BD, 'elapsed time (hours, log scale)');
+R('xt-d', BD.x + BD.w / 2, BD.t + BD.h + 6.6, 'protein number in the run, shortest first', { ha: 'center' });
+R('ref-d', BD.x + BD.w - 1.0, D.d.search_t - 2.3, 'search: 113 min = 1.9 h', { ha: 'right', fs: FL, color: SUB });
+// end labels: value and name, one column right of the plot; label blocks are relaxed so that they do not overlap (isotonic fit), leaders computed from the line ends
+const LAB = [['AlphaFold2 reduced_dbs (sampled)', ['AlphaFold2, extrapolated', 'from 50 runs,', 'reduced databases']], ['ColabFold Recompile', ['recompile the model', 'for every protein']],
+  ['ColabFold Default', ['default settings']], ['ColabFold Stop >= 85', ['stop extra model runs', 'once pLDDT ≥ 85']]];
+const LX = BD.x + BD.w + 3.4, LH = (n) => 5.3 + 2.7 * (n - 1);      // a label of n name lines is LH(n) mm tall; its block centre is lab_t + 0.05 + 1.35 (n - 1)
+const ends = LAB.map(([k, nm]) => ({ k, nm, ...D.d.lines[k] })).sort((a, b) => a.end_t - b.end_t);
+{ // pool adjacent violators: the label blocks keep 1.4 mm apart and stay as near their line ends as that allows
+  const off = [0]; for (let i = 1; i < ends.length; i++) off[i] = off[i - 1] + (LH(ends[i - 1].nm.length) + LH(ends[i].nm.length)) / 2 + 1.4;
+  const blocks = []; ends.forEach((e, i) => { blocks.push({ s: e.end_t - off[i], n: 1 }); while (blocks.length > 1 && blocks[blocks.length - 2].s / blocks[blocks.length - 2].n > blocks[blocks.length - 1].s / blocks[blocks.length - 1].n) { const b = blocks.pop(); blocks[blocks.length - 1].s += b.s; blocks[blocks.length - 1].n += b.n; } });
+  let i = 0; blocks.forEach((b) => { for (let j = 0; j < b.n; j++, i++) { const c = b.s / b.n + off[i]; ends[i].lab_t = c - 0.05 - 1.35 * (ends[i].nm.length - 1); } });
+}
+ends.forEach((e, i) => {
+  e.vt = e.lab_t - 1.3;                                                 // centre of the value line: the leader ends here
+  R('el-v-' + i, LX, e.vt, e.label, { bold: true });
+  e.nm.forEach((line, k) => R('el-n-' + i + (k ? '-' + k : ''), LX, e.lab_t + 1.4 + 2.7 * k, line, { fs: FL, color: SUB }));
+  f.route([[e.end_x, Tp(e.end_t)], [LX - 0.7, Tp(e.vt)]], { head: false, width: 0.25 });
+  e.leader = f.svg.lastElementChild;
+});
+
+// ---------------------------------------------------------------- foot
+R('boundary', X0, H - 5.6, 'Marks are source data; computed numbers are labelled; we sort and convert units.', { fs: FL, color: SUB });
+R('credit', X0, H - 2.3, 'After Fig. 2 of Mirdita et al., Nature Methods 2022, doi:10.1038/s41592-022-01488-1, CC BY 4.0. Data: Source Data Fig. 2. Redesigned; values as published.', { fs: FL, color: SUB });
+
+// ================================================================ alignment checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const m = {}; Object.entries(REC).forEach(([k, el]) => { m[k] = M(el); });
+  const svgEl = (id) => { const e = document.getElementById(id); if (!e) { fails.push('missing layer element ' + id); return { l: 0, t: 0, r: 0, b: 0, w: 0, h: 0, cx: 0, cy: 0 }; } return M(e); };
+  // 1. panel letters, titles, sub-lines on the panel grid, nothing past the panel edge
+  [['a', X0, T1, 2], ['b', X1, T1, 2], ['c', X0, T2, 3], ['d', X1, T2, 2]].forEach(([c, x, T, ns]) => {
+    const L = M(document.getElementById('panel-' + c));
+    near(L.l, x, `panel ${c}: letter x`); near(L.cy, T + TITLE_DT, `panel ${c}: letter row`, 0.5);
+    near(m['title-' + c].l, x + TITLE_DX, `panel ${c}: title x`); near(m['title-' + c].cy, T + TITLE_DT, `panel ${c}: title row`, 0.35);
+    const lines = [m['title-' + c]];
+    for (let k = 1; k <= ns; k++) { const e = m[`sub${k}-${c}`]; near(e.l, x + TITLE_DX, `panel ${c}: sub-line ${k} x`); near(e.cy, T + SUB_DT[k - 1], `panel ${c}: sub-line ${k} row`, 0.35); lines.push(e); }
+    lines.forEach((e, i) => { if (e.r > x + CW + 1e-6) fails.push(`panel ${c}: line ${i} runs past the panel edge (${e.r.toFixed(2)} > ${(x + CW).toFixed(2)})`); });
+  });
+  // 2. plot areas sit on the boxes of window.DATA, panels of one row share top and bottom
+  const A = { fm: svgEl('a_block_fm'), ot: svgEl('a_block_ot'), b: svgEl('b_area'), d: svgEl('d_area'), c: [0, 1, 2].map((j) => svgEl('c_area_' + j)) };
+  near(A.fm.l, blk.fm.x, 'a: free-modelling block left'); near(A.ot.l, blk.ot.x, 'a: other block left'); near(A.fm.t, D.box.a.t, 'a: block top'); near(A.ot.t, D.box.a.t, 'a: block top (other)');
+  near(A.fm.b, D.box.a.t + D.box.a.h, 'a: block bottom'); near(A.ot.b, D.box.a.t + D.box.a.h, 'a: block bottom (other)'); near(A.fm.w, blk.fm.w, 'a: free-modelling block width'); near(A.ot.w, blk.ot.w, 'a: other block width');
+  near(A.b.l, D.box.b.x, 'b: area left'); near(A.b.t, D.box.b.t, 'b: area top'); near(A.b.w, D.box.b.w, 'b: area width'); near(A.b.h, D.box.b.h, 'b: area height');
+  near(A.b.t, A.fm.t, 'a and b: plot areas share the top'); near(A.b.b, A.fm.b, 'a and b: plot areas share the bottom');
+  A.c.forEach((e, j) => { near(e.l, D.cbox[j].x, `c: column ${j + 1} left`); near(e.w, D.cbox[j].w, `c: column ${j + 1} width`); near(e.t, A.d.t, `c: column ${j + 1} top on the top of d`); near(e.b, A.d.b, `c: column ${j + 1} bottom on the bottom of d`); });
+  near(A.d.l, D.box.d.x, 'd: area left'); near(A.d.w, D.box.d.w, 'd: area width'); near(A.d.t, D.box.d.t, 'd: area top'); near(A.d.h, D.box.d.h, 'd: area height');
+  near(A.c[1].l - A.c[0].r, A.c[2].l - A.c[1].r, 'c: equal gaps between the three columns');
+  // 3. axis captions centred on their plot areas, y captions on one offset from the panel edge
+  [['yt-a', A.fm.t, A.fm.b, X0], ['yt-b', A.b.t, A.b.b, X1], ['yt-d', A.d.t, A.d.b, X1]].forEach(([k, t, b, x]) => { near(m[k].cy, (t + b) / 2, `${k}: centred on its plot area`); near(m[k].cx, x + 3.4, `${k}: x offset from the panel edge`); });
+  near(m['xt-b'].cx, A.b.l + A.b.w / 2, 'b: x caption centred'); near(m['xt-d'].cx, A.d.l + A.d.w / 2, 'd: x caption centred'); near(m['xt-c'].cx, A.c[1].cx, 'c: x caption centred on the middle column');
+  near(m['xt-c'].cy, m['xt-d'].cy, 'c and d: x captions on one row'); near(m['xt-b'].cy - A.b.b, 7.0, 'b: x caption distance below the area'); near(m['xt-d'].cy - A.d.b, 6.6, 'd: x caption distance below the area');
+  // 4. panel a: printed numbers under their columns, captions and notes on block edges
+  D.a.cols.forEach((c, i) => {
+    near(m['num-' + i].cx, c.x, `a: number ${i + 1} under its column`, 0.15);
+    if (c.mean91) near(m['num91-' + i].cx, c.x, `a: paper number ${i + 1} under its column`, 0.15);
+    const mb = svgEl('a_mean_' + i); near(mb.cx, c.x, `a: mean bar ${i + 1} centred on its column`, 0.1); near(mb.cy, c.mean_t, `a: mean bar ${i + 1} at its mean (computed from the data)`, 0.12);
+    const g = svgEl('a_glyph_' + i); near(g.cx, c.x, `a: glyph ${i + 1} under its column`, 0.12); near(g.cy, D.a.glyph_t, `a: glyph ${i + 1} on the glyph row`, 0.12);
+  });
+  { const ys = D.a.cols.map((c, i) => m['num-' + i].cy); near(Math.max(...ys), Math.min(...ys), 'a: means on one row');
+    const y9 = D.a.cols.map((c, i) => c.mean91 ? m['num91-' + i].cy : null).filter((v) => v !== null); near(Math.max(...y9), Math.min(...y9), 'a: paper means on one row'); }
+  near(m['cap-fm'].l, A.fm.l, 'a: caption on the free-modelling block edge'); near(m['cap-ot'].l, A.ot.l, 'a: caption on the other block edge'); near(m['cap-fm'].cy, m['cap-ot'].cy, 'a: captions on one row');
+  near(m['cap91'].l, A.ot.l, 'a: paper caption on the other block edge'); near(m['cap91'].cy, m['tune-fm'].cy, 'a: second note row'); near(m['def-fm'].cy, m['num91-' + D.a.cols.findIndex((c) => c.mean91)].cy, 'a: first note row on the paper numbers');
+  near(m['def-fm'].l, A.fm.l, 'a: definition on the block edge'); near(m['tune-fm'].l, A.fm.l, 'a: tuning note on the block edge');
+  near(m['bh-fm'].l, A.fm.l, 'a: block header on the block edge'); near(m['bh-ot'].l, A.ot.l, 'a: block header on the other block edge'); near(m['bh-fm'].cy, m['bh-ot'].cy, 'a: block headers on one row');
+  [0, 1].forEach((k) => { near(m['nocolab-' + k].l, A.ot.l + 1.0, `a: no-data note line ${k + 1} on the block edge`); if (k) near(m['nocolab-' + k].cy - m['nocolab-' + (k - 1)].cy, 2.7, `a: no-data note line ${k + 1} pitch`, 0.15); });
+  if (!(m['nocolab-1'].b < A.ot.b - 0.4)) fails.push('a: no-data note touches the bottom of the block');
+  { const cols = D.a.cols; for (let i = 1; i < cols.length; i++) if (cols[i].block === cols[i - 1].block) near(cols[i].x - cols[i - 1].x, cols[1].x - cols[0].x, `a: column pitch ${i}`, 0.01); }
+  // 5. panel c: column headers over their columns, bars on their rows
+  [0, 1, 2].forEach((j) => { near(m['ch1-' + j].cx, A.c[j].cx, `c: header ${j + 1} centred over its column`); near(m['ch2-' + j].cx, A.c[j].cx, `c: sub-header ${j + 1} centred over its column`); near(m['ch1-' + j].cy, m['ch1-0'].cy, `c: header ${j + 1} row`); near(m['ch2-' + j].cy, m['ch2-0'].cy, `c: sub-header ${j + 1} row`); });
+  near(m['ch-id'].r, A.c[0].l - 2.2, 'c: id header on the id column'); near(m['ch-id'].cy, m['ch2-0'].cy, 'c: id header on the sub-header row');
+  { const rows = D.c.order.length; near(A.c[0].h / rows, D.c.row_pitch, 'c: row pitch'); for (let j = 0; j < 3; j++) { const bar0 = svgEl(`c_bar_${j}_0`), barN = svgEl(`c_bar_${j}_${rows - 1}`); near(bar0.cy - A.c[j].t, D.c.row_pitch / 2, `c: first bar of column ${j + 1} on the first row`, 0.1); near(A.c[j].b - barN.cy, D.c.row_pitch / 2, `c: last bar of column ${j + 1} on the last row`, 0.1); } }
+  // 6. key: glyph columns, text edge, rows across the two columns
+  D.keyglyphs.forEach((g, i) => { near(m['key-' + i].l, g.x + (D.key.text_dx - D.key.glyph_dx), `key ${i}: text edge`); near(m['key-' + i].cy, g.t, `key ${i}: text on its glyph row`, 0.3);
+    const e = svgEl('key_glyph_' + i); near(e.cx, g.x, `key glyph ${i}: x`, 0.12); near(e.cy, g.t, `key glyph ${i}: y`, 0.12); });
+  { const c0 = D.keyglyphs.filter((g) => g.col === 0), c1 = D.keyglyphs.filter((g) => g.col === 1);
+    c0.forEach((g) => near(g.x, c0[0].x, 'key: glyphs of column 1 on one edge')); c1.forEach((g) => near(g.x, c1[0].x, 'key: glyphs of column 2 on one edge'));
+    near(c1[0].x - c0[0].x, X1 - X0, 'key: column 2 on the right panel edge'); near(c0[0].x, X0 + D.key.glyph_dx, 'key: column 1 on the left panel edge');
+    [0, 1, 2].forEach((r) => near(m['key-' + D.keyglyphs.indexOf(c0[r])].cy, m['key-' + D.keyglyphs.indexOf(c1[r])].cy, `key: row ${r + 1} across columns`));
+    near(m['key-def'].cy, D.key.rows_t[3], 'key: definition row', 0.3); near(m['key-def'].l, X0, 'key: definition on the left edge'); near(m['key-head'].l, X0, 'key: heading on the left edge'); }
+  // 7. panel d: leaders start on the end of their data line and end at their label; label column on one edge
+  ends.forEach((e, i) => {
+    const ln = svgEl(e.gid), lead = e.leader.getBoundingClientRect(), lt = (lead.top - o.top) * K, lb = (lead.bottom - o.top) * K, x0 = (lead.left - o.left) * K, x1 = (lead.right - o.left) * K;
+    near(x0, ln.r, `d: leader ${i + 1} starts at the end of its line (x)`); near(ln.t, e.end_t, `d: data line ${i + 1} ends where DATA says (y)`, 0.25);
+    near(lt, Math.min(ln.t, e.vt), `d: leader ${i + 1} top`); near(lb, Math.max(ln.t, e.vt), `d: leader ${i + 1} bottom`);
+    near(x1, m['el-v-' + i].l - 0.7, `d: leader ${i + 1} ends at its label`, 0.25); near(m['el-v-' + i].cy, e.vt, `d: label ${i + 1} value on the leader end`, 0.3);
+    near(m['el-v-' + i].l, LX, `d: label ${i + 1} value on the label column`); near(m['el-n-' + i].l, LX, `d: label ${i + 1} name on the label column`);
+    near(m['el-n-' + i].cy - m['el-v-' + i].cy, 2.7, `d: label ${i + 1} value over name spacing`, 0.35);
+    e.nm.forEach((_, k) => { if (k) near(m[`el-n-${i}-${k}`].cy - m[`el-n-${i}${k > 1 ? '-' + (k - 1) : ''}`].cy, 2.7, `d: label ${i + 1} name line ${k + 1} pitch`, 0.2); });
+  });
+  near(m['ref-d'].r, A.d.r - 1.0, 'd: reference label on the right edge of the area'); if (!(m['ref-d'].b < D.d.search_t - 0.3)) fails.push('d: reference label sits on the dotted line');
+  // 8. text on text, text inside the page
+  const T = [...Object.entries(REC).map(([k, el]) => [k, M(el)]), ...[...document.querySelectorAll('.plots svg text')].map((t, i) => ['tick:' + t.textContent + '#' + i, M(t)])];
+  for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) { const a = T[i][1], b = T[j][1], pad = 0.08;
+    if (T[i][0].startsWith('tick:') && T[j][0].startsWith('tick:')) continue;   // tick labels of one axis: their spacing is the row or tick pitch, checked by eye and by the row-pitch check
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${T[i][0]} and ${T[j][0]}`); }
+  T.forEach(([k, e]) => { if (e.l < 1.0 || e.t < 1.0 || e.r > W - 1.0 || e.b > H - 0.8) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

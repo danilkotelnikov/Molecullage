@@ -1,0 +1,248 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Ebola virus glycoprotein inhibitor pocket</title>
+<style>
+.tile2{position:absolute;display:flex;align-items:center;justify-content:space-between;border-width:.5pt;border-style:solid;border-radius:.6mm;font-size:var(--fs-label);line-height:1;color:var(--ink);padding:0 .9mm;white-space:pre}
+.tile2 .nm{display:block}.tile2 .ch{display:block;font-weight:700}
+#fig .state{border:.6pt solid #777777}
+.dlab{position:absolute;background:rgba(255,255,255,.88);color:var(--ink);font-size:var(--fs-label);line-height:1;padding:.15mm .35mm;white-space:pre;transform:translate(-50%,-50%)}
+</style></head><body>
+<!--INLINE_JS data.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>
+// Gallery piece 02-ebola-pocket. After Fig. 5 of Bu et al., Nature Communications 2026 (doi 10.1038/s41467-026-77332-3, CC BY 4.0), redrawn from PDB 9PEL.
+// Every position below comes from window.DATA (src/layout.py: contacts.json, ligand2d.json, the render anchors); the page draws it and re-checks it.
+// Coordinates in DATA are millimetres from the top-left (x right, t down). The kit takes y up: Tp(t) = H - t.
+const D = window.DATA, A = D.panel_a, B = D.panel_b;
+const W = 178, H = D.H;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', HAIR = '#777777';
+const FAM = window.TOKENS.color.family;
+const GP1 = { fill: FAM.palemint.fill, edge: FAM.mint.edge }, GP2 = { fill: FAM.palelilac.fill, edge: FAM.peri.edge }, LIGC = FAM.apricot.edge;
+const SWC = (u) => (u === 'GP1' ? GP1 : GP2);
+const NS = 'http://www.w3.org/2000/svg';
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+const checks = [];   // build-time assertions: collected here, thrown together at the end
+const near = (a, b, tol, what) => { if (!(Math.abs(a - b) <= tol)) checks.push(`${what}: ${a.toFixed(3)} vs ${b.toFixed(3)} (tolerance ${tol} mm)`); };
+const TOL = 0.25;
+
+function svgEl(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); f.svg.appendChild(e); return e; }
+function line(x1, t1, x2, t2, { w = 0.25, color = INK, dash = null, cap = 'butt' } = {}) {
+  return svgEl('line', { x1, y1: t1, x2, y2: t2, stroke: color, 'stroke-width': w, 'stroke-linecap': cap, ...(dash ? { 'stroke-dasharray': dash } : {}) });
+}
+function poly(pts, { w = 0.25, color = INK, dash = null } = {}) {
+  return svgEl('polyline', { points: pts.map((p) => `${p[0]},${p[1]}`).join(' '), fill: 'none', stroke: color, 'stroke-width': w, 'stroke-linejoin': 'round', ...(dash ? { 'stroke-dasharray': dash } : {}) });
+}
+const dotAt = (x, t, r, fill = INK) => svgEl('circle', { cx: x, cy: t, r, fill });
+const ringAt = (x, t, r, w = 0.3) => svgEl('circle', { cx: x, cy: t, r, fill: 'none', stroke: INK, 'stroke-width': w });
+const unitv = (x1, t1, x2, t2) => { const d = Math.hypot(x2 - x1, t2 - t1); return [(x2 - x1) / d, (t2 - t1) / d]; };
+// one line style per kind of contact, the same in both panels and in the key
+const STY = { hbond: { w: 0.3, dash: '1.1 0.7' }, cation_pi: { w: 0.55, dash: null }, contact: { w: 0.17, color: HAIR, dash: null }, polar: { w: 0.22, color: HAIR, dash: '0.25 0.45' } };
+
+function tile(t, prefix) {
+  const e = document.createElement('div');
+  e.className = 'tile2'; e.id = `${prefix}-${t.id}`;
+  e.style.cssText = `left:${t.x}mm;top:${t.t}mm;width:${t.w}mm;height:${t.h}mm;background:${SWC(t.subunit).fill};border-color:${SWC(t.subunit).edge}`;
+  e.innerHTML = `<span class="nm">${t.name3}${t.num}</span><span class="ch">${t.chain}</span>`;
+  f.el.appendChild(e);
+}
+function sampleTile(x, t, subunit, chain) {   // a tile with a generic name, for the key
+  const e = document.createElement('div');
+  e.className = 'tile2'; e.id = `key-tile-${chain}`;
+  e.style.cssText = `left:${x}mm;top:${t}mm;width:${D.panel_b.tile_w}mm;height:${D.panel_b.tile_h}mm;background:${SWC(subunit).fill};border-color:${SWC(subunit).edge}`;
+  e.innerHTML = `<span class="nm">Xxx12</span><span class="ch">${chain}</span>`;
+  f.el.appendChild(e);
+}
+function distLabel(id, x, t, d) {
+  const e = document.createElement('div');
+  e.className = 'dlab'; e.id = id; e.style.cssText = `left:${x}mm;top:${t}mm`; e.textContent = `${d.toFixed(1)} Å`;
+  f.el.appendChild(e);
+}
+const allDots = [];   // end points of lines, for the spacing check
+
+// ---- titles
+f.letter('a', D.box_a[0], Tp(0.6));
+R(D.box_a[0] + 4.7, 2.4, 'Inhibitor in its pocket', { bold: true, fs: 7.5 });
+R(D.box_a[0] + 4.7, 5.9, 'MWAC-3634 in Ebola virus glycoprotein (GP), PDB 9PEL', { color: SUB });
+f.letter('b', D.box_b[0], Tp(0.6));
+R(D.box_b[0] + 4.7, 2.4, 'What touches the inhibitor', { bold: true, fs: 7.5 });
+R(D.box_b[0] + 4.7, 5.9, 'Same contacts with GP1 and GP2, drawn flat', { color: SUB });
+
+// ================================================================================================ panel a: 3D close-up, overview, tile frame
+const ov = A.overview, img = A.img, fr = A.frame;
+const ovIm = f.image({ x: ov.x, y: Tp(ov.t + ov.h), w: ov.w, name: ov.name });
+f.state({ x: fr.x, y: Tp(fr.t + fr.h), w: fr.w, h: fr.h });
+const imIm = f.image({ x: img.x, y: Tp(img.t + img.h), w: img.w, name: img.name });
+const P = (im, k) => { const p = im.pt(k); return [p[0], H - p[1]]; };   // anchor of a render in page millimetres, t down
+const bo = A.box_o;
+svgEl('rect', { x: bo.x, y: bo.t, width: bo.w, height: bo.h, fill: 'none', stroke: INK, 'stroke-width': 0.25, 'stroke-dasharray': '0.9 0.6' });
+line(bo.x, bo.t + bo.h, fr.x, fr.t, { w: 0.2, color: HAIR, dash: '0.9 0.6' });
+line(bo.x + bo.w, bo.t + bo.h, fr.x + fr.w, fr.t, { w: 0.2, color: HAIR, dash: '0.9 0.6' });
+f.note({ x: ov.x - 31.5, y: Tp(ov.t + 4.0), w: 29, text: 'One of three<br>GP1 and GP2 copies;<br>nanobody, glycans<br>not drawn', fs: 7, color: SUB, ha: 'right' });
+f.note({ x: ov.x + ov.w + 2.5, y: Tp(ov.t + 4.0), w: 22, text: 'Box: the area<br>enlarged below', fs: 7, color: SUB });
+A.tiles.forEach((t) => {
+  tile(t, 'ta');
+  const sty = STY[t.kind];
+  poly(t.poly, { w: sty.w, color: sty.color || INK, dash: sty.dash });
+  const p1 = t.poly[1];
+  dotAt(p1[0], p1[1], 0.8, '#fff'); dotAt(p1[0], p1[1], 0.5, SWC(t.subunit).edge);
+  allDots.push({ owner: 'a' + t.id, x: p1[0], t: p1[1] });
+  if (t.poly.length > 2) {
+    const p2 = t.poly[2];
+    if (t.kind === 'cation_pi') { ringAt(p2[0], p2[1], 1.1); dotAt(p2[0], p2[1], 0.4); } else dotAt(p2[0], p2[1], 0.45, sty.color || INK);
+    allDots.push({ owner: 'a' + t.id, x: p2[0], t: p2[1] });
+  }
+  if (t.dist != null) distLabel(`dist-a-${t.id}`, t.lx, t.lt, t.dist);
+});
+{ const s = A.scale;   // scale bar (orthographic view: the same scale everywhere in the picture)
+  line(s.x, s.t, s.x + s.len_mm, s.t, { w: 0.4, color: INK });
+  line(s.x, s.t - 0.7, s.x, s.t + 0.7, { w: 0.25, color: INK }); line(s.x + s.len_mm, s.t - 0.7, s.x + s.len_mm, s.t + 0.7, { w: 0.25, color: INK });
+  R(s.x + s.len_mm / 2, s.t - 2.0, s.label, { ha: 'center', fs: 6.55 });
+}
+
+// ================================================================================================ panel b: 2D skeleton, tiles, contact lines
+const atom = Object.fromEntries(B.atoms.map((a) => [a.name, a]));
+const LAB = (a) => a.label != null;
+const ringOf = (a, b) => B.rings.filter((r) => r.includes(a) && r.includes(b)).sort((p, q) => p.length - q.length)[0];
+const wedgeOf = (a, b) => B.wedges.find((w) => (w.from === a && w.to === b) || (w.from === b && w.to === a));
+function wedgeBond(w, p1, p2) {   // narrow end at the stereocentre (from), wide end at the other atom
+  const a = atom[w.from], b = atom[w.to];
+  const [ux, ut] = unitv(a.x, a.t, b.x, b.t);
+  const s = a.rad, e = b.rad;
+  const q1 = [a.x + ux * s, a.t + ut * s], q2 = [b.x - ux * e, b.t - ut * e];
+  const nx = -ut, nt = ux, hw = 0.62;
+  if (w.kind === 'wedge') {
+    svgEl('polygon', { points: `${q1[0]},${q1[1]} ${q2[0] + nx * hw},${q2[1] + nt * hw} ${q2[0] - nx * hw},${q2[1] - nt * hw}`, fill: LIGC, stroke: LIGC, 'stroke-width': 0.1, 'stroke-linejoin': 'round' });
+  } else {
+    const N = 7;
+    for (let k = 1; k <= N; k++) {
+      const u = k / (N + 0.5), cx = q1[0] + (q2[0] - q1[0]) * u, ct = q1[1] + (q2[1] - q1[1]) * u, h = hw * u;
+      line(cx + nx * h, ct + nt * h, cx - nx * h, ct - nt * h, { w: 0.22, color: LIGC });
+    }
+  }
+}
+B.bonds.forEach((bd) => {
+  const a = atom[bd.a], b = atom[bd.b];
+  const w = wedgeOf(bd.a, bd.b);
+  if (w) { wedgeBond(w); return; }
+  const [ux, ut] = unitv(a.x, a.t, b.x, b.t);
+  const s = a.rad, e = b.rad;
+  const p1 = [a.x + ux * s, a.t + ut * s], p2 = [b.x - ux * e, b.t - ut * e];
+  const st = { w: 0.3, color: LIGC, cap: 'round' };
+  if (bd.order === 'DOUB') {
+    const ring = ringOf(bd.a, bd.b);
+    const nx = -ut, nt = ux;
+    if (ring) {
+      const cx = ring.reduce((m, n) => m + atom[n].x, 0) / ring.length, ct = ring.reduce((m, n) => m + atom[n].t, 0) / ring.length;
+      const sg = ((cx - (a.x + b.x) / 2) * nx + (ct - (a.t + b.t) / 2) * nt) > 0 ? 1 : -1;
+      const off = 0.95, L = Math.hypot(b.x - a.x, b.t - a.t);
+      const sa = Math.max(0.16 * L, LAB(a) ? a.rad + 0.8 : 0), sb = Math.max(0.16 * L, LAB(b) ? b.rad + 0.8 : 0);   // the inner line stays clear of an atom label
+      line(p1[0], p1[1], p2[0], p2[1], st);
+      line(a.x + ux * sa + nx * sg * off, a.t + ut * sa + nt * sg * off, b.x - ux * sb + nx * sg * off, b.t - ut * sb + nt * sg * off, st);
+    } else {
+      line(p1[0] + nx * 0.42, p1[1] + nt * 0.42, p2[0] + nx * 0.42, p2[1] + nt * 0.42, st);
+      line(p1[0] - nx * 0.42, p1[1] - nt * 0.42, p2[0] - nx * 0.42, p2[1] - nt * 0.42, st);
+    }
+  } else line(p1[0], p1[1], p2[0], p2[1], st);
+});
+B.atoms.filter(LAB).forEach((a) => R(a.x, a.t, a.label, { ha: 'center', color: LIGC, fs: 7 }));
+B.tiles.forEach((t) => {
+  tile(t, 'tb');
+  const sty = STY[t.kind];
+  line(t.x1, t.t1, t.x2, t.t2, { w: sty.w, color: sty.color || INK, dash: sty.dash });
+  if (t.kind === 'cation_pi') { ringAt(t.x2, t.t2, 1.1); dotAt(t.x2, t.t2, 0.4); }
+  else dotAt(t.x2, t.t2, t.kind === 'hbond' ? 0.45 : 0.38, sty.color || INK);
+  allDots.push({ owner: 'b' + t.id, x: t.x2, t: t.t2, target: t.target });
+  if (t.dist != null) distLabel(`dist-b-${t.id}`, t.lx, t.lt, t.dist);
+});
+
+// ================================================================================================ key and foot
+const KT = D.box_b[1] + D.box_b[3] + 3.4;      // first key row (t)
+const RH = 4.1;                                 // key row height
+// left column, under panel a: what the tile colours and chain letters mean
+sampleTile(1.5, KT - 1.85, 'GP1', 'A');
+R(1.5 + B.tile_w + 2.2, KT, 'GP1 residue, chain A', { color: INK });
+sampleTile(1.5, KT + RH - 1.85, 'GP2', 'a');
+R(1.5 + B.tile_w + 2.2, KT + RH, 'GP2 residue, chain a', { color: INK });
+{ const sw = document.createElement('div'); sw.className = 'sw fam-apricot'; sw.style.cssText = `left:${1.5 + (B.tile_w - 3.8) / 2}mm;top:${KT + 2 * RH - 1.5}mm`; f.el.appendChild(sw); }
+R(1.5 + B.tile_w + 2.2, KT + 2 * RH, 'Inhibitor MWAC-3634 (component A1CIK)', { color: INK });
+R(1.5, KT + 3 * RH, 'GP: Ebola virus glycoprotein, made of GP1 and GP2', { color: INK });
+f.note({ x: 1.5, y: Tp(KT + 3 * RH + 2.4), w: 84, text: 'Tile: residue name, number, chain, as numbered in the deposited entry. Sticks in a: the tiled residues. Lines in a end on the residue\'s closest atom; lines in b on an inhibitor atom it touches.', fs: 7, color: INK });
+// right column, under panel b: the line styles
+const KS = [   // [kind, text]
+  ['hbond', 'Hydrogen bond (heavy atoms), distance in Å'], ['cation_pi', 'Cation–π: charged Arg group over a ring, in Å'],
+  ['contact', 'Hydrophobic contact'], ['polar', 'Polar contact only (no carbon pair), in Å'],
+];
+KS.forEach(([k, s], i) => {
+  const x = D.box_b[0], t = KT + i * RH, sty = STY[k];
+  line(x, t, x + 7.2, t, { w: sty.w, color: sty.color || INK, dash: sty.dash });
+  if (k === 'cation_pi') { ringAt(x + 7.2, t, 1.1); dotAt(x + 7.2, t, 0.4); } else dotAt(x + 7.2, t, 0.4, sty.color || INK);
+  R(x + 10.4, t, s, { color: INK });
+});
+{ const x = D.box_b[0], t = KT + 4 * RH, hw = 0.62;   // wedge and hash sample
+  svgEl('polygon', { points: `${x},${t} ${x + 3.2},${t + hw} ${x + 3.2},${t - hw}`, fill: LIGC, stroke: LIGC, 'stroke-width': 0.1 });
+  for (let k = 1; k <= 5; k++) { const u = k / 5.5, cx = x + 4.0 + 3.2 * u, h = hw * u; line(cx, t - h, cx, t + h, { w: 0.22, color: LIGC }); }
+  R(x + 10.4, t, 'Wedge and hash: stereocentres, as deposited', { color: INK });
+}
+f.note({ x: D.box_b[0], y: Tp(KT + 4 * RH + 2.4), w: 85, text: 'Listed: any atom within 4.5 Å of the inhibitor. Hydrophobic line: a carbon pair within 4.5 Å.', fs: 7, color: INK });
+R(1.5, H - 8.6, 'The paper lists 18 residues (LigPlot); here Ser41 and Leu184 are the two extra.', { color: INK });
+R(1.5, H - 5.0, 'The 2D drawing and tile positions are illustration; contacts are computed from 9PEL.', { fs: 6.55, color: SUB });
+const credit = R(1.5, H - 1.6, 'After Fig. 5 of Bu et al., Nature Communications 2026, doi:10.1038/s41467-026-77332-3, CC BY 4.0. Data: PDB 9PEL. Redesigned; contacts computed here.', { fs: 6.55, color: SUB });
+
+// ================================================================================================ assertions (build time)
+const mm = (px) => px / (96 / 25.4);
+const box0 = document.getElementById('fig').getBoundingClientRect();
+const rect = (el) => { const r = el.getBoundingClientRect(); return { l: mm(r.left - box0.left), r: mm(r.right - box0.left), t: mm(r.top - box0.top), b: mm(r.bottom - box0.top) }; };
+// 1 tile text sits at the same inset in every tile, tiles are where the layout put them
+[['ta', A.tiles], ['tb', B.tiles]].forEach(([pre, tiles]) => tiles.forEach((t) => {
+  const el = document.getElementById(`${pre}-${t.id}`), r = rect(el);
+  near(r.l, t.x, TOL, `${pre} ${t.id} left`); near(r.t, t.t, TOL, `${pre} ${t.id} top`);
+  const nm = rect(el.querySelector('.nm')), ch = rect(el.querySelector('.ch'));
+  const cs = getComputedStyle(el), inset = mm(parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth));
+  near(nm.l - r.l, inset, TOL, `${pre} ${t.id} name inset`); near(r.r - ch.r, inset, TOL, `${pre} ${t.id} chain inset`);
+  if (nm.r > ch.l - 0.3) checks.push(`${pre} ${t.id}: name and chain touch (tile too narrow)`);
+}));
+// 2 columns share one x, rows share one t (checkAlign)
+const checkAlign = (items, key, what) => { const v = items.map((i) => i[key]); const m = v[0]; v.forEach((x, i) => near(x, m, TOL, `${what} ${items[i].id}`)); };
+[A.tiles, B.tiles].forEach((tiles, k) => ['L', 'R'].forEach((s) => checkAlign(tiles.filter((t) => t.side === s), 'x', `panel ${'ab'[k]} column ${s}`)));
+[A.tiles, B.tiles].forEach((tiles, k) => ['T', 'B'].forEach((s) => { const r = tiles.filter((t) => t.side === s); if (r.length) checkAlign(r, 't', `panel ${'ab'[k]} row ${s}`); }));
+// the key tiles sit on the tile grid of the panels
+near(rect(document.getElementById('key-tile-A')).l, 1.5, TOL, 'key tile A left'); near(rect(document.getElementById('key-tile-a')).l, 1.5, TOL, 'key tile a left');
+// 3 panel a: the first end of every line is the render anchor of its residue atom, the last end of a special line the anchor of its inhibitor end point
+A.tiles.forEach((t) => {
+  const p = P(imIm, t.anchor); near(p[0], t.poly[1][0], TOL, `${t.id} residue end x`); near(p[1], t.poly[1][1], TOL, `${t.id} residue end t`);
+  if (t.anchor2) { const q = P(imIm, t.anchor2); near(q[0], t.poly[2][0], TOL, `${t.id} inhibitor end x`); near(q[1], t.poly[2][1], TOL, `${t.id} inhibitor end t`); }
+  if (t.hidden) checks.push(`${t.id}: its end atom ${t.atom} is not drawn in the render`);
+  if (t.poly[0][0] !== undefined && Math.hypot(t.poly[0][0] - (t.side === 'L' ? t.x + t.w : t.side === 'R' ? t.x : t.x + t.w / 2), t.poly[0][1] - (t.side === 'B' ? t.t : t.t + t.h / 2)) > 0.05) checks.push(`${t.id}: line does not leave its tile edge`);
+});
+// 4 panel b: the end of a line is on an atom the residue touches (carbon with a carbon pair for a hydrophobic line); a labelled atom is approached to its label radius
+B.tiles.forEach((t) => {
+  if (t.target.startsWith('ring:')) {
+    const ns = t.target.slice(5).split(','), cx = ns.reduce((m, n) => m + atom[n].x, 0) / ns.length, ct = ns.reduce((m, n) => m + atom[n].t, 0) / ns.length;
+    near(cx, t.x2, TOL, `${t.id} ring x`); near(ct, t.t2, TOL, `${t.id} ring t`);
+  } else {
+    const at = atom[t.target];
+    if (!t.contacted.includes(t.target)) checks.push(`${t.id}: line ends on ${t.target}, which it does not touch`);
+    if (t.kind === 'contact' && !t.cc_atoms.includes(t.target)) checks.push(`${t.id}: a hydrophobic line ends on ${t.target}, which makes no carbon pair with it`);
+    if (t.kind === 'contact' && at.element !== 'C') checks.push(`${t.id}: a hydrophobic line ends on ${at.element}`);
+    const d = Math.hypot(at.x - t.x2, at.t - t.t2);
+    near(d, at.rad ? at.rad + 0.2 : 0, 0.05, `${t.id} end distance from ${t.target}`);
+  }
+});
+// 5 no two lines cross, in either panel (a line of panel a is a polyline)
+const cross = (p, q, r, s) => { const o = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]); return o(r, s, p) * o(r, s, q) < 0 && o(p, q, r) * o(p, q, s) < 0; };
+const segsA = A.tiles.map((t) => [t.id, t.poly.slice(1).map((p, i) => [t.poly[i], p])]);
+const segsB = B.tiles.map((t) => [t.id, [[[t.x1, t.t1], [t.x2, t.t2]]]]);
+[[segsA, 'a'], [segsB, 'b']].forEach(([L, k]) => { for (let i = 0; i < L.length; i++) for (let j = i + 1; j < L.length; j++) {
+  if (L[i][1].some((s) => L[j][1].some((u) => cross(s[0], s[1], u[0], u[1])))) checks.push(`panel ${k}: lines of ${L[i][0]} and ${L[j][0]} cross`); } });
+// 6 end points of different tiles are at least min_dot apart (two tiles of panel b may share one carbon only where no other carbon makes the contact: listed in DATA)
+for (let i = 0; i < allDots.length; i++) for (let j = i + 1; j < allDots.length; j++) {
+  const u = allDots[i], v = allDots[j];
+  if (u.owner[0] !== v.owner[0] || u.owner === v.owner) continue;
+  if (Math.hypot(u.x - v.x, u.t - v.t) < D.min_dot && !(u.target && u.target === v.target && B.shared_atoms.includes(u.target))) checks.push(`end points of ${u.owner} and ${v.owner} are ${Math.hypot(u.x - v.x, u.t - v.t).toFixed(2)} mm apart`);
+}
+// 7 text stays inside the page and the credit line fits on one line
+const cr = rect(credit); if (cr.r > W - 1.0) checks.push(`credit line is ${cr.r.toFixed(1)} mm wide, page ${W} mm`);
+document.querySelectorAll('.lab,.tile2,.dlab,.tbox').forEach((e) => { const r = rect(e); if (r.l < -0.01 || r.r > W + 0.01 || r.b > H + 0.01 || r.t < -0.01) checks.push(`${e.id} (${(e.textContent || '').slice(0, 20)}) leaves the page`); });
+if (checks.length) { document.title = 'CHECK FAILED'; console.error('layout checks failed:\n' + checks.join('\n')); throw new Error('layout checks failed:\n' + checks.join('\n')); }
+</script></body></html>

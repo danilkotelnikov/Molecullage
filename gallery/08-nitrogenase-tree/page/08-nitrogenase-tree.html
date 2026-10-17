@@ -1,0 +1,158 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>08-nitrogenase-tree</title></head><body>
+<!--INLINE_JS plots_layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG plots_layer.svg--></div></div>
+<script>
+// Redesign of Figs 3A, 4A and 4B of Cuevas Zuviria et al. 2025, eLife 14:RP105613. src/make_layer.py draws the tree, the clade bands, the trait matrix, the event discs, the numbered
+// rings and the clade bars as one SVG layer and writes every position this page needs to window.DATA (millimetres, origin top-left). This page writes the text, places the three
+// ChimeraX renders, draws the leaders, and measures the rendered page at the end (checks.js): checkAlign() throws one Error that lists every position off its grid line.
+const D = window.DATA, W = D.W, H = D.H, TOL = 0.25;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', RULE = '#3A3A3A', EVENT = D.colors.event, FL = (window.CONFIG || {}).floorPt || 6.55;
+const REC = {};            // text elements (checked for text on text and for the page edge)
+const EL = {};             // other elements the checks measure
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+const X0 = D.X0, Y0 = D.Y0, Y1 = D.Y1, P = D.P, RX = D.RX;
+const TITLE_DX = 4.6, TITLE_DT = 2.2, SUB_DT = [5.8, 9.0, 12.2];
+const MINUS = '−';
+const fmtInt = (v) => Math.round(v).toLocaleString('en-US');
+const fmtC = (v) => (Number.isInteger(v) ? v.toLocaleString('en-US') : v.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
+const fmtG = (v) => (v < 0 ? MINUS : '') + Math.abs(v).toFixed(1);
+const txt = (s) => s.replace(/^-/, MINUS);
+const box = (cls, css, html = '') => { const d = document.createElement('div'); d.className = cls; d.style.cssText = css; d.innerHTML = html; f.el.appendChild(d); return d; };
+// glyphs: a white ring (with its number written on it) and an indigo disc (with its letter); (x, t) is the centre, millimetres from the top
+const ring = (id, x, t, n, r = 1.25) => { box('rg', `position:absolute;left:${x - r}mm;top:${t - r}mm;width:${2 * r}mm;height:${2 * r}mm;border-radius:50%;background:#fff;border:0.25mm solid ${INK}`).id = id; R(id + '-n', x, t, String(n), { ha: 'center', bold: true, fs: FL, color: INK }); };
+const disc = (id, x, t, letter, r = D.disc_r) => { box('dc', `position:absolute;left:${x - r}mm;top:${t - r}mm;width:${2 * r}mm;height:${2 * r}mm;border-radius:50%;background:${EVENT};border:0.25mm solid #fff`).id = id; R(id + '-n', x, t, letter, { ha: 'center', bold: true, fs: FL, color: '#FFFFFF' }); };
+
+const head = (ch, x, T, title, subs) => {
+  f.letter(ch, x, Tp(T + 0.6));
+  R('title-' + ch, x + TITLE_DX, T + TITLE_DT, title, { bold: true, fs: 7.5 });
+  subs.forEach((s, k) => R(`sub${k + 1}-${ch}`, x + TITLE_DX, T + SUB_DT[k], s, { color: SUB, fs: 7, mfs: 7 }));
+};
+
+// ---------------------------------------------------------------- panel a: tree and traits
+const T0 = 1.5;
+head('a', X0, T0, 'Nitrogenase family tree, with traits', [
+  '385 living proteins, 384 reconstructed ancestors. Darker bands: Vnf and Anf inside Nif-III.',
+  'Nif, Vnf, Anf: nitrogenases using molybdenum, vanadium, or only iron. I to III: Nif clades.',
+  'Anf sits inside Vnf. D, K: subunits of the enzyme core. Branch lengths are to scale.']);
+['Dashed stub (left edge of tree):', 'root branch to 385 outgroup', 'sequences (not drawn).'].forEach((s, k) => R('root' + (k + 1), D.LBAR_X + D.LBAR_W + 1.6, Y0 - 10.4 + 2.9 * k, s, { fs: FL, color: SUB }));
+// matrix header: title, one legend for the three columns, names, units, colour bars and their end numbers
+const C = D.cols;
+R('mh1', C[0].x, Y0 - 23.0, 'Predicted core (2 D, 2 K)', { bold: true, fs: 7 });
+R('mh2', C[0].x, Y0 - 20.0, 'AlphaFold2 predictions, one row per living protein', { fs: FL, color: SUB });
+R('lg1', C[0].x, Y0 - 17.0, 'Lighter to darker: smaller to larger (area, contacts).', { fs: FL, color: INK });
+R('lg2', C[0].x, Y0 - 14.0, 'ΔG, predicted binding energy: less to more stable.', { fs: FL, color: INK });
+C.forEach((c, k) => {
+  R('cn-' + k, c.x + c.w / 2, Y0 - 10.6, c.name, { ha: 'center', fs: FL, color: INK });
+  R('cu-' + k, c.x + c.w / 2, Y0 - 7.8, '(' + c.unit + ')', { ha: 'center', fs: FL, color: SUB });
+  const left = c.invert ? c.hi : c.lo, right = c.invert ? c.lo : c.hi;       // light end left, dark end right (for ΔG the light end is the highest value)
+  R('kl-' + k, c.x, Y0 - 2.1, txt(left), { ha: 'left', fs: FL, color: SUB });
+  R('kr-' + k, c.x + c.w, Y0 - 2.1, txt(right), { ha: 'right', fs: FL, color: SUB });
+});
+// clade names on the left strips, turned
+const GN = { 'nif-iii': 'Nif-III', Vnf: 'Vnf', Anf: 'Anf', 'nif-i': 'Nif-I', 'nif-ii': 'Nif-II' };
+Object.entries(D.blocks).forEach(([g, b]) => R('bar-' + g, D.LBAR_X + D.LBAR_W / 2, (b.top + b.bottom) / 2, GN[g], { ha: 'center', rot: true, bold: true, fs: FL, color: b.text }));
+// numbered rings at the tips and at the ends of their rows
+D.rings.forEach((r) => { ring('ringt-' + r.n, r.xt, r.y, r.n); ring('ringm-' + r.n, D.RING_X, r.y, r.n); });
+// event discs and the clade each belongs to
+D.events.forEach((e) => { disc('disc-' + e.key, e.xm, e.y + e.dy, e.letter); R('evlab-' + e.key, e.label.x, e.label.t + e.label.h / 2, e.label.text, { fs: FL, color: INK }); });
+// scale bar below the tree: 0.5 substitutions per site, from the root edge
+const SB = 0.5 * D.S, SBY = Y1 + 3.4;
+f.route([[D.XR, Tp(SBY)], [D.XR + SB, Tp(SBY)]], { head: false, width: 0.35 }); EL.sbar = f.svg.lastElementChild;
+f.route([[D.XR, Tp(SBY - 0.9)], [D.XR, Tp(SBY + 0.9)]], { head: false, width: 0.35 }); EL.sbar0 = f.svg.lastElementChild;
+f.route([[D.XR + SB, Tp(SBY - 0.9)], [D.XR + SB, Tp(SBY + 0.9)]], { head: false, width: 0.35 }); EL.sbar1 = f.svg.lastElementChild;
+R('scale', D.XR + SB + 1.6, SBY, '0.5 amino-acid substitutions per site', { fs: FL, color: INK });
+
+// ---------------------------------------------------------------- panel b: three insertions in deposited structures
+head('b', RX, T0, 'Three insertions in deposited structures', [
+  'The enzyme core holds two D and two K subunits.',
+  'Pictures: X-ray entries of the Protein Data Bank (PDB).']);
+const KEY_T = T0 + 12.2;
+const SW = [[D.colors.D, 'D subunit'], [D.colors.K, 'K subunit'], [EVENT, 'inserted segment']];
+let kx = RX + 4.6;
+SW.forEach(([c, t], i) => {
+  box('sw', `left:${kx}mm;top:${KEY_T - 1.5}mm;width:3.8mm;height:3mm;background:${c};border:0.6pt solid #0A0A0A;border-radius:0.6mm`).id = 'keysw-' + i;
+  R('keyt-' + i, kx + 5.0, KEY_T, t, { fs: FL, color: INK });
+  kx += 5.0 + (t.length * 1.07) + 3.2;
+});
+// what the marks mean (one place, panel b header)
+const MT = RX + 5.0;
+ring('mk-ring', RX + 2.4, 18.2, 1);
+R('mk-0', MT, 18.2, 'Ring and number: the tip whose entry is shown below.', { fs: FL, color: INK });
+disc('mk-disc', RX + 2.4, 21.4, 'D');
+R('mk-1', MT, 21.4, 'D or K on a thick blue branch: where the paper', { fs: FL, color: INK });
+R('mk-2', MT, 24.3, 'places that insertion; the clade is named beside it.', { fs: FL, color: INK });
+R('mk-3', MT, 27.2, 'K appears first, then lengthens later.', { fs: FL, color: INK });
+R('mk-4', MT, 30.7, 'Residues: computed here; “Paper says”: the paper’s value.', { fs: FL, color: INK });
+// insets
+const SH = 40.6, SG = 4.55, RW = 40.0;
+const GAPC = { 'nif-i': 'Nif-I clade', 'nif-ii': 'Nif-II clade', Anf: 'Anf clade' };
+const LINES = { K: ['K-subunit', 'N-terminal', 'extension'], D_nif2: ['D-subunit', 'insertion'], D_anf: ['D-subunit', 'C-terminal', 'extension'] };
+const PAPER = { K: 'about 8 to 40', nif2: 'about 55', anf: 'about 60' };
+const slotTop = (i) => Y0 + i * (SH + SG);
+D.insets.forEach((ins, i) => {
+  const top = slotTop(i), b = D.blocks[ins.group], key = ins.pdb;
+  box('fr', `position:absolute;left:${RX}mm;top:${top}mm;width:${W - RX - X0}mm;height:${SH}mm;border:0.9pt solid ${RULE};border-radius:1.2mm;background:#fff`).id = 'frame-' + key;
+  box('st', `position:absolute;left:${RX}mm;top:${top}mm;width:2.2mm;height:${SH}mm;border:0.9pt solid ${RULE};border-radius:1.2mm 0 0 1.2mm;background:${b.bar}`).id = 'stripe-' + key;
+  ring('hring-' + ins.n, RX + 5.2, top + 2.8, ins.n);
+  R('ph-' + key, RX + 7.8, top + 2.8, key, { bold: true, fs: 7.5 });
+  R('ps-' + key, RX + 7.8 + 8.8, top + 2.8, `$${ins.species.replace('Azotobacter', 'A.').replace('Clostridium', 'C.')}$, ${GAPC[ins.group]}, ${parseFloat(ins.resolution).toFixed(2)} Å`, { fs: FL, color: SUB, mfs: FL });
+  const ar = window.ART['nsdb__' + key].ar, rh = RW / ar;
+  const ix = RX + 3.4, it = top + 5.0;
+  f.image({ x: ix, y: Tp(it + rh), w: RW, name: 'nsdb__' + key });
+  EL['img-' + key] = f.el.lastElementChild;
+  ['D', 'K'].forEach((l) => R(`lt-${key}-${l}`, ix + ins.letters[l][0] * RW, it + ins.letters[l][1] * rh, l, { ha: 'center', bold: true, fs: 7.5, color: INK }));
+  const tx = ix + RW + 1.9;
+  const lines = ins.letter === 'K' ? LINES.K : (ins.group === 'Anf' ? LINES.D_anf : LINES.D_nif2);
+  const ty = top + 8.2;
+  disc('idisc-' + key, tx + D.disc_r, ty, ins.letter);
+  lines.forEach((s, k) => R(`ev-${key}-${k}`, tx + 2 * D.disc_r + 1.3, ty + 3.0 * k, s, { fs: FL, color: INK }));
+  let t2 = ty + 3.0 * lines.length + 3.0;
+  R('ln1-' + key, tx, t2, ins.length + ' residues', { fs: FL, color: INK, bold: true });
+  const base = ['vs. ' + ins.base[0]].concat(ins.alt ? ['(' + ins.alt.length + ' vs. ' + ins.alt.name + ')'] : []);
+  base.forEach((s, k) => R(`bs-${key}-${k}`, tx, t2 + 2.9 * (k + 1), s, { fs: FL, color: SUB }));
+  t2 += 2.9 * base.length;
+  const pk = ins.letter === 'K' ? 'K' : (ins.group === 'Anf' ? 'anf' : 'nif2');
+  R(`pp-${key}-0`, tx, t2 + 5.4, 'Paper says', { fs: FL, color: SUB });
+  R(`pp-${key}-1`, tx, t2 + 8.3, PAPER[pk], { fs: FL, color: SUB });
+  // leader: from the right edge of the clade bar, level with the middle of the frame, to the frame
+  const y = top + SH / 2;
+  f.route([[D.BAR_X + D.BAR_W, Tp(y)], [RX, Tp(y)]], { head: false, width: 0.35 });
+  EL['lead-' + key] = f.svg.lastElementChild;
+});
+
+// ---------------------------------------------------------------- panel c: medians by clade
+const TC = Y1 + 8.5;
+head('c', X0, TC, 'Median of each trait, by clade', [
+  'Today: living proteins; ancestors: reconstructed. Medians over an even count can end in .5.',
+  'The 5 deepest ancestors have no clade label and are left out.']);
+const CRX = [30.0, 42.2, 57.4, 69.6, 84.8, 97.0, 112.2, 124.4];      // right edges of the eight numeric columns, millimetres
+const GROUPS = [['Proteins', 0], ['Surface area (Å²)', 2], ['Contacts', 4], ['ΔG (kcal/mol)', 6]];
+GROUPS.forEach(([t, j], g) => R('th-' + g, (CRX[j] + CRX[j + 1]) / 2 - 3.2, TC + 13.6, t, { ha: 'center', bold: true, fs: FL }));
+for (let j = 0; j < 8; j++) R('ts-' + j, CRX[j], TC + 16.6, j % 2 ? 'ancestors' : 'today', { ha: 'right', fs: FL, color: SUB });
+const TR0 = TC + 20.6, TRP = 3.5;
+const TFILL = { 'nif-i': [D.blocks['nif-i'].bar], 'nif-ii': [D.blocks['nif-ii'].bar], 'nif-iii': [D.blocks['nif-iii'].bar], an: [D.blocks.Vnf.bar, D.blocks.Anf.bar] };
+D.table.forEach((r, i) => {
+  const t = TR0 + TRP * i;
+  TFILL[r.key].forEach((c, k) => box('sw', `left:${X0 + k * 2.4}mm;top:${t - 1.2}mm;width:2.2mm;height:2.4mm;background:${c};border:0.6pt solid #0A0A0A;border-radius:0.4mm`).id = `tsw-${i}-${k}`);
+  R('tl-' + i, X0 + (TFILL[r.key].length === 2 ? 5.2 : 3.0), t, r.label, { fs: FL, color: INK });
+  const vals = [r.n_today, r.n_anc, r.total_area_today, r.total_area_anc, r.intermolecular_contacts_today, r.intermolecular_contacts_anc, r.binding_affinity_today, r.binding_affinity_anc];
+  vals.forEach((v, j) => R(`tv-${i}-${j}`, CRX[j], t, j < 2 ? String(v) : (j < 4 ? fmtInt(v) : (j < 6 ? fmtC(v) : fmtG(v))), { ha: 'right', fs: FL, color: INK }));
+});
+// notes beside the table
+const NX = 131.0;
+R('hr-h', NX, TC + TITLE_DT, 'About the numbers', { bold: true, fs: 7.5 });
+['Paper: Nif-I has the most contacts and',
+ 'the lowest ΔG; Nif-II the largest surface',
+ 'area. The order of the medians matches.',
+ 'Node 802, last common ancestor of Vnf',
+ 'and Anf, is labelled Nif-III in the data.'].forEach((s, k) => R('hr-' + k, NX, TC + 6.0 + 2.95 * k, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- foot
+R('credit', X0, H - 5.6, 'After Figs 3 and 4 of Cuevas Zuviría et al., eLife 2025, doi:10.7554/eLife.105613, CC BY 4.0. Data: Fig. 4 source data, PDB.', { fs: FL, color: SUB });
+R('credit2', X0, H - 2.3, 'Redesigned; tree and trait values from the source data, medians and segment lengths computed here.', { fs: FL, color: SUB });
+</script>
+<!--INLINE_JS checks.js-->
+</body></html>

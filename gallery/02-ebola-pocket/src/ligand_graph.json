@@ -1,0 +1,952 @@
+{
+ "component": "A1CIK",
+ "source": "data/pdb/9PEL.cif: _chem_comp_atom, _chem_comp_bond, and the coordinates of residue A:401",
+ "atoms": [
+  {
+   "name": "C10",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    147.23,
+    146.227,
+    118.531
+   ]
+  },
+  {
+   "name": "C13",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    145.71,
+    147.015,
+    116.844
+   ]
+  },
+  {
+   "name": "C17",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    144.703,
+    150.361,
+    119.123
+   ]
+  },
+  {
+   "name": "C20",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    146.191,
+    149.15,
+    124.553
+   ]
+  },
+  {
+   "name": "C21",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    147.11,
+    149.587,
+    125.499
+   ]
+  },
+  {
+   "name": "C22",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    148.219,
+    150.333,
+    125.088
+   ]
+  },
+  {
+   "name": "C26",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "R",
+   "xyz": [
+    152.497,
+    149.082,
+    125.729
+   ]
+  },
+  {
+   "name": "C28",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    154.183,
+    149.572,
+    123.919
+   ]
+  },
+  {
+   "name": "C01",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    147.724,
+    152.359,
+    120.115
+   ]
+  },
+  {
+   "name": "C02",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "R",
+   "xyz": [
+    148.359,
+    151.039,
+    120.559
+   ]
+  },
+  {
+   "name": "C04",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    147.469,
+    150.182,
+    122.761
+   ]
+  },
+  {
+   "name": "C05",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    148.401,
+    150.63,
+    123.738
+   ]
+  },
+  {
+   "name": "C06",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    146.258,
+    149.683,
+    121.024
+   ]
+  },
+  {
+   "name": "C07",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    145.643,
+    149.471,
+    119.642
+   ]
+  },
+  {
+   "name": "C08",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    145.982,
+    148.307,
+    118.872
+   ]
+  },
+  {
+   "name": "C09",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    146.922,
+    147.329,
+    119.325
+   ]
+  },
+  {
+   "name": "C12",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    146.621,
+    146.071,
+    117.288
+   ]
+  },
+  {
+   "name": "C14",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    145.395,
+    148.147,
+    117.653
+   ]
+  },
+  {
+   "name": "C16",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    144.15,
+    150.123,
+    117.866
+   ]
+  },
+  {
+   "name": "C19",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    146.386,
+    149.458,
+    123.184
+   ]
+  },
+  {
+   "name": "C23",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    149.24,
+    150.8,
+    126.138
+   ]
+  },
+  {
+   "name": "C25",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    151.207,
+    149.626,
+    125.105
+   ]
+  },
+  {
+   "name": "C27",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    153.447,
+    148.673,
+    124.679
+   ]
+  },
+  {
+   "name": "C29",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    155.057,
+    149.126,
+    122.944
+   ]
+  },
+  {
+   "name": "C30",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    155.2,
+    147.772,
+    122.709
+   ]
+  },
+  {
+   "name": "C31",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    154.468,
+    146.864,
+    123.453
+   ]
+  },
+  {
+   "name": "C32",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    154.627,
+    145.368,
+    123.192
+   ]
+  },
+  {
+   "name": "C36",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    153.595,
+    147.314,
+    124.432
+   ]
+  },
+  {
+   "name": "C37",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "S",
+   "xyz": [
+    152.949,
+    150.264,
+    126.688
+   ]
+  },
+  {
+   "name": "C38",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    153.807,
+    149.622,
+    127.894
+   ]
+  },
+  {
+   "name": "C40",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    155.932,
+    150.964,
+    127.412
+   ]
+  },
+  {
+   "name": "C42",
+   "element": "C",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    151.82,
+    150.806,
+    127.1
+   ]
+  },
+  {
+   "name": "C44",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    148.921,
+    150.187,
+    119.392
+   ]
+  },
+  {
+   "name": "C45",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    148.533,
+    150.427,
+    118.068
+   ]
+  },
+  {
+   "name": "C46",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    149.04,
+    149.666,
+    117.021
+   ]
+  },
+  {
+   "name": "C47",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    149.949,
+    148.658,
+    117.27
+   ]
+  },
+  {
+   "name": "C48",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    150.365,
+    148.396,
+    118.6
+   ]
+  },
+  {
+   "name": "C49",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    149.875,
+    149.132,
+    119.641
+   ]
+  },
+  {
+   "name": "C50",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    150.333,
+    148.815,
+    120.96
+   ]
+  },
+  {
+   "name": "C51",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    151.249,
+    147.797,
+    121.175
+   ]
+  },
+  {
+   "name": "C52",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    151.737,
+    147.058,
+    120.104
+   ]
+  },
+  {
+   "name": "C53",
+   "element": "C",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    151.304,
+    147.348,
+    118.821
+   ]
+  },
+  {
+   "name": "F33",
+   "element": "F",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    154.405,
+    144.672,
+    124.341
+   ]
+  },
+  {
+   "name": "F34",
+   "element": "F",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    155.889,
+    145.115,
+    122.751
+   ]
+  },
+  {
+   "name": "F35",
+   "element": "F",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    153.733,
+    144.968,
+    122.249
+   ]
+  },
+  {
+   "name": "N03",
+   "element": "N",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    147.384,
+    150.311,
+    121.395
+   ]
+  },
+  {
+   "name": "N15",
+   "element": "N",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    144.497,
+    149.051,
+    117.18
+   ]
+  },
+  {
+   "name": "N18",
+   "element": "N",
+   "aromatic": true,
+   "stereo": "",
+   "xyz": [
+    145.661,
+    149.16,
+    122.086
+   ]
+  },
+  {
+   "name": "N24",
+   "element": "N",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    150.642,
+    150.386,
+    126.049
+   ]
+  },
+  {
+   "name": "N39",
+   "element": "N",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    155.193,
+    149.981,
+    128.183
+   ]
+  },
+  {
+   "name": "O41",
+   "element": "O",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    153.305,
+    148.797,
+    128.584
+   ]
+  },
+  {
+   "name": "O43",
+   "element": "O",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    148.886,
+    151.477,
+    127.039
+   ]
+  },
+  {
+   "name": "CL11",
+   "element": "Cl",
+   "aromatic": false,
+   "stereo": "",
+   "xyz": [
+    148.403,
+    145.008,
+    119.101
+   ]
+  }
+ ],
+ "bonds": [
+  {
+   "a": "C13",
+   "b": "C12",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C13",
+   "b": "C14",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C46",
+   "b": "C47",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C46",
+   "b": "C45",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "N15",
+   "b": "C14",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "N15",
+   "b": "C16",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C47",
+   "b": "C48",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C12",
+   "b": "C10",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C14",
+   "b": "C08",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C16",
+   "b": "C17",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C45",
+   "b": "C44",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C10",
+   "b": "CL11",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C10",
+   "b": "C09",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C48",
+   "b": "C53",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C48",
+   "b": "C49",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C53",
+   "b": "C52",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C08",
+   "b": "C09",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C08",
+   "b": "C07",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C17",
+   "b": "C07",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C44",
+   "b": "C49",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C44",
+   "b": "C02",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C49",
+   "b": "C50",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C07",
+   "b": "C06",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C52",
+   "b": "C51",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C01",
+   "b": "C02",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C02",
+   "b": "N03",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C50",
+   "b": "C51",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C06",
+   "b": "N03",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C06",
+   "b": "N18",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "N03",
+   "b": "C04",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "N18",
+   "b": "C19",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "F35",
+   "b": "C32",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C30",
+   "b": "C29",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C30",
+   "b": "C31",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "F34",
+   "b": "C32",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C04",
+   "b": "C19",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C04",
+   "b": "C05",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C29",
+   "b": "C28",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C19",
+   "b": "C20",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C32",
+   "b": "C31",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C32",
+   "b": "F33",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C31",
+   "b": "C36",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C05",
+   "b": "C22",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C28",
+   "b": "C27",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C36",
+   "b": "C27",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C20",
+   "b": "C21",
+   "order": "doub",
+   "aromatic": true
+  },
+  {
+   "a": "C27",
+   "b": "C26",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C22",
+   "b": "C21",
+   "order": "sing",
+   "aromatic": true
+  },
+  {
+   "a": "C22",
+   "b": "C23",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C25",
+   "b": "C26",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C25",
+   "b": "N24",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C26",
+   "b": "C37",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "N24",
+   "b": "C23",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "N24",
+   "b": "C42",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C23",
+   "b": "O43",
+   "order": "doub",
+   "aromatic": false
+  },
+  {
+   "a": "C37",
+   "b": "C42",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C37",
+   "b": "C38",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C40",
+   "b": "N39",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C38",
+   "b": "N39",
+   "order": "sing",
+   "aromatic": false
+  },
+  {
+   "a": "C38",
+   "b": "O41",
+   "order": "doub",
+   "aromatic": false
+  }
+ ],
+ "n_heavy": 53
+}

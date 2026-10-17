@@ -1,0 +1,19 @@
+module,subunit,entities,deposited_entity_name,gene_id,chains,copies,mark_fig1F,tone_hex
+F1,α,16,"ATP synthase subunit alpha, mitochondrial",ACANB15922,a b c,3,dot,#3475B3
+F1,β,17,ATP synthase subunit beta,ACANB02410,d e f,3,dot,#2A4588
+F1,γ,3,"F-ATPase gamma subunit,ATP synthase gamma subunit, mitochondrial",ACANB07530,A,1,dot,#63A6E7
+F1,δ,5,"ATP synthase, Delta/Epsilon chain, betasandwich domain containing protein",ACANB02409,C,1,dot,#262066
+F1,ε,9,"ATP synthase subunit epsilon, mitochondrial, putative",ACANB12077,H,1,star,#D9EAFE
+F1,IF1,7,ATP synthase inhibitory factor 1 (IF1),ACANB08262,E,1,star,#A2D1FF
+Fo,Atp6,1,ATP synthase subunit a,ACANB15943,6,1,dot,#A67C0B
+Fo,c,14,"ATP synthase subunit 9, mitochondrial",ACANB15917,P Q R S T U V W X,9,star,#DBA936
+Fo,f,12,"ATP synthase subunit f, mitochondrial",ACANB14194,K,1,dot,#4B3202
+Fo,i/j,11,"ATP synthase subunit i/j, mitochondrial",ACANB04724,J,1,dot,#775002
+Stalk,8,2,ORFB,ACANB15938,8,1,dot,#FEDEE2
+Stalk,b,4,ORF25,ACANB15939,B,1,dot,#FD8885
+Stalk,d,6,"ATP synthase subunit d, mitochondrial",ACANB10705,D,1,dot,#992E49
+Stalk,OSCP,8,"ATP synthase OSCP, mitochondrial",ACANB01783,G,1,dot,#640325
+Stalk,04460,15,ACANB04460,ACANB04460,Z,1,star,#D4645A
+Stalk,MASA,13,ACANB14707,ACANB14707,M,1,dot,#FFBCBB
+Stalk,MDH,10,malate dehydrogenase,ACANB11954,I L,2,dot,#B64B39
+,unassigned,18 19 20 21,unknown protein,,1 2 3 5,4,,#777777

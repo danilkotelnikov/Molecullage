@@ -1,0 +1,6 @@
+data/*
+!data/SOURCES.txt
+art/*__full.png
+art/render_progress.log
+/02-ebola-pocket.html
+__pycache__/

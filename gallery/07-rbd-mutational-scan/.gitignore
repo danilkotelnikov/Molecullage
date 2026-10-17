@@ -1,0 +1,11 @@
+data/
+art/scanprobe_*.png
+art/scanid_final.png
+art/zoomid_final.png
+art/scan__ace2.png
+art/scan__kp.png
+art/scan__lp.png
+art/zoom__ace2.png
+art/zoom__kp.png
+art/zoom__lp.png
+art/render_progress.log

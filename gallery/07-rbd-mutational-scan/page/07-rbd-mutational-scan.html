@@ -1,0 +1,183 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>07-rbd-mutational-scan</title></head><body>
+<!--INLINE_JS plots_layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG plots_layer.svg--></div></div>
+<script>
+// Redesign of Fig. 2 of Taylor and Starr 2026, PLoS Pathogens 22(6):e1014074. matplotlib (src/make_plots.py) draws the heat-map cells, strips, frames, colour bars, key glyphs and ticks
+// as one SVG layer; ChimeraX renders (src/render_scan.py, trimmed by struct/trim.py) are placed from the art index. This page draws every text at the positions of window.DATA
+// (top-down mm, origin top-left) and the lines and outlines of panel b from the render anchors, then measures the rendered page: checkAlign() throws one Error that lists every
+// position that is off its grid line by more than TOL, every overlap of text on text, every number that does not lie inside its outline.
+const D = window.DATA, W = D.W, H = D.H, TOL = 0.25;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', FL = (window.CONFIG || {}).floorPt || 6.55;
+const REC = {};
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+const NS = 'http://www.w3.org/2000/svg';
+const svgEl = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); f.svg.appendChild(e); return e; };
+// text turned by 90 degrees, reading upwards, whose top end sits at tTop (its end next to the map): measure the unturned text first
+const RV = (name, x, tTop, s, o = {}) => {
+  const tmp = f.rich(0, Tp(0), s, { fs: FL, ...o }); const w = tmp.getBoundingClientRect().width * 25.4 / 96; tmp.remove();
+  return R(name, x, tTop + w / 2, s, { fs: FL, ha: 'center', rot: true, ...o });
+};
+const MINUS = '−';
+const T1 = D.MAP_B;
+const bgs = Object.keys(D.blocks);
+const CAP1 = 2.2, CAP2 = 5.2;       // caption rows of a colour bar, relative to the head of its panel
+const SUBY = [5.8, 9.0, 12.2, 15.4];  // sub-lines of a panel head
+
+// ---- one colour bar: two caption lines above, tick numbers, the words for its two ends
+function barTexts(id, b, head, c1, c2, lo, hi) {
+  R('barcap1-' + id, b.x, head + CAP1, c1, { bold: true, fs: FL });
+  R('barcap2-' + id, b.x, head + CAP2, c2, { fs: FL, color: SUB });
+  b.ticks.forEach((tk, i) => R(`bartick-${id}-${i}`, tk.x, b.t + b.h + 3.0, (tk.v > 0 ? '+' : tk.v < 0 ? MINUS : '') + Math.abs(tk.v), { ha: 'center', fs: FL }));
+  R('barlo-' + id, b.x, b.t + b.h + 6.0, lo, { fs: FL, color: SUB });
+  R('barhi-' + id, b.x + b.L, b.t + b.h + 6.0, hi, { fs: FL, color: SUB, ha: 'right' });
+}
+
+// ================================================================ panel a: heat maps
+f.letter('a', 1.5, Tp(0.6));
+R('title-a', 6.1, 2.2, 'ACE2 binding of every RBD mutation', { bold: true, fs: 7.5 });
+['Each column is a site, each row the amino acid it is changed to.',
+ 'Purple: ACE2 binding weakened. Green: strengthened. White: unchanged.',
+ 'del: the residue deleted (row under the white line).',
+ 'Row order: that of the paper’s Fig. 5B.'].forEach((s, k) => R('sub-a' + k, 6.1, SUBY[k], s, { color: SUB }));
+barTexts('bind', D.bars.bind, 0, 'Map and binding-strip scale', 'ACE2 binding change (' + MINUS + 'log10 KD)', 'lower affinity', 'higher affinity');
+barTexts('expr', D.bars.expr, 0, 'Expression-strip scale', 'RBD expression change (logMFI)', 'lower expression', 'higher expression');
+// key line
+['unmutated residue (site’s own)', 'not measured: left empty, not estimated', 'hotspot site named in the paper'].forEach((s, i) => R('key-' + i, D.key.x[i] + D.key.text_dx, D.key.t, s, { fs: FL }));
+// headings of the two blocks
+R('g1-c', D.f_c[0], D.T.g1, 'ACE2-contact sites (20)', { bold: true });
+R('g2-c', D.f_c[0], D.T.g2, 'heavy atom under 5 Å from ACE2 in 8QSQ', { fs: FL, color: SUB });
+R('g1-o', D.f_o[0], D.T.g1, 'Other sites (180)', { bold: true });
+R('g2-o', D.f_o[0], D.T.g2, 'narrower columns; contact sites not repeated', { fs: FL, color: SUB });
+// per background: name and counts (turned), strip names, amino-acid letters
+const AA = Object.keys(D.row_y);
+bgs.forEach((n, bi) => {
+  const b = D.blocks[n], c = D.counts[n], mid = b.map_t + D.MAP_H / 2;
+  R('bgname-' + bi, 3.4, mid, n, { bold: true, fs: 7.5, ha: 'center', rot: true });
+  R('bgcount-' + bi, 6.4, mid, `${c.substitutions.toLocaleString('en-US')} substitutions, ${c.deletions} deletions`, { fs: FL, color: SUB, ha: 'center', rot: true });
+  R('bgmiss-' + bi, 9.3, mid, `no value: binding ${c.missing_binding}, expression ${c.missing_expression}`, { fs: FL, color: SUB, ha: 'center', rot: true });
+  R('striplab-b' + bi, D.X0 - 1.5, b.strip_b + D.STRIP_H / 2, 'site mean, binding', { fs: FL, color: SUB, ha: 'right' });
+  R('striplab-e' + bi, D.X0 - 1.5, b.strip_e + D.STRIP_H / 2, 'site mean, expression', { fs: FL, color: SUB, ha: 'right' });
+  AA.forEach((a, i) => R(`aa-${bi}-${i}`, D.X0 - 1.5, b.map_t + D.row_y[a] + D.ROW / 2, a === '-' ? 'del' : a, { fs: FL, ha: 'right' }));
+});
+// site labels under the lower map: every contact site (turned, unmutated letter and number), every tenth site of the other block in its row, 483
+D.contact.forEach((c, i) => RV('csite-' + i, c.x, T1 + 1.9, c.wt + c.site, { bold: c.hot, color: INK }));
+D.ticks.forEach((p, i) => R('tick-' + i, p.x, D.t_lab + D.row_lab * p.row, String(p.site), { ha: 'center', fs: FL }));
+R('n483', D.x483 + 1.3, D.T.g2, '483 deleted', { fs: FL, color: SUB });
+R('xaxis1', (D.f_c[0] + D.f_o[1]) / 2, D.ax[0], 'RBD site, spike numbering; black ticks every tenth site (500: contact block).', { ha: 'center', fs: FL, color: SUB });
+R('xaxis2', (D.f_c[0] + D.f_o[1]) / 2, D.ax[1], 'Grey marks: where contact sites were taken out. Triangle: site 483, deleted (paper’s Fig. 1A).', { ha: 'center', fs: FL, color: SUB });
+
+// ================================================================ panel b: the RBD in PDB 8QSQ coloured by the site mean of ACE2 binding, each background with its enlargement of the three hotspot sites
+const PB = D.pb;
+f.letter('b', 1.5, Tp(PB.t + 0.6));
+R('title-b', 6.1, PB.t + 2.2, 'Mean effect on the RBD structure', { bold: true, fs: 7.5 });
+['Structure of BA.2.86 (PDB 8QSQ), coloured with KP.3.1.1 and LP.8.1 data.',
+ 'Outlined: the paper’s hotspots 455, 456, 493 (repeated substitutions).',
+ 'Grey: ACE2 within 5 Å of the RBD. White: site mean near zero.',
+ 'Not in 8QSQ, not drawn: sites ' + D.no_coords_text + '.'].forEach((s, k) => R('sub-b' + k, 6.1, PB.t + SUBY[k], s, { color: SUB }));
+barTexts('struct', D.bars.struct, PB.t, 'Structure colour scale', 'site mean of ACE2 binding change', 'lower affinity', 'higher affinity');
+const IM = [], ZM = [], LABS = [];
+const inPoly = (pt, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < ((xj - xi) * (pt[1] - yi)) / (yj - yi) + xi) c = !c; } return c; };
+bgs.forEach((n, bi) => {
+  const tag = bi === 0 ? 'kp' : 'lp';
+  R('rname-' + bi, PB.x_ov[bi], PB.names_t, n, { bold: true });
+  R('zname-' + bi, PB.x_in[bi], PB.names_t, n + ' enlarged', { bold: true });
+  f.image({ x: PB.x_ov[bi], y: Tp(PB.rt + PB.rh), w: PB.rw, name: 'scan__ace2' });
+  const r = f.image({ x: PB.x_ov[bi], y: Tp(PB.rt + PB.rh), w: PB.rw, name: 'scan__' + tag });
+  f.image({ x: PB.x_in[bi], y: Tp(PB.rt + PB.rh_in), w: PB.rw, name: 'zoom__ace2' });
+  const z = f.image({ x: PB.x_in[bi], y: Tp(PB.rt + PB.rh_in), w: PB.rw, name: 'zoom__' + tag });
+  IM.push(r); ZM.push(z);
+  const P = (im, k) => { const p = im.pt(k); return p ? [p[0], H - p[1]] : null; };
+  // frame of the enlargement; dashed box on the overview and the two lines between them
+  svgEl('rect', { x: PB.x_in[bi], y: PB.rt, width: PB.rw, height: PB.rh_in, fill: 'none', stroke: INK, 'stroke-width': 0.25 });
+  const tl = P(r, 'box_tl'), br = P(r, 'box_br');
+  svgEl('rect', { x: tl[0], y: tl[1], width: br[0] - tl[0], height: br[1] - tl[1], fill: 'none', stroke: INK, 'stroke-width': 0.25, 'stroke-dasharray': '0.9 0.6' });
+  [[[br[0], tl[1]], [PB.x_in[bi], PB.rt]], [[br[0], br[1]], [PB.x_in[bi], PB.rt + PB.rh_in]]].forEach(([p, q]) =>
+    svgEl('line', { x1: p[0], y1: p[1], x2: q[0], y2: q[1], stroke: '#777777', 'stroke-width': 0.2, 'stroke-dasharray': '0.9 0.6' }));
+  LABS.push({ bi, box: [tl, br], frame: [PB.x_in[bi], PB.rt, PB.x_in[bi] + PB.rw, PB.rt + PB.rh_in], ov: [PB.x_ov[bi], PB.rt, PB.x_ov[bi] + PB.rw, PB.rt + PB.rh], polys: {} });
+  // the hotspot sites on the enlargement: outline of the visible patch of the residue, its number on the patch
+  D.hotspots.forEach((s) => {
+    const npts = window.ART['zoom__' + tag].meta['hot_' + s + '_npts'];
+    const poly = [...Array(npts).keys()].map((i) => P(z, `hot_${s}_c${i}`));
+    svgEl('polygon', { points: poly.map((p) => p.join(',')).join(' '), fill: 'none', stroke: INK, 'stroke-width': 0.3, 'stroke-linejoin': 'round' });
+    const c = P(z, 'hot_' + s);
+    R(`hot-${bi}-${s}`, c[0], c[1], String(s), { bold: true, ha: 'center' });
+    LABS[LABS.length - 1].polys[s] = { poly, c };
+  });
+});
+// notes under the tiles
+[D.diff_text, '8QSQ chain A numbers: spike minus 3 (minus 4 from 484).'].forEach((t, k) => R('note-b' + k, 1.5, PB.notes_t + 3.0 * k, t, { fs: FL, color: SUB }));
+
+// ================================================================ foot
+R('boundary', 1.5, H - 5.6, 'Heat-map cells: S1 Data as published. Site means, contact sites, render colours: computed here.', { fs: FL, color: SUB });
+R('credit', 1.5, H - 2.3, 'After Fig. 2 of Taylor and Starr, PLoS Pathogens 2026, doi:10.1371/journal.ppat.1014074, CC BY 4.0. Data: S1 Data. Redesigned; values as published.', { fs: FL, color: SUB });
+
+// ================================================================ checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const m = {}; Object.entries(REC).forEach(([k, el]) => { m[k] = M(el); });
+  const S = (id) => { const e = document.getElementById(id); if (!e) { fails.push('missing layer element ' + id); return { l: 0, t: 0, r: 0, b: 0, w: 0, h: 0, cx: 0, cy: 0 }; } return M(e); };
+  // 1. titles and sub-lines on the left edge of their panel; headings on the frame of their block
+  near(m['title-a'].l, 6.1, 'a: title x'); near(m['title-b'].l, 6.1, 'b: title x');
+  [0, 1, 2, 3].forEach((k) => { near(m['sub-a' + k].l, 6.1, `a: sub-line ${k} x`); near(m['sub-b' + k].l, 6.1, `b: sub-line ${k} x`); });
+  ['g1-c', 'g2-c'].forEach((k) => near(m[k].l, D.f_c[0], k + ' on the contact frame')); ['g1-o', 'g2-o'].forEach((k) => near(m[k].l, D.f_o[0], k + ' on the other frame'));
+  // 2. the maps: frames of both blocks, strips and maps, on the data; the padding inside a frame is the same at both ends
+  bgs.forEach((n) => {
+    const b = D.blocks[n];
+    ['c', 'o'].forEach((g) => {
+      const x0 = g === 'c' ? D.f_c[0] : D.f_o[0], x1 = g === 'c' ? D.f_c[1] : D.f_o[1];
+      [['map', b.map_t, D.MAP_H], ['bind', b.strip_b, D.STRIP_H], ['expr', b.strip_e, D.STRIP_H]].forEach(([k, t, h]) => {
+        const e = S(`box_${k}_${g}_${n}`);
+        near(e.l, x0, `${n} ${k} ${g}: left`, 0.3); near(e.r, x1, `${n} ${k} ${g}: right`, 0.3); near(e.t, t, `${n} ${k} ${g}: top`, 0.3); near(e.b, t + h, `${n} ${k} ${g}: bottom`, 0.3);
+      });
+    });
+    const cb = S(`cells_${n}`);
+    near(cb.l, D.f_c[0] + D.PAD, `${n}: first column one padding inside the frame`, 0.3); near(cb.r, D.f_o[1] - D.PAD, `${n}: last column one padding inside the frame`, 0.3);
+    D.hotspots.forEach((s) => {
+      const e = S(`hot_${s}_${n}`), c = D.contact.find((q) => q.site === s);
+      near(e.cx, c.x, `${n}: hotspot ${s} column centre`, 0.3); near(e.t, b.strip_b, `${n}: hotspot ${s} box top`, 0.6); near(e.b, b.map_t + D.MAP_H, `${n}: hotspot ${s} box bottom`, 0.6);
+    });
+  });
+  // 3. site labels under their columns and ticks, amino-acid letters on their rows, with 1 mm or more between letters and frame
+  D.contact.forEach((c, i) => near(m['csite-' + i].cx, c.x, `contact label ${c.site}: centre on its column`, 0.3));
+  D.ticks.forEach((p, i) => near(m['tick-' + i].cx, p.x, `tick label ${p.site}: centre on its tick`, 0.3));
+  bgs.forEach((n, bi) => AA.forEach((a, i) => { const e = m[`aa-${bi}-${i}`]; near(e.cy, D.blocks[n].map_t + D.row_y[a] + D.ROW / 2, `${n}: letter ${a} on its row`, 0.4); if (!(D.f_c[0] - e.r >= 1.0)) fails.push(`${n}: letter ${a} is less than 1 mm from the frame`); }));
+  // 4. colour-bar texts on their ticks and ends
+  Object.entries(D.bars).forEach(([k, b]) => {
+    b.ticks.forEach((tk, i) => near(m[`bartick-${k}-${i}`].cx, tk.x, `${k} tick label ${tk.v}`, 0.3));
+    near(m['barcap1-' + k].l, b.x, `${k} caption left`); near(m['barcap2-' + k].l, b.x, `${k} caption 2 left`); near(m['barlo-' + k].l, b.x, `${k} low word left`); near(m['barhi-' + k].r, b.x + b.L, `${k} high word right`);
+    ['barcap1-', 'barcap2-'].forEach((q) => { if (m[q + k].r > b.x + b.L + 0.5) fails.push(`${q}${k} runs ${(m[q + k].r - b.x - b.L).toFixed(1)} mm past its bar`); });
+  });
+  // 5. renders: size and place from the data; the dashed box and the outlines sit inside their images; each hotspot number lies wholly inside the outline of its residue's patch
+  IM.forEach((r) => near(r.w, PB.rw, 'overview width', 1e-6)); ZM.forEach((r) => near(r.w, PB.rw, 'enlargement width', 1e-6));
+  LABS.forEach((L) => {
+    const [tl, br] = L.box;
+    if (tl[0] < L.ov[0] || tl[1] < L.ov[1] || br[0] > L.ov[2] || br[1] > L.ov[3]) fails.push(`render ${L.bi}: the dashed box leaves the overview`);
+    near((br[0] - tl[0]) / (br[1] - tl[1]), PB.ar_in, 'dashed box has the aspect of the enlargement', 0.01);
+    D.hotspots.forEach((s) => {
+      const { poly, c } = L.polys[s], e = M(REC[`hot-${L.bi}-${s}`]);
+      poly.forEach((p) => { if (p[0] < L.frame[0] - 0.01 || p[0] > L.frame[2] + 0.01 || p[1] < L.frame[1] - 0.01 || p[1] > L.frame[3] + 0.01) fails.push(`outline of ${s} leaves the enlargement`); });
+      near(e.cx, c[0], `label ${s} centre x on its anchor`, 0.15); near(e.cy, c[1], `label ${s} centre y on its anchor`, 0.35);
+      const h = 0.72 * 7 * 25.4 / 72, corners = [[e.l, e.cy - h / 2], [e.r, e.cy - h / 2], [e.l, e.cy + h / 2], [e.r, e.cy + h / 2]];
+      corners.forEach((q) => { if (!inPoly(q, poly)) fails.push(`number ${s} (render ${L.bi}) is not wholly inside the outline of its residue`); });
+    });
+  });
+  // 6. nothing on text: every pair of text boxes (digits-high boxes for horizontal text) must be apart; the turned site labels overlap in their boxes by design (their ink is narrower)
+  const ink = (k) => { const e = REC[k], b = m[k]; const fs = parseFloat(getComputedStyle(e).fontSize) * K * 0.5; const rot = /rotate/.test(e.style.transform); if (rot) return b; const h = 2 * fs * 0.72; return { l: b.l, r: b.r, t: b.cy - h / 2, b: b.cy + h / 2 }; };
+  const names = Object.keys(m).filter((k) => !k.startsWith('csite-'));
+  for (let i = 0; i < names.length; i++) for (let j = i + 1; j < names.length; j++) {
+    const a = ink(names[i]), b = ink(names[j]);
+    if (a.l < b.r - 0.15 && b.l < a.r - 0.15 && a.t < b.b - 0.15 && b.t < a.b - 0.15) fails.push(`text overlaps text: ${names[i]} and ${names[j]}`);
+  }
+  // the turned site labels against the rest
+  D.contact.forEach((c, i) => { const a = m['csite-' + i]; names.forEach((k) => { const b = ink(k); if (a.cx - 0.8 < b.r && b.l < a.cx + 0.8 && a.t < b.b && b.t < a.b) fails.push(`contact label ${c.site} overlaps ${k}`); }); });
+  // 7. nothing within the outer margin, nothing past the page
+  Object.entries(m).forEach(([k, e]) => { if (e.l < 1.0 || e.t < 0.5 || e.r > W - 1.0 || e.b > H - 0.2) fails.push(`${k} is outside the margin (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`); });
+  if (fails.length) throw new Error('checkAlign: ' + fails.length + ' problem(s)\n' + fails.join('\n'));
+}
+checkAlign();
+</script></body></html>

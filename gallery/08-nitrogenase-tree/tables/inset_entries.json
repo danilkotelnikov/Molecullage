@@ -1,0 +1,53 @@
+{
+ "3U7Q": {
+  "title": "A. vinelandii nitrogenase MoFe protein at atomic resolution",
+  "method": "X-RAY DIFFRACTION",
+  "resolution": "1.00",
+  "organism": [
+   "Azotobacter vinelandii"
+  ],
+  "chains_D": [
+   "A",
+   "C"
+  ],
+  "chains_K": [
+   "B",
+   "D"
+  ],
+  "released": "2011-10-14"
+ },
+ "4WES": {
+  "title": "Nitrogenase molybdenum-iron protein from Clostridium pasteurianum at 1.08 A resolution",
+  "method": "X-RAY DIFFRACTION",
+  "resolution": "1.08",
+  "organism": [
+   "Clostridium pasteurianum"
+  ],
+  "chains_D": [
+   "A",
+   "C"
+  ],
+  "chains_K": [
+   "B",
+   "D"
+  ],
+  "released": "2014-09-10"
+ },
+ "8BOQ": {
+  "title": "A. vinelandii Fe-nitrogenase FeFe protein",
+  "method": "X-RAY DIFFRACTION",
+  "resolution": "1.547",
+  "organism": [
+   "Azotobacter vinelandii DJ"
+  ],
+  "chains_D": [
+   "A",
+   "D"
+  ],
+  "chains_K": [
+   "B",
+   "E"
+  ],
+  "released": "2022-11-15"
+ }
+}

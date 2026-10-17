@@ -1,0 +1,10 @@
+# The seven variants Table 1 marks N.D. (activity not detected). Highest mean kapp (min-1) of the 8 or 12 [ATP] points of the source file (Figure 1 - source data 2),
+# the [ATP] where it occurs, the highest [ATP] with a value, the number of points with a value, and [ATP] values (mM) where the file cell is blank.
+variant,highest_mean_kapp_per_min,at_ATP_mM,highest_ATP_mM,points_with_value,blank_cells_at_ATP_mM
+E29A,0.000986,0.3,5.0,12,
+E29V,0.001416,5.0,5.0,9,0.05;0.1;0.2
+E29K,0.000000,0.0,1.0,8,
+E29G,0.001015,1.0,1.0,8,
+E32K,0.001233,0.75,1.0,8,
+E32G,0.003058,0.75,1.0,8,
+E29Q/E32Q,0.000664,0.05,5.0,12,

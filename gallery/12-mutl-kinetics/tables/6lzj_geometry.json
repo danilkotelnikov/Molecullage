@@ -1,0 +1,61 @@
+{
+ "entry": "6LZJ",
+ "chain": "A",
+ "resolution_A": 1.73,
+ "offset_file_to_paper": 7,
+ "file_number": {
+  "Glu29": 22,
+  "Glu32": 25,
+  "Asn33": 26
+ },
+ "water": {
+  "resname": "HOH",
+  "number": 565,
+  "xyz": [
+   8.685,
+   38.998,
+   -23.901
+  ]
+ },
+ "Glu29_to_water": {
+  "atom": "OE1",
+  "A": 2.89
+ },
+ "Glu32_to_water": {
+  "atom": "OE1",
+  "A": 2.76
+ },
+ "water_to_PG": 3.54,
+ "water_to_Mg": 4.66,
+ "Glu29_to_Glu32_closest_O": 4.2,
+ "other_waters_within_3p2_of_either": [
+  {
+   "number": 513,
+   "to_Glu29": 4.71,
+   "to_Glu32": 2.47
+  },
+  {
+   "number": 522,
+   "to_Glu29": 6.66,
+   "to_Glu32": 2.55
+  },
+  {
+   "number": 526,
+   "to_Glu29": 2.58,
+   "to_Glu32": 4.06
+  },
+  {
+   "number": 550,
+   "to_Glu29": 2.69,
+   "to_Glu32": 7.5
+  }
+ ],
+ "ligand": {
+  "resname": "ACP",
+  "number": 402,
+  "atoms": 31
+ },
+ "mg": {
+  "number": 401
+ }
+}

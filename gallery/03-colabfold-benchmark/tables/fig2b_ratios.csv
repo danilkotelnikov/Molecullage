@@ -1,0 +1,6 @@
+# Mirdita et al. 2022, Nature Methods 19:679-682, doi 10.1038/s41592-022-01488-1 (CC BY 4.0), Source Data Fig. 2, sheet fig2b. Per target, seconds of the first setup divided by seconds of the second (af2 = AlphaFold2, af2colab = AlphaFold-Colab, bfd = ColabFold BFD/MGnify, colabfolddb = ColabFold ColabFoldDB); median over the 20 targets. Computed here, not in the paper.
+pair,median_ratio_of_search_times_20_targets
+af2/bfd,90.849
+af2/colabfolddb,76.314
+af2colab/bfd,80.543
+af2colab/colabfolddb,66.513

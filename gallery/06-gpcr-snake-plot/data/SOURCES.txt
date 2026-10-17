@@ -1,0 +1,1 @@
+pdb/7F61.cif	https://files.rcsb.org/download/7F61.cif	422633 bytes	sha256 098bb4f13be3d277d7d8b212010997f41dab62f80f48e8ecf749f6a9dfc1076e	pinned

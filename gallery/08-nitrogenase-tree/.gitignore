@@ -1,0 +1,4 @@
+data/*
+!data/SOURCES.txt
+art_flip/
+art/render.log

@@ -1,0 +1,261 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>B cell reporter screens: mTORC1 and GSK3</title></head><body>
+<!--INLINE_JS layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG layer.svg--></div></div>
+<script>
+// Redesign of the graphical abstract and Fig. 2A of Kalchschmidt et al. 2025 (Cell Reports 44(10):116361), as a three-row workflow.
+// a  Cells: the 47 reporter genes, grouped as the paper's Fig. 2A groups them, aligned pills at 6.55 pt (no arrows: the text states none between the groups).
+// b  Screen: proportional bars of the regulators and links (Table S3) and the two gene groups the same regulators move in opposite ways (Results, "Broad bi-phasic impact").
+// c  Analysis: RNA-seq changes of ten genes the paper names under rapamycin, LY2090314 and both (Tables S5, S9, S10) and the 303 genes changed by each drug (S5, S9).
+// Colours: purple and apricot = the role of a regulator (b); maroon and mint = RNA up or down after a drug (c). Dark blue = a step or pathway. Pale blue = a gene. Cream = a count.
+// matplotlib draws bars, matrix and scatter (src/make_layer.py); this page draws every word. Positions come from window.DATA. Checks at the end throw on a misalignment.
+const D = window.DATA, W = D.W, H = D.H;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;                                   // top-down mm -> kit y
+const INK = '#0A0A0A', SUB = '#2B2B2B', NC = '#6B6B6B', UPD = '#7A29BB', DNT = '#9A5600';   // text colours: the dark edge tones of purple and apricot; n.c. in mid grey (5.3:1 on white)
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, mfs: 8.4, ...o });   // t = centre line of the text
+const rt = (pts, o = {}) => f.route(pts.map(([x, t]) => [x, Tp(t)]), o);
+const tool = (x, t, w, h, title, sub, o = {}) => f.tool({ x, y: Tp(t + h), w, h, title, sub, fam: 'indigo', ...o });
+const pill = (x, t, w, h, text, sub, fam, o = {}) => f.pill({ x, y: Tp(t + h), w, h, text, sub, fam, ...o });
+const badge = (x, t, n, r) => f.badge({ x, y: Tp(t), n, fam: 'grey', r });
+const GL = 1.5, GR = 176.5, LX = 8.4, LW = 32, OX = 44.0;      // column edges: letters and strips, left blocks, objects
+const R1 = 1.5, R2 = 56.0, R3 = 95.2;                          // top of each row
+const fmt = (n) => n.toLocaleString('en-US');
+const mmw = (el) => el.getBoundingClientRect().width * 25.4 / 96;
+const CHK = { pills: [], free: [], inbar: [] };                // for the checks at the end
+
+function rowHead(letter, n, t, title, subs) {                  // panel letter in the left margin, step number and title over the object column, plain lines under it
+  f.letter(letter, GL, Tp(t - 0.1));
+  badge(41.8, t + 1.7, n, 1.7);                                // the step number again, next to the title
+  R(OX, t + 1.7, title, { bold: true, fs: 7.5 });
+  subs.forEach((s, i) => R(OX, t + 5.6 + 3.4 * i, s, { fs: 7, color: SUB }));
+}
+function strip(t0, t1, name) { f.stage({ x: GL, y: Tp(t1), w: 4.4, h: t1 - t0, text: name, fam: 'indigo' }); }
+const down = (x, t0, t1, o = {}) => rt([[x, t0], [x, t1]], o);
+const CX = LX + LW / 2;                                        // centre of the left column
+function swatch(x, t, fill, edge, kind) {                      // key swatch 3.8 x 3 mm centred on t; kind 'both' = purple band, white, apricot band
+  const s = document.createElement('div'); s.className = 'sw';
+  s.style.cssText = `left:${x}mm;top:${t - 1.5}mm;overflow:hidden;background:${kind === 'both' ? '#fff' : fill}`;
+  s.style.setProperty('border-color', edge, 'important');
+  if (kind === 'both') {
+    const hi = document.createElement('div'); hi.style.cssText = 'position:absolute;left:0;right:0;top:0;height:25%;background:#9B51E1';
+    const lo = document.createElement('div'); lo.style.cssText = 'position:absolute;left:0;right:0;bottom:0;height:25%;background:#FBB153';
+    s.append(hi, lo);
+  }
+  f.el.appendChild(s);
+  return s;
+}
+
+// ================================================================ a: cells
+rowHead('a', 1, R1, '47 reporter genes, by pathway', ['Each gene has its own tagged cell line and screen. Groups follow Fig. 2A.']);
+strip(R1 + 5.2, 54.6, 'Cells');
+tool(LX, 11.0, LW, 16, 'Reporter cell lines', 'tag brightness tracks expression'); badge(LX + 0.3, 11.3, 1);
+down(CX, 27.0, 29.0);
+pill(LX, 29.3, LW, 8.5, '47 cell lines', 'SU-DHL-4 B cell lymphoma', 'grey');
+down(CX, 38.1, 65.2);                                          // hand-over to the screen
+
+const PX = 14.0, PWD = 13.1, PY = 5.4, PH = 4.6;               // pill pitch and size: 6.55 pt names, one grid for all groups
+const GAP = 4.0, T_HDR = 11.0, H_HDR = 9.0, T_PILL = T_HDR + H_HDR + 1.2;
+const cols = [3, 2, 4];                                        // columns per block: BCR | PI3K and NF-kB | nuclear
+const gx = [OX]; gx.push(gx[0] + cols[0] * PX - (PX - PWD) + GAP); gx.push(gx[1] + cols[1] * PX - (PX - PWD) + GAP);
+const grp = Object.fromEntries(D.groups.map((g) => [g.name, g.genes]));
+function pills(genes, x0, t0, nrows) {                         // fill down each column, then right
+  genes.forEach((g, i) => {
+    const c = Math.floor(i / nrows), r = i % nrows;
+    const x = x0 + c * PX, t = t0 + r * PY;
+    pill(x, t, PWD, PH, g, '', 'palesky', { fs: 6.55 });
+    CHK.pills.push({ id: g, x, t, w: PWD, h: PH });
+  });
+}
+const hdr = (x, t, nc, title, sub) => tool(x, t, nc * PX - (PX - PWD), H_HDR, title, sub);
+const bcr = grp['BCR signalling'], pik = grp['PI3K-AKT-mTOR'], nfk = grp['NF-kB signalling'], nuc = grp['Nuclear proteins and transcription factors'];
+hdr(gx[0], T_HDR, 3, 'BCR signalling', `B cell receptor, ${bcr.length} genes`);
+pills(bcr, gx[0], T_PILL, 5);
+hdr(gx[1], T_HDR, 2, 'PI3K-AKT-mTOR', `pathway, ${pik.length} genes`);
+pills(pik, gx[1], T_PILL, 3);
+const T_NF = T_PILL + 3 * PY - (PY - PH) + 1.4;                // second block of the middle column, closes with the nuclear block
+hdr(gx[1], T_NF, 2, 'NF-κB signalling', `${nfk.length} genes`);
+pills(nfk, gx[1], T_NF + H_HDR + 1.2, 1);
+hdr(gx[2], T_HDR, 4, 'Nuclear proteins', `and transcription factors, ${nuc.length} genes`);
+pills(nuc, gx[2], T_PILL, 6);
+
+// ================================================================ b: screen
+rowHead('b', 2, R2, 'Regulators found by the screens', ['A regulator is a gene whose loss changes the brightness of a reporter.']);
+strip(R2 + 5.2, 92.6, 'Screen');
+tool(LX, 65.5, LW, 17, 'CRISPR screens', 'knock out genes, one per cell; sort the dimmest and brightest 5%'); badge(LX + 0.3, 65.8, 2);
+down(CX, 82.7, 84.7);
+pill(LX, 85.0, LW, 8.5, `${fmt(D.counts.regulators)} regulators`, `${fmt(D.counts.links)} links`, 'grey');
+down(CX, 93.8, 107.3);                                         // hand-over to the analysis
+const BW = { regulators: ['activators only', 'both', 'repressors only'], links: ['activating', 'repressing'] };
+{
+  const b = D.bars;
+  R(OX, b.regulators.t - 2.4, fmt(b.regulators.total) + ' regulators', { bold: true });
+  const t2 = R(OX, b.links.t - 2.4, fmt(b.links.total) + ' links', { bold: true });
+  R(OX + mmw(t2) + 1.5, b.links.t - 2.4, 'a regulator and a reporter gene it changes', { color: SUB });
+  ['regulators', 'links'].forEach((k) => b[k].segs.forEach((sg, i) => {   // number in bold, then the words, centred in the segment, in ink
+    const t = b[k].t + b[k].h / 2;
+    const n = R(0, t, fmt(sg.value), { bold: true, fs: 7 });
+    const w = R(0, t, BW[k][i], { fs: 7 });
+    const wn = mmw(n), ww = mmw(w), x0 = sg.cx - (wn + 1.1 + ww) / 2;
+    n.style.left = x0 + 'mm'; w.style.left = (x0 + wn + 1.1) + 'mm';
+    CHK.inbar.push({ n, w, x0, x1: x0 + wn + 1.1 + ww, sx0: sg.x, sx1: sg.x + sg.w, name: k + i });
+  }));
+  swatch(OX, 89.6, '', '#0A0A0A', 'both');                     // the striped segment, defined where it is drawn
+  R(OX + 5.2, 89.6, 'Both: activator for some reporters, repressor for others.', { fs: 6.55, color: SUB });
+  R(OX, 92.6, 'The box at right is a subset of these.', { fs: 6.55, color: SUB });
+}
+// the same regulators, opposite sign on the two gene groups (Results, "Broad bi-phasic impact of mTOR signaling")
+const SX = 118.0;
+R(SX, D.bars.regulators.t - 2.4, 'Same regulators, opposite effects', { bold: true });
+pill(SX, 70.2, 17.5, 18, 'Ribosome, translation, mTORC1 regulators', '', 'palesky');
+const AY1 = 73.45, AY2 = 84.95, AX0 = SX + 17.9, AX1 = 147.4;
+rt([[AX0, AY1], [AX1, AY1]], { color: UPD, width: 0.45 });
+rt([[AX0, AY2], [AX1, AY2]], { color: DNT, width: 0.45, head: false });
+rt([[AX1, AY2 - 1.7], [AX1, AY2 + 1.7]], { color: DNT, width: 0.45, head: false });   // T-bar: represses
+R((AX0 + AX1) / 2, AY1 - 2.3, 'activate', { ha: 'center', fs: 6.55, color: UPD, bold: true });
+R((AX0 + AX1) / 2, AY2 + 2.5, 'repress', { ha: 'center', fs: 6.55, color: DNT, bold: true });
+pill(147.8, AY1 - 5.25, 28.7, 10.5, 'Group 1: 17 genes', 'e.g. MSH6, MSH2,<br>E2F2, BCL-XL', 'palesky');
+pill(147.8, AY2 - 5.25, 28.7, 10.5, 'Group 2: 18 genes', 'e.g. CD79A, CD79B,<br>MEF2B, OCAB, IGK', 'palesky');
+R(SX, 92.6, 'Groups 1 and 2: text and Fig. 5A.', { fs: 6.55, color: SUB });
+
+// ================================================================ c: analysis
+const M = D.matrix, S = D.scatter;
+rowHead('c', 3, R3, 'mTORC1 and GSK3 often move the same genes in opposite directions',
+  ['RNA-seq: change in a gene’s RNA after the drug. +1 is twice as high, −1 half.', 'Reporter brightness (a, b) and RNA (c) are different measurements.']);
+strip(R3 + 5.2, 191.0, 'Analysis');
+tool(LX, M.hdr_t, LW, 17, 'Block mTORC1, GSK3 or both', 'for 2 days, then RNA-seq'); badge(LX + 0.3, M.hdr_t + 0.3, 3);
+const PW2 = 15.6, TP = M.hdr_t + 19.5;
+down(LX + PW2 / 2, M.hdr_t + 17.2, TP - 0.3); down(LX + LW - PW2 / 2, M.hdr_t + 17.2, TP - 0.3);
+pill(LX, TP, PW2, 8.5, fmt(D.counts.rapamycin_genes_changed), 'rapamycin', 'grey');
+pill(LX + LW - PW2, TP, PW2, 8.5, fmt(D.counts.gsk3i_genes_changed), 'LY2090314', 'grey');
+R(CX, TP + 10.9, 'genes changed', { ha: 'center', color: SUB });
+// matrix: three blocked conditions as column heads, each over its own bars and its own numbers
+const heads = [['mTORC1 blocked', 'rapamycin'], ['GSK3 blocked', 'LY2090314'], ['Both blocked', 'both drugs']];
+M.cols.forEach((c0, k) => tool(c0, M.hdr_t, M.hdr_w, M.hdr_h, heads[k][0], heads[k][1]));
+f.note({ x: OX, y: Tp(M.hdr_t + 0.4), w: 13.8, text: 'Genes the paper names as changed by rapamycin', fs: 6.55, color: SUB });
+const sgn = (v) => (v > 0 ? '+' : '−') + Math.abs(v).toFixed(2);
+M.rows.forEach((r) => {
+  if (r.kind === 'head') { R(OX, r.t, r.text, { bold: true }); return; }
+  const g = R(M.label_r, r.t, r.gene, { ha: 'right' }); g.dataset.chk = 'gene'; if (r.shape) g.dataset.glyph = 'yes';
+  r.vals.forEach((v, k) => {
+    const n = R(M.cols[k] + M.num_r, r.t, v === null ? 'n.c.' : sgn(v), { ha: 'right', fs: 6.55, color: v === null ? NC : INK });
+    n.dataset.chk = 'num' + k;
+  });
+});
+M.cols.forEach((c0, k) => {
+  const z = D.matrix.zero[k];
+  M.ticks.forEach((tk) => { const e = R(z + tk * M.unit, M.axis_t + 3.0, tk > 0 ? '+' + tk : tk < 0 ? '−' + Math.abs(tk) : '0', { ha: 'center', fs: 6.55 }); e.dataset.chk = 'tick' + tk; });
+});
+R((M.cols[0] + M.cols[2] + M.hdr_w) / 2, M.axis_t + 6.4, '$\\mathrm{log}_2$ fold change against the solvent control', { ha: 'center' });
+R(OX, M.axis_t + 10.2, `With both drugs, ${M.both_missing} of these ${M.n_genes} genes are n.c.`, { fs: 6.55, color: SUB });
+R(OX, M.axis_t + 13.4, `Of ${D.counts.translation_genes_S6B_cluster2} translation genes raised by rapamycin, ${D.counts.translation_up_with_both_S10} stay up with both.`, { fs: 6.55, color: SUB });
+
+// scatter of the genes changed by each drug
+const sx0 = S.x0, st0 = S.t0, sh = S.h;
+R(130, R3 + 14.1, 'Genes changed by each drug', { bold: true, fs: 7.5 });
+f.note({ x: 130, y: Tp(R3 + 16.4), w: 46.5, text: '284 of 303 genes in both lists move in opposite directions.', fs: 7, color: INK });
+const tickTxt = (tk) => (tk > 0 ? '+' + tk : tk < 0 ? '−' + Math.abs(tk) : '0');
+S.xt.forEach(([tk, x]) => R(x, st0 + sh + 2.7, tickTxt(tk), { ha: 'center', fs: 6.55 }));
+S.yt.forEach(([tk, t]) => R(sx0 - 1.9, t, tickTxt(tk), { ha: 'right', fs: 6.55 }));
+R(sx0 + S.w / 2, st0 + sh + 6.0, '$\\mathrm{log}_2$ fold change, rapamycin', { ha: 'center' });
+R(sx0 - 8.0, st0 + sh / 2, '$\\mathrm{log}_2$ fold change, LY2090314', { ha: 'center', rot: true });
+const q = D.counts.quadrants;
+const corner = { ul: ['left', q['rapa down, GSK3i up']], ur: ['right', q['rapa up, GSK3i up']], ll: ['left', q['rapa down, GSK3i down']], lr: ['right', q['rapa up, GSK3i down']] };
+Object.entries(corner).forEach(([k, [al, n]]) => {
+  const [x, t] = D.corner_at[k];
+  const e = R(x, t, n + ' genes', { ha: al, bold: true, fs: 6.55 }); CHK.free.push(e);
+});
+D.legend.cells.forEach((c) => R(c.x + 2.7, c.t, c.gene, { fs: 6.55 }));   // the four shapes, drawn in the layer, named here
+f.note({ x: 130, y: Tp(D.legend.t[1] + 3.4), w: 46.5, text: 'Shaded: opposite directions. Changed, by the paper’s rule: base mean above 100, fold change above 1.5, adjusted p below 0.01.', fs: 6.55, color: SUB });
+
+// ================================================================ key (left column, under the counts) and footer
+{
+  const x = LX, xs = [LX, 25.0];
+  let t = TP + 16.6;
+  R(x, t, 'Key', { bold: true });
+  t += 4.7;
+  const one = (fill, edge, text, kind) => { swatch(x, t, fill, edge, kind); R(x + 5.2, t, text, { fs: 6.55, color: INK }); t += 4.6; };
+  const pair = (a, b) => { [a, b].forEach(([fill, edge, text], i) => { swatch(xs[i], t, fill, edge); R(xs[i] + 5.2, t, text, { fs: 6.55, color: INK }); }); t += 4.6; };
+  one('#1D397B', '#0A0A0A', 'step or pathway');
+  one('#E9F3F9', '#1D397B', 'gene or gene group');
+  one('#FFEDD1', '#151515', 'count');
+  R(x, t, 'b: regulator role', { fs: 6.55, bold: true }); t += 4.6;
+  pair(['#9B51E1', '#7A29BB', 'activator'], ['#FBB153', '#9A5600', 'repressor']);
+  one('', '#0A0A0A', 'both roles', 'both');
+  R(x, t, 'c: RNA after a drug', { fs: 6.55, bold: true }); t += 4.6;
+  pair(['#9B2D61', '#9B2D61', 'up'], ['#91D7AB', '#317F45', 'down']);
+  R(x, t, 'n.c.', { fs: 6.55, color: NC }); R(x + 5.2, t, 'not listed as changed', { fs: 6.55, color: INK });
+  CHK.keyEnd = t + 1.3;
+}
+f.label(1.5, 5.1, 'Counts computed from the paper’s tables; arrows follow its text.', { fs: 6.55, color: SUB });
+f.label(1.5, 1.6, 'After Figs 2A, 5, 7 of Kalchschmidt et al., Cell Rep. 2025, doi:10.1016/j.celrep.2025.116361, CC BY 4.0. Data: Tables S1, 3, 5, 6, 9, 10. Redesigned; values as published.', { fs: 6.55, color: SUB });
+
+// ================================================================ checks: they throw, so the build prints the message and exits with an error
+(function checks() {
+  const fr = document.getElementById('fig').getBoundingClientRect();
+  const mm = (px) => px * 25.4 / 96;
+  const box = (el) => { const r = el.getBoundingClientRect(); return { l: mm(r.left - fr.left), r: mm(r.right - fr.left), t: mm(r.top - fr.top), b: mm(r.bottom - fr.top) }; };
+  const fail = [];
+  // 1. every gene pill sits where the grid says, and its name is not clipped
+  const pillEls = [...document.querySelectorAll('.pill')];
+  CHK.pills.forEach((p) => {
+    const el = pillEls.find((e) => e.textContent === p.id && Math.abs(mm(e.getBoundingClientRect().left - fr.left) - p.x) < 0.05);
+    if (!el) { fail.push('pill not found at its grid position: ' + p.id); return; }
+    const b = box(el);
+    if (Math.abs(b.l - p.x) > 0.25 || Math.abs(b.t - p.t) > 0.25 || Math.abs((b.r - b.l) - p.w) > 0.25) fail.push('pill off grid: ' + p.id);
+  });
+  document.querySelectorAll('.pill').forEach((e) => { const s = e.querySelector('span'); if (s && s.scrollWidth > e.clientWidth - 1) fail.push('pill text clipped: ' + e.textContent); });
+  if (CHK.pills.length !== 47) fail.push('pill count ' + CHK.pills.length);
+  // 2. one grid for the values: each column of numbers shares its right edge and sits right of its own bars and inside its own head (0.25 mm)
+  const groups = {};
+  document.querySelectorAll('[data-chk]').forEach((e) => { (groups[e.dataset.chk] ||= []).push(box(e)); });
+  const edge = (key, side) => { const v = groups[key].map((b) => b[side]); if (Math.max(...v) - Math.min(...v) > 0.25) fail.push(`${key} not aligned: ${side} spread ${(Math.max(...v) - Math.min(...v)).toFixed(2)} mm`); };
+  ['num0', 'num1', 'num2', 'gene'].forEach((k) => edge(k, 'r'));
+  [0, 1, 2].forEach((k) => {
+    const barsRight = D.matrix.zero[k] + D.matrix.bar_w / 2, headRight = D.matrix.cols[k] + D.matrix.hdr_w;
+    groups['num' + k].forEach((b) => { if (b.l < barsRight - 0.1 || b.r > headRight + 0.1) fail.push(`num${k} outside its own panel`); });
+  });
+  ['tick-2', 'tick0', 'tick2'].forEach((k) => { const v = groups[k].map((b) => (b.l + b.r) / 2); const zs = D.matrix.zero.map((z) => z + (k === 'tick-2' ? -2 : k === 'tick2' ? 2 : 0) * D.matrix.unit); v.forEach((c, i) => { if (Math.abs(c - zs[i]) > 0.25) fail.push(k + ' tick label off its tick'); }); });
+  document.querySelectorAll('[data-glyph]').forEach((e) => { if (box(e).l < D.matrix.glyph_x + 1.6) fail.push('gene name touches its shape: ' + e.textContent); });
+  // 3. every number-and-words label sits inside its bar segment
+  CHK.inbar.forEach((q2) => {
+    const a = box(q2.n), c = box(q2.w);
+    if (a.l < q2.sx0 + 0.3 || c.r > q2.sx1 - 0.3) fail.push('bar label does not fit its segment: ' + q2.name);
+  });
+  // 4. no count label sits on a dot of the scatter, and the labels stay inside the plot
+  const pts = D.points_mm;
+  CHK.free.forEach((e) => {
+    const b = box(e);
+    pts.forEach(([x, t]) => { if (x > b.l - 0.55 && x < b.r + 0.55 && t > b.t - 0.55 && t < b.b + 0.55) fail.push('label on a dot: ' + e.textContent); });
+    D.named.forEach((N) => { const [x, t] = N.centre; if (x > b.l - 1.4 && x < b.r + 1.4 && t > b.t - 1.4 && t < b.b + 1.4) fail.push('label on a marked dot: ' + e.textContent); });
+    if (b.l < sx0 - 0.1 || b.r > sx0 + S.w + 0.1 || b.t < st0 - 0.1 || b.b > st0 + sh + 0.1) fail.push('label outside the plot: ' + e.textContent);
+  });
+  // 5. no two pieces of text overlap, and nothing leaves the figure
+  const leaves = [...document.querySelectorAll('.lab, .pill span, .pill em, .card .t, .card .s, .stage span, .badge, .tbox')];
+  const bs = leaves.map((e) => ({ e, ...box(e) }));
+  for (let i = 0; i < bs.length; i++) {
+    const a = bs[i];
+    if (a.l < -0.1 || a.t < -0.1 || a.r > W + 0.1 || a.b > H + 0.1) fail.push('outside the figure: ' + a.e.textContent.slice(0, 30));
+    for (let j = i + 1; j < bs.length; j++) {
+      const c = bs[j];
+      if (a.e.parentElement === c.e.parentElement || a.e.contains(c.e) || c.e.contains(a.e)) continue;
+      const w = Math.min(a.r, c.r) - Math.max(a.l, c.l), h = Math.min(a.b, c.b) - Math.max(a.t, c.t);
+      if (w > 0.05 && h > 0.05) fail.push(`text overlap: "${a.e.textContent.slice(0, 24)}" and "${c.e.textContent.slice(0, 24)}"`);
+    }
+  }
+  // 6. a free label never crosses the edge of a pill, block, strip or swatch (it sits wholly outside or wholly inside)
+  const shapes = [...document.querySelectorAll('.pill, .card, .stage, .sw')].map((e) => ({ e, ...box(e) }));
+  bs.forEach((a) => {
+    if (!a.e.matches('.lab, .tbox')) return;
+    shapes.forEach((c) => {
+      if (c.e.contains(a.e)) return;
+      const w = Math.min(a.r, c.r) - Math.max(a.l, c.l), h = Math.min(a.b, c.b) - Math.max(a.t, c.t);
+      if (w > 0.05 && h > 0.05) fail.push(`text crosses a shape: "${a.e.textContent.slice(0, 24)}"`);
+    });
+  });
+  if (CHK.keyEnd > 191.0 + 0.1) fail.push('key runs below the strip: ' + CHK.keyEnd.toFixed(1));
+  document.querySelectorAll('.card').forEach((e) => { if (e.scrollHeight > e.clientHeight + 1 || e.scrollWidth > e.clientWidth + 1) fail.push('card content overflows: ' + e.textContent.slice(0, 30)); });
+  window.__checks = fail;
+  if (fail.length) throw new Error('CHECKS FAILED (' + fail.length + '): ' + fail.slice(0, 14).join(' | '));
+})();
+</script></body></html>

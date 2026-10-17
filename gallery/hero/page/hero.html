@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Molecullage hero banner</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<!--INLINE_JS data.js-->
+<script>
+// Hero banner of the README, 178 x 52 mm. Left: the name and one tagline. Right: five picture tiles of equal height with equal gaps,
+// each a crop of a finished gallery figure (src/make_crops.py cuts them and writes window.DATA, the grid in millimetres, origin top left).
+// At the end the page measures itself: checkHero() throws one Error that lists every tile, caption or text box that is off the grid by more
+// than TOL, and a title that is not spelled 'Molecullage'. The build prints that error and exits with 1.
+const D = window.DATA, TOL = 0.25;
+const W = D.W, H = D.H;
+const FL = (window.CONFIG || {}).floorPt || 6.55;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });   // svgTop: the hairlines are drawn over the pictures
+const HAIR = 0.12;                                                              // mm, tile frame stroke (0.34 pt); CSS borders under 1 px are widened by the browser, SVG strokes are not
+const INK = 'var(--ink)', SUB = 'var(--sub)';
+const T = (cls, x, t, html, css) => {       // a text box at x, top t (mm, top-down); it keeps its own width, one line per <br>
+  const d = document.createElement('div');
+  d.className = cls;
+  d.style.cssText = `position:absolute;left:${x}mm;top:${t}mm;white-space:nowrap;margin:0;${css}`;
+  d.innerHTML = html; f.el.appendChild(d); return d;
+};
+
+// ---- left block, centred on the tiles and their captions
+const CAP_T = D.TOP + D.TH + 1.6, CAP_LH = 3.1;                 // caption block: top, line pitch (7 pt = 2.47 mm)
+const CAP_B = CAP_T + 2 * CAP_LH;
+const TITLE_H = 7.06, TAG_LH = 3.6, TAG_GAP = 2.3;              // 20 pt line; 8 pt tagline lines; gap between them
+const BLOCK_H = TITLE_H + TAG_GAP + 3 * TAG_LH;
+const BT = (D.TOP + CAP_B) / 2 - BLOCK_H / 2;
+const title = T('title', 1.5, BT, 'Molecullage', `font-size:20pt;font-weight:700;line-height:${TITLE_H}mm;color:${INK}`);
+const tag = T('tag', 1.5, BT + TITLE_H + TAG_GAP, 'Figures of protein structures,<br>sequences, plots and workflows,<br>built from small web pages.',
+  `font-size:8pt;line-height:${TAG_LH}mm;color:${INK}`);
+
+// ---- the five tiles, their captions (two lines on common baselines) and the hairline frames
+const tiles = D.tiles.map((t) => {
+  const box = document.createElement('div');
+  box.className = 'tile'; box.id = 'tile-' + t.key;
+  box.style.cssText = `position:absolute;left:${t.x}mm;top:${D.TOP}mm;width:${t.w}mm;height:${D.TH}mm;background:#fff`;
+  const im = document.createElement('img');
+  im.src = t.file; im.alt = '';
+  im.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
+  box.append(im); f.el.appendChild(box);
+  const l = t.x + HAIR / 2, r = t.x + t.w - HAIR / 2, b = H - D.TOP - D.TH + HAIR / 2, tp = H - D.TOP - HAIR / 2;   // frame stroke lies inside the tile; y up
+  f.route([[(l + r) / 2, tp], [r, tp], [r, b], [l, b], [l, tp], [(l + r) / 2, tp]], { head: false, color: 'var(--ink)', width: HAIR });
+  const c1 = T('cap1', t.x, CAP_T, t.cap[0], `font-size:7pt;font-weight:700;line-height:${CAP_LH}mm;color:${INK}`);
+  const c2 = T('cap2', t.x, CAP_T + CAP_LH, t.cap[1], `font-size:7pt;line-height:${CAP_LH}mm;color:${INK}`);
+  return { t, box, im, c1, c2 };
+});
+
+// ---- credit, below everything, at the floor size, under a hairline rule that also keeps the empty band across the page short
+const CREDIT_T = H - 1.5 - 2.4;
+const credit = T('credit', 1.5, CREDIT_T, 'Redesigns of figures from open-access papers: see gallery/.', `font-size:${FL}pt;line-height:2.4mm;color:${INK}`);
+const RULE_Y = (CAP_T + CAP_LH + 2.1 + CREDIT_T + 0.2) / 2;       // midway between the baseline of caption line 2 and the cap height of the credit (offsets measured on the PNG)
+f.route([[1.5, H - RULE_Y], [D.XR, H - RULE_Y]], { head: false, color: 'var(--rule)', width: 0.1 });
+const rule = f.svg.lastElementChild;
+
+// ---- checks, in millimetres from the page's top left
+const PXMM = 96 / 25.4;
+const mm = (e) => { const r = e.getBoundingClientRect(), o = f.el.getBoundingClientRect();
+  return { l: (r.left - o.left) / PXMM, r: (r.right - o.left) / PXMM, t: (r.top - o.top) / PXMM, b: (r.bottom - o.top) / PXMM, w: r.width / PXMM, h: r.height / PXMM }; };
+function checkHero() {
+  const bad = [];
+  const near = (what, a, b) => { if (Math.abs(a - b) > TOL) bad.push(`${what}: ${a.toFixed(3)} vs ${b.toFixed(3)} mm`); };
+  const R = tiles.map((o) => mm(o.box));
+  R.forEach((r, i) => { near(`tile ${i + 1} height`, r.h, D.TH); near(`tile ${i + 1} top`, r.t, D.TOP); near(`tile ${i + 1} width`, r.w, D.tiles[i].w); });
+  for (let i = 1; i < R.length; i++) near(`gap ${i}-${i + 1}`, R[i].l - R[i - 1].r, D.GAP);
+  near('first tile left', R[0].l, D.X0); near('last tile right', R[R.length - 1].r, D.XR);
+  R.forEach((r, i) => { if (r.w < 22 || r.w > 26) bad.push(`tile ${i + 1} width ${r.w.toFixed(2)} mm is outside 22 to 26`); });
+  tiles.forEach((o, i) => {
+    const a = mm(o.c1), b = mm(o.c2), r = R[i];
+    near(`caption ${i + 1} line 1 left`, a.l, r.l); near(`caption ${i + 1} line 2 left`, b.l, r.l);
+    near(`caption ${i + 1} line 1 top`, a.t, CAP_T); near(`caption ${i + 1} line 2 top`, b.t, CAP_T + CAP_LH);
+    const next = R[i + 1] ? R[i + 1].l : D.XR + D.GAP;
+    if (Math.max(a.r, b.r) > next - 1.0) bad.push(`caption ${i + 1} (${o.t.cap.join(' / ')}) runs ${(Math.max(a.r, b.r) - next).toFixed(2)} mm into its neighbour`);
+    if (Math.max(a.r, b.r) > r.r) bad.push(`caption ${i + 1} is wider than its tile`);
+    if (o.t.cap.join(' ').split(/\s+/).length > 4) bad.push(`caption ${i + 1} has more than 4 words`);
+    const asp = o.im.naturalWidth / o.im.naturalHeight;
+    if (!o.im.naturalWidth) bad.push(`image ${o.t.file} did not load`);
+    else if (Math.abs(asp / (r.w / r.h) - 1) > 0.005) bad.push(`image ${o.t.file} aspect ${asp.toFixed(4)} is not the tile's ${(r.w / r.h).toFixed(4)}`);
+  });
+  if (title.textContent !== 'Molecullage') bad.push(`title reads '${title.textContent}', not 'Molecullage'`);
+  const ti = mm(title), tg = mm(tag), cr = mm(credit);
+  if (Math.max(ti.r, tg.r) > D.X0 - 3) bad.push(`left block ends at ${Math.max(ti.r, tg.r).toFixed(2)} mm; tiles start at ${D.X0} mm`);
+  near('title left', ti.l, 1.5); near('tagline left', tg.l, 1.5); near('credit left', cr.l, 1.5);
+  if (cr.r > W - 1.5) bad.push('credit runs past the right margin');
+  if (cr.t < CAP_B + 1.0) bad.push(`credit is ${(cr.t - CAP_B).toFixed(2)} mm below the captions`);
+  const ru = mm(rule);
+  near('rule left', ru.l, 1.5); near('rule right', ru.r, D.XR);
+  if (ru.t < CAP_B || ru.t > cr.t) bad.push('the rule is not between the captions and the credit');
+  if (tag.textContent.replace(/\s+/g, ' ') !== 'Figures of protein structures,sequences, plots and workflows,built from small web pages.') bad.push('tagline text changed');
+  if (!document.fonts.check('7pt Arial')) bad.push('Arial is not available');
+  if (bad.length) throw new Error('hero banner checks failed:\n' + bad.join('\n'));
+  window.HERO_OK = true;
+}
+window.addEventListener('load', checkHero);
+</script></body></html>

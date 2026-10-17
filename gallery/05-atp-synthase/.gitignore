@@ -1,0 +1,5 @@
+data/
+__pycache__/
+/05-atp-synthase.html
+art/*.png
+!art/*_t.png

@@ -1,0 +1,6 @@
+# Mirdita et al. 2022, Nature Methods 19:679-682, doi 10.1038/s41592-022-01488-1 (CC BY 4.0), Source Data Fig. 2, sheet fig2c (the sheet names are shifted against the figure: the sheet fig2c is panel d). Only the last point of each of the four lines; the full curves are read from the xlsx at build time (1,762 values per run, cumulative seconds).
+run,last_protein_number,seconds_as_in_sheet,hours_plotted
+AlphaFold2 reduced_dbs (sampled),1762,15241496.9118,4233.7491
+ColabFold Recompile,1762,871431,242.0642
+ColabFold Default,1762,627402,174.2783
+ColabFold Stop >= 85,1762,173303,48.1397

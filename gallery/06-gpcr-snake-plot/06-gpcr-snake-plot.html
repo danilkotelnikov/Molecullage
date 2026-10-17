@@ -1,0 +1,1577 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>06-gpcr-snake-plot</title><style>:root{--ink:#0A0A0A;--sub:#2B2B2B;--line:#0A0A0A;--rule:#3A3A3A;--guide:#777777;--fs-letter:9pt;--fs-title:7.5pt;--fs-label:7pt;--fs-floor:6.55pt;--fs-math:8.4pt;--data0:#1D397B;--data1:#AC3F3F;--data2:#317F45;--data3:#7A29BB;--data4:#9A5600;--data5:#9B2D61}
+.fam-mint{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.fam-rose{background:#E16F6B;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-peri{background:#9B51E1;border-color:#7A29BB;--edge:#7A29BB}
+.fam-apricot{background:#FBB153;border-color:#9A5600;--edge:#9A5600}
+.fam-indigo{background:#1D397B;border-color:#1D397B;--edge:#1D397B}
+.fam-violet{background:#F1C3DD;border-color:#9B2D61;--edge:#9B2D61}
+.fam-grey{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-full{background:#FFFFFF;border-color:#151515;--edge:#151515}
+.fam-full{border-style:dashed}
+.fam-green{background:#01B151;border-color:#317F45;--edge:#317F45}
+.fam-purple{background:#9B51E1;border-color:#7A29BB;--edge:#7A29BB}
+.fam-maroon{background:#9B2D61;border-color:#9B2D61;--edge:#9B2D61}
+.fam-palemint{background:#D1F1EB;border-color:#317F45;--edge:#317F45}
+.fam-palelilac{background:#EFCBFF;border-color:#7A29BB;--edge:#7A29BB}
+.fam-palepink{background:#FFD9D7;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-palesky{background:#E9F3F9;border-color:#1D397B;--edge:#1D397B}
+.fam-antigen{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.fam-target{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.fam-binder{background:#E16F6B;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-heavy{background:#E16F6B;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-light{background:#9B51E1;border-color:#7A29BB;--edge:#7A29BB}
+.fam-epitope{background:#FBB153;border-color:#9A5600;--edge:#9A5600}
+.fam-model{background:#1D397B;border-color:#1D397B;--edge:#1D397B}
+.fam-base{background:#1D397B;border-color:#1D397B;--edge:#1D397B}
+.fam-complex{background:#F1C3DD;border-color:#9B2D61;--edge:#9B2D61}
+.fam-neutral{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-module{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-cream{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-ok{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.dashed{background:#fff !important}
+/* Molecullage kit styles. Type sizes come from the ladder in molecullage.json (typeLadder), injected by build.mjs as --fs-* variables:
+   letter 9, title 7.5, label 7, floor 6.5 (written 6.55 so that the PDF reports at least 6.5), math 8.4. Arial only. */
+:root{--fs-letter:9pt;--fs-title:7.5pt;--fs-label:7pt;--fs-floor:6.55pt;--fs-math:8.4pt;--guide:#777777;--data0:#1D397B}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+.page{padding:0;display:inline-block}
+.card{position:absolute;border-width:1pt;border-style:solid;border-radius:.6mm;padding:1.8mm 2.2mm;display:flex;gap:2mm;align-items:center;overflow:hidden}
+.card .tx{min-width:0}
+.card .tx.center{width:100%;text-align:center}
+.card .t{font-size:var(--fs-title);font-weight:700;line-height:1.2;margin:0;color:var(--ink)}
+.card .s{font-size:var(--fs-label);line-height:1.2;margin:.4mm 0 0;color:var(--sub)}
+.chip{flex:none;width:6.4mm;height:6.4mm;border-radius:50%;background:#fff;border:.6pt solid var(--edge);display:flex;align-items:center;justify-content:center;font-size:11pt;color:var(--edge)}
+.ic{display:inline-flex}.ic svg{display:block}
+.dashed{border-style:dashed}
+.card.stack{flex-direction:column;align-items:flex-start;justify-content:center;gap:.9mm}
+.card .head{display:flex;gap:1.8mm;align-items:center}
+.card.stack .chip{width:5mm;height:5mm;font-size:9pt}
+.route{fill:none;stroke:var(--line);stroke-width:.3;stroke-linecap:butt;stroke-linejoin:miter}
+.route.dashed{stroke-dasharray:1.0 .7}
+.route.nohead{marker-end:none}
+.dot{fill:var(--line)}
+.node{fill:#fff;stroke:var(--line);stroke-width:.3}
+.mark{fill:none;stroke:var(--line);stroke-width:.3}
+.lab{position:absolute;white-space:pre;line-height:1.15}
+.sw{position:absolute;width:3.8mm;height:3mm;border-width:1pt;border-style:solid;border-radius:.6mm}
+.card.tile{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.8mm;padding:1.2mm 1mm}
+.card.tile .s{margin:0}
+.ic.big{font-size:15pt;color:var(--ink)}
+.group{position:absolute;border:.8pt solid var(--rule);border-radius:2mm}
+.group .gt{position:absolute;left:2mm;top:-1.9mm;background:#fff;padding:0 1mm;font-size:var(--fs-title);font-weight:700;color:var(--ink)}
+.tensor{position:absolute;display:flex;border:.4pt solid var(--rule);overflow:hidden}
+.tensor i{flex:1;display:block}
+.card.plain{align-items:center;gap:2.2mm;padding:1.6mm 2.4mm}
+.band{position:absolute;display:flex;align-items:center;gap:2.2mm;padding:0 5mm 0 2.4mm;border:0;clip-path:polygon(0 0,calc(100% - 2.6mm) 0,100% 50%,calc(100% - 2.6mm) 100%,0 100%)}
+.band b{font-size:var(--fs-title);font-weight:700;color:var(--ink)}.band span{font-size:var(--fs-floor);font-style:italic;color:var(--sub)}
+.band.dashed{background:#F2F2F2!important}
+.letter{position:absolute;display:flex;align-items:center;gap:1.2mm;line-height:1}
+.letter b{font-size:var(--fs-letter);font-weight:700;color:var(--ink)}
+.letter .mk{font-size:8.5pt;color:var(--sub)}
+.chipbox{position:absolute;display:flex;align-items:center;justify-content:center;border:.8pt solid var(--edge);border-radius:.8mm;color:var(--ink)}
+.picto{position:absolute;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.tbox{position:absolute;line-height:1.25}
+.plots svg{display:block}
+.group.dashed{border-style:dashed;background:transparent!important}
+.card.fam-full,.card.dashed{border-style:dashed}
+.sw.dashed,.sw.fam-full{border-style:dashed}
+.art{position:absolute;display:block}
+.mth{font-family:Arial,Helvetica,sans-serif;white-space:pre}
+.mth i{font-style:italic}.mth .up{font-style:normal}
+.mth sub,.mth sup{font-size:.78em;line-height:0;position:relative;vertical-align:baseline}
+.mth sub{top:.28em}.mth sup{top:-.42em}
+.state{position:absolute;border:1pt solid var(--rule);border-radius:1.2mm;background:#fff}
+.state.dashed{border-style:dashed}
+.state .st{position:absolute;left:1.8mm;top:1.3mm;font-size:var(--fs-title);font-weight:700;line-height:1.15;color:var(--ink);white-space:pre}
+.card.tool{padding:1mm 1.6mm;border-radius:1mm}
+.card.tool .t{font-size:var(--fs-title)}.card.tool .s{font-size:var(--fs-label);margin:.3mm 0 0}.card.tool .rep{font-weight:400}
+.pill{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-width:.8pt;border-style:solid;line-height:1.2;color:var(--ink);overflow:hidden;padding:0 1.4mm}
+.pill em{font-style:normal;font-size:var(--fs-floor);color:var(--sub)}
+.stage{position:absolute;display:flex;align-items:center;justify-content:center;border-width:.8pt;border-style:solid;border-radius:1mm;overflow:hidden}
+.stage span{display:block;transform:rotate(-90deg);white-space:nowrap;font-weight:700;line-height:1;color:inherit}
+.stage i{font-style:normal;font-weight:400;font-size:var(--fs-floor)}
+.badge{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;border-width:.8pt;border-style:solid;font-weight:700;line-height:1}
+.bar{position:absolute;border:.8pt solid var(--rule);border-radius:.4mm;background:#fff;overflow:hidden}
+.bar i{display:block;height:100%}
+/* small helpers that templates share */
+.cell{position:absolute;box-sizing:border-box}
+.fig{position:relative}
+.card,.state,.chipbox,.sw,.group,.bar{border-color:#0A0A0A!important}.card.fam-peri .t,.card.fam-peri .s,.band.fam-peri b,.band.fam-peri span,.bar.fam-peri b,.state.fam-peri .t,.card.fam-indigo .t,.card.fam-indigo .s,.band.fam-indigo b,.band.fam-indigo span,.bar.fam-indigo b,.state.fam-indigo .t,.card.fam-purple .t,.card.fam-purple .s,.band.fam-purple b,.band.fam-purple span,.bar.fam-purple b,.state.fam-purple .t,.card.fam-maroon .t,.card.fam-maroon .s,.band.fam-maroon b,.band.fam-maroon span,.bar.fam-maroon b,.state.fam-maroon .t{color:#fff!important}.stage.fam-peri,.badge.fam-peri,.stage.fam-indigo,.badge.fam-indigo,.stage.fam-purple,.badge.fam-purple,.stage.fam-maroon,.badge.fam-maroon{color:#fff!important}.stage.fam-mint,.badge.fam-mint,.stage.fam-rose,.badge.fam-rose,.stage.fam-apricot,.badge.fam-apricot,.stage.fam-violet,.badge.fam-violet,.stage.fam-grey,.badge.fam-grey,.stage.fam-full,.badge.fam-full,.stage.fam-green,.badge.fam-green,.stage.fam-palemint,.badge.fam-palemint,.stage.fam-palelilac,.badge.fam-palelilac,.stage.fam-palepink,.badge.fam-palepink,.stage.fam-palesky,.badge.fam-palesky{color:#0A0A0A!important}.stage,.badge{border-color:#0A0A0A!important}</style><script>window.ICONS={"device-desktop":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10\" /><path d=\"M7 20h10\" /><path d=\"M9 16v4\" /><path d=\"M15 16v4\" /></svg>","flask":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M9 3l6 0\" /><path d=\"M10 9l4 0\" /><path d=\"M10 3v6l-4 11a.7 .7 0 0 0 .5 1h11a.7 .7 0 0 0 .5 -1l-4 -11v-6\" /></svg>","arrow-narrow-right":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M5 12l14 0\" /><path d=\"M15 16l4 -4\" /><path d=\"M15 8l4 4\" /></svg>"};window.ART={"h3r__full":{"w":884,"h":1521,"ar":0.5812,"anchors":{"origin":[0.40813,0.42792],"site1_side":[0.4827,0.55808],"site1_ca":[0.4877,0.52632],"site2_side":[0.30099,0.21946],"site2_ca":[0.24878,0.19373],"site3_side":[0.43655,0.65375],"site3_ca":[0.41268,0.64703],"site4_side":[0.50298,0.63238],"site4_ca":[0.52863,0.65032],"ligand":[0.42066,0.25481]},"meta":{"px_per_A":20.08228444856021,"field_width_A":119.50831620513507,"ligand_atoms":{"CAN":[1158.5144013372162,596.5679573776729],"CAQ":[1175.9319354333304,619.5387987635847],"CAR":[1179.8186609689621,614.8218339098515],"CAO":[1168.4379499291522,586.9770770769726],"NAD":[1167.927597488524,574.9505717663869],"CAP":[1149.5904902203918,551.5785657337979],"CAS":[1158.0168155693225,529.4495453501046],"CAT":[1143.2808946295966,520.120952645611],"FAB":[1122.0651245035597,531.6359999129543],"CAL":[1152.1219208938653,498.07935234763124],"CAU":[1181.7829467114573,516.5757905516439],"CAM":[1190.7236455378286,494.5761504239432],"CAJ":[1176.3274859121402,485.4175035089871],"CAF":[1184.8938132244762,462.74548333456426],"CAI":[1183.6402973630845,463.7963645171697],"FAA":[1168.2767732056975,440.89079699050717],"CAH":[1215.774486064342,458.82945817246497],"CAG":[1209.2695931789474,445.99429682893737],"CAK":[1229.5775735363322,452.4921156926419],"OAC":[1234.3668982641238,475.9160095232154],"NAE":[1240.829327952124,430.4817007954692],"CAV":[1260.6996076804721,432.1118694314049],"CAW":[1245.9991714953858,444.5066932947839]}}}};window.ART_DIR="art";window.CONFIG={"claimBoundary":"","floorPt":6.55,"typeLadder":{"letter":9,"title":7.5,"label":7,"floor":6.5,"math":8.4},"strictness":"normal"};window.TOKENS={"color":{"ink":"#0A0A0A","sub":"#2B2B2B","line":"#0A0A0A","rule":"#3A3A3A","guide":"#777777","white":"#FFFFFF","family":{"mint":{"fill":"#91D7AB","edge":"#317F45"},"rose":{"fill":"#E16F6B","edge":"#AC3F3F"},"peri":{"fill":"#9B51E1","edge":"#7A29BB"},"apricot":{"fill":"#FBB153","edge":"#9A5600"},"indigo":{"fill":"#1D397B","edge":"#1D397B"},"violet":{"fill":"#F1C3DD","edge":"#9B2D61"},"grey":{"fill":"#FFEDD1","edge":"#151515"},"full":{"fill":"#FFFFFF","edge":"#151515","dash":true},"green":{"fill":"#01B151","edge":"#317F45"},"purple":{"fill":"#9B51E1","edge":"#7A29BB"},"maroon":{"fill":"#9B2D61","edge":"#9B2D61"},"palemint":{"fill":"#D1F1EB","edge":"#317F45"},"palelilac":{"fill":"#EFCBFF","edge":"#7A29BB"},"palepink":{"fill":"#FFD9D7","edge":"#AC3F3F"},"palesky":{"fill":"#E9F3F9","edge":"#1D397B"}},"alias":{"antigen":"mint","target":"mint","binder":"rose","heavy":"rose","light":"peri","epitope":"apricot","model":"indigo","base":"indigo","complex":"violet","neutral":"grey","module":"grey","cream":"grey","ok":"mint"},"data":["#1D397B","#AC3F3F","#317F45","#7A29BB","#9A5600","#9B2D61"]},"meta":{"source":"sampled from Fig. 8 of Int. J. Mol. Sci. 2025, 26, 9262 (doi 10.3390/ijms26199262, open access); plot colours from Figs 1, 4 and 7","method":"mode of exact pixel colours of a 300 dpi page render, colours grouped at 2 levels (palette/sample_palette.py)","core_six":["#91D7AB","#E16F6B","#9B51E1","#FBB153","#1D397B","#F1C3DD"],"core_six_min_ciede2000":11.5,"core_six_worst_case":{"vision":"tritan","pair":["#FBB153","#F1C3DD"]},"white_text_on":["peri","indigo","purple","maroon"]},"provenance":{"mint":{"fill":"#91D7AB","edge":"#317F45","role":"antigen, target","fill_origin":"sampled","edge_origin":"sampled or chosen"},"rose":{"fill":"#E16F6B","edge":"#AC3F3F","role":"binder, heavy chain","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"peri":{"fill":"#9B51E1","edge":"#7A29BB","role":"light chain","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"apricot":{"fill":"#FBB153","edge":"#9A5600","role":"contact patch, epitope","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"indigo":{"fill":"#1D397B","edge":"#1D397B","role":"implemented model, tool blocks","fill_origin":"sampled","edge_origin":"sampled or chosen"},"violet":{"fill":"#F1C3DD","edge":"#9B2D61","role":"complexes","fill_origin":"sampled","edge_origin":"sampled or chosen"},"grey":{"fill":"#FFEDD1","edge":"#151515","role":"neutral cards and inputs","fill_origin":"sampled","edge_origin":"sampled or chosen"},"full":{"fill":"#FFFFFF","edge":"#151515","role":"designed, not implemented: white and dashed","fill_origin":"chosen","edge_origin":"sampled or chosen"},"green":{"fill":"#01B151","edge":"#317F45","role":"stage hue: selection","fill_origin":"sampled","edge_origin":"sampled or chosen"},"purple":{"fill":"#9B51E1","edge":"#7A29BB","role":"stage hue: dynamics","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"maroon":{"fill":"#9B2D61","edge":"#9B2D61","role":"stage hue: evaluation, held-out set","fill_origin":"sampled","edge_origin":"sampled or chosen"},"palemint":{"fill":"#D1F1EB","edge":"#317F45","role":"data pill","fill_origin":"sampled","edge_origin":"sampled or chosen"},"palelilac":{"fill":"#EFCBFF","edge":"#7A29BB","role":"data pill","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"palepink":{"fill":"#FFD9D7","edge":"#AC3F3F","role":"data pill","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"palesky":{"fill":"#E9F3F9","edge":"#1D397B","role":"pass zone, good-region shading","fill_origin":"chosen","edge_origin":"sampled or chosen"}}};</script><script>/* Molecullage kit. Coordinates are millimetres, origin bottom-left, like a plotting canvas.
+   Cards are HTML (real text layout, Tabler icon SVGs); connectors are one SVG overlay.
+   Usage: const f = new Fig(document.getElementById('fig'), 100, 92, { svgTop: true });
+          f.module({x,y,w,h,title,sub:[...],icon:'database',fam:'indigo',dashed:false});
+          f.route([[x,y],...],{dashed}); f.plus(x,y); f.dot(x,y); f.bracket(x,y0,y1,'x N'); f.label(x,y,'text');
+          f.boundary('one-line claim boundary');   // no argument: the claimBoundary of molecullage.json
+   Family names (fam:) come from the token file; see docs/palette.md. */
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  // ---- Arial-only maths (Nature asks for Arial or Helvetica): a small LaTeX subset to HTML with italic variables and real scripts.
+  // Supported: letters, digits, _x _{xy} ^2 ^{-2}, \theta \phi \sigma \mu \tau \lambda \alpha \beta, \to \sim \cdot \times, \mathrm{..}, \, and + = - .
+  const GREEK = { theta: 'θ', phi: 'φ', sigma: 'σ', mu: 'μ', tau: 'τ', lambda: 'λ', alpha: 'α', beta: 'β' };
+  const OPS = { to: '→', sim: '~', cdot: '·', times: '×' };
+  const grp = (s, i) => {
+    if (s[i] === '{') { let d = 1, j = i + 1; for (; j < s.length && d; j++) { if (s[j] === '{') d++; else if (s[j] === '}') d--; } return [s.slice(i + 1, j - 1), j]; }
+    if (s[i] === '\\') { const m = /^\\([a-zA-Z]+)/.exec(s.slice(i)); if (m) return [m[0], i + m[0].length]; }
+    return [s[i], i + 1];
+  };
+  function M(s) {
+    let out = '', i = 0;
+    while (i < s.length) {
+      const c = s[i];
+      if (c === '_' || c === '^') { const [g, n] = grp(s, i + 1); const tag = c === '_' ? 'sub' : 'sup'; out += `<${tag}>${M(g)}</${tag}>`; i = n; }
+      else if (c === '\\') {
+        const m = /^\\([a-zA-Z]+|.)/.exec(s.slice(i)); i += m[0].length; const nm = m[1];
+        if (nm === 'mathrm') { const [g, n] = grp(s, i); out += `<span class="up">${g}</span>`; i = n; }
+        else if (nm === ',' || nm === ' ') out += ' ';
+        else if (GREEK[nm]) out += `<i>${GREEK[nm]}</i>`;
+        else if (OPS[nm]) out += ` ${OPS[nm]} `;
+        else out += nm;
+      }
+      else if (/[a-zA-Z]/.test(c)) { out += `<i>${c}</i>`; i++; }
+      else if (c === '-') { out += out && !/[( ]$/.test(out) ? ' − ' : '−'; i++; }
+      else if (c === '=' || c === '+') { out += ` ${c} `; i++; }
+      else if (c === '{' || c === '}') i++;
+      else { out += c; i++; }
+    }
+    return out;
+  }
+  const MS = (s, pt) => `<span class="mth"${pt ? ` style="font-size:${pt}pt"` : ''}>${M(s)}</span>`;
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  window.M = M; window.MS = MS;
+  class Fig {
+    // opts.svgTop: draw routes, leaders and ghosts above cards and pictures (pages written to the grammar use it); default draws them under the cards.
+    constructor(el, w, h, opts = {}) {
+      this.el = el; this.w = w; this.h = h;
+      el.style.position = 'relative'; el.style.width = w + 'mm'; el.style.height = h + 'mm';
+      this.svg = document.createElementNS(NS, 'svg');
+      this.svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      this.svg.setAttribute('width', w + 'mm'); this.svg.setAttribute('height', h + 'mm');
+      this.svg.style.cssText = 'position:absolute;left:0;top:0;overflow:visible;pointer-events:none' + (opts.svgTop ? ';z-index:5' : '');
+      this.svg.innerHTML = '<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="1.15" markerHeight="1.15" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--line)"/></marker></defs>';
+      el.appendChild(this.svg);
+      this.n = 0;
+    }
+    Y(y) { return this.h - y; }
+    mk(color) {
+      const id = 'c' + color.replace(/[^0-9a-z]/gi, '');
+      if (!this.svg.querySelector('#ah-' + id)) {
+        const m = document.createElementNS(NS, 'marker');
+        m.setAttribute('id', 'ah-' + id); m.setAttribute('viewBox', '0 0 10 10'); m.setAttribute('refX', '9'); m.setAttribute('refY', '5');
+        m.setAttribute('markerWidth', '1.15'); m.setAttribute('markerHeight', '1.15'); m.setAttribute('markerUnits', 'userSpaceOnUse'); m.setAttribute('orient', 'auto');
+        m.innerHTML = `<path d="M0 0L10 5L0 10z" fill="${color}"/>`;
+        this.svg.querySelector('defs').appendChild(m);
+      }
+      return id;
+    }
+    // The claim-boundary line: one short line at the bottom edge, in the floor size. Text defaults to molecullage.json "claimBoundary".
+    boundary(text, { x = 1.5, color = 'var(--sub)' } = {}) {
+      const s = text || (window.CONFIG || {}).claimBoundary || '';
+      if (s) this.label(x, 1.6, s, { fs: (window.CONFIG || {}).floorPt || 6.55, color });
+    }
+    letter(ch, x, y, marker = null) {
+      const d = document.createElement('div');
+      d.className = 'letter'; d.id = 'panel-' + ch;
+      d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm`;
+      const ic = marker && window.ICONS ? `<span class="ic mk">${window.ICONS[marker === 'computer' ? 'device-desktop' : 'flask'] || ''}</span>` : '';
+      d.innerHTML = `<b>${ch}</b>${ic}`;
+      this.el.appendChild(d);
+    }
+    chip({ x, y, w, h, text, fam = 'indigo', fs = 6.2 }) {
+      const d = document.createElement('div');
+      d.className = `chipbox fam-${fam}`; d.id = this.id('chip');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt`;
+      d.textContent = text; this.el.appendChild(d);
+    }
+    pictogram(icon, x, y, size = 5) {
+      const d = document.createElement('div');
+      d.className = 'picto'; d.id = this.id('pictogram');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + size)}mm;width:${size}mm;height:${size}mm;font-size:${size * 2.83}pt`;
+      d.innerHTML = `<span class="ic">${(window.ICONS || {})[icon] || ''}</span>`; this.el.appendChild(d);
+    }
+    // Raster render (ChimeraX), trimmed by struct/trim.py; `name` is "<group>__<layer>", size and anchors from window.ART.
+    // x, y: bottom-left corner in mm; w: width in mm (height follows the aspect ratio). Returns the bounds like module().
+    image({ x, y, w, name, flipX = false }) {
+      const a = (window.ART || {})[name];
+      if (!a) throw new Error('image not in struct index: ' + name);
+      const h = w / a.ar;
+      const im = document.createElement('img');
+      im.className = 'art'; im.id = this.id('structure'); im.src = `${window.ART_DIR || 'art'}/${name}_t.png`;
+      im.style.cssText = `position:absolute;left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm${flipX ? ';transform:scaleX(-1)' : ''}`;
+      this.el.appendChild(im);
+      const A = a.anchors || {};
+      // pt(name): anchor of the render (CDR tip, epitope, ...) as [x, y] in mm; outline: silhouette polyline in mm (closed)
+      const pt = (n) => (A[n] ? [x + A[n][0] * w, y + (1 - A[n][1]) * h] : null);
+      const outline = a.outline ? a.outline.map(([fx, fy]) => [x + fx * w, y + (1 - fy) * h]) : null;
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h, pt, outline };
+    }
+    // Dashed silhouette of a missing partner (rule: absence is drawn as a dashed outline in place).
+    ghost(poly, { color = 'var(--guide)', width = 0.3, dash = '1.1 0.8' } = {}) {
+      this.route(poly.concat([poly[0]]), { head: false, color, width });
+      const p = this.svg.lastElementChild; p.style.strokeDasharray = dash; p.style.strokeLinejoin = 'round';
+    }
+    // State card: a pale frame that holds a picture; the title sits top left (design rule: two kinds of rectangle, state and operation).
+    state({ x, y, w, h, title = '', dashed = false }) {
+      const d = document.createElement('div');
+      d.className = 'state' + (dashed ? ' dashed' : ''); d.id = this.id('state');   // two kinds of rectangle: state (holds a picture) and operation (a module)
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      if (title) d.innerHTML = `<span class="st">${title}</span>`;
+      this.el.appendChild(d);
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+    }
+    // Progress bar: value in [0, 1]; the fill carries the colour, the frame is a hairline.
+    bar({ x, y, w, h = 1.8, value = 0, color = 'var(--data0)', edge = 'var(--rule)' }) {
+      const d = document.createElement('div');
+      d.className = 'bar'; d.id = this.id('bar');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;border-color:${edge}`;
+      d.innerHTML = `<i style="width:${Math.max(0, Math.min(1, value)) * 100}%;background:${color}"></i>`;
+      this.el.appendChild(d);
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+    }
+    box({ x, y, w, h, html, fs = 6.2, color = 'var(--sub)', ha = 'left', bold = false }) {
+      const d = document.createElement('div');
+      d.className = 'tbox'; d.id = this.id('text');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt;color:${color};text-align:${ha};font-weight:${bold ? 700 : 400}`;
+      d.innerHTML = html; this.el.appendChild(d);
+    }
+    band({ x, y, w, h, text, sub = '', fam = 'indigo', dashed = false }) {
+      const d = document.createElement('div');
+      d.className = `band fam-${fam}` + (dashed ? ' dashed' : ''); d.id = this.id('band');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      d.innerHTML = `<b>${text}</b>${sub ? `<span>${sub}</span>` : ''}`;
+      this.el.appendChild(d);
+    }
+    group({ x, y, w, h, title = '', fam = 'grey', dashed = false }) {
+      const d = document.createElement('div');
+      d.className = 'group' + (dashed ? ' dashed' : ''); d.id = this.id('group');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      if (title) d.innerHTML = `<span class="gt">${title}</span>`;
+      this.el.appendChild(d);
+    }
+    tensor({ x, y, w = 5, h = 3, stripes = ['var(--data0)'], label = '', side = 'right' }) {
+      const d = document.createElement('div');
+      d.className = 'tensor'; d.id = this.id('tensor');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      d.innerHTML = stripes.map(c => `<i style="background:${c}"></i>`).join('');
+      this.el.appendChild(d);
+      if (label) this.label(side === 'right' ? x + w + 1.2 : x - 1.2, y + h / 2, label, { ha: side === 'right' ? 'left' : 'right', fs: 5.8 });
+    }
+    id(kind) { this.n += 1; return `${kind}-${String(this.n).padStart(3, '0')}`; }
+    module({ x, y, w, h, title = '', sub = [], icon = null, fam = 'grey', dashed = false, layout = 'row', gid = null }) {
+      const d = document.createElement('div');
+      d.className = `card fam-${fam}` + (dashed ? ' dashed' : '');
+      d.id = gid || this.id('module');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      const ic = icon && window.ICONS && window.ICONS[icon] ? `<div class="chip"><span class="ic">${window.ICONS[icon]}</span></div>` : '';
+      const tt = (Array.isArray(title) ? title : [title]).filter(Boolean).map(t => `<p class="t">${t}</p>`).join('');
+      const ss = (Array.isArray(sub) ? sub : [sub]).filter(Boolean).map(t => `<p class="s">${t}</p>`).join('');
+      if (layout === 'tile') {
+        d.classList.add('tile');
+        const pic = icon && window.ICONS && window.ICONS[icon] ? `<span class="ic big">${window.ICONS[icon]}</span>` : '';
+        const t2 = (Array.isArray(title) ? title : [title]).filter(Boolean).map(t => `<p class="t">${t}</p>`).join('');
+        const s2 = (Array.isArray(sub) ? sub : [sub]).filter(Boolean).map(t => `<p class="s">${t}</p>`).join('');
+        d.innerHTML = `${pic}${t2}${s2}`; this.el.appendChild(d);
+        return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+      }
+      if (layout === 'plain') {
+        d.classList.add('plain');
+        const pic = icon && window.ICONS && window.ICONS[icon] ? `<span class="ic big">${window.ICONS[icon]}</span>` : '';
+        const t2 = (Array.isArray(title) ? title : [title]).filter(Boolean).map(t => `<p class="t">${t}</p>`).join('');
+        const s2 = (Array.isArray(sub) ? sub : [sub]).filter(Boolean).map(t => `<p class="s">${t}</p>`).join('');
+        d.innerHTML = `${pic}<div class="tx">${t2}${s2}</div>`; this.el.appendChild(d);
+        return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+      }
+      d.innerHTML = layout === 'stack'
+        ? `<div class="head">${ic}<div class="tx">${tt}</div></div><div class="tx">${ss}</div>`
+        : `${ic}<div class="tx${ic ? '' : ' center'}">${tt}${ss}</div>`;
+      if (layout === 'stack') d.classList.add('stack');
+      this.el.appendChild(d);
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+    }
+    route(pts, { dashed = false, head = true, color = null, width = null } = {}) {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${this.Y(y)}`).join(''));
+      p.setAttribute('class', 'route' + (dashed ? ' dashed' : ''));
+      p.setAttribute('id', this.id('route'));
+      if (color) { p.style.stroke = color; if (head) { p.setAttribute('marker-end', `url(#ah-${this.mk(color)})`); } }
+      else if (head) p.setAttribute('marker-end', 'url(#ah)');
+      if (width) p.style.strokeWidth = width;
+      this.svg.appendChild(p);
+    }
+    dot(x, y) {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', this.Y(y)); c.setAttribute('r', 0.5);
+      c.setAttribute('class', 'dot'); c.setAttribute('id', this.id('junction'));
+      this.svg.appendChild(c);
+    }
+    plus(x, y, r = 1.7) {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('id', this.id('plus'));
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', this.Y(y)); c.setAttribute('r', r); c.setAttribute('class', 'node');
+      const k = r * 0.62;
+      const a = document.createElementNS(NS, 'path');
+      a.setAttribute('d', `M${x - k} ${this.Y(y)}H${x + k}M${x} ${this.Y(y) - k}V${this.Y(y) + k}`); a.setAttribute('class', 'mark');
+      g.append(c, a); this.svg.appendChild(g);
+    }
+    bracket(x, y0, y1, text) {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', `M${x + 1.6} ${this.Y(y0)}H${x}V${this.Y(y1)}H${x + 1.6}`); p.setAttribute('class', 'route nohead');
+      p.setAttribute('id', this.id('bracket')); this.svg.appendChild(p);
+      this.label(x - 2.6, (y0 + y1) / 2, text, { rot: true, fs: 6.2, color: 'var(--ink)', ha: 'center' });
+    }
+    label(x, y, text, { fs = 7, color = 'var(--sub)', ha = 'left', rot = false, bold = false, italic = false } = {}) {
+      const d = document.createElement('div');
+      d.className = 'lab'; d.id = this.id('label'); d.textContent = text;
+      const tr = ha === 'center' ? 'translate(-50%,-50%)' : ha === 'right' ? 'translate(-100%,-50%)' : 'translate(0,-50%)';
+      d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm;font-size:${fs}pt;color:${color};font-weight:${bold ? 700 : 400};font-style:${italic ? 'italic' : 'normal'};transform:${tr}${rot ? ' rotate(-90deg)' : ''};`;
+      this.el.appendChild(d);
+    }
+    // Text with $maths$ pieces, in Arial throughout. x, y in mm (y up); ha left, center or right. mfs: size of the maths pieces, pt (default 7.2).
+    rich(x, y, s, { fs = 7, color = 'var(--sub)', ha = 'left', bold = false, rot = false, mfs = 8.4 } = {}) {
+      const d = document.createElement('div');
+      d.className = 'lab'; d.id = this.id('label');
+      const tr = (ha === 'center' ? 'translate(-50%,-50%)' : ha === 'right' ? 'translate(-100%,-50%)' : 'translate(0,-50%)') + (rot ? ' rotate(-90deg)' : '');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm;font-size:${fs}pt;color:${color};font-weight:${bold ? 700 : 400};transform:${tr}`;
+      d.innerHTML = s.split('$').map((p, i) => (i % 2 ? MS(p, mfs) : esc(p))).join('');
+      this.el.appendChild(d);
+      return d;
+    }
+    legend(x, y, items, dx = 28) {
+      items.forEach(([fam, text, dashed], i) => {
+        const s = document.createElement('div');
+        s.className = `sw fam-${fam}` + (dashed ? ' dashed' : '');
+        s.style.cssText = `left:${x + i * dx}mm;top:${this.Y(y) - 1.5}mm`;
+        this.el.appendChild(s);
+        this.label(x + i * dx + 5.2, y, text, { fs: 7, color: 'var(--ink)' });
+      });
+    }
+  }
+  window.Fig = Fig;
+})();
+
+/* Molecullage kit, block grammar of a stage-coded pipeline figure: tool blocks, data pills, stage strips, step badges.
+   Loaded after kit.js by build.mjs. Coordinates in millimetres, origin bottom-left (y up), as in kit.js. Text colour on dark families comes from the tokens CSS.
+     f.tool({x,y,w,h,title,sub,fam,dashed,repeat})  saturated block with a bold name and one plain line; repeat: n draws n-1 offset copies behind it and a x n badge
+     f.pill({x,y,w,h,text,sub,fam,dashed})            rounded data object (pale family): what flows between the blocks
+     f.stage({x,y,w,h,text,fam})                      strip, text rotated by default, one per stage (left edge of a block column; reset the rotation to lay it flat on top of a column)
+     f.badge({x,y,n,fam})                             numbered circle for a reading order
+     f.note({x,y,w,text,fs,color,ha})                 wrapped plain-language text block (top-left anchored at x, y = top edge)
+   Each returns bounds {x,y,w,h,cx,cy,l,r,b,t} plus pt(side) = anchor on the side: 'l','r','t','b' in mm. */
+(function () {
+  const F = window.Fig.prototype;
+  const bounds = (x, y, w, h) => ({
+    x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h,
+    pt(s) { return s === 'l' ? [x, y + h / 2] : s === 'r' ? [x + w, y + h / 2] : s === 't' ? [x + w / 2, y + h] : [x + w / 2, y]; },
+  });
+  F.tool = function ({ x, y, w, h, title, sub = '', fam = 'indigo', dashed = false, repeat = 0, fs = 7.5 }) {
+    if (repeat) {   // repeat: a number n, or a text such as 'N' for a toy size; up to two copies behind the block
+      for (let k = Math.min(typeof repeat === 'number' ? repeat - 1 : 2, 2); k >= 1; k--) {   // up to two copies behind: a stack means "repeated"
+        const d = document.createElement('div');
+        d.className = `card tool fam-${fam}`; d.id = this.id('module');
+        d.style.cssText = `left:${x + k * 1.0}mm;top:${this.Y(y + h - k * 1.0)}mm;width:${w}mm;height:${h}mm`;
+        this.el.appendChild(d);
+      }
+    }
+    const d = document.createElement('div');
+    d.className = `card tool fam-${fam}` + (dashed ? ' dashed' : ''); d.id = this.id('module');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;justify-content:center;text-align:center`;
+    d.innerHTML = `<div class="tx center"><p class="t" style="font-size:${fs}pt">${title}${repeat ? ` <span class="rep">×${repeat}</span>` : ''}</p>${sub ? `<p class="s">${sub}</p>` : ''}</div>`;
+    this.el.appendChild(d);
+    return bounds(x, y, w, h);
+  };
+  F.pill = function ({ x, y, w, h = 4.6, text, sub = '', fam = 'palemint', dashed = false, fs = 7 }) {
+    const d = document.createElement('div');
+    d.className = `pill fam-${fam}` + (dashed ? ' dashed' : ''); d.id = this.id('pill');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt;border-radius:${Math.min(h / 2, 3)}mm`;
+    d.innerHTML = `<span>${text}</span>${sub ? `<em>${sub}</em>` : ''}`;
+    this.el.appendChild(d);
+    return bounds(x, y, w, h);
+  };
+  F.stage = function ({ x, y, w = 4.4, h, text, fam = 'indigo', fs = 7.5 }) {
+    const d = document.createElement('div');
+    d.className = `stage fam-${fam}`; d.id = this.id('stage');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt`;
+    d.innerHTML = `<span>${text}</span>`;
+    this.el.appendChild(d);
+    return bounds(x, y, w, h);
+  };
+  F.badge = function ({ x, y, n, fam = 'indigo', r = 1.9 }) {
+    const d = document.createElement('div');
+    d.className = `badge fam-${fam}`; d.id = this.id('badge');
+    d.style.cssText = `left:${x - r}mm;top:${this.Y(y + r)}mm;width:${2 * r}mm;height:${2 * r}mm;font-size:7pt`;
+    d.textContent = n; this.el.appendChild(d);
+    return bounds(x - r, y - r, 2 * r, 2 * r);
+  };
+  F.note = function ({ x, y, w, text, fs = 7, color = 'var(--ink)', ha = 'left', bold = false }) {
+    const d = document.createElement('div');
+    d.className = 'tbox'; d.id = this.id('text');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm;width:${w}mm;font-size:${fs}pt;color:${color};text-align:${ha};font-weight:${bold ? 700 : 400};line-height:1.22`;
+    d.innerHTML = text.split('$').map((p, i) => (i % 2 ? window.MS(p, fs * 1.2) : p)).join('');
+    this.el.appendChild(d);
+    return d;
+  };
+})();
+</script></head><body>
+<script>window.LAYOUT = {"W":178.0,"H":201.5,"TB":103.67443467538712,"KEY_X":75.5,"img":{"name":"h3r__full","x_left":23.0,"t_top":106.87443467538712,"w":48.420786115780565,"h":83.31223493450479,"scale":1.1,"phi":244,"tilt":-30},"sites":[{"n":1,"num":73,"wt":"L","mut":"M","bw":"2.43","where":"TM2","bead":[23.25,67.13949677176599],"badge":[25.85,67.13949677176599],"anchor":[46.37265095058415,153.36910794992218],"tag":[51.789093592151296,152.41404297275406],"tagseg":[[47.16049715299392,153.23018940778863],[50.45960312558481,152.6484680126044]]},{"n":2,"num":193,"wt":"F","mut":"S","bw":"ECL2","where":"ECL2","bead":[50.25076642941657,36.23558205675198],"badge":[47.65076642941657,36.23558205675198],"anchor":[37.57426682221922,125.15812438950287],"tag":[41.07426682221922,119.09594656301181],"tagseg":[[37.97426682221922,124.46530406647533],[40.399266822219225,120.2650808581208]]},{"n":3,"num":359,"wt":"S","mut":"Y","bw":"6.36","where":"TM6","bead":[63.25,71.16073968621211],"badge":[65.85,71.16073968621211],"anchor":[44.13835682502287,161.33927291190517],"tag":[44.13835682502287,166.83927291190517],"tagseg":[[44.13835682502287,162.13927291190518],[44.13835682502287,165.48927291190518]]},{"n":4,"num":415,"wt":"C","mut":"R","bw":"7.56","where":"TM7","bead":[71.75,72.0271659160021],"badge":[69.15,72.0271659160021],"anchor":[47.354636325747265,159.55897732383406],"tag":[48.309701302915386,164.97541996540122],"tagseg":[[47.49355486788081,160.3468235262438],[48.07527626306503,163.64592949883473]]}],"beads":[[27,8.054,30.963,0,1],[28,9.786,31.963,0,1],[29,11.518,32.963,0,1],[30,13.25,33.963,1,1],[31,11.75,35.237,1,1],[32,13.25,36.511,1,1],[33,11.75,37.785,1,1],[34,13.25,39.059,1,1],[35,11.75,40.333,1,1],[36,13.25,41.607,1,1],[37,11.75,42.881,1,1],[38,13.25,44.155,1,1],[39,11.75,45.429,1,1],[40,13.25,46.703,1,1],[41,11.75,47.977,1,1],[42,13.25,49.251,1,1],[43,11.75,50.525,1,1],[44,13.25,51.799,1,1],[45,11.75,53.073,1,1],[46,13.25,54.347,1,1],[47,11.75,55.621,1,1],[48,13.25,56.895,1,1],[49,11.75,58.169,1,1],[50,13.25,59.443,1,1],[51,11.75,60.717,1,1],[52,13.25,61.991,1,1],[53,11.75,63.265,1,1],[54,13.25,64.539,1,1],[55,11.75,65.813,1,1],[56,13.25,67.087,1,1],[57,11.75,68.361,1,1],[58,13.25,69.635,1,1],[59,11.75,70.909,1,1],[60,13.25,72.183,1,1],[61,11.75,73.457,1,1],[62,13.25,74.731,1,1],[63,14.831,76.515,1,1],[64,16.991,77.52,1,1],[65,19.374,77.579,1,1],[66,21.582,76.683,1,1],[67,23.25,74.981,1,1],[68,21.75,73.674,1,1],[69,23.25,72.367,1,1],[70,21.75,71.06,1,1],[71,23.25,69.753,1,1],[72,21.75,68.446,1,1],[73,23.25,67.139,1,1],[74,21.75,65.833,1,1],[75,23.25,64.526,1,1],[76,21.75,63.219,1,1],[77,23.25,61.912,1,1],[78,21.75,60.605,1,1],[79,23.25,59.298,1,1],[80,21.75,57.991,1,1],[81,23.25,56.684,1,1],[82,21.75,55.377,1,1],[83,23.25,54.07,1,1],[84,21.75,52.763,1,1],[85,23.25,51.456,1,1],[86,21.75,50.15,1,1],[87,23.25,48.843,1,1],[88,21.75,47.536,1,1],[89,23.25,46.229,1,1],[90,21.75,44.922,1,1],[91,23.25,43.615,1,1],[92,21.75,42.308,1,1],[93,23.25,41.001,1,1],[94,21.75,39.694,1,1],[95,23.25,38.387,1,1],[96,21.75,37.08,1,1],[97,23.25,35.773,1,1],[98,21.75,34.466,1,1],[99,24.625,34.653,0,1],[100,27.5,34.839,0,1],[101,30.375,35.026,0,1],[102,33.25,35.212,1,1],[103,31.75,36.455,1,1],[104,33.25,37.697,1,1],[105,31.75,38.939,1,1],[106,33.25,40.181,1,1],[107,31.75,41.423,1,1],[108,33.25,42.665,1,1],[109,31.75,43.907,1,1],[110,33.25,45.15,1,1],[111,31.75,46.392,1,1],[112,33.25,47.634,1,1],[113,31.75,48.876,1,1],[114,33.25,50.118,1,1],[115,31.75,51.36,1,1],[116,33.25,52.602,1,1],[117,31.75,53.845,1,1],[118,33.25,55.087,1,1],[119,31.75,56.329,1,1],[120,33.25,57.571,1,1],[121,31.75,58.813,1,1],[122,33.25,60.055,1,1],[123,31.75,61.297,1,1],[124,33.25,62.54,1,1],[125,31.75,63.782,1,1],[126,33.25,65.024,1,1],[127,31.75,66.266,1,1],[128,33.25,67.508,1,1],[129,31.75,68.75,1,1],[130,33.25,69.992,1,1],[131,31.75,71.235,1,1],[132,33.25,72.477,1,1],[133,31.75,73.719,1,1],[134,33.25,74.961,1,1],[135,31.75,76.203,1,1],[136,33.25,77.445,1,1],[137,31.75,78.687,1,1],[138,33.25,79.93,1,1],[139,33.894,81.811,1,1],[140,35.161,83.345,1,1],[141,36.888,84.332,1,1],[142,38.853,84.645,1,1],[143,40.801,84.245,1,1],[144,42.483,83.182,1,1],[145,43.681,81.595,1,1],[146,44.241,79.686,1,1],[147,44.091,77.702,0,1],[148,43.25,75.9,1,1],[149,41.75,74.507,1,1],[150,43.25,73.114,1,1],[151,41.75,71.722,1,1],[152,43.25,70.329,1,1],[153,41.75,68.937,1,1],[154,43.25,67.544,1,1],[155,41.75,66.152,1,1],[156,43.25,64.759,1,1],[157,41.75,63.366,1,1],[158,43.25,61.974,1,1],[159,41.75,60.581,1,1],[160,43.25,59.189,1,1],[161,41.75,57.796,1,1],[162,43.25,56.404,1,1],[163,41.75,55.011,1,1],[164,43.25,53.619,1,1],[165,41.75,52.226,1,1],[166,43.25,50.833,1,1],[167,41.75,49.441,1,1],[168,43.25,48.048,1,1],[169,41.75,46.656,1,1],[170,43.25,45.263,1,1],[171,41.75,43.871,1,1],[172,43.25,42.478,1,1],[173,41.75,41.085,1,1],[174,43.25,39.693,1,1],[175,41.75,38.3,1,1],[176,43.25,36.908,1,1],[177,41.75,35.515,1,1],[178,43.25,34.123,1,1],[179,43.25,32.123,0,1],[180,43.25,30.123,0,1],[181,43.25,28.123,0,1],[182,43.25,26.123,0,1],[183,43.308,24.126,0,1],[184,44.461,22.607,0,1],[185,46.434,22.4,0,1],[186,48.373,22.751,0,1],[187,49.284,24.442,0,1],[188,49.3,26.442,0,1],[189,49.3,28.442,0,1],[190,49.3,30.442,0,1],[191,49.3,32.442,0,1],[192,49.422,34.433,0,1],[193,50.251,36.236,0,1],[194,51.696,37.608,0,1],[195,53.25,38.867,1,1],[196,51.75,40.19,1,1],[197,53.25,41.513,1,1],[198,51.75,42.835,1,1],[199,53.25,44.158,1,1],[200,51.75,45.481,1,1],[201,53.25,46.803,1,1],[202,51.75,48.126,1,1],[203,53.25,49.449,1,1],[204,51.75,50.771,1,1],[205,53.25,52.094,1,1],[206,51.75,53.417,1,1],[207,53.25,54.739,1,1],[208,51.75,56.062,1,1],[209,53.25,57.385,1,1],[210,51.75,58.707,1,1],[211,53.25,60.03,1,1],[212,51.75,61.353,1,1],[213,53.25,62.675,1,1],[214,51.75,63.998,1,1],[215,53.25,65.321,1,1],[216,51.75,66.643,1,1],[217,53.25,67.966,1,1],[218,51.75,69.289,1,1],[219,53.25,70.611,1,1],[220,51.75,71.934,1,1],[221,53.25,73.257,1,1],[222,51.75,74.579,1,1],[223,53.25,75.902,1,1],[224,51.75,77.225,1,1],[225,53.25,78.547,1,1],[226,51.75,79.87,1,1],[227,53.25,81.192,1,1],[228,51.75,82.515,1,1],[229,53.25,83.838,1,1],[230,51.75,85.16,1,1],[231,51.75,87.16,0,1],[232,51.75,89.16,0,1],[233,51.75,91.16,0,1],[234,51.75,93.16,1,1],[235,51.75,95.16,1,1],[236,51.75,97.16,1,1],[341,61.75,99.774,0,0],[342,61.75,97.774,0,0],[343,61.75,95.774,0,0],[344,61.75,93.774,0,0],[345,61.75,91.774,0,0],[346,61.75,89.774,0,0],[347,61.75,87.774,0,1],[348,61.75,85.774,1,1],[349,63.25,84.446,1,1],[350,61.75,83.117,1,1],[351,63.25,81.789,1,1],[352,61.75,80.46,1,1],[353,63.25,79.132,1,1],[354,61.75,77.803,1,1],[355,63.25,76.475,1,1],[356,61.75,75.146,1,1],[357,63.25,73.818,1,1],[358,61.75,72.489,1,1],[359,63.25,71.161,1,1],[360,61.75,69.832,1,1],[361,63.25,68.504,1,1],[362,61.75,67.175,1,1],[363,63.25,65.847,1,1],[364,61.75,64.518,1,1],[365,63.25,63.19,1,1],[366,61.75,61.861,1,1],[367,63.25,60.533,1,1],[368,61.75,59.204,1,1],[369,63.25,57.876,1,1],[370,61.75,56.547,1,1],[371,63.25,55.219,1,1],[372,61.75,53.89,1,1],[373,63.25,52.561,1,1],[374,61.75,51.233,1,1],[375,63.25,49.904,1,1],[376,61.75,48.576,1,1],[377,63.25,47.247,1,1],[378,61.75,45.919,1,1],[379,63.25,44.59,1,1],[380,61.75,43.262,1,1],[381,63.25,41.933,1,1],[382,61.75,40.605,1,1],[383,63.25,39.276,1,1],[384,61.75,37.948,1,1],[385,63.518,37.017,0,1],[386,65.411,36.381,0,1],[387,67.383,36.056,0,1],[388,69.381,36.052,0,1],[389,71.353,36.368,0,1],[390,73.25,36.996,1,1],[391,71.75,38.397,1,1],[392,73.25,39.798,1,1],[393,71.75,41.2,1,1],[394,73.25,42.601,1,1],[395,71.75,44.002,1,1],[396,73.25,45.403,1,1],[397,71.75,46.805,1,1],[398,73.25,48.206,1,1],[399,71.75,49.607,1,1],[400,73.25,51.008,1,1],[401,71.75,52.41,1,1],[402,73.25,53.811,1,1],[403,71.75,55.212,1,1],[404,73.25,56.613,1,1],[405,71.75,58.015,1,1],[406,73.25,59.416,1,1],[407,71.75,60.817,1,1],[408,73.25,62.218,1,1],[409,71.75,63.62,1,1],[410,73.25,65.021,1,1],[411,71.75,66.422,1,1],[412,73.25,67.823,1,1],[413,71.75,69.225,1,1],[414,73.25,70.626,1,1],[415,71.75,72.027,1,1],[416,73.25,73.428,1,1],[417,73.9,75.828,1,1],[418,75.35,78.278,1,1],[419,76.8,76.978,1,1],[420,78.25,78.278,1,1],[421,79.7,76.978,1,1],[422,81.15,78.278,1,1],[423,82.6,76.978,1,1],[424,84.05,78.278,1,1],[425,85.5,76.978,1,1],[426,86.95,78.278,1,1],[427,88.4,76.978,1,1],[428,89.85,78.278,1,1],[429,91.3,76.978,1,1],[430,92.75,78.278,1,1],[431,94.2,76.978,1,1],[432,95.65,78.278,1,1],[433,97.1,76.978,0,0]],"cols":[12.5,22.5,32.5,42.5,52.5,62.5,72.5],"tm":[{"name":"TM1","x":14.1,"t":29.76314035536723,"start":30,"end":62,"x_col":12.5,"t_top":33.96314035536723,"t_bot":74.7308676926006,"n":33},{"name":"TM2","x":22.5,"t":30.266439466839838,"start":67,"end":98,"x_col":22.5,"t_top":34.46643946683984,"t_bot":74.98103052494827,"n":32},{"name":"TM3","x":32.5,"t":31.012472732467668,"start":102,"end":138,"x_col":32.5,"t_top":35.21247273246767,"t_bot":79.92950488536478,"n":37},{"name":"TM4","x":42.5,"t":18.2,"start":148,"end":178,"x_col":42.5,"t_top":34.12254450100158,"t_bot":75.89959776493976,"n":31},{"name":"TM5","x":54.1,"t":34.66738269362985,"start":195,"end":230,"x_col":52.5,"t_top":38.86738269362984,"t_bot":85.16047009822529,"n":36},{"name":"TM6","x":62.5,"t":33.74779652899633,"start":348,"end":384,"x_col":62.5,"t_top":37.94779652899633,"t_bot":85.77443467538711,"n":37},{"name":"TM7","x":72.5,"t":32.7958743845744,"start":390,"end":416,"x_col":72.5,"t_top":36.99587438457439,"t_bot":73.42841757725925,"n":27}],"loops":{"ICL1":{"a":62,"b":67,"n":4,"chord":10.003128582732915,"arc":11.999999999999998},"ECL1":{"a":98,"b":102,"n":3,"chord":11.524173099768301,"arc":11.524173099768301},"ICL2":{"a":138,"b":148,"n":9,"chord":10.78147259882676,"arc":20.000000000000004},"ECL3":{"a":384,"b":390,"n":5,"chord":11.539330819811036,"arc":12.0},"ECL2":{"a":178,"b":195,"n":16,"chord":11.068581186142326,"arc":33.99999999999999,"rise":11.722544501001583,"x_leg":49.3}},"gap":{"a0":[51.75,98.0604700982253],"a1":[61.75,100.67443467538712],"ctrl":[56.75,104.77443467538711],"mid":[56.75,102.07094353109667],"n":104,"rng":[237,340]},"nstub":{"p0":[8.053847577293368,30.96314035536723],"dir":[-0.8660254037844387,-0.49999999999999994],"marker":[3.8103230987496177,28.51314035536723],"size":2.4},"h8":{"x0":73.0,"x1":96.55000000000001,"t":80.22841757725925,"tick":0.8,"mid":84.775},"r_bead":0.9,"r_site":1.2,"r_badge":1.3,"fit_dev":[1.44,1.41,2.74,1.94,1.14,2.78,1.78],"anchor_check_mm":0.0,"n_beads":303,"snake_t":[22.4,100.67443467538712],"last_bead":[97.10000000000001,76.97841757725925],"tail_x":72.5};
+</script>
+<script>window.PLOT = {"W":178.0,"H":201.5,"rows":[{"id":"L73M","group":"A","label":"L73M","sites":[1],"mean":"36.3","sd":null,"n":1,"table":"Table 2","t":23.799999999999997,"x":149.9554530693316,"lo":null,"hi":null,"mean_int":"36","mean_frac":".3"},{"id":"L73A","group":"A","label":"L73A","sites":[1],"mean":null,"sd":null,"n":null,"table":"Table 2","t":28.799999999999997,"x":null,"lo":null,"hi":null},{"id":"L73F","group":"A","label":"L73F","sites":[1],"mean":null,"sd":null,"n":null,"table":"Table 2","t":33.8,"x":null,"lo":null,"hi":null},{"id":"F193S","group":"A","label":"F193S","sites":[2],"mean":"12.4","sd":null,"n":1,"table":"Table 2","t":40.099999999999994,"x":146.86570619019693,"lo":null,"hi":null,"mean_int":"12","mean_frac":".4"},{"id":"F193A","group":"A","label":"F193A","sites":[2],"mean":"17.8","sd":"6.4","n":3,"table":"Table 2","t":45.099999999999994,"x":147.90557911849436,"lo":146.62383820324857,"hi":148.78911870008642,"mean_int":"17","mean_frac":".8","sd_int":"6","sd_frac":".4"},{"id":"F193Y","group":"A","label":"F193Y","sites":[2],"mean":null,"sd":null,"n":null,"table":"Table 2","t":50.099999999999994,"x":null,"lo":null,"hi":null},{"id":"S359Y","group":"A","label":"S359Y","sites":[3],"mean":"7.5","sd":null,"n":1,"table":"Table 2","t":56.39999999999999,"x":145.41940348238722,"lo":null,"hi":null,"mean_int":"7","mean_frac":".5"},{"id":"S359A","group":"A","label":"S359A","sites":[3],"mean":null,"sd":null,"n":null,"table":"Table 2","t":61.39999999999999,"x":null,"lo":null,"hi":null},{"id":"S359F","group":"A","label":"S359F","sites":[3],"mean":null,"sd":null,"n":null,"table":"Table 2","t":66.39999999999999,"x":null,"lo":null,"hi":null},{"id":"S359Q","group":"A","label":"S359Q","sites":[3],"mean":null,"sd":null,"n":null,"table":"Table 2","t":71.39999999999999,"x":null,"lo":null,"hi":null},{"id":"C415R","group":"A","label":"C415R","sites":[4],"mean":"4.0","sd":"1.6","n":3,"table":"Table 2","t":77.69999999999999,"x":143.6111889908609,"lo":142.14178146410904,"hi":144.57906298549187,"mean_int":"4","mean_frac":".0","sd_int":"1","sd_frac":".6"},{"id":"C415A","group":"A","label":"C415A","sites":[4],"mean":"49","sd":"10","n":3,"table":"Table 2","t":82.69999999999999,"x":150.81842077211698,"lo":150.16182688633194,"hi":151.35264254796743,"mean_int":"49","mean_frac":"","sd_int":"10","sd_frac":""},{"id":"C415K","group":"A","label":"C415K","sites":[4],"mean":"10.8","sd":"5.0","n":3,"table":"Table 2","t":87.69999999999999,"x":146.46831197631542,"lo":144.68000437733943,"hi":147.56272923739286,"mean_int":"10","mean_frac":".8","sd_int":"5","sd_frac":".0"},{"id":"C415E","group":"A","label":"C415E","sites":[4],"mean":null,"sd":null,"n":null,"table":"Table 2","t":92.69999999999999,"x":null,"lo":null,"hi":null},{"id":"C415L","group":"A","label":"C415L","sites":[4],"mean":"148","sd":"65","n":3,"table":"Table 2","t":97.69999999999999,"x":153.9981189185444,"lo":152.33441287152354,"hi":155.04540728599036,"mean_int":"148","mean_frac":"","sd_int":"65","sd_frac":""},{"id":"C415Y","group":"A","label":"C415Y","sites":[4],"mean":null,"sd":null,"n":null,"table":"Table 2","t":102.69999999999999,"x":null,"lo":null,"hi":null},{"id":"L73M_F193S","group":"B","label":"L73M + F193S","sites":[1,2],"mean":"1.9","sd":"0.5","n":3,"table":"Table 1","t":116.0,"x":141.46978028657145,"lo":140.59133943805995,"hi":142.14178146410904,"mean_int":"1","mean_frac":".9","sd_int":"0","sd_frac":".5"},{"id":"L73M_S359Y","group":"B","label":"L73M + S359Y","sites":[1,3],"mean":"6.7","sd":"2.1","n":3,"table":"Table 1","t":121.0,"x":145.09494335280533,"lo":144.0132190389338,"hi":145.8792137843331,"mean_int":"6","mean_frac":".7","sd_int":"2","sd_frac":".1"},{"id":"L73M_C415R","group":"B","label":"L73M + C415R","sites":[1,4],"mean":"1.4","sd":"0.5","n":3,"table":"Table 1","t":126.0,"x":140.59133943805995,"lo":139.32039228592234,"hi":141.46978028657145,"mean_int":"1","mean_frac":".4","sd_int":"0","sd_frac":".5"},{"id":"F193S_S359Y","group":"B","label":"F193S + S359Y","sites":[2,3],"mean":"1.0","sd":"0.4","n":3,"table":"Table 1","t":131.0,"x":139.62346544342898,"lo":138.15405791667712,"hi":140.59133943805995,"mean_int":"1","mean_frac":".0","sd_int":"0","sd_frac":".4"},{"id":"F193S_C415R","group":"B","label":"F193S + C415R","sites":[2,4],"mean":"0.23","sd":"0.05","n":3,"table":"Table 1","t":136.0,"x":135.39589182178887,"lo":134.6907886162093,"hi":135.96173576834693,"mean_int":"0","mean_frac":".23","sd_int":"0","sd_frac":".05"},{"id":"S359Y_C415R","group":"B","label":"S359Y + C415R","sites":[3,4],"mean":"8.5","sd":"6.4","n":3,"table":"Table 1","t":141.0,"x":145.7794395803665,"lo":141.75767380730517,"hi":147.3940241509631,"mean_int":"8","mean_frac":".5","sd_int":"6","sd_frac":".4"}],"groups":{"A":{"top":21.299999999999997,"bot":105.19999999999999,"head_t":19.4},"B":{"top":113.5,"bot":143.5,"head_t":111.6}},"t_ax":144.5,"t_ax_top":16.2,"t_colhead":13.6,"x_badge":[105.8,108.9],"x_name":111.7,"x0":133.0,"x1":157.5,"dp1":163.0,"dp2":171.4,"x_nd":161.2,"ticks":[[0.1,133.0],[1,139.62346544342898],[10,146.24693088685797],[100,152.87039633028698]],"r_dot":0.8,"pitch":5.0,"key":{"t":[157.1,160.6,164.1],"x_glyph":104.8,"x_gx":107.0},"v0":0.1,"v1":500.0,"bottom":165.6};
+</script>
+<div class="page"><div class="fig" id="fig" style="padding:0"><div class="plots" style="position:absolute;left:0;top:0;pointer-events:none"><svg xmlns="http://www.w3.org/2000/svg" width="178.0mm" height="201.5mm" viewBox="0 0 178.0 201.5" id="snake_layer">
+<g id="snake" stroke-width="0.18" stroke="#317F45">
+<circle id="res27" cx="8.054" cy="30.963" r="0.9" fill="#FFFFFF"/>
+<circle id="res28" cx="9.786" cy="31.963" r="0.9" fill="#FFFFFF"/>
+<circle id="res29" cx="11.518" cy="32.963" r="0.9" fill="#FFFFFF"/>
+<circle id="res30" cx="13.250" cy="33.963" r="0.9" fill="#91D7AB"/>
+<circle id="res31" cx="11.750" cy="35.237" r="0.9" fill="#91D7AB"/>
+<circle id="res32" cx="13.250" cy="36.511" r="0.9" fill="#91D7AB"/>
+<circle id="res33" cx="11.750" cy="37.785" r="0.9" fill="#91D7AB"/>
+<circle id="res34" cx="13.250" cy="39.059" r="0.9" fill="#91D7AB"/>
+<circle id="res35" cx="11.750" cy="40.333" r="0.9" fill="#91D7AB"/>
+<circle id="res36" cx="13.250" cy="41.607" r="0.9" fill="#91D7AB"/>
+<circle id="res37" cx="11.750" cy="42.881" r="0.9" fill="#91D7AB"/>
+<circle id="res38" cx="13.250" cy="44.155" r="0.9" fill="#91D7AB"/>
+<circle id="res39" cx="11.750" cy="45.429" r="0.9" fill="#91D7AB"/>
+<circle id="res40" cx="13.250" cy="46.703" r="0.9" fill="#91D7AB"/>
+<circle id="res41" cx="11.750" cy="47.977" r="0.9" fill="#91D7AB"/>
+<circle id="res42" cx="13.250" cy="49.251" r="0.9" fill="#91D7AB"/>
+<circle id="res43" cx="11.750" cy="50.525" r="0.9" fill="#91D7AB"/>
+<circle id="res44" cx="13.250" cy="51.799" r="0.9" fill="#91D7AB"/>
+<circle id="res45" cx="11.750" cy="53.073" r="0.9" fill="#91D7AB"/>
+<circle id="res46" cx="13.250" cy="54.347" r="0.9" fill="#91D7AB"/>
+<circle id="res47" cx="11.750" cy="55.621" r="0.9" fill="#91D7AB"/>
+<circle id="res48" cx="13.250" cy="56.895" r="0.9" fill="#91D7AB"/>
+<circle id="res49" cx="11.750" cy="58.169" r="0.9" fill="#91D7AB"/>
+<circle id="res50" cx="13.250" cy="59.443" r="0.9" fill="#91D7AB"/>
+<circle id="res51" cx="11.750" cy="60.717" r="0.9" fill="#91D7AB"/>
+<circle id="res52" cx="13.250" cy="61.991" r="0.9" fill="#91D7AB"/>
+<circle id="res53" cx="11.750" cy="63.265" r="0.9" fill="#91D7AB"/>
+<circle id="res54" cx="13.250" cy="64.539" r="0.9" fill="#91D7AB"/>
+<circle id="res55" cx="11.750" cy="65.813" r="0.9" fill="#91D7AB"/>
+<circle id="res56" cx="13.250" cy="67.087" r="0.9" fill="#91D7AB"/>
+<circle id="res57" cx="11.750" cy="68.361" r="0.9" fill="#91D7AB"/>
+<circle id="res58" cx="13.250" cy="69.635" r="0.9" fill="#91D7AB"/>
+<circle id="res59" cx="11.750" cy="70.909" r="0.9" fill="#91D7AB"/>
+<circle id="res60" cx="13.250" cy="72.183" r="0.9" fill="#91D7AB"/>
+<circle id="res61" cx="11.750" cy="73.457" r="0.9" fill="#91D7AB"/>
+<circle id="res62" cx="13.250" cy="74.731" r="0.9" fill="#91D7AB"/>
+<circle id="res63" cx="14.831" cy="76.515" r="0.9" fill="#91D7AB"/>
+<circle id="res64" cx="16.991" cy="77.520" r="0.9" fill="#91D7AB"/>
+<circle id="res65" cx="19.374" cy="77.579" r="0.9" fill="#91D7AB"/>
+<circle id="res66" cx="21.582" cy="76.683" r="0.9" fill="#91D7AB"/>
+<circle id="res67" cx="23.250" cy="74.981" r="0.9" fill="#91D7AB"/>
+<circle id="res68" cx="21.750" cy="73.674" r="0.9" fill="#91D7AB"/>
+<circle id="res69" cx="23.250" cy="72.367" r="0.9" fill="#91D7AB"/>
+<circle id="res70" cx="21.750" cy="71.060" r="0.9" fill="#91D7AB"/>
+<circle id="res71" cx="23.250" cy="69.753" r="0.9" fill="#91D7AB"/>
+<circle id="res72" cx="21.750" cy="68.446" r="0.9" fill="#91D7AB"/>
+<circle id="res74" cx="21.750" cy="65.833" r="0.9" fill="#91D7AB"/>
+<circle id="res75" cx="23.250" cy="64.526" r="0.9" fill="#91D7AB"/>
+<circle id="res76" cx="21.750" cy="63.219" r="0.9" fill="#91D7AB"/>
+<circle id="res77" cx="23.250" cy="61.912" r="0.9" fill="#91D7AB"/>
+<circle id="res78" cx="21.750" cy="60.605" r="0.9" fill="#91D7AB"/>
+<circle id="res79" cx="23.250" cy="59.298" r="0.9" fill="#91D7AB"/>
+<circle id="res80" cx="21.750" cy="57.991" r="0.9" fill="#91D7AB"/>
+<circle id="res81" cx="23.250" cy="56.684" r="0.9" fill="#91D7AB"/>
+<circle id="res82" cx="21.750" cy="55.377" r="0.9" fill="#91D7AB"/>
+<circle id="res83" cx="23.250" cy="54.070" r="0.9" fill="#91D7AB"/>
+<circle id="res84" cx="21.750" cy="52.763" r="0.9" fill="#91D7AB"/>
+<circle id="res85" cx="23.250" cy="51.456" r="0.9" fill="#91D7AB"/>
+<circle id="res86" cx="21.750" cy="50.150" r="0.9" fill="#91D7AB"/>
+<circle id="res87" cx="23.250" cy="48.843" r="0.9" fill="#91D7AB"/>
+<circle id="res88" cx="21.750" cy="47.536" r="0.9" fill="#91D7AB"/>
+<circle id="res89" cx="23.250" cy="46.229" r="0.9" fill="#91D7AB"/>
+<circle id="res90" cx="21.750" cy="44.922" r="0.9" fill="#91D7AB"/>
+<circle id="res91" cx="23.250" cy="43.615" r="0.9" fill="#91D7AB"/>
+<circle id="res92" cx="21.750" cy="42.308" r="0.9" fill="#91D7AB"/>
+<circle id="res93" cx="23.250" cy="41.001" r="0.9" fill="#91D7AB"/>
+<circle id="res94" cx="21.750" cy="39.694" r="0.9" fill="#91D7AB"/>
+<circle id="res95" cx="23.250" cy="38.387" r="0.9" fill="#91D7AB"/>
+<circle id="res96" cx="21.750" cy="37.080" r="0.9" fill="#91D7AB"/>
+<circle id="res97" cx="23.250" cy="35.773" r="0.9" fill="#91D7AB"/>
+<circle id="res98" cx="21.750" cy="34.466" r="0.9" fill="#91D7AB"/>
+<circle id="res99" cx="24.625" cy="34.653" r="0.9" fill="#FFFFFF"/>
+<circle id="res100" cx="27.500" cy="34.839" r="0.9" fill="#FFFFFF"/>
+<circle id="res101" cx="30.375" cy="35.026" r="0.9" fill="#FFFFFF"/>
+<circle id="res102" cx="33.250" cy="35.212" r="0.9" fill="#91D7AB"/>
+<circle id="res103" cx="31.750" cy="36.455" r="0.9" fill="#91D7AB"/>
+<circle id="res104" cx="33.250" cy="37.697" r="0.9" fill="#91D7AB"/>
+<circle id="res105" cx="31.750" cy="38.939" r="0.9" fill="#91D7AB"/>
+<circle id="res106" cx="33.250" cy="40.181" r="0.9" fill="#91D7AB"/>
+<circle id="res107" cx="31.750" cy="41.423" r="0.9" fill="#91D7AB"/>
+<circle id="res108" cx="33.250" cy="42.665" r="0.9" fill="#91D7AB"/>
+<circle id="res109" cx="31.750" cy="43.907" r="0.9" fill="#91D7AB"/>
+<circle id="res110" cx="33.250" cy="45.150" r="0.9" fill="#91D7AB"/>
+<circle id="res111" cx="31.750" cy="46.392" r="0.9" fill="#91D7AB"/>
+<circle id="res112" cx="33.250" cy="47.634" r="0.9" fill="#91D7AB"/>
+<circle id="res113" cx="31.750" cy="48.876" r="0.9" fill="#91D7AB"/>
+<circle id="res114" cx="33.250" cy="50.118" r="0.9" fill="#91D7AB"/>
+<circle id="res115" cx="31.750" cy="51.360" r="0.9" fill="#91D7AB"/>
+<circle id="res116" cx="33.250" cy="52.602" r="0.9" fill="#91D7AB"/>
+<circle id="res117" cx="31.750" cy="53.845" r="0.9" fill="#91D7AB"/>
+<circle id="res118" cx="33.250" cy="55.087" r="0.9" fill="#91D7AB"/>
+<circle id="res119" cx="31.750" cy="56.329" r="0.9" fill="#91D7AB"/>
+<circle id="res120" cx="33.250" cy="57.571" r="0.9" fill="#91D7AB"/>
+<circle id="res121" cx="31.750" cy="58.813" r="0.9" fill="#91D7AB"/>
+<circle id="res122" cx="33.250" cy="60.055" r="0.9" fill="#91D7AB"/>
+<circle id="res123" cx="31.750" cy="61.297" r="0.9" fill="#91D7AB"/>
+<circle id="res124" cx="33.250" cy="62.540" r="0.9" fill="#91D7AB"/>
+<circle id="res125" cx="31.750" cy="63.782" r="0.9" fill="#91D7AB"/>
+<circle id="res126" cx="33.250" cy="65.024" r="0.9" fill="#91D7AB"/>
+<circle id="res127" cx="31.750" cy="66.266" r="0.9" fill="#91D7AB"/>
+<circle id="res128" cx="33.250" cy="67.508" r="0.9" fill="#91D7AB"/>
+<circle id="res129" cx="31.750" cy="68.750" r="0.9" fill="#91D7AB"/>
+<circle id="res130" cx="33.250" cy="69.992" r="0.9" fill="#91D7AB"/>
+<circle id="res131" cx="31.750" cy="71.235" r="0.9" fill="#91D7AB"/>
+<circle id="res132" cx="33.250" cy="72.477" r="0.9" fill="#91D7AB"/>
+<circle id="res133" cx="31.750" cy="73.719" r="0.9" fill="#91D7AB"/>
+<circle id="res134" cx="33.250" cy="74.961" r="0.9" fill="#91D7AB"/>
+<circle id="res135" cx="31.750" cy="76.203" r="0.9" fill="#91D7AB"/>
+<circle id="res136" cx="33.250" cy="77.445" r="0.9" fill="#91D7AB"/>
+<circle id="res137" cx="31.750" cy="78.687" r="0.9" fill="#91D7AB"/>
+<circle id="res138" cx="33.250" cy="79.930" r="0.9" fill="#91D7AB"/>
+<circle id="res139" cx="33.894" cy="81.811" r="0.9" fill="#91D7AB"/>
+<circle id="res140" cx="35.161" cy="83.345" r="0.9" fill="#91D7AB"/>
+<circle id="res141" cx="36.888" cy="84.332" r="0.9" fill="#91D7AB"/>
+<circle id="res142" cx="38.853" cy="84.645" r="0.9" fill="#91D7AB"/>
+<circle id="res143" cx="40.801" cy="84.245" r="0.9" fill="#91D7AB"/>
+<circle id="res144" cx="42.483" cy="83.182" r="0.9" fill="#91D7AB"/>
+<circle id="res145" cx="43.681" cy="81.595" r="0.9" fill="#91D7AB"/>
+<circle id="res146" cx="44.241" cy="79.686" r="0.9" fill="#91D7AB"/>
+<circle id="res147" cx="44.091" cy="77.702" r="0.9" fill="#FFFFFF"/>
+<circle id="res148" cx="43.250" cy="75.900" r="0.9" fill="#91D7AB"/>
+<circle id="res149" cx="41.750" cy="74.507" r="0.9" fill="#91D7AB"/>
+<circle id="res150" cx="43.250" cy="73.114" r="0.9" fill="#91D7AB"/>
+<circle id="res151" cx="41.750" cy="71.722" r="0.9" fill="#91D7AB"/>
+<circle id="res152" cx="43.250" cy="70.329" r="0.9" fill="#91D7AB"/>
+<circle id="res153" cx="41.750" cy="68.937" r="0.9" fill="#91D7AB"/>
+<circle id="res154" cx="43.250" cy="67.544" r="0.9" fill="#91D7AB"/>
+<circle id="res155" cx="41.750" cy="66.152" r="0.9" fill="#91D7AB"/>
+<circle id="res156" cx="43.250" cy="64.759" r="0.9" fill="#91D7AB"/>
+<circle id="res157" cx="41.750" cy="63.366" r="0.9" fill="#91D7AB"/>
+<circle id="res158" cx="43.250" cy="61.974" r="0.9" fill="#91D7AB"/>
+<circle id="res159" cx="41.750" cy="60.581" r="0.9" fill="#91D7AB"/>
+<circle id="res160" cx="43.250" cy="59.189" r="0.9" fill="#91D7AB"/>
+<circle id="res161" cx="41.750" cy="57.796" r="0.9" fill="#91D7AB"/>
+<circle id="res162" cx="43.250" cy="56.404" r="0.9" fill="#91D7AB"/>
+<circle id="res163" cx="41.750" cy="55.011" r="0.9" fill="#91D7AB"/>
+<circle id="res164" cx="43.250" cy="53.619" r="0.9" fill="#91D7AB"/>
+<circle id="res165" cx="41.750" cy="52.226" r="0.9" fill="#91D7AB"/>
+<circle id="res166" cx="43.250" cy="50.833" r="0.9" fill="#91D7AB"/>
+<circle id="res167" cx="41.750" cy="49.441" r="0.9" fill="#91D7AB"/>
+<circle id="res168" cx="43.250" cy="48.048" r="0.9" fill="#91D7AB"/>
+<circle id="res169" cx="41.750" cy="46.656" r="0.9" fill="#91D7AB"/>
+<circle id="res170" cx="43.250" cy="45.263" r="0.9" fill="#91D7AB"/>
+<circle id="res171" cx="41.750" cy="43.871" r="0.9" fill="#91D7AB"/>
+<circle id="res172" cx="43.250" cy="42.478" r="0.9" fill="#91D7AB"/>
+<circle id="res173" cx="41.750" cy="41.085" r="0.9" fill="#91D7AB"/>
+<circle id="res174" cx="43.250" cy="39.693" r="0.9" fill="#91D7AB"/>
+<circle id="res175" cx="41.750" cy="38.300" r="0.9" fill="#91D7AB"/>
+<circle id="res176" cx="43.250" cy="36.908" r="0.9" fill="#91D7AB"/>
+<circle id="res177" cx="41.750" cy="35.515" r="0.9" fill="#91D7AB"/>
+<circle id="res178" cx="43.250" cy="34.123" r="0.9" fill="#91D7AB"/>
+<circle id="res179" cx="43.250" cy="32.123" r="0.9" fill="#FFFFFF"/>
+<circle id="res180" cx="43.250" cy="30.123" r="0.9" fill="#FFFFFF"/>
+<circle id="res181" cx="43.250" cy="28.123" r="0.9" fill="#FFFFFF"/>
+<circle id="res182" cx="43.250" cy="26.123" r="0.9" fill="#FFFFFF"/>
+<circle id="res183" cx="43.308" cy="24.126" r="0.9" fill="#FFFFFF"/>
+<circle id="res184" cx="44.461" cy="22.607" r="0.9" fill="#FFFFFF"/>
+<circle id="res185" cx="46.434" cy="22.400" r="0.9" fill="#FFFFFF"/>
+<circle id="res186" cx="48.373" cy="22.751" r="0.9" fill="#FFFFFF"/>
+<circle id="res187" cx="49.284" cy="24.442" r="0.9" fill="#FFFFFF"/>
+<circle id="res188" cx="49.300" cy="26.442" r="0.9" fill="#FFFFFF"/>
+<circle id="res189" cx="49.300" cy="28.442" r="0.9" fill="#FFFFFF"/>
+<circle id="res190" cx="49.300" cy="30.442" r="0.9" fill="#FFFFFF"/>
+<circle id="res191" cx="49.300" cy="32.442" r="0.9" fill="#FFFFFF"/>
+<circle id="res192" cx="49.422" cy="34.433" r="0.9" fill="#FFFFFF"/>
+<circle id="res194" cx="51.696" cy="37.608" r="0.9" fill="#FFFFFF"/>
+<circle id="res195" cx="53.250" cy="38.867" r="0.9" fill="#91D7AB"/>
+<circle id="res196" cx="51.750" cy="40.190" r="0.9" fill="#91D7AB"/>
+<circle id="res197" cx="53.250" cy="41.513" r="0.9" fill="#91D7AB"/>
+<circle id="res198" cx="51.750" cy="42.835" r="0.9" fill="#91D7AB"/>
+<circle id="res199" cx="53.250" cy="44.158" r="0.9" fill="#91D7AB"/>
+<circle id="res200" cx="51.750" cy="45.481" r="0.9" fill="#91D7AB"/>
+<circle id="res201" cx="53.250" cy="46.803" r="0.9" fill="#91D7AB"/>
+<circle id="res202" cx="51.750" cy="48.126" r="0.9" fill="#91D7AB"/>
+<circle id="res203" cx="53.250" cy="49.449" r="0.9" fill="#91D7AB"/>
+<circle id="res204" cx="51.750" cy="50.771" r="0.9" fill="#91D7AB"/>
+<circle id="res205" cx="53.250" cy="52.094" r="0.9" fill="#91D7AB"/>
+<circle id="res206" cx="51.750" cy="53.417" r="0.9" fill="#91D7AB"/>
+<circle id="res207" cx="53.250" cy="54.739" r="0.9" fill="#91D7AB"/>
+<circle id="res208" cx="51.750" cy="56.062" r="0.9" fill="#91D7AB"/>
+<circle id="res209" cx="53.250" cy="57.385" r="0.9" fill="#91D7AB"/>
+<circle id="res210" cx="51.750" cy="58.707" r="0.9" fill="#91D7AB"/>
+<circle id="res211" cx="53.250" cy="60.030" r="0.9" fill="#91D7AB"/>
+<circle id="res212" cx="51.750" cy="61.353" r="0.9" fill="#91D7AB"/>
+<circle id="res213" cx="53.250" cy="62.675" r="0.9" fill="#91D7AB"/>
+<circle id="res214" cx="51.750" cy="63.998" r="0.9" fill="#91D7AB"/>
+<circle id="res215" cx="53.250" cy="65.321" r="0.9" fill="#91D7AB"/>
+<circle id="res216" cx="51.750" cy="66.643" r="0.9" fill="#91D7AB"/>
+<circle id="res217" cx="53.250" cy="67.966" r="0.9" fill="#91D7AB"/>
+<circle id="res218" cx="51.750" cy="69.289" r="0.9" fill="#91D7AB"/>
+<circle id="res219" cx="53.250" cy="70.611" r="0.9" fill="#91D7AB"/>
+<circle id="res220" cx="51.750" cy="71.934" r="0.9" fill="#91D7AB"/>
+<circle id="res221" cx="53.250" cy="73.257" r="0.9" fill="#91D7AB"/>
+<circle id="res222" cx="51.750" cy="74.579" r="0.9" fill="#91D7AB"/>
+<circle id="res223" cx="53.250" cy="75.902" r="0.9" fill="#91D7AB"/>
+<circle id="res224" cx="51.750" cy="77.225" r="0.9" fill="#91D7AB"/>
+<circle id="res225" cx="53.250" cy="78.547" r="0.9" fill="#91D7AB"/>
+<circle id="res226" cx="51.750" cy="79.870" r="0.9" fill="#91D7AB"/>
+<circle id="res227" cx="53.250" cy="81.192" r="0.9" fill="#91D7AB"/>
+<circle id="res228" cx="51.750" cy="82.515" r="0.9" fill="#91D7AB"/>
+<circle id="res229" cx="53.250" cy="83.838" r="0.9" fill="#91D7AB"/>
+<circle id="res230" cx="51.750" cy="85.160" r="0.9" fill="#91D7AB"/>
+<circle id="res231" cx="51.750" cy="87.160" r="0.9" fill="#FFFFFF"/>
+<circle id="res232" cx="51.750" cy="89.160" r="0.9" fill="#FFFFFF"/>
+<circle id="res233" cx="51.750" cy="91.160" r="0.9" fill="#FFFFFF"/>
+<circle id="res234" cx="51.750" cy="93.160" r="0.9" fill="#91D7AB"/>
+<circle id="res235" cx="51.750" cy="95.160" r="0.9" fill="#91D7AB"/>
+<circle id="res236" cx="51.750" cy="97.160" r="0.9" fill="#91D7AB"/>
+<circle id="res341" cx="61.750" cy="99.774" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+<circle id="res342" cx="61.750" cy="97.774" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+<circle id="res343" cx="61.750" cy="95.774" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+<circle id="res344" cx="61.750" cy="93.774" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+<circle id="res345" cx="61.750" cy="91.774" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+<circle id="res346" cx="61.750" cy="89.774" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+<circle id="res347" cx="61.750" cy="87.774" r="0.9" fill="#FFFFFF"/>
+<circle id="res348" cx="61.750" cy="85.774" r="0.9" fill="#91D7AB"/>
+<circle id="res349" cx="63.250" cy="84.446" r="0.9" fill="#91D7AB"/>
+<circle id="res350" cx="61.750" cy="83.117" r="0.9" fill="#91D7AB"/>
+<circle id="res351" cx="63.250" cy="81.789" r="0.9" fill="#91D7AB"/>
+<circle id="res352" cx="61.750" cy="80.460" r="0.9" fill="#91D7AB"/>
+<circle id="res353" cx="63.250" cy="79.132" r="0.9" fill="#91D7AB"/>
+<circle id="res354" cx="61.750" cy="77.803" r="0.9" fill="#91D7AB"/>
+<circle id="res355" cx="63.250" cy="76.475" r="0.9" fill="#91D7AB"/>
+<circle id="res356" cx="61.750" cy="75.146" r="0.9" fill="#91D7AB"/>
+<circle id="res357" cx="63.250" cy="73.818" r="0.9" fill="#91D7AB"/>
+<circle id="res358" cx="61.750" cy="72.489" r="0.9" fill="#91D7AB"/>
+<circle id="res360" cx="61.750" cy="69.832" r="0.9" fill="#91D7AB"/>
+<circle id="res361" cx="63.250" cy="68.504" r="0.9" fill="#91D7AB"/>
+<circle id="res362" cx="61.750" cy="67.175" r="0.9" fill="#91D7AB"/>
+<circle id="res363" cx="63.250" cy="65.847" r="0.9" fill="#91D7AB"/>
+<circle id="res364" cx="61.750" cy="64.518" r="0.9" fill="#91D7AB"/>
+<circle id="res365" cx="63.250" cy="63.190" r="0.9" fill="#91D7AB"/>
+<circle id="res366" cx="61.750" cy="61.861" r="0.9" fill="#91D7AB"/>
+<circle id="res367" cx="63.250" cy="60.533" r="0.9" fill="#91D7AB"/>
+<circle id="res368" cx="61.750" cy="59.204" r="0.9" fill="#91D7AB"/>
+<circle id="res369" cx="63.250" cy="57.876" r="0.9" fill="#91D7AB"/>
+<circle id="res370" cx="61.750" cy="56.547" r="0.9" fill="#91D7AB"/>
+<circle id="res371" cx="63.250" cy="55.219" r="0.9" fill="#91D7AB"/>
+<circle id="res372" cx="61.750" cy="53.890" r="0.9" fill="#91D7AB"/>
+<circle id="res373" cx="63.250" cy="52.561" r="0.9" fill="#91D7AB"/>
+<circle id="res374" cx="61.750" cy="51.233" r="0.9" fill="#91D7AB"/>
+<circle id="res375" cx="63.250" cy="49.904" r="0.9" fill="#91D7AB"/>
+<circle id="res376" cx="61.750" cy="48.576" r="0.9" fill="#91D7AB"/>
+<circle id="res377" cx="63.250" cy="47.247" r="0.9" fill="#91D7AB"/>
+<circle id="res378" cx="61.750" cy="45.919" r="0.9" fill="#91D7AB"/>
+<circle id="res379" cx="63.250" cy="44.590" r="0.9" fill="#91D7AB"/>
+<circle id="res380" cx="61.750" cy="43.262" r="0.9" fill="#91D7AB"/>
+<circle id="res381" cx="63.250" cy="41.933" r="0.9" fill="#91D7AB"/>
+<circle id="res382" cx="61.750" cy="40.605" r="0.9" fill="#91D7AB"/>
+<circle id="res383" cx="63.250" cy="39.276" r="0.9" fill="#91D7AB"/>
+<circle id="res384" cx="61.750" cy="37.948" r="0.9" fill="#91D7AB"/>
+<circle id="res385" cx="63.518" cy="37.017" r="0.9" fill="#FFFFFF"/>
+<circle id="res386" cx="65.411" cy="36.381" r="0.9" fill="#FFFFFF"/>
+<circle id="res387" cx="67.383" cy="36.056" r="0.9" fill="#FFFFFF"/>
+<circle id="res388" cx="69.381" cy="36.052" r="0.9" fill="#FFFFFF"/>
+<circle id="res389" cx="71.353" cy="36.368" r="0.9" fill="#FFFFFF"/>
+<circle id="res390" cx="73.250" cy="36.996" r="0.9" fill="#91D7AB"/>
+<circle id="res391" cx="71.750" cy="38.397" r="0.9" fill="#91D7AB"/>
+<circle id="res392" cx="73.250" cy="39.798" r="0.9" fill="#91D7AB"/>
+<circle id="res393" cx="71.750" cy="41.200" r="0.9" fill="#91D7AB"/>
+<circle id="res394" cx="73.250" cy="42.601" r="0.9" fill="#91D7AB"/>
+<circle id="res395" cx="71.750" cy="44.002" r="0.9" fill="#91D7AB"/>
+<circle id="res396" cx="73.250" cy="45.403" r="0.9" fill="#91D7AB"/>
+<circle id="res397" cx="71.750" cy="46.805" r="0.9" fill="#91D7AB"/>
+<circle id="res398" cx="73.250" cy="48.206" r="0.9" fill="#91D7AB"/>
+<circle id="res399" cx="71.750" cy="49.607" r="0.9" fill="#91D7AB"/>
+<circle id="res400" cx="73.250" cy="51.008" r="0.9" fill="#91D7AB"/>
+<circle id="res401" cx="71.750" cy="52.410" r="0.9" fill="#91D7AB"/>
+<circle id="res402" cx="73.250" cy="53.811" r="0.9" fill="#91D7AB"/>
+<circle id="res403" cx="71.750" cy="55.212" r="0.9" fill="#91D7AB"/>
+<circle id="res404" cx="73.250" cy="56.613" r="0.9" fill="#91D7AB"/>
+<circle id="res405" cx="71.750" cy="58.015" r="0.9" fill="#91D7AB"/>
+<circle id="res406" cx="73.250" cy="59.416" r="0.9" fill="#91D7AB"/>
+<circle id="res407" cx="71.750" cy="60.817" r="0.9" fill="#91D7AB"/>
+<circle id="res408" cx="73.250" cy="62.218" r="0.9" fill="#91D7AB"/>
+<circle id="res409" cx="71.750" cy="63.620" r="0.9" fill="#91D7AB"/>
+<circle id="res410" cx="73.250" cy="65.021" r="0.9" fill="#91D7AB"/>
+<circle id="res411" cx="71.750" cy="66.422" r="0.9" fill="#91D7AB"/>
+<circle id="res412" cx="73.250" cy="67.823" r="0.9" fill="#91D7AB"/>
+<circle id="res413" cx="71.750" cy="69.225" r="0.9" fill="#91D7AB"/>
+<circle id="res414" cx="73.250" cy="70.626" r="0.9" fill="#91D7AB"/>
+<circle id="res416" cx="73.250" cy="73.428" r="0.9" fill="#91D7AB"/>
+<circle id="res417" cx="73.900" cy="75.828" r="0.9" fill="#91D7AB"/>
+<circle id="res418" cx="75.350" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res419" cx="76.800" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res420" cx="78.250" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res421" cx="79.700" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res422" cx="81.150" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res423" cx="82.600" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res424" cx="84.050" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res425" cx="85.500" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res426" cx="86.950" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res427" cx="88.400" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res428" cx="89.850" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res429" cx="91.300" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res430" cx="92.750" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res431" cx="94.200" cy="76.978" r="0.9" fill="#91D7AB"/>
+<circle id="res432" cx="95.650" cy="78.278" r="0.9" fill="#91D7AB"/>
+<circle id="res433" cx="97.100" cy="76.978" r="0.9" fill="#FFFFFF" stroke-dasharray="0.45 0.3"/>
+</g>
+<path id="icl3_gap" d="M51.750 98.060 Q56.750 104.774 61.750 100.674" fill="none" stroke="#0A0A0A" stroke-width="0.3" stroke-dasharray="0.9 0.7"/>
+<line id="nterm_dash" x1="7.274" y1="30.513" x2="5.023" y2="29.213" stroke="#0A0A0A" stroke-width="0.3" stroke-dasharray="0.9 0.7"/>
+<rect id="n11q_marker" x="2.610" y="27.313" width="2.4" height="2.4" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="0.3"/>
+<g id="sites" stroke-width="0.25" stroke="#9A5600">
+<circle id="res73" cx="23.250" cy="67.139" r="1.2" fill="#FBB153"/>
+<circle id="res193" cx="50.251" cy="36.236" r="1.2" fill="#FBB153"/>
+<circle id="res359" cx="63.250" cy="71.161" r="1.2" fill="#FBB153"/>
+<circle id="res415" cx="71.750" cy="72.027" r="1.2" fill="#FBB153"/>
+</g></svg></div><div class="plots" style="position:absolute;left:0;top:0;pointer-events:none"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="504.566929pt" height="571.181102pt" viewBox="0 0 504.566929 571.181102" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 571.181102 
+L 504.566929 571.181102 
+L 504.566929 0 
+L 0 0 
+L 0 571.181102 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="axes_1">
+   <g id="area_A">
+    <path d="M 377.007874 298.204724 
+L 446.456693 298.204724 
+L 446.456693 60.377953 
+L 377.007874 60.377953 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #e9f3f9"/>
+   </g>
+   <g id="area_B">
+    <path d="M 377.007874 406.771654 
+L 446.456693 406.771654 
+L 446.456693 321.732283 
+L 377.007874 321.732283 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #e9f3f9"/>
+   </g>
+   <g id="grid_A_0.1">
+    <path d="M 377.007874 60.377953 
+L 377.007874 298.204724 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_B_0.1">
+    <path d="M 377.007874 321.732283 
+L 377.007874 406.771654 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_A_1">
+    <path d="M 395.783052 60.377953 
+L 395.783052 298.204724 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_B_1">
+    <path d="M 395.783052 321.732283 
+L 395.783052 406.771654 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_A_10">
+    <path d="M 414.558229 60.377953 
+L 414.558229 298.204724 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_B_10">
+    <path d="M 414.558229 321.732283 
+L 414.558229 406.771654 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_A_100">
+    <path d="M 433.333407 60.377953 
+L 433.333407 298.204724 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="grid_B_100">
+    <path d="M 433.333407 321.732283 
+L 433.333407 406.771654 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.9"/>
+   </g>
+   <g id="rowline_L73M">
+    <path d="M 377.007874 67.464567 
+L 446.456693 67.464567 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_L73A">
+    <path d="M 377.007874 81.637795 
+L 446.456693 81.637795 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_L73F">
+    <path d="M 377.007874 95.811024 
+L 446.456693 95.811024 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_F193S">
+    <path d="M 377.007874 113.669291 
+L 446.456693 113.669291 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_F193A">
+    <path d="M 377.007874 127.84252 
+L 446.456693 127.84252 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_F193Y">
+    <path d="M 377.007874 142.015748 
+L 446.456693 142.015748 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_S359Y">
+    <path d="M 377.007874 159.874016 
+L 446.456693 159.874016 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_S359A">
+    <path d="M 377.007874 174.047244 
+L 446.456693 174.047244 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_S359F">
+    <path d="M 377.007874 188.220472 
+L 446.456693 188.220472 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_S359Q">
+    <path d="M 377.007874 202.393701 
+L 446.456693 202.393701 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_C415R">
+    <path d="M 377.007874 220.251969 
+L 446.456693 220.251969 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_C415A">
+    <path d="M 377.007874 234.425197 
+L 446.456693 234.425197 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_C415K">
+    <path d="M 377.007874 248.598425 
+L 446.456693 248.598425 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_C415E">
+    <path d="M 377.007874 262.771654 
+L 446.456693 262.771654 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_C415L">
+    <path d="M 377.007874 276.944882 
+L 446.456693 276.944882 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_C415Y">
+    <path d="M 377.007874 291.11811 
+L 446.456693 291.11811 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_L73M_F193S">
+    <path d="M 377.007874 328.818898 
+L 446.456693 328.818898 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_L73M_S359Y">
+    <path d="M 377.007874 342.992126 
+L 446.456693 342.992126 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_L73M_C415R">
+    <path d="M 377.007874 357.165354 
+L 446.456693 357.165354 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_F193S_S359Y">
+    <path d="M 377.007874 371.338583 
+L 446.456693 371.338583 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_F193S_C415R">
+    <path d="M 377.007874 385.511811 
+L 446.456693 385.511811 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="rowline_S359Y_C415R">
+    <path d="M 377.007874 399.685039 
+L 446.456693 399.685039 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #ffffff; stroke-width: 0.35"/>
+   </g>
+   <g id="axis_A">
+    <path d="M 377.007874 45.92126 
+L 446.456693 45.92126 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="tick_A_0.1">
+    <path d="M 377.007874 45.92126 
+L 377.007874 41.952756 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_A_0.1">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="377.007874" y="39.233621" transform="rotate(-0 377.007874 39.233621)">0.1</text>
+   </g>
+   <g id="tick_A_1">
+    <path d="M 395.783052 45.92126 
+L 395.783052 41.952756 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_A_1">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="395.783052" y="39.233621" transform="rotate(-0 395.783052 39.233621)">1</text>
+   </g>
+   <g id="tick_A_10">
+    <path d="M 414.558229 45.92126 
+L 414.558229 41.952756 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_A_10">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="414.558229" y="39.233621" transform="rotate(-0 414.558229 39.233621)">10</text>
+   </g>
+   <g id="tick_A_100">
+    <path d="M 433.333407 45.92126 
+L 433.333407 41.952756 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_A_100">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="433.333407" y="39.233621" transform="rotate(-0 433.333407 39.233621)">100</text>
+   </g>
+   <g id="axis_B">
+    <path d="M 377.007874 409.606299 
+L 446.456693 409.606299 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="tick_B_0.1">
+    <path d="M 377.007874 409.606299 
+L 377.007874 413.574803 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_B_0.1">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="377.007874" y="419.680493" transform="rotate(-0 377.007874 419.680493)">0.1</text>
+   </g>
+   <g id="tick_B_1">
+    <path d="M 395.783052 409.606299 
+L 395.783052 413.574803 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_B_1">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="395.783052" y="419.680493" transform="rotate(-0 395.783052 419.680493)">1</text>
+   </g>
+   <g id="tick_B_10">
+    <path d="M 414.558229 409.606299 
+L 414.558229 413.574803 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_B_10">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="414.558229" y="419.680493" transform="rotate(-0 414.558229 419.680493)">10</text>
+   </g>
+   <g id="tick_B_100">
+    <path d="M 433.333407 409.606299 
+L 433.333407 413.574803 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #0a0a0a; stroke-width: 0.5"/>
+   </g>
+   <g id="ticklab_B_100">
+    <text style="font-size: 6.55px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #0a0a0a" x="433.333407" y="419.680493" transform="rotate(-0 433.333407 419.680493)">100</text>
+   </g>
+   <g id="bar_F193A">
+    <path d="M 415.626628 127.84252 
+L 421.764431 127.84252 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_F193A">
+    <path d="M 415.626628 130.110236 
+L 415.626628 125.574803 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_F193A">
+    <path d="M 421.764431 130.110236 
+L 421.764431 125.574803 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_C415R">
+    <path d="M 402.921585 220.251969 
+L 409.830415 220.251969 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_C415R">
+    <path d="M 402.921585 222.519685 
+L 402.921585 217.984252 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_C415R">
+    <path d="M 409.830415 222.519685 
+L 409.830415 217.984252 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_C415A">
+    <path d="M 425.655572 234.425197 
+L 429.031113 234.425197 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_C415A">
+    <path d="M 425.655572 236.692913 
+L 425.655572 232.15748 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_C415A">
+    <path d="M 429.031113 236.692913 
+L 429.031113 232.15748 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_C415K">
+    <path d="M 410.116548 248.598425 
+L 418.288051 248.598425 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_C415K">
+    <path d="M 410.116548 250.866142 
+L 410.116548 246.330709 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_C415K">
+    <path d="M 418.288051 250.866142 
+L 418.288051 246.330709 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_C415L">
+    <path d="M 431.814084 276.944882 
+L 439.498792 276.944882 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_C415L">
+    <path d="M 431.814084 279.212598 
+L 431.814084 274.677165 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_C415L">
+    <path d="M 439.498792 279.212598 
+L 439.498792 274.677165 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_L73M_F193S">
+    <path d="M 398.526631 328.818898 
+L 402.921585 328.818898 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_L73M_F193S">
+    <path d="M 398.526631 331.086614 
+L 398.526631 326.551181 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_L73M_F193S">
+    <path d="M 402.921585 331.086614 
+L 402.921585 326.551181 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_L73M_S359Y">
+    <path d="M 408.226448 342.992126 
+L 413.515882 342.992126 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_L73M_S359Y">
+    <path d="M 408.226448 345.259843 
+L 408.226448 340.724409 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_L73M_S359Y">
+    <path d="M 413.515882 345.259843 
+L 413.515882 340.724409 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_L73M_C415R">
+    <path d="M 394.923947 357.165354 
+L 401.0167 357.165354 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_L73M_C415R">
+    <path d="M 394.923947 359.433071 
+L 394.923947 354.897638 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_L73M_C415R">
+    <path d="M 401.0167 359.433071 
+L 401.0167 354.897638 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_F193S_S359Y">
+    <path d="M 391.617802 371.338583 
+L 398.526631 371.338583 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_F193S_S359Y">
+    <path d="M 391.617802 373.606299 
+L 391.617802 369.070866 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_F193S_S359Y">
+    <path d="M 398.526631 373.606299 
+L 398.526631 369.070866 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_F193S_C415R">
+    <path d="M 381.800661 385.511811 
+L 385.403345 385.511811 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_F193S_C415R">
+    <path d="M 381.800661 387.779528 
+L 381.800661 383.244094 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_F193S_C415R">
+    <path d="M 385.403345 387.779528 
+L 385.403345 383.244094 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_S359Y_C415R">
+    <path d="M 401.832776 399.685039 
+L 417.809832 399.685039 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_S359Y_C415R">
+    <path d="M 401.832776 401.952756 
+L 401.832776 397.417323 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_S359Y_C415R">
+    <path d="M 417.809832 401.952756 
+L 417.809832 397.417323 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="bar_key">
+    <path d="M 297.637795 445.322835 
+L 308.976378 445.322835 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap0_key">
+    <path d="M 297.637795 447.590551 
+L 297.637795 443.055118 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="cap1_key">
+    <path d="M 308.976378 447.590551 
+L 308.976378 443.055118 
+" clip-path="url(#p6a53ac5ad3)" style="fill: none; stroke: #1d397b; stroke-width: 0.45"/>
+   </g>
+   <g id="dot_L73M">
+    <path d="M 425.070576 64.516535 
+L 428.018607 67.464567 
+L 425.070576 70.412598 
+L 422.122544 67.464567 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_F193S">
+    <path d="M 416.312238 110.72126 
+L 419.26027 113.669291 
+L 416.312238 116.617323 
+L 413.364207 113.669291 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_F193A">
+    <path d="M 419.259909 130.110236 
+C 419.861315 130.110236 420.438169 129.871295 420.863427 129.446037 
+C 421.288685 129.02078 421.527626 128.443925 421.527626 127.84252 
+C 421.527626 127.241114 421.288685 126.66426 420.863427 126.239002 
+C 420.438169 125.813744 419.861315 125.574803 419.259909 125.574803 
+C 418.658504 125.574803 418.081649 125.813744 417.656392 126.239002 
+C 417.231134 126.66426 416.992193 127.241114 416.992193 127.84252 
+C 416.992193 128.443925 417.231134 129.02078 417.656392 129.446037 
+C 418.081649 129.871295 418.658504 130.110236 419.259909 130.110236 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_S359Y">
+    <path d="M 412.212482 156.925984 
+L 415.160514 159.874016 
+L 412.212482 162.822047 
+L 409.264451 159.874016 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_C415R">
+    <path d="M 407.086835 222.519685 
+C 407.68824 222.519685 408.265095 222.280744 408.690353 221.855486 
+C 409.115611 221.430228 409.354551 220.853374 409.354551 220.251969 
+C 409.354551 219.650563 409.115611 219.073709 408.690353 218.648451 
+C 408.265095 218.223193 407.68824 217.984252 407.086835 217.984252 
+C 406.485429 217.984252 405.908575 218.223193 405.483317 218.648451 
+C 405.058059 219.073709 404.819118 219.650563 404.819118 220.251969 
+C 404.819118 220.853374 405.058059 221.430228 405.483317 221.855486 
+C 405.908575 222.280744 406.485429 222.519685 407.086835 222.519685 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_C415A">
+    <path d="M 427.516783 236.692913 
+C 428.118189 236.692913 428.695043 236.453972 429.120301 236.028715 
+C 429.545559 235.603457 429.7845 235.026602 429.7845 234.425197 
+C 429.7845 233.823791 429.545559 233.246937 429.120301 232.821679 
+C 428.695043 232.396421 428.118189 232.15748 427.516783 232.15748 
+C 426.915378 232.15748 426.338523 232.396421 425.913266 232.821679 
+C 425.488008 233.246937 425.249067 233.823791 425.249067 234.425197 
+C 425.249067 235.026602 425.488008 235.603457 425.913266 236.028715 
+C 426.338523 236.453972 426.915378 236.692913 427.516783 236.692913 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_C415K">
+    <path d="M 415.185766 250.866142 
+C 415.787172 250.866142 416.364026 250.627201 416.789284 250.201943 
+C 417.214542 249.776685 417.453483 249.199831 417.453483 248.598425 
+C 417.453483 247.99702 417.214542 247.420165 416.789284 246.994907 
+C 416.364026 246.56965 415.787172 246.330709 415.185766 246.330709 
+C 414.584361 246.330709 414.007506 246.56965 413.582248 246.994907 
+C 413.156991 247.420165 412.91805 247.99702 412.91805 248.598425 
+C 412.91805 249.199831 413.156991 249.776685 413.582248 250.201943 
+C 414.007506 250.627201 414.584361 250.866142 415.185766 250.866142 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_C415L">
+    <path d="M 436.530101 279.212598 
+C 437.131506 279.212598 437.708361 278.973658 438.133619 278.5484 
+C 438.558876 278.123142 438.797817 277.546287 438.797817 276.944882 
+C 438.797817 276.343476 438.558876 275.766622 438.133619 275.341364 
+C 437.708361 274.916106 437.131506 274.677165 436.530101 274.677165 
+C 435.928695 274.677165 435.351841 274.916106 434.926583 275.341364 
+C 434.501325 275.766622 434.262384 276.343476 434.262384 276.944882 
+C 434.262384 277.546287 434.501325 278.123142 434.926583 278.5484 
+C 435.351841 278.973658 435.928695 279.212598 436.530101 279.212598 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_L73M_F193S">
+    <path d="M 401.0167 331.086614 
+C 401.618105 331.086614 402.19496 330.847673 402.620218 330.422415 
+C 403.045476 329.997158 403.284417 329.420303 403.284417 328.818898 
+C 403.284417 328.217492 403.045476 327.640638 402.620218 327.21538 
+C 402.19496 326.790122 401.618105 326.551181 401.0167 326.551181 
+C 400.415295 326.551181 399.83844 326.790122 399.413182 327.21538 
+C 398.987924 327.640638 398.748983 328.217492 398.748983 328.818898 
+C 398.748983 329.420303 398.987924 329.997158 399.413182 330.422415 
+C 399.83844 330.847673 400.415295 331.086614 401.0167 331.086614 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_L73M_S359Y">
+    <path d="M 411.292753 345.259843 
+C 411.894158 345.259843 412.471013 345.020902 412.896271 344.595644 
+C 413.321528 344.170386 413.560469 343.593531 413.560469 342.992126 
+C 413.560469 342.390721 413.321528 341.813866 412.896271 341.388608 
+C 412.471013 340.96335 411.894158 340.724409 411.292753 340.724409 
+C 410.691347 340.724409 410.114493 340.96335 409.689235 341.388608 
+C 409.263977 341.813866 409.025036 342.390721 409.025036 342.992126 
+C 409.025036 343.593531 409.263977 344.170386 409.689235 344.595644 
+C 410.114493 345.020902 410.691347 345.259843 411.292753 345.259843 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_L73M_C415R">
+    <path d="M 398.526631 359.433071 
+C 399.128037 359.433071 399.704891 359.19413 400.130149 358.768872 
+C 400.555407 358.343614 400.794348 357.76676 400.794348 357.165354 
+C 400.794348 356.563949 400.555407 355.987094 400.130149 355.561837 
+C 399.704891 355.136579 399.128037 354.897638 398.526631 354.897638 
+C 397.925226 354.897638 397.348372 355.136579 396.923114 355.561837 
+C 396.497856 355.987094 396.258915 356.563949 396.258915 357.165354 
+C 396.258915 357.76676 396.497856 358.343614 396.923114 358.768872 
+C 397.348372 359.19413 397.925226 359.433071 398.526631 359.433071 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_F193S_S359Y">
+    <path d="M 395.783052 373.606299 
+C 396.384457 373.606299 396.961312 373.367358 397.386569 372.9421 
+C 397.811827 372.516843 398.050768 371.939988 398.050768 371.338583 
+C 398.050768 370.737177 397.811827 370.160323 397.386569 369.735065 
+C 396.961312 369.309807 396.384457 369.070866 395.783052 369.070866 
+C 395.181646 369.070866 394.604792 369.309807 394.179534 369.735065 
+C 393.754276 370.160323 393.515335 370.737177 393.515335 371.338583 
+C 393.515335 371.939988 393.754276 372.516843 394.179534 372.9421 
+C 394.604792 373.367358 395.181646 373.606299 395.783052 373.606299 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_F193S_C415R">
+    <path d="M 383.799378 387.779528 
+C 384.400784 387.779528 384.977638 387.540587 385.402896 387.115329 
+C 385.828154 386.690071 386.067095 386.113216 386.067095 385.511811 
+C 386.067095 384.910406 385.828154 384.333551 385.402896 383.908293 
+C 384.977638 383.483035 384.400784 383.244094 383.799378 383.244094 
+C 383.197973 383.244094 382.621119 383.483035 382.195861 383.908293 
+C 381.770603 384.333551 381.531662 384.910406 381.531662 385.511811 
+C 381.531662 386.113216 381.770603 386.690071 382.195861 387.115329 
+C 382.621119 387.540587 383.197973 387.779528 383.799378 387.779528 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="dot_S359Y_C415R">
+    <path d="M 413.233057 401.952756 
+C 413.834463 401.952756 414.411317 401.713815 414.836575 401.288557 
+C 415.261833 400.863299 415.500774 400.286445 415.500774 399.685039 
+C 415.500774 399.083634 415.261833 398.50678 414.836575 398.081522 
+C 414.411317 397.656264 413.834463 397.417323 413.233057 397.417323 
+C 412.631652 397.417323 412.054797 397.656264 411.629539 398.081522 
+C 411.204281 398.50678 410.965341 399.083634 410.965341 399.685039 
+C 410.965341 400.286445 411.204281 400.863299 411.629539 401.288557 
+C 412.054797 401.713815 412.631652 401.952756 413.233057 401.952756 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="key_dot_full">
+    <path d="M 303.307087 447.590551 
+C 303.908492 447.590551 304.485346 447.35161 304.910604 446.926352 
+C 305.335862 446.501095 305.574803 445.92424 305.574803 445.322835 
+C 305.574803 444.721429 305.335862 444.144575 304.910604 443.719317 
+C 304.485346 443.294059 303.908492 443.055118 303.307087 443.055118 
+C 302.705681 443.055118 302.128827 443.294059 301.703569 443.719317 
+C 301.278311 444.144575 301.03937 444.721429 301.03937 445.322835 
+C 301.03937 445.92424 301.278311 446.501095 301.703569 446.926352 
+C 302.128827 447.35161 302.705681 447.590551 303.307087 447.590551 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="key_dot_single">
+    <path d="M 303.307087 452.296063 
+L 306.255118 455.244094 
+L 303.307087 458.192126 
+L 300.359055 455.244094 
+z
+" clip-path="url(#p6a53ac5ad3)" style="fill: #1d397b; stroke: #1d397b; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p6a53ac5ad3">
+   <rect x="0" y="0" width="504.566929" height="571.181102"/>
+  </clipPath>
+ </defs>
+</svg>
+</div></div></div>
+<script>
+// Redesign of Figs 1a-b and 4 and of Tables 1 and 2 of Nakajima et al. 2026, Protein Science 35(1):e70408 (doi 10.1002/pro.70408, CC BY 4.0).
+// Snake plot (a): src/snake.py, from PDB 7F61 chain A. 3D view (b): ChimeraX render of the same chain, src/render_h3r.py. Dot plot (c): src/make_plots.py, the EC50 values as printed.
+// src/layout.py and src/make_plots.py give every position in millimetres (top-down, origin top-left) in window.LAYOUT and window.PLOT; this page draws titles, names, numbers,
+// badges and leaders at those positions and, at the end, measures the rendered page: checkAlign() throws one Error that lists every position that is off its grid line by more
+// than the tolerance, every leader end that is off its residue, and every text that touches a circle, a leader, a badge or another text.
+const L = window.LAYOUT, P = window.PLOT, W = L.W, H = L.H, TOL = 0.25;
+const XL0 = 1.5, XR0 = 104.5, XR1 = 176.5, T0 = 0.9;           // T0: top of the title rows (outer margin 1.5 mm to the first text)
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', FL = (window.CONFIG || {}).floorPt || 6.55;
+const FAM = window.TOKENS.color.family;
+const ROSE_DARK = FAM.rose.edge, INDIGO = FAM.indigo.fill;
+const NS = 'http://www.w3.org/2000/svg';
+const REC = {};                                     // every text element by name, for the alignment checks
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+const svgEl = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); f.svg.appendChild(e); return e; };
+const poly = (pts, o = {}) => svgEl('polyline', { points: pts.map((p) => p.join(',')).join(' '), fill: 'none', stroke: o.color || INK, 'stroke-width': o.w || 0.3, 'stroke-linejoin': 'round', 'stroke-linecap': 'butt', ...(o.opacity ? { 'stroke-opacity': o.opacity } : {}) });
+const BADGES = [];                                  // expected badge centres, checked against the rendered badges
+const badge = (x, t, n, name) => { f.badge({ x, y: Tp(t), n, fam: 'apricot', r: L.r_badge }); BADGES.push({ x, t, n, name }); };
+const S = L.sites;
+const LW = 0.25, HALO = 0.8;                        // width of a leader and of the white halo under it
+
+// ---------------------------------------------------------------- panel a: snake plot
+f.letter('a', XL0, Tp(T0 + 0.6));
+R('title-a', XL0 + 4.6, T0 + 2.2, 'Four H3R mutations that restore signaling', { bold: true, fs: 7.5 });
+R('sub1-a', XL0 + 4.6, T0 + 5.8, 'H3R: human histamine H3 receptor. Top is outside the cell.', { color: SUB });
+R('sub2-a', XL0 + 4.6, T0 + 9.0, 'Chain A of Protein Data Bank entry 7F61, residues 27–433 of 445.', { color: SUB });
+R('sub3-a', XL0 + 4.6, T0 + 12.2, 'Yeast construct H3R_i3d: N11Q, ICL3 237–340 deleted.', { color: SUB });
+L.tm.forEach((h, k) => R('tm' + (k + 1), h.x, h.t, h.name, { fs: FL, ha: 'center', color: SUB }));
+// N terminus marker and the deleted ICL3
+const NM = L.nstub.marker;
+R('icl3-1', L.gap.a0[0] - 2.0, L.gap.a0[1] - 1.2, 'ICL3 237–340', { ha: 'right', fs: FL });
+R('icl3-2', L.gap.a0[0] - 2.0, L.gap.a0[1] + 1.7, 'deleted', { ha: 'right', fs: FL });
+// helix 8: a bracket under its row and the name; where the sequence ends
+const B8 = L.h8;
+poly([[B8.x0, B8.t - B8.tick], [B8.x0, B8.t], [B8.x1, B8.t], [B8.x1, B8.t - B8.tick]], { w: 0.25 });
+R('h8', B8.mid, B8.t + 2.7, 'helix 8', { fs: FL, ha: 'center' });
+// key of the snake plot (x from KX): circle fills, the dashed line, the square, the site badge, the abbreviations
+const KX = 77.0, K0 = 24.0, KP = 3.5;
+const KEY = [['#91D7AB', null, 'helix in 7F61'], ['#FFFFFF', null, 'not in a helix'], ['#FFFFFF', '0.45 0.3', 'no coordinates']];
+KEY.forEach(([fill, dash, txt], i) => {
+  const t = K0 + KP * i;
+  svgEl('circle', { id: 'keyc' + i, cx: KX + 0.9, cy: t, r: L.r_bead, fill, stroke: FAM.mint.edge, 'stroke-width': 0.18, ...(dash ? { 'stroke-dasharray': dash } : {}) });
+  R('keyt' + i, KX + 3.0, t, txt, { fs: FL, color: SUB });
+});
+let kt = K0 + KP * 3;
+svgEl('line', { id: 'keydash', x1: KX - 0.3, y1: kt, x2: KX + 2.1, y2: kt, stroke: INK, 'stroke-width': 0.3, 'stroke-dasharray': '0.9 0.7' });
+R('keyt3', KX + 3.0, kt, 'not drawn', { fs: FL, color: SUB });
+kt += KP + 0.2;
+svgEl('rect', { id: 'keysq', x: KX - 0.3, y: kt - 1.0, width: 2.0, height: 2.0, fill: '#FFFFFF', stroke: INK, 'stroke-width': 0.3 });
+R('keyt4a', KX + 3.0, kt, 'N11Q, in all', { fs: FL, color: SUB });
+R('keyt4b', KX + 3.0, kt + 2.9, 'constructs', { fs: FL, color: SUB });
+kt += 2.9 + KP + 0.9;
+svgEl('circle', { id: 'keysite', cx: KX + 0.9, cy: kt, r: L.r_site * 0.8, fill: FAM.apricot.fill, stroke: FAM.apricot.edge, 'stroke-width': 0.25 });
+badge(KX + 4.6, kt, 3, 'keybadge');
+['mutation site;', 'same number', 'in a, b and c'].forEach((s, i) => R('keys' + i, KX + 7.4, kt - 2.9 + 2.9 * i + 1.45, s, { fs: FL, color: SUB }));
+kt += 8.0;
+['TM: transmembrane', 'helix; limits are', '7F61 helix records'].forEach((s, i) => R('keym' + i, KX, kt + 2.9 * i, s, { fs: FL, color: SUB }));
+kt += 8.7 + 1.2;
+['ECL, ICL: loop', 'outside, inside'].forEach((s, i) => R('keyl' + i, KX, kt + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- panel b: the same chain in 3D, a badge on a short leader at each residue
+const IM = L.img;
+f.letter('b', XL0, Tp(L.TB + 0.6));
+R('title-b', XL0 + 4.6, L.TB + 2.2, 'H3R in 3D', { bold: true, fs: 7.5 });
+const im = f.image({ x: IM.x_left, y: Tp(IM.t_top + IM.h), w: IM.w, name: IM.name });
+S.forEach((s) => {
+  poly(s.tagseg, { color: '#FFFFFF', w: HALO, opacity: 0.9 });
+  poly(s.tagseg, { w: LW });
+  svgEl('circle', { id: 'anchor' + s.n, cx: s.anchor[0], cy: s.anchor[1], r: 0.5, fill: INK, stroke: '#FFFFFF', 'stroke-width': 0.18 });
+  badge(s.badge[0], s.badge[1], s.n, 'snake' + s.n);
+  badge(s.tag[0], s.tag[1], s.n, 'tag' + s.n);
+});
+// left of the picture: the antagonist
+const tl = IM.t_top + 17.0;
+svgEl('line', { id: 'ligkey', x1: XL0 + 0.6, y1: tl, x2: XL0 + 4.4, y2: tl, stroke: FAM.rose.fill, 'stroke-width': 1.1, 'stroke-linecap': 'round' });
+R('lig1', XL0 + 6.0, tl - 1.4, 'antagonist', { color: ROSE_DARK });
+R('lig2', XL0 + 6.0, tl + 1.45, 'PF-03654746', { color: ROSE_DARK });
+// right of the picture: the four sites
+const RX = L.KEY_X;
+S.forEach((s, k) => {
+  const t = IM.t_top + 6.0 + 5.6 * k;
+  badge(RX + L.r_badge, t, s.n, 'key' + s.n);
+  R('key-a' + s.n, RX + 2 * L.r_badge + 1.6, t - 1.35, `${s.wt}${s.num}${s.mut}`, { bold: true });
+  R('key-b' + s.n, RX + 2 * L.r_badge + 1.6, t + 1.45, s.bw === 'ECL2' ? 'ECL2' : `${s.where}, ${s.bw}`, { fs: FL, color: SUB });
+});
+const tk = IM.t_top + 6.0 + 5.6 * 3 + 5.0;
+['2.43 etc.:', 'Ballesteros–Weinstein', 'number (2.50 is D80)'].forEach((s, i) => R('def' + i, RX, tk + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- panel c: EC50 dot plot
+f.letter('c', XR0, Tp(T0 + 0.6));
+R('title-c', XR0 + 4.6, T0 + 2.2, 'Histamine EC50 of each H3R mutant', { bold: true, fs: 7.5 });
+R('sub1-c', XR0 + 4.6, T0 + 5.8, 'EC50: histamine concentration, half-maximal response.', { color: SUB });
+R('sub2-c', XR0 + 4.6, T0 + 9.0, 'Lower EC50 = the mutant responds to less histamine.', { color: SUB });
+R('colhead', XR1, P.t_colhead, 'mean ± SD, µM', { fs: FL, color: SUB, ha: 'right' });
+R('grp-A', XR0, P.groups.A.head_t, 'Single mutants (paper’s Table 2)', { bold: true });
+R('grp-B', XR0, P.groups.B.head_t, 'Six double mutants (paper’s Table 1)', { bold: true });
+P.rows.forEach((r) => {
+  r.sites.forEach((n, i) => badge(P.x_badge[i], r.t, n, `row${r.id}-${i}`));
+  R('nm-' + r.id, P.x_name, r.t, r.label);
+  if (r.mean === null) { R('nd-' + r.id, P.x_nd, r.t, 'ND', { fs: FL, color: SUB, ha: 'center' }); return; }
+  R('mi-' + r.id, P.dp1, r.t, r.mean_int, { fs: FL, ha: 'right' });
+  if (r.mean_frac) R('mf-' + r.id, P.dp1, r.t, r.mean_frac, { fs: FL });
+  if (r.sd !== null) {
+    R('si-' + r.id, P.dp2, r.t, r.sd_int, { fs: FL, ha: 'right' });
+    if (r.sd_frac) R('sf-' + r.id, P.dp2, r.t, r.sd_frac, { fs: FL });
+  }
+});
+R('xt-c', (P.x0 + P.x1) / 2, P.t_ax + 7.6, 'EC50 (µM, log scale)', { ha: 'center' });
+const KG = P.key;
+R('key-1', KG.x_gx + 3.4, KG.t[0], 'three experiments; bar = ± 1 SD (standard deviation)', { fs: FL, color: SUB });
+R('key-2', KG.x_gx + 3.4, KG.t[1], 'one experiment, no SD', { fs: FL, color: SUB });
+// one block of notes
+['ND: not determined; the paper’s text calls some inactive, some weak.', 'C415R: 4.0 ± 1.6 here; 3.5 ± 1.5 in Table 1.', 'Doubles sorted by site number.',
+  'Panel b: tilted ' + Math.abs(IM.tilt) + '° towards the outside; heights depend on view.', 'ICL3 242–346: missing from the 7F61 model.', 'Not drawn: chain B (BRIL, a fusion protein for', 'crystallisation), cholesterol, water.'].forEach((s, i) =>
+  R('pnote' + i, XR0, KG.t[1] + 5.6 + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- foot
+R('boundary', XL0, H - 5.6, 'Data: 7F61 coordinates and helix records, published EC50 values. Illustration: loops.', { fs: FL, color: SUB });
+R('credit', XL0, H - 2.3, 'After Figs 1 and 4, Tables 1 and 2 of Nakajima et al., Protein Science 2026, doi:10.1002/pro.70408, CC BY 4.0. Data: PDB 7F61. Redesigned; values as published.', { fs: FL, color: SUB });
+
+// ================================================================ checks on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const m = {}; Object.entries(REC).forEach(([k, el]) => { m[k] = M(el); });
+  const byId = (id) => { const e = document.getElementById(id); if (!e) { fails.push('missing element ' + id); return { l: 0, t: 0, r: 0, b: 0, w: 0, h: 0, cx: 0, cy: 0 }; } return M(e); };
+  // 1. panel letters, titles and sub-lines on the panel grid
+  [['a', XL0, T0], ['c', XR0, T0], ['b', XL0, L.TB]].forEach(([c, x, T]) => {
+    const Lt = M(document.getElementById('panel-' + c));
+    near(Lt.l, x, `panel ${c}: letter x`); near(m['title-' + c].l, x + 4.6, `panel ${c}: title x`); near(m['title-' + c].cy, T + 2.2, `panel ${c}: title row`, 0.35);
+    near(Lt.cy, T + 2.2, `panel ${c}: letter row`, 0.5);
+  });
+  ['sub1-a', 'sub2-a', 'sub3-a'].forEach((k) => near(m[k].l, XL0 + 4.6, k + ' x')); ['sub1-c', 'sub2-c'].forEach((k) => near(m[k].l, XR0 + 4.6, k + ' x'));
+  near(m['sub1-a'].cy, m['sub1-c'].cy, 'sub-lines 1 of a and c on one row', 0.2); near(m['sub2-a'].cy, m['sub2-c'].cy, 'sub-lines 2 of a and c on one row', 0.2);
+  // 2. the snake circles are where layout says; the picture is where layout says
+  L.beads.forEach(([n, x, t]) => { if (S.some((s) => s.num === n)) return; const c = byId('res' + n); near(c.cx, x, `circle ${n}: x`, 0.08); near(c.cy, t, `circle ${n}: t`, 0.08); });
+  S.forEach((s) => { const c = byId('res' + s.num); near(c.cx, s.bead[0], `site circle ${s.num}: x`, 0.08); near(c.cy, s.bead[1], `site circle ${s.num}: t`, 0.08); });
+  const img = M(document.querySelector('img.art'));
+  near(img.l, IM.x_left, '3D picture: left'); near(img.t, IM.t_top, '3D picture: top'); near(img.w, IM.w, '3D picture: width'); near(img.h, IM.h, '3D picture: height');
+  // 3. the dots in the 3D picture sit on the residues (anchor computed from the render and checked against the coordinates in layout.py); each leader runs anchor -> badge
+  const ART = window.ART[IM.name].anchors;
+  S.forEach((s) => {
+    const a = byId('anchor' + s.n), fr = ART['site' + s.n + '_side'];
+    near(a.cx, img.l + fr[0] * img.w, `dot ${s.n}: x on the residue in the picture`, 0.1); near(a.cy, img.t + fr[1] * img.h, `dot ${s.n}: t on the residue in the picture`, 0.1);
+    near(a.cx, s.anchor[0], `dot ${s.n}: x`, 0.05); near(a.cy, s.anchor[1], `dot ${s.n}: t`, 0.05);
+    const u = [s.tag[0] - s.anchor[0], s.tag[1] - s.anchor[1]], d = Math.hypot(u[0], u[1]);
+    near(Math.hypot(s.tagseg[1][0] - s.tag[0], s.tagseg[1][1] - s.tag[1]), L.r_badge + 0.05, `leader ${s.n}: ends at the rim of its badge`, 0.01);
+    near((s.tagseg[0][0] - s.anchor[0]) * u[1] - (s.tagseg[0][1] - s.anchor[1]) * u[0], 0, `leader ${s.n}: starts on the line anchor to badge`, 0.01);
+    if (d > 10.5 || d < 5.4) fails.push(`leader ${s.n} is ${d.toFixed(1)} mm long`);
+  });
+  // 4. badges: rendered where they were asked for
+  const rb = [...document.querySelectorAll('.badge')].map(M);
+  BADGES.forEach((b) => { const hit = rb.some((e) => Math.abs(e.cx - b.x) < 0.06 && Math.abs(e.cy - b.t) < 0.06 && Math.abs(e.w - 2 * L.r_badge) < 0.1); if (!hit) fails.push(`badge ${b.name} (${b.n}) is not at (${b.x.toFixed(2)}, ${b.t.toFixed(2)})`); });
+  // 5. panel c: dots and bars on their rows and columns, numbers on the decimal point, names on one edge
+  P.rows.forEach((r) => {
+    near(m['nm-' + r.id].l, P.x_name, `row ${r.id}: name edge`); near(m['nm-' + r.id].cy, r.t, `row ${r.id}: name on its row`, 0.4);
+    if (r.mean === null) { near(m['nd-' + r.id].cx, P.x_nd, `row ${r.id}: ND column`); near(m['nd-' + r.id].cy, r.t, `row ${r.id}: ND row`, 0.4); return; }
+    const d = byId('dot_' + r.id); near(d.cx, r.x, `row ${r.id}: mark x`, 0.06); near(d.cy, r.t, `row ${r.id}: mark row`, 0.06);
+    near(r.x, P.x0 + (P.x1 - P.x0) * (Math.log10(parseFloat(r.mean)) - Math.log10(P.v0)) / (Math.log10(P.v1) - Math.log10(P.v0)), `row ${r.id}: mark at the log of ${r.mean}`, 0.001);
+    near(m['mi-' + r.id].r, P.dp1, `row ${r.id}: mean on its decimal point`); near(m['mi-' + r.id].cy, r.t, `row ${r.id}: mean row`, 0.4);
+    if (r.mean_frac) { near(m['mf-' + r.id].l, P.dp1, `row ${r.id}: mean fraction on its decimal point`); near(m['mf-' + r.id].cy, r.t, `row ${r.id}: mean fraction row`, 0.4); }
+    if (r.sd !== null) {
+      const b = byId('bar_' + r.id); near(b.l, r.lo, `row ${r.id}: bar low end`, 0.12); near(b.r, r.hi, `row ${r.id}: bar high end`, 0.12);
+      near(m['si-' + r.id].r, P.dp2, `row ${r.id}: SD on its decimal point`);
+      if (r.sd_frac) near(m['sf-' + r.id].l, P.dp2, `row ${r.id}: SD fraction on its decimal point`);
+    }
+  });
+  P.ticks.forEach(([v, x]) => { ['A', 'B'].forEach((g) => { near(byId(`tick_${g}_${v}`).cx, x, `tick ${g} ${v}`, 0.06); near(byId(`ticklab_${g}_${v}`).cx, x, `tick label ${g} ${v}`, 0.2); }); });
+  near(byId('area_A').l, P.x0, 'plot area A left', 0.06); near(byId('area_A').r, P.x1, 'plot area A right', 0.06); near(byId('area_B').l, P.x0, 'plot area B left', 0.06);
+  near(byId('area_A').t, P.groups.A.top, 'plot area A top', 0.06); near(byId('area_B').b, P.groups.B.bot, 'plot area B bottom', 0.06);
+  near(m['xt-c'].cx, (P.x0 + P.x1) / 2, 'axis caption centred on the plot');
+  near(m['grp-A'].l, XR0, 'group A heading edge'); near(m['grp-B'].l, XR0, 'group B heading edge'); near(m['grp-A'].cy, P.groups.A.head_t, 'group A heading row', 0.4);
+  near(byId('key_dot_full').cx, KG.x_gx, 'key circle x', 0.06); near(byId('key_dot_full').cy, KG.t[0], 'key circle row', 0.06); near(byId('key_dot_single').cy, KG.t[1], 'key diamond row', 0.06);
+  // 6. the key of the snake plot is on its rows and its edge; the site key is on one grid
+  [0, 1, 2].forEach((i) => { near(byId('keyc' + i).cy, K0 + KP * i, `circle key ${i + 1}: row`, 0.06); near(m['keyt' + i].cy, K0 + KP * i, `circle key ${i + 1}: text row`, 0.4); near(m['keyt' + i].l, KX + 3.0, `circle key ${i + 1}: text edge`); });
+  near(m.keyt3.l, KX + 3.0, 'key: text edge'); near(m.keyt4a.l, KX + 3.0, 'key: text edge'); ['keym0', 'keym1', 'keym2', 'keyl0', 'keyl1'].forEach((k) => near(m[k].l, KX, 'key lines on the key edge'));
+  [1, 2, 3, 4].forEach((n) => { near(m['key-a' + n].l, RX + 2 * L.r_badge + 1.6, `site key ${n}: text edge`); near(m['key-b' + n].l, m['key-a' + n].l, `site key ${n}: second line on the first`, 0.15); });
+  ['def0', 'def1', 'def2'].forEach((k) => near(m[k].l, RX, 'number note on the key edge'));
+  near(m.tm1.cy, m.tm1.cy, 'tm'); // helix names are checked against the circles below
+  // 7. texts: not on a circle, not on a leader, not on another text, not off the page
+  const circles = L.beads.map(([n, x, t]) => ({ x, t, r: S.some((s) => s.num === n) ? L.r_site : L.r_bead }));
+  P.rows.forEach((r) => { if (r.x !== null) circles.push({ x: r.x, t: r.t, r: P.r_dot * 1.3 }); });
+  const segs = S.map((s) => s.tagseg);
+  const rectSegDist = (e, a, b) => { let best = 1e9; for (let i = 0; i <= 80; i++) { const x = a[0] + (b[0] - a[0]) * i / 80, y = a[1] + (b[1] - a[1]) * i / 80, dx = Math.max(e.l - x, 0, x - e.r), dy = Math.max(e.t - y, 0, y - e.b); best = Math.min(best, Math.hypot(dx, dy)); } return best; };
+  const T = Object.entries(REC).map(([k, el]) => [k, M(el)]);
+  T.forEach(([k, e]) => {
+    circles.forEach((c) => { const dx = Math.max(e.l - c.x, 0, c.x - e.r), dy = Math.max(e.t - c.t, 0, c.t - e.b); if (Math.hypot(dx, dy) < c.r + 0.15) fails.push(`text on a circle: ${k} and circle at (${c.x.toFixed(1)}, ${c.t.toFixed(1)})`); });
+    segs.forEach((sg) => { if (rectSegDist(e, sg[0], sg[1]) < 0.45) fails.push(`text on a leader: ${k}`); });
+    if (e.l < 1.0 || e.t < 0.8 || e.r > W - 1.0 || e.b > H - 0.6) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`);
+    if (e.r > (e.l < XR0 - 1 ? 100.9 : W - 1.0) && e.l < XR0 - 1 && !/^(boundary|credit)$/.test(k)) fails.push(`text of the left block runs into the right block: ${k} (${e.r.toFixed(2)})`);
+  });
+  for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) { const a = T[i][1], b = T[j][1], pad = 0.08;
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${T[i][0]} and ${T[j][0]}`); }
+  document.querySelectorAll('.plots svg text').forEach((t) => { const e = M(t); T.forEach(([k, b]) => { if (e.l + 0.08 < b.r && b.l + 0.08 < e.r && e.t + 0.08 < b.b && b.t + 0.08 < e.b) fails.push(`text on a tick label: ${k}`); }); });
+  rb.forEach((e) => { T.forEach(([k, b]) => { const dx = Math.max(b.l - e.cx, 0, e.cx - b.r), dy = Math.max(b.t - e.cy, 0, e.cy - b.b); if (Math.hypot(dx, dy) < L.r_badge + 0.05) fails.push(`badge on text ${k}`); }); });
+  // the picture is a raster: no text inside its box except the panel b title
+  T.forEach(([k, e]) => { if (e.l < img.r + 0.5 && e.r > img.l && e.t < img.b && e.b > img.t && k !== 'title-b') fails.push(`text over the 3D picture box: ${k}`); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

@@ -1,0 +1,38 @@
+# The marks of the figure, one per PDB entry, from tables/table1.csv (He, Zhao and Xu 2026, Table 1; CC BY 4.0). Resolution and technique as in Table 1; marker_diameter_mm is computed by src/make_data.py (linear in resolution, 4.4 mm at 2.65 A, 2.0 mm at 7.70 A).
+pdb,receptor,mode,arrestin,technique,resolution_A,conformation_as_in_table,marker_diameter_mm,x_mm,y_mm
+8JRV,GCGR,Tail,βarr1,Cryo-EM,3.30,Tail,3.717,74.35,37.75
+8JRU,GCGR,Tail,βarr1,Cryo-EM,3.50,Tail and ligand-free,3.630,87.05,37.75
+6PWC,NTSR1,Core,βarr1,Cryo-EM,4.90,Core,3.020,20.95,44.25
+6UP7,NTSR1,Core,βarr1,Cryo-EM,4.20,Core,3.325,33.65,44.25
+8ZYT,NTSR1,Core,βarr1,Cryo-EM,2.65,Core,4.000,46.35,44.25
+9M0D,NTSR1,Core,βarr1,Cryo-EM,3.41,Core,3.669,59.05,44.25
+8ZYU,NTSR1,Loop-engaged,βarr1,Cryo-EM,2.65,Loop-engaged,4.000,100.62,44.25
+8ZYY,NTSR1,Loop-engaged,βarr1,Cryo-EM,2.83,Loop-engaged,3.922,113.33,44.25
+9IJR,GPR52,Side-engaged,βarr1,Cryo-EM,3.86,Side-engaged,3.473,126.90,50.75
+9IJS,GPR52,Side-engaged,βarr1,Cryo-EM,3.64,Side-engaged and ligand-free,3.569,139.60,50.75
+9E82,ACKR3,Membrane-anchored,βarr1,Cryo-EM,3.40,Membrane-anchored,3.673,153.18,57.25
+4ZWJ,Rhodopsin,Core,Arr1,XFEL,3.30,Core,3.717,20.95,63.75
+5DGY,Rhodopsin,Core,Arr1,XFEL,7.70,Core,1.800,33.65,63.75
+5W0P,Rhodopsin,Core,Arr1,XFEL,3.01,Core,3.843,46.35,63.75
+6U1N,M2R,Core,βarr1,Cryo-EM,4.00,Core,3.412,20.95,70.25
+6TKO,Turkey β1AR,Core,βarr1,Cryo-EM,3.30,Core,3.717,20.95,76.75
+7R0C,V2R,Core,βarr1,Cryo-EM,4.73,Core,3.094,20.95,83.25
+7SRS,5-HT2BR,Core,βarr1,Cryo-EM,3.30,Core,3.717,20.95,89.75
+8WRZ,CB1R,Core,βarr1,Cryo-EM,3.60,Core,3.586,20.95,96.25
+8WU1,CB1R,Core,βarr1,Cryo-EM,3.20,Core,3.760,33.65,96.25
+9II2,mGlu3R,Core,βarr1,Cryo-EM,3.70,Core and dimer-2:2,3.543,20.95,102.75
+9II3,mGlu3R,Core,βarr1,Cryo-EM,3.90,Core and dimer-2:1,3.455,33.65,102.75
+9KUV,APJR,Core,βarr1,Cryo-EM,3.21,Core and monomer,3.756,20.95,109.25
+9KUW,APJR,Core,βarr1,Cryo-EM,3.49,Core and dimer-2:2,3.634,33.65,109.25
+9KUX,APJR,Core,βarr1,Cryo-EM,3.57,Core and dimer-2:1,3.599,46.35,109.25
+9MBA,mGlu8R,Core,βarr1,Cryo-EM,3.14,Core and dimer-2:2,3.787,20.95,115.75
+9UYH,GPR1,Core,βarr1,Cryo-EM,3.30,Core conformation 1,3.717,20.95,122.25
+9UYI,GPR1,Core,βarr1,Cryo-EM,3.20,Core conformation 2,3.760,33.65,122.25
+9UYJ,GPR1,Core,βarr1,Cryo-EM,3.30,Core conformation 3,3.717,46.35,122.25
+9UYL,GPR1,Core,βarr1,Cryo-EM,3.30,Core conformation 4,3.717,59.05,122.25
+9UYN,GPR1,Core,βarr1,Cryo-EM,2.90,Core and ligand-free,3.891,20.95,128.75
+9UYM,GPR1,Core,βarr2,Cryo-EM,3.50,Core conformation 1-like,3.630,33.65,128.75
+9WSV,MOR,Core,βarr1,Cryo-EM,2.80,Core,3.935,20.95,135.25
+9WSX,MOR,Core,βarr1,Cryo-EM,2.80,Core,3.935,33.65,135.25
+9LXR,PTH1R,Core,βarr1,Cryo-EM,3.07,Core,3.817,20.95,141.75
+9LXP,PTH1R,Core,βarr1,Cryo-EM,3.20,Core,3.760,33.65,141.75

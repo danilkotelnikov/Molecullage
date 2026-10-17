@@ -1,0 +1,4 @@
+event,subunit,clade_block,node_at_branch_end,node_at_branch_start,branch_length_subst_per_site,paper
+D-subunit C-terminal extension,D,Anf,786,787,0.327631,"about 60 residues, unique to Anf"
+K-subunit N-terminal extension,K,Nif-I,1207,1206,0.472278,"about 8 to 40 residues, unique to Nif-I"
+D-subunit insertion,D,Nif-II,1345,1206,0.182008,"about 55 residues, unique to Nif-II"

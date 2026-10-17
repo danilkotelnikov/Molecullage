@@ -1,0 +1,217 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>10-arrestin-landscape</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<!--INLINE_JS data.js-->
+<script>
+// Redesign of Table 1 and Fig. 2 of He, Zhao and Xu 2026, Cell Discovery 12:61 (doi 10.1038/s41421-026-00909-1, CC BY 4.0).
+// Panel a: all 36 PDB entries of Table 1 as one mark each, in a grid of receptor (rows) by engagement mode (columns, the five modes of Fig. 2a-e).
+// Panel b: three entries drawn from PDB coordinates (ChimeraX, src/render_modes.py), receptors superposed, one camera, in a frame of its own.
+// Every position comes from window.DATA (src/make_data.py, millimetres, top-down); checkAlign() at the end measures the rendered page and throws one Error
+// that lists every mark, text or image that is off its grid line by more than TOL.
+const D = window.DATA, W = D.W, H = 166.0, TOL = 0.25, MMPX = 96 / 25.4;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const TOK = window.TOKENS.color, FAM = TOK.family;
+const INK = TOK.ink, SUB = TOK.sub, GUIDE = TOK.guide;
+const FL = (window.CONFIG || {}).floorPt || 6.55;
+const NS = 'http://www.w3.org/2000/svg';
+const X0 = D.X0, XR = D.XR;
+const REC = {};
+function svgEl(tag, attrs) { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); f.svg.appendChild(e); return e; }
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+function HT(name, x, t, html, { fs = 7, ha = 'left', bold = false, color = INK } = {}) {
+  const d = document.createElement('div');
+  d.className = 'lab'; d.id = f.id('label');
+  const tr = ha === 'right' ? 'translate(-100%,-50%)' : ha === 'center' ? 'translate(-50%,-50%)' : 'translate(0,-50%)';
+  d.style.cssText = `left:${x}mm;top:${t}mm;font-size:${fs}pt;color:${color};font-weight:${bold ? 700 : 400};transform:${tr}`;
+  d.innerHTML = html; f.el.appendChild(d);
+  if (name) REC[name] = d;
+  return d;
+}
+const rectOf = (el) => { const r = el.getBoundingClientRect(), g = f.el.getBoundingClientRect(); const m = { l: (r.left - g.left) / MMPX, r: (r.right - g.left) / MMPX, t: (r.top - g.top) / MMPX, b: (r.bottom - g.top) / MMPX }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+const line = (x1, t1, x2, t2, o = {}) => svgEl('line', { x1, y1: t1, x2, y2: t2, stroke: GUIDE, 'stroke-width': 0.2, opacity: 0.55, ...o });
+const diam = (res) => D.diam.D_MAX - (D.diam.D_MAX - D.diam.D_MIN) * (res - D.diam.R_BEST) / (D.diam.R_WORST - D.diam.R_BEST);
+const sqSide = (d) => d * Math.sqrt(Math.PI) / 2;                          // a square of the same area as the circle
+// a mark: circle (cryo-EM) or square (X-ray); hollow = white fill, drawn for the entry whose technique RCSB does not confirm; grey = key marker without an arrestin colour
+function mark(cx, t, shape, d, fam, id, { hollow = false, grey = false } = {}) {
+  const fill = grey ? GUIDE : hollow ? '#fff' : FAM[fam].fill, stroke = grey ? GUIDE : FAM[fam].edge;
+  const o = { fill, stroke, 'stroke-width': hollow ? 0.45 : 0.25 }; if (id) o.id = id;
+  if (shape === 'circle') return svgEl('circle', { cx, cy: t, r: d / 2, ...o });
+  const s = sqSide(d);
+  return svgEl('rect', { x: cx - s / 2, y: t - s / 2, width: s, height: s, ...o });
+}
+const col = (m) => D.cols.find((c) => c.mode === m);
+
+// ---------------------------------------------------------------- heading
+f.letter('a', X0, Tp(1.4));
+const TX = X0 + 4.6;
+R('title-a', TX, 3.0, 'GPCR–arrestin structures by engagement mode', { bold: true, fs: 7.5 });
+R('sub-a1', TX, 7.0, `All ${D.n_entries} structures in Table 1 of the paper (He et al. 2026). Mode: how arrestin sits on the receptor.`, { color: SUB });
+R('sub-a2', TX, 10.0, `Core is ${D.n_ent['Core']} of ${D.n_entries} as classed in Table 1; four receptors carry a dagger. Each other mode has one receptor.`, { color: SUB });
+
+// ---------------------------------------------------------------- key: colour, shape, size (one line each), then the reading rule
+const KT = [14.0, 17.4, 20.8], KX = X0 + 11.0, KD = 3.0;
+['Colour', 'Shape', 'Size'].forEach((s, i) => R('key-h' + i, X0, KT[i], s, { bold: true }));
+const KEYM = [];                                                           // key markers, measured by the checks
+function keyItem(name, x, t, shape, fam, text, opt = {}) {
+  const el0 = mark(x + 2.0, t, shape, KD, fam, 'key-' + name, opt);
+  KEYM.push([name, el0, x + 2.0, t, KD, shape]);
+  const el = R('key-t-' + name, x + 5.2, t, text, { color: INK });
+  return rectOf(el).r + 4.0;
+}
+let kx = KX;
+kx = keyItem('arr1', kx, KT[0], 'square', 'indigo', 'Arr1 = arrestin-1 (rhodopsin, X-ray)');
+kx = keyItem('barr1', kx, KT[0], 'circle', 'peri', 'βarr1 = β-arrestin 1 (arrestin-2)');
+kx = keyItem('barr2', kx, KT[0], 'circle', 'rose', 'βarr2 = β-arrestin 2 (arrestin-3)');
+kx = KX;
+kx = keyItem('em', kx, KT[1], 'circle', 'peri', 'cryo-EM', { grey: true });
+kx = keyItem('xray', kx, KT[1], 'square', 'peri', 'X-ray (XFEL = X-ray free-electron laser)', { grey: true });
+kx = keyItem('hollow', kx, KT[1], 'square', 'indigo', 'hollow: 5DGY, XFEL in the paper, synchrotron in its PDB record', { hollow: true });
+R('key-size', KX, KT[2], 'Size repeats the resolution printed under each ID: bigger = sharper.', { color: INK });
+R('key-layout', X0, 24.2, 'Rows: non-Core receptors first, in column order, then in the paper’s table order. Blank cell: no entry. Ring: drawn in panel b.', { color: SUB, fs: FL });
+
+// ---------------------------------------------------------------- matrix: headers, grid lines, row labels, marks
+const T0 = D.T0, TE = D.T_END, SPLIT = D.cols[1].x0 - 1.0;
+const R4 = T0 + 4 * D.ROW_PITCH;                                          // bottom of the four non-Core rows
+R('hd-receptor', X0, D.T_HEAD, 'Receptor', { bold: true });
+D.cols.forEach((c, i) => {
+  R('hd-' + i, c.tile_x0, D.T_HEAD, c.mode, { bold: true });
+  const n = c.n_entries, txt = i === 0 ? `${n} entries, ${c.n_receptors} receptors` : `${n} ${n === 1 ? 'entry' : 'entries'}`;
+  R('ct-' + i, c.tile_x0, D.T_COUNT, txt, { fs: FL, color: SUB });
+});
+line(X0, T0 - 0.5, XR, T0 - 0.5, { opacity: 0.9, 'stroke-width': 0.25 });
+line(SPLIT, T0 - 0.5, SPLIT, R4);
+for (let k = 2; k < 5; k++) line(D.cols[k].x0, T0 - 0.5, D.cols[k].x0, R4);
+D.rows.forEach((r, i) => {
+  HT('row-' + r.receptor, X0, r.t_c, `<span class="mth">${r.label}</span>`, { fs: 7 });
+  if (i < D.rows.length - 1) line(X0, r.t_bot, i < 4 ? XR : SPLIT, r.t_bot);
+});
+D.tiles.forEach((x) => {
+  x.el = mark(x.x, x.t, x.shape, x.d, x.fam, 'mk-' + x.pdb, { hollow: x.hollow });
+  if (x.ring) x.ringEl = svgEl('circle', { cx: x.x, cy: x.t, r: D.diam.D_MAX / 2 + 0.4, fill: 'none', stroke: INK, 'stroke-width': 0.3, id: 'ring-' + x.pdb });
+  x.idEl = HT('id-' + x.pdb, x.tx, x.t_id, x.pdb, { fs: FL, bold: true });
+  x.resEl = HT('res-' + x.pdb, x.tx, x.t_res, `${x.resolution} Å`, { fs: FL, color: SUB });
+});
+// dagger note under the Core block: where the text of the paper describes a Core row differently
+const FT = TE + 3.0;
+['† Table 1 says Core; the text describes them differently.', 'PTH1R: tail- and core-engaged (elsewhere both core).', 'mGlu3R, mGlu8R: shallow, peripheral interface.', 'APJR dimers: tail-dominant or shallow-core.']
+  .forEach((s, i) => R('dag-' + i, X0, FT + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- panel b: three entries, one view, in a frame of its own (outside the grid)
+const BXF = SPLIT, BYF = R4 + 1.0, BXR = XR, BYB = TE + 10.7;
+svgEl('rect', { x: BXF, y: BYF, width: BXR - BXF, height: BYB - BYF, rx: 1.2, fill: 'none', stroke: GUIDE, 'stroke-width': 0.3, id: 'b-frame' });
+const BX = BXF + 1.5, BT = BYF + 3.3;
+f.letter('b', BX, Tp(BT - 1.6));
+R('title-b', BX + 4.6, BT, 'Three entries in one view', { bold: true, fs: 7.5 });
+const KB = BT + 4.0;
+function sw(name, x, fam, text) {
+  svgEl('rect', { x, y: KB - 1.3, width: 2.6, height: 2.6, fill: FAM[fam].fill, stroke: FAM[fam].edge, 'stroke-width': 0.25, id: 'bkey-' + name });
+  const el = R('bkey-t-' + name, x + 3.8, KB, text, { fs: FL, color: INK });
+  return rectOf(el).r + 3.4;
+}
+let bx = BX;
+bx = sw('rec', bx, 'grey', 'receptor');
+bx = sw('arr', bx, 'peri', 'arrestin (βarr1)');
+bx = sw('con', bx, 'apricot', 'receptor residues within 4.5 Å of arrestin');
+const SW = 30.5, SG = (BXR - 1.5 - BX - 3 * SW) / 2, RT = KB + 2.6;
+const IMG = [];
+D.render.forEach((r, k) => {
+  const x = BX + k * (SW + SG), h = SW / r.ar;
+  f.image({ x, y: Tp(RT + h), w: SW, name: r.name });
+  IMG.push({ r, x, h });
+  const ct = RT + h + 2.3;
+  R('rc1-' + k, x, ct, `${r.mode}, ${r.pdb}`, { bold: true });
+  R('rc2-' + k, x, ct + 3.0, `${r.receptor}${r.n_v2r_tail ? ' + V2R tail' : ''}, ${r.arrestin}`);
+  R('rc3-' + k, x, ct + 6.0, `${r.n_receptor_contacts} orange residues`, { color: SUB, fs: FL });
+  if (r.n_v2r_tail) R('rc4-' + k, x, ct + 8.9, `${r.n_v2r_tail} in the V2R tail`, { color: SUB, fs: FL });
+});
+const IH = SW / D.render[0].ar, DT0 = RT + IH + 2.3 + 8.9 + 4.0;           // definitions start below the captions
+const DEF = [
+  ['Core', 'the arrestin finger loop inserts deep into the receptor’s transmembrane core.'],
+  ['Tail', 'held mainly by the receptor’s phosphorylated C-terminus; core stays open.'],
+  ['Loop-engaged', 'receptor loop ICL3 inserts into arrestin; finger loop stays outside the core.'],
+  ['Side-engaged', 'arrestin binds sideways via ICL1 and helix 8; no core insertion.'],
+  ['Membrane-anchored', 'held by the C-terminus; finger loop enters the lipid or micelle boundary.'],
+];
+DEF.forEach(([m, s], i) => HT('def-' + i, BX, DT0 + 2.9 * i, `<b>${m}:</b> ${s}`, { fs: FL, color: INK }));
+['Definitions are shortened from the paper. ICL: intracellular loop.', 'Orange: loops, helix ends, helix 8, C-terminal tail. Loops are not labelled.',
+  'One receptor, one arrestin per render. 9WSV, 8JRV: the receptor ends in the V2R tail.']
+  .forEach((s, i) => HT('bn-' + i, BX, DT0 + 2.9 * (5 + i), s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- foot
+R('boundary', X0, FT + 2.9 * 3 + 3.7, 'Marks follow Table 1 as published; panel b is drawn from PDB coordinates.', { fs: FL, color: SUB });
+R('credit', X0, H - 2.3, 'After Fig. 2 and Table 1 of He et al., Cell Discovery 2026, doi:10.1038/s41421-026-00909-1, CC BY 4.0. Data: Table 1, PDB. Redesigned; values as published.', { fs: FL, color: SUB });
+
+// ================================================================ alignment checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const m = {}; Object.entries(REC).forEach(([k, el]) => { m[k] = rectOf(el); });
+  const bb = (el) => el.getBBox();
+  // 1. every mark: centre, size, ring, text edge, text rows, printed numbers, clearance to the next mark and to the cell edge
+  D.tiles.forEach((x) => {
+    const b = bb(x.el), sz = x.shape === 'circle' ? x.d : sqSide(x.d);
+    near(b.x + b.width / 2, x.x, `${x.pdb}: marker x`, 0.05); near(b.y + b.height / 2, x.t, `${x.pdb}: marker y`, 0.05); near(b.width, sz, `${x.pdb}: marker size`, 0.01);
+    near(sz, x.shape === 'circle' ? diam(parseFloat(x.resolution)) : sqSide(diam(parseFloat(x.resolution))), `${x.pdb}: marker size follows the resolution`, 0.01);
+    near(m['id-' + x.pdb].l, x.tx, `${x.pdb}: id text edge`); near(m['res-' + x.pdb].l, x.tx, `${x.pdb}: resolution text edge`);
+    near(m['id-' + x.pdb].cy, x.t_id, `${x.pdb}: id row`, 0.35); near(m['res-' + x.pdb].cy, x.t_res, `${x.pdb}: resolution row`, 0.35);
+    if (x.resEl.textContent !== `${x.resolution} Å`) fails.push(`${x.pdb}: printed resolution ${x.resEl.textContent}`);
+    if (x.idEl.textContent !== x.pdb) fails.push(`${x.pdb}: printed id ${x.idEl.textContent}`);
+    const c = D.cols[x.col]; const right = Math.max(m['id-' + x.pdb].r, m['res-' + x.pdb].r);
+    const nxt = D.tiles.find((y) => y.col === x.col && Math.abs(y.t - x.t) < 0.01 && Math.abs(y.tile_x - x.tile_x - D.PITCH) < 0.01);
+    if (nxt) { const nl = bb(nxt.ringEl || nxt.el); const left = nl.x - (nxt.ringEl ? 0.15 : 0.125); if (right > left - 0.95) fails.push(`${x.pdb}: text is ${(left - right).toFixed(2)} mm from the next mark (${nxt.pdb}), want 1`); }
+    if (right > c.x0 + c.w - 0.95) fails.push(`${x.pdb}: text is ${(c.x0 + c.w - right).toFixed(2)} mm from its column edge, want 1`);
+    if (x.ring) { const rb = bb(x.ringEl); near(rb.x + rb.width / 2, x.x, `${x.pdb}: ring x`, 0.05); near(rb.y + rb.height / 2, x.t, `${x.pdb}: ring y`, 0.05);
+      if (m['id-' + x.pdb].l - (rb.x + rb.width + 0.15) < 0.25) fails.push(`${x.pdb}: ring touches the id text`);
+      if (rb.x - 0.15 < c.x0 + 0.2) fails.push(`${x.pdb}: ring reaches the column edge`); }
+  });
+  // 2. marks of one slot share one x, marks of one sub-row share one y
+  const grp = {}; D.tiles.forEach((x) => { const k = `${x.col}:${Math.round((x.tx - D.cols[x.col].tile_x0) / D.PITCH * 1000)}`; (grp[k] = grp[k] || []).push(x); });
+  Object.values(grp).forEach((a) => a.forEach((x) => { near(rectOf(x.el).cx, rectOf(a[0].el).cx, `slot of ${x.pdb}: marker column`, 0.1); near(m['id-' + x.pdb].l, m['id-' + a[0].pdb].l, `slot of ${x.pdb}: text column`, 0.1); }));
+  const rows = {}; D.tiles.forEach((x) => { (rows[x.t.toFixed(3)] = rows[x.t.toFixed(3)] || []).push(x); });
+  Object.values(rows).forEach((a) => a.forEach((x) => { near(m['id-' + x.pdb].cy, m['id-' + a[0].pdb].cy, `row of ${x.pdb}: id baseline`, 0.1); near(m['res-' + x.pdb].cy, m['res-' + a[0].pdb].cy, `row of ${x.pdb}: resolution baseline`, 0.1); near(rectOf(x.el).cy, rectOf(a[0].el).cy, `row of ${x.pdb}: marker row`, 0.1); }));
+  // 3. row labels on their rows, headers on their columns
+  D.rows.forEach((r) => { const e = m['row-' + r.receptor]; near(e.l, X0, `${r.receptor}: label edge`); near(e.cy, r.t_c, `${r.receptor}: label row`, 0.45); if (e.r > D.cols[0].x0 - 0.4) fails.push(`${r.receptor}: label reaches the Core column (${e.r.toFixed(2)})`); });
+  D.cols.forEach((c, i) => { near(m['hd-' + i].l, c.tile_x0, `header ${i}: edge`); near(m['ct-' + i].l, c.tile_x0, `count ${i}: edge`); near(m['hd-' + i].cy, m['hd-0'].cy, `header ${i}: row`, 0.1); near(m['ct-' + i].cy, m['ct-0'].cy, `count ${i}: row`, 0.1);
+    [m['hd-' + i], m['ct-' + i]].forEach((e) => { if (e.r > c.x0 + c.w - 0.95) fails.push(`header ${i} is ${(c.x0 + c.w - e.r).toFixed(2)} mm from its column edge, want 1`); }); });
+  near(m['hd-receptor'].l, X0, 'receptor header edge');
+  // 4. key: markers on their text rows, one text edge, one size
+  KEYM.forEach(([name, el, cx, t, d, shape]) => { const b = bb(el), sz = shape === 'circle' ? d : sqSide(d); near(b.x + b.width / 2, cx, `key ${name}: x`, 0.05); near(b.y + b.height / 2, t, `key ${name}: y`, 0.05); near(b.width, sz, `key ${name}: size`, 0.01); near(m['key-t-' + name].cy, t, `key ${name}: text row`, 0.4); near(m['key-t-' + name].l, cx + 3.2, `key ${name}: text edge`, 0.25); });
+  [0, 1, 2].forEach((i) => { near(m['key-h' + i].l, X0, `key heading ${i}: edge`); near(m['key-h' + i].cy, KT[i], `key heading ${i}: row`, 0.4); });
+  near(m['key-size'].l, KX, 'key size line: edge'); near(m['key-size'].cy, KT[2], 'key size line: row', 0.4);
+  near(m['key-t-arr1'].l, m['key-t-em'].l, 'key: first text edge in rows 1 and 2', 0.25);
+  // 5. panel b: frame, images on their slots, captions on the image edge, everything inside the frame
+  const fr = rectOf(document.getElementById('b-frame'));
+  near(fr.l, SPLIT, 'frame: left edge on the grid divider', 0.2);
+  IMG.forEach(({ r, x, h }, k) => {
+    const el = document.querySelectorAll('img.art')[k], e = rectOf(el);
+    near(e.l, x, `render ${r.pdb}: left`); near(e.t, RT, `render ${r.pdb}: top`); near(e.w, SW, `render ${r.pdb}: width`); near(e.h, h, `render ${r.pdb}: height`);
+    [1, 2, 3].forEach((j) => near(m[`rc${j}-${k}`].l, x, `caption ${r.pdb} line ${j}: edge`));
+    if (r.n_v2r_tail) near(m[`rc4-${k}`].l, x, `caption ${r.pdb} line 4: edge`);
+    near(m['rc1-' + k].cy, m['rc1-0'].cy, `caption ${r.pdb}: row`, 0.1);
+    [1, 2, 3, 4].forEach((j) => { const e2 = m[`rc${j}-${k}`]; if (e2 && e2.r > x + SW + 0.05) fails.push(`caption ${r.pdb} line ${j} runs past its image (${e2.r.toFixed(2)} > ${(x + SW).toFixed(2)})`); });
+    if (e.r > fr.r - 1.0 || e.l < fr.l + 1.0) fails.push(`render ${r.pdb} is closer than 1 mm to the frame`);
+  });
+  near(IMG[1].x - IMG[0].x, IMG[2].x - IMG[1].x, 'renders: equal pitch', 0.01);
+  near(m['title-b'].l, BX + 4.6, 'panel b title edge'); near(rectOf(document.getElementById('panel-b')).l, BX, 'panel b letter edge');
+  near(rectOf(document.getElementById('panel-a')).l, X0, 'panel a letter edge');
+  near(m['title-a'].l, TX, 'panel a title edge'); near(m['sub-a1'].l, TX, 'panel a subtitle 1 edge'); near(m['sub-a2'].l, TX, 'panel a subtitle 2 edge');
+  for (let i = 0; i < 5; i++) near(m['def-' + i].l, BX, `definition ${i}: edge`);
+  for (let i = 0; i < 3; i++) near(m['bn-' + i].l, BX, `note ${i}: edge`);
+  ['bkey-t-rec', 'bkey-t-arr', 'bkey-t-con'].forEach((k) => near(m[k].cy, KB, `${k}: row`, 0.4));
+  Object.entries(m).forEach(([k, e]) => { if (/^(def|bn|bkey|rc|title-b)/.test(k)) { if (e.r > fr.r - 1.0) fails.push(`${k} is ${(fr.r - e.r).toFixed(2)} mm from the right frame edge, want 1`); if (e.b > fr.b - 0.8) fails.push(`${k} is ${(fr.b - e.b).toFixed(2)} mm from the bottom frame edge`); } });
+  // 6. dagger note and foot lines on the left edge; the grid and the frame do not touch the notes
+  [0, 1, 2, 3].forEach((i) => { near(m['dag-' + i].l, X0, `dagger line ${i}: edge`); if (m['dag-' + i].r > SPLIT - 1.0) fails.push(`dagger line ${i} reaches the frame (${m['dag-' + i].r.toFixed(2)})`); });
+  ['boundary', 'credit', 'key-layout'].forEach((k) => near(m[k].l, X0, `${k}: edge`));
+  if (m['dag-0'].t < TE + 0.8) fails.push('dagger note touches the matrix');
+  if (m['boundary'].t < Math.max(fr.b, m['dag-3'].b) + 0.8) fails.push('boundary line is too close to the frame or the note above it');
+  // 7. text on text; text inside the page; marks and rings clear of every text but their own
+  const T = Object.entries(m);
+  for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) { const a = T[i][1], b = T[j][1], pad = 0.06;
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${T[i][0]} and ${T[j][0]}`); }
+  T.forEach(([k, e]) => { if (e.l < 1.0 || e.t < 0.8 || e.r > W - 1.0 || e.b > H - 0.6) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`); });
+  D.tiles.forEach((x) => { [x.el, x.ringEl].filter(Boolean).forEach((el) => { const mb = rectOf(el); T.forEach(([k, e]) => { if (k === 'id-' + x.pdb || k === 'res-' + x.pdb) return; if (mb.l < e.r - 0.06 && e.l < mb.r - 0.06 && mb.t < e.b - 0.06 && e.t < mb.b - 0.06) fails.push(`mark ${x.pdb} under text ${k}`); }); }); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+window.addEventListener('load', () => { document.querySelectorAll('img.art').forEach((im) => { if (!(im.complete && im.naturalWidth > 0)) throw new Error('render image did not load: ' + im.src); }); });
+</script></body></html>

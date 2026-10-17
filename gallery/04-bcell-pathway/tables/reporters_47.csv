@@ -1,0 +1,48 @@
+label_in_figure,group_in_figure,name_in_table_S1,name_in_table_S3,reporter,terminus,activators_table_S3A,repressors_table_S3B
+BLK,BCR signalling,BLK,BLK,mOrange,C-terminal,36,279
+BLNK,BCR signalling,BLNK,BLNK,GFP,C-terminal,168,146
+BTK,BCR signalling,BTK,BTK,GFP,C-terminal,124,226
+CD20,BCR signalling,MS4A1,MS4A1,GFP,N-terminal,126,281
+CD27,BCR signalling,CD27,CD27,GFP,N-terminal,160,216
+CD45,BCR signalling,PTPRC,PTPRC,mOrange,N-terminal,89,214
+CD79A,BCR signalling,CD79A,CD79A,GFP,C-terminal,138,325
+CD79B,BCR signalling,CD79B,CD79B,GFP,C-terminal,72,349
+CD81,BCR signalling,CD81,CD81,GFP,C-terminal,156,164
+CSK,BCR signalling,CSK,CSK,GFP,C-terminal,121,183
+IGH,BCR signalling,IgH,IGH,GFP,N-terminal,117,345
+IGK,BCR signalling,IgKappa,IGK,mOrange,C-terminal,102,417
+LYN,BCR signalling,LYN,LYN,GFP,C-terminal,198,366
+PLCG2,BCR signalling,PLCG2,PLCG2,mOrange,N-terminal,98,174
+SYK,BCR signalling,SYK,SYK,GFP,C-terminal,135,184
+AKT2,PI3K-AKT-mTOR,AKT2,AKT2,GFP,C-terminal,177,169
+BCL-XL,PI3K-AKT-mTOR,BCL-XL,BCL-XL,GFP,C-terminal,135,203
+BCL2,PI3K-AKT-mTOR,BCL2,BCL2,GFP,C-terminal,153,185
+MCL1,PI3K-AKT-mTOR,MCL1,MCL1,GFP,N-terminal,232,198
+PIK3AP1,PI3K-AKT-mTOR,PIK3AP1,PIK3AP1,GFP,C-terminal,78,231
+PTEN,PI3K-AKT-mTOR,PTEN,PTEN,mOrange,N-terminal,115,294
+MAP3K7,NF-kB signalling,MAP3K7,MAP3K7,GFP,N-terminal,138,283
+TNIP1,NF-kB signalling,TNIP1,TNIP1,GFP,N-terminal,84,171
+BACH2,Nuclear proteins and transcription factors,BACH2,BACH2,GFP,C-terminal,121,147
+BCL11A,Nuclear proteins and transcription factors,BCL11A,BCL11A,mOrange,N-terminal,29,298
+BCL6,Nuclear proteins and transcription factors,BCL6,BCL6,mOrange,C-terminal,176,297
+BTG2,Nuclear proteins and transcription factors,BTG2,BTG2,mOrange,C-terminal,59,384
+E2F2,Nuclear proteins and transcription factors,E2F2,E2F2,GFP,C-terminal,282,160
+HDAC1,Nuclear proteins and transcription factors,HDAC1,HDAC1,GFP,C-terminal,80,142
+ID3,Nuclear proteins and transcription factors,ID3,ID3,GFP,C-terminal,201,301
+IKZF1,Nuclear proteins and transcription factors,IKZF1,IKZF1,mOrange,C-terminal,70,195
+IRF8,Nuclear proteins and transcription factors,IRF8,IRF8,GFP,C-terminal,62,193
+MEF2B,Nuclear proteins and transcription factors,MEF2B,MEF2B,mOrange,N-terminal,107,349
+MSH2,Nuclear proteins and transcription factors,MSH2,MSH2,GFP,N-terminal,340,177
+MSH6,Nuclear proteins and transcription factors,MSH6,MSH6,GFP,C-terminal,376,136
+MYC,Nuclear proteins and transcription factors,MYC,MYC,GFP,C-terminal,166,135
+NCOA3,Nuclear proteins and transcription factors,NCOA3,NCOA3,GFP,N-terminal,113,231
+OCAB,Nuclear proteins and transcription factors,OcaB,POU2AF1,mOrange,N-terminal,97,452
+OCT2,Nuclear proteins and transcription factors,POU2F2,POU2F2,GFP,N-terminal,72,132
+PARP1,Nuclear proteins and transcription factors,PARP1,PARP1,GFP,N-terminal,145,248
+PAX5,Nuclear proteins and transcription factors,PAX5,PAX5,mOrange,C-terminal,64,229
+RB1,Nuclear proteins and transcription factors,RB1,RB1,GFP,N-terminal,358,314
+REL,Nuclear proteins and transcription factors,REL,REL,GFP,N-terminal,113,243
+SPI1,Nuclear proteins and transcription factors,SPI1,SPI1,GFP,C-terminal,101,181
+SPIB,Nuclear proteins and transcription factors,SPIB,SPIB,GFP,C-terminal,98,244
+TCF3,Nuclear proteins and transcription factors,TCF3,TCF3,GFP,C-terminal,229,202
+TP53,Nuclear proteins and transcription factors,TP53,TP53,GFP,N-terminal,76,158

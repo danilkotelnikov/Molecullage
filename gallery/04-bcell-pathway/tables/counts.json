@@ -1,0 +1,42 @@
+{
+ "reporter_lines": 47,
+ "screens": 47,
+ "regulators": 4440,
+ "activators_only": 1685,
+ "both_roles": 1002,
+ "repressors_only": 1753,
+ "links": 17638,
+ "activating_links": 6487,
+ "repressing_links": 11151,
+ "mean_activators_per_screen": 138,
+ "mean_repressors_per_screen": 237,
+ "rapamycin_genes_changed": 2458,
+ "rapamycin_up": 1277,
+ "rapamycin_down": 1181,
+ "gsk3i_genes_changed": 427,
+ "gsk3i_down": 356,
+ "gsk3i_up": 71,
+ "both_genes_changed_S10": 808,
+ "translation_genes_S6B_cluster2": 99,
+ "translation_up_with_both_S10": 74,
+ "smallest_abs_log2FC_of_the_303": 0.58,
+ "shared_genes": 303,
+ "quadrants": {
+  "rapa down, GSK3i up": 36,
+  "rapa up, GSK3i up": 7,
+  "rapa up, GSK3i down": 248,
+  "rapa down, GSK3i down": 12
+ },
+ "pearson_r_shared": -0.674,
+ "opposite_direction": 284,
+ "reporters_up_with_rapamycin_S5": 22,
+ "reporters_down_with_rapamycin_S5": 3,
+ "source": {
+  "reporters": "Table S1",
+  "regulators and links": "Table S3A, S3B",
+  "rapamycin": "Table S5",
+  "LY2090314": "Table S9",
+  "both": "Table S10",
+  "clusters": "Table S6A, S6B"
+ }
+}

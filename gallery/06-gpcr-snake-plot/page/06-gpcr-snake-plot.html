@@ -1,0 +1,209 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>06-gpcr-snake-plot</title></head><body>
+<!--INLINE_JS layout_data.js-->
+<!--INLINE_JS plot_data.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG snake_layer.svg--><!--INLINE_SVG plot_layer.svg--></div></div>
+<script>
+// Redesign of Figs 1a-b and 4 and of Tables 1 and 2 of Nakajima et al. 2026, Protein Science 35(1):e70408 (doi 10.1002/pro.70408, CC BY 4.0).
+// Snake plot (a): src/snake.py, from PDB 7F61 chain A. 3D view (b): ChimeraX render of the same chain, src/render_h3r.py. Dot plot (c): src/make_plots.py, the EC50 values as printed.
+// src/layout.py and src/make_plots.py give every position in millimetres (top-down, origin top-left) in window.LAYOUT and window.PLOT; this page draws titles, names, numbers,
+// badges and leaders at those positions and, at the end, measures the rendered page: checkAlign() throws one Error that lists every position that is off its grid line by more
+// than the tolerance, every leader end that is off its residue, and every text that touches a circle, a leader, a badge or another text.
+const L = window.LAYOUT, P = window.PLOT, W = L.W, H = L.H, TOL = 0.25;
+const XL0 = 1.5, XR0 = 104.5, XR1 = 176.5, T0 = 0.9;           // T0: top of the title rows (outer margin 1.5 mm to the first text)
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const INK = '#0A0A0A', SUB = '#2B2B2B', FL = (window.CONFIG || {}).floorPt || 6.55;
+const FAM = window.TOKENS.color.family;
+const ROSE_DARK = FAM.rose.edge, INDIGO = FAM.indigo.fill;
+const NS = 'http://www.w3.org/2000/svg';
+const REC = {};                                     // every text element by name, for the alignment checks
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+const svgEl = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); f.svg.appendChild(e); return e; };
+const poly = (pts, o = {}) => svgEl('polyline', { points: pts.map((p) => p.join(',')).join(' '), fill: 'none', stroke: o.color || INK, 'stroke-width': o.w || 0.3, 'stroke-linejoin': 'round', 'stroke-linecap': 'butt', ...(o.opacity ? { 'stroke-opacity': o.opacity } : {}) });
+const BADGES = [];                                  // expected badge centres, checked against the rendered badges
+const badge = (x, t, n, name) => { f.badge({ x, y: Tp(t), n, fam: 'apricot', r: L.r_badge }); BADGES.push({ x, t, n, name }); };
+const S = L.sites;
+const LW = 0.25, HALO = 0.8;                        // width of a leader and of the white halo under it
+
+// ---------------------------------------------------------------- panel a: snake plot
+f.letter('a', XL0, Tp(T0 + 0.6));
+R('title-a', XL0 + 4.6, T0 + 2.2, 'Four H3R mutations that restore signaling', { bold: true, fs: 7.5 });
+R('sub1-a', XL0 + 4.6, T0 + 5.8, 'H3R: human histamine H3 receptor. Top is outside the cell.', { color: SUB });
+R('sub2-a', XL0 + 4.6, T0 + 9.0, 'Chain A of Protein Data Bank entry 7F61, residues 27–433 of 445.', { color: SUB });
+R('sub3-a', XL0 + 4.6, T0 + 12.2, 'Yeast construct H3R_i3d: N11Q, ICL3 237–340 deleted.', { color: SUB });
+L.tm.forEach((h, k) => R('tm' + (k + 1), h.x, h.t, h.name, { fs: FL, ha: 'center', color: SUB }));
+// N terminus marker and the deleted ICL3
+const NM = L.nstub.marker;
+R('icl3-1', L.gap.a0[0] - 2.0, L.gap.a0[1] - 1.2, 'ICL3 237–340', { ha: 'right', fs: FL });
+R('icl3-2', L.gap.a0[0] - 2.0, L.gap.a0[1] + 1.7, 'deleted', { ha: 'right', fs: FL });
+// helix 8: a bracket under its row and the name; where the sequence ends
+const B8 = L.h8;
+poly([[B8.x0, B8.t - B8.tick], [B8.x0, B8.t], [B8.x1, B8.t], [B8.x1, B8.t - B8.tick]], { w: 0.25 });
+R('h8', B8.mid, B8.t + 2.7, 'helix 8', { fs: FL, ha: 'center' });
+// key of the snake plot (x from KX): circle fills, the dashed line, the square, the site badge, the abbreviations
+const KX = 77.0, K0 = 24.0, KP = 3.5;
+const KEY = [['#91D7AB', null, 'helix in 7F61'], ['#FFFFFF', null, 'not in a helix'], ['#FFFFFF', '0.45 0.3', 'no coordinates']];
+KEY.forEach(([fill, dash, txt], i) => {
+  const t = K0 + KP * i;
+  svgEl('circle', { id: 'keyc' + i, cx: KX + 0.9, cy: t, r: L.r_bead, fill, stroke: FAM.mint.edge, 'stroke-width': 0.18, ...(dash ? { 'stroke-dasharray': dash } : {}) });
+  R('keyt' + i, KX + 3.0, t, txt, { fs: FL, color: SUB });
+});
+let kt = K0 + KP * 3;
+svgEl('line', { id: 'keydash', x1: KX - 0.3, y1: kt, x2: KX + 2.1, y2: kt, stroke: INK, 'stroke-width': 0.3, 'stroke-dasharray': '0.9 0.7' });
+R('keyt3', KX + 3.0, kt, 'not drawn', { fs: FL, color: SUB });
+kt += KP + 0.2;
+svgEl('rect', { id: 'keysq', x: KX - 0.3, y: kt - 1.0, width: 2.0, height: 2.0, fill: '#FFFFFF', stroke: INK, 'stroke-width': 0.3 });
+R('keyt4a', KX + 3.0, kt, 'N11Q, in all', { fs: FL, color: SUB });
+R('keyt4b', KX + 3.0, kt + 2.9, 'constructs', { fs: FL, color: SUB });
+kt += 2.9 + KP + 0.9;
+svgEl('circle', { id: 'keysite', cx: KX + 0.9, cy: kt, r: L.r_site * 0.8, fill: FAM.apricot.fill, stroke: FAM.apricot.edge, 'stroke-width': 0.25 });
+badge(KX + 4.6, kt, 3, 'keybadge');
+['mutation site;', 'same number', 'in a, b and c'].forEach((s, i) => R('keys' + i, KX + 7.4, kt - 2.9 + 2.9 * i + 1.45, s, { fs: FL, color: SUB }));
+kt += 8.0;
+['TM: transmembrane', 'helix; limits are', '7F61 helix records'].forEach((s, i) => R('keym' + i, KX, kt + 2.9 * i, s, { fs: FL, color: SUB }));
+kt += 8.7 + 1.2;
+['ECL, ICL: loop', 'outside, inside'].forEach((s, i) => R('keyl' + i, KX, kt + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- panel b: the same chain in 3D, a badge on a short leader at each residue
+const IM = L.img;
+f.letter('b', XL0, Tp(L.TB + 0.6));
+R('title-b', XL0 + 4.6, L.TB + 2.2, 'H3R in 3D', { bold: true, fs: 7.5 });
+const im = f.image({ x: IM.x_left, y: Tp(IM.t_top + IM.h), w: IM.w, name: IM.name });
+S.forEach((s) => {
+  poly(s.tagseg, { color: '#FFFFFF', w: HALO, opacity: 0.9 });
+  poly(s.tagseg, { w: LW });
+  svgEl('circle', { id: 'anchor' + s.n, cx: s.anchor[0], cy: s.anchor[1], r: 0.5, fill: INK, stroke: '#FFFFFF', 'stroke-width': 0.18 });
+  badge(s.badge[0], s.badge[1], s.n, 'snake' + s.n);
+  badge(s.tag[0], s.tag[1], s.n, 'tag' + s.n);
+});
+// left of the picture: the antagonist
+const tl = IM.t_top + 17.0;
+svgEl('line', { id: 'ligkey', x1: XL0 + 0.6, y1: tl, x2: XL0 + 4.4, y2: tl, stroke: FAM.rose.fill, 'stroke-width': 1.1, 'stroke-linecap': 'round' });
+R('lig1', XL0 + 6.0, tl - 1.4, 'antagonist', { color: ROSE_DARK });
+R('lig2', XL0 + 6.0, tl + 1.45, 'PF-03654746', { color: ROSE_DARK });
+// right of the picture: the four sites
+const RX = L.KEY_X;
+S.forEach((s, k) => {
+  const t = IM.t_top + 6.0 + 5.6 * k;
+  badge(RX + L.r_badge, t, s.n, 'key' + s.n);
+  R('key-a' + s.n, RX + 2 * L.r_badge + 1.6, t - 1.35, `${s.wt}${s.num}${s.mut}`, { bold: true });
+  R('key-b' + s.n, RX + 2 * L.r_badge + 1.6, t + 1.45, s.bw === 'ECL2' ? 'ECL2' : `${s.where}, ${s.bw}`, { fs: FL, color: SUB });
+});
+const tk = IM.t_top + 6.0 + 5.6 * 3 + 5.0;
+['2.43 etc.:', 'Ballesteros–Weinstein', 'number (2.50 is D80)'].forEach((s, i) => R('def' + i, RX, tk + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- panel c: EC50 dot plot
+f.letter('c', XR0, Tp(T0 + 0.6));
+R('title-c', XR0 + 4.6, T0 + 2.2, 'Histamine EC50 of each H3R mutant', { bold: true, fs: 7.5 });
+R('sub1-c', XR0 + 4.6, T0 + 5.8, 'EC50: histamine concentration, half-maximal response.', { color: SUB });
+R('sub2-c', XR0 + 4.6, T0 + 9.0, 'Lower EC50 = the mutant responds to less histamine.', { color: SUB });
+R('colhead', XR1, P.t_colhead, 'mean ± SD, µM', { fs: FL, color: SUB, ha: 'right' });
+R('grp-A', XR0, P.groups.A.head_t, 'Single mutants (paper’s Table 2)', { bold: true });
+R('grp-B', XR0, P.groups.B.head_t, 'Six double mutants (paper’s Table 1)', { bold: true });
+P.rows.forEach((r) => {
+  r.sites.forEach((n, i) => badge(P.x_badge[i], r.t, n, `row${r.id}-${i}`));
+  R('nm-' + r.id, P.x_name, r.t, r.label);
+  if (r.mean === null) { R('nd-' + r.id, P.x_nd, r.t, 'ND', { fs: FL, color: SUB, ha: 'center' }); return; }
+  R('mi-' + r.id, P.dp1, r.t, r.mean_int, { fs: FL, ha: 'right' });
+  if (r.mean_frac) R('mf-' + r.id, P.dp1, r.t, r.mean_frac, { fs: FL });
+  if (r.sd !== null) {
+    R('si-' + r.id, P.dp2, r.t, r.sd_int, { fs: FL, ha: 'right' });
+    if (r.sd_frac) R('sf-' + r.id, P.dp2, r.t, r.sd_frac, { fs: FL });
+  }
+});
+R('xt-c', (P.x0 + P.x1) / 2, P.t_ax + 7.6, 'EC50 (µM, log scale)', { ha: 'center' });
+const KG = P.key;
+R('key-1', KG.x_gx + 3.4, KG.t[0], 'three experiments; bar = ± 1 SD (standard deviation)', { fs: FL, color: SUB });
+R('key-2', KG.x_gx + 3.4, KG.t[1], 'one experiment, no SD', { fs: FL, color: SUB });
+// one block of notes
+['ND: not determined; the paper’s text calls some inactive, some weak.', 'C415R: 4.0 ± 1.6 here; 3.5 ± 1.5 in Table 1.', 'Doubles sorted by site number.',
+  'Panel b: tilted ' + Math.abs(IM.tilt) + '° towards the outside; heights depend on view.', 'ICL3 242–346: missing from the 7F61 model.', 'Not drawn: chain B (BRIL, a fusion protein for', 'crystallisation), cholesterol, water.'].forEach((s, i) =>
+  R('pnote' + i, XR0, KG.t[1] + 5.6 + 2.9 * i, s, { fs: FL, color: SUB }));
+
+// ---------------------------------------------------------------- foot
+R('boundary', XL0, H - 5.6, 'Data: 7F61 coordinates and helix records, published EC50 values. Illustration: loops.', { fs: FL, color: SUB });
+R('credit', XL0, H - 2.3, 'After Figs 1 and 4, Tables 1 and 2 of Nakajima et al., Protein Science 2026, doi:10.1002/pro.70408, CC BY 4.0. Data: PDB 7F61. Redesigned; values as published.', { fs: FL, color: SUB });
+
+// ================================================================ checks on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const m = {}; Object.entries(REC).forEach(([k, el]) => { m[k] = M(el); });
+  const byId = (id) => { const e = document.getElementById(id); if (!e) { fails.push('missing element ' + id); return { l: 0, t: 0, r: 0, b: 0, w: 0, h: 0, cx: 0, cy: 0 }; } return M(e); };
+  // 1. panel letters, titles and sub-lines on the panel grid
+  [['a', XL0, T0], ['c', XR0, T0], ['b', XL0, L.TB]].forEach(([c, x, T]) => {
+    const Lt = M(document.getElementById('panel-' + c));
+    near(Lt.l, x, `panel ${c}: letter x`); near(m['title-' + c].l, x + 4.6, `panel ${c}: title x`); near(m['title-' + c].cy, T + 2.2, `panel ${c}: title row`, 0.35);
+    near(Lt.cy, T + 2.2, `panel ${c}: letter row`, 0.5);
+  });
+  ['sub1-a', 'sub2-a', 'sub3-a'].forEach((k) => near(m[k].l, XL0 + 4.6, k + ' x')); ['sub1-c', 'sub2-c'].forEach((k) => near(m[k].l, XR0 + 4.6, k + ' x'));
+  near(m['sub1-a'].cy, m['sub1-c'].cy, 'sub-lines 1 of a and c on one row', 0.2); near(m['sub2-a'].cy, m['sub2-c'].cy, 'sub-lines 2 of a and c on one row', 0.2);
+  // 2. the snake circles are where layout says; the picture is where layout says
+  L.beads.forEach(([n, x, t]) => { if (S.some((s) => s.num === n)) return; const c = byId('res' + n); near(c.cx, x, `circle ${n}: x`, 0.08); near(c.cy, t, `circle ${n}: t`, 0.08); });
+  S.forEach((s) => { const c = byId('res' + s.num); near(c.cx, s.bead[0], `site circle ${s.num}: x`, 0.08); near(c.cy, s.bead[1], `site circle ${s.num}: t`, 0.08); });
+  const img = M(document.querySelector('img.art'));
+  near(img.l, IM.x_left, '3D picture: left'); near(img.t, IM.t_top, '3D picture: top'); near(img.w, IM.w, '3D picture: width'); near(img.h, IM.h, '3D picture: height');
+  // 3. the dots in the 3D picture sit on the residues (anchor computed from the render and checked against the coordinates in layout.py); each leader runs anchor -> badge
+  const ART = window.ART[IM.name].anchors;
+  S.forEach((s) => {
+    const a = byId('anchor' + s.n), fr = ART['site' + s.n + '_side'];
+    near(a.cx, img.l + fr[0] * img.w, `dot ${s.n}: x on the residue in the picture`, 0.1); near(a.cy, img.t + fr[1] * img.h, `dot ${s.n}: t on the residue in the picture`, 0.1);
+    near(a.cx, s.anchor[0], `dot ${s.n}: x`, 0.05); near(a.cy, s.anchor[1], `dot ${s.n}: t`, 0.05);
+    const u = [s.tag[0] - s.anchor[0], s.tag[1] - s.anchor[1]], d = Math.hypot(u[0], u[1]);
+    near(Math.hypot(s.tagseg[1][0] - s.tag[0], s.tagseg[1][1] - s.tag[1]), L.r_badge + 0.05, `leader ${s.n}: ends at the rim of its badge`, 0.01);
+    near((s.tagseg[0][0] - s.anchor[0]) * u[1] - (s.tagseg[0][1] - s.anchor[1]) * u[0], 0, `leader ${s.n}: starts on the line anchor to badge`, 0.01);
+    if (d > 10.5 || d < 5.4) fails.push(`leader ${s.n} is ${d.toFixed(1)} mm long`);
+  });
+  // 4. badges: rendered where they were asked for
+  const rb = [...document.querySelectorAll('.badge')].map(M);
+  BADGES.forEach((b) => { const hit = rb.some((e) => Math.abs(e.cx - b.x) < 0.06 && Math.abs(e.cy - b.t) < 0.06 && Math.abs(e.w - 2 * L.r_badge) < 0.1); if (!hit) fails.push(`badge ${b.name} (${b.n}) is not at (${b.x.toFixed(2)}, ${b.t.toFixed(2)})`); });
+  // 5. panel c: dots and bars on their rows and columns, numbers on the decimal point, names on one edge
+  P.rows.forEach((r) => {
+    near(m['nm-' + r.id].l, P.x_name, `row ${r.id}: name edge`); near(m['nm-' + r.id].cy, r.t, `row ${r.id}: name on its row`, 0.4);
+    if (r.mean === null) { near(m['nd-' + r.id].cx, P.x_nd, `row ${r.id}: ND column`); near(m['nd-' + r.id].cy, r.t, `row ${r.id}: ND row`, 0.4); return; }
+    const d = byId('dot_' + r.id); near(d.cx, r.x, `row ${r.id}: mark x`, 0.06); near(d.cy, r.t, `row ${r.id}: mark row`, 0.06);
+    near(r.x, P.x0 + (P.x1 - P.x0) * (Math.log10(parseFloat(r.mean)) - Math.log10(P.v0)) / (Math.log10(P.v1) - Math.log10(P.v0)), `row ${r.id}: mark at the log of ${r.mean}`, 0.001);
+    near(m['mi-' + r.id].r, P.dp1, `row ${r.id}: mean on its decimal point`); near(m['mi-' + r.id].cy, r.t, `row ${r.id}: mean row`, 0.4);
+    if (r.mean_frac) { near(m['mf-' + r.id].l, P.dp1, `row ${r.id}: mean fraction on its decimal point`); near(m['mf-' + r.id].cy, r.t, `row ${r.id}: mean fraction row`, 0.4); }
+    if (r.sd !== null) {
+      const b = byId('bar_' + r.id); near(b.l, r.lo, `row ${r.id}: bar low end`, 0.12); near(b.r, r.hi, `row ${r.id}: bar high end`, 0.12);
+      near(m['si-' + r.id].r, P.dp2, `row ${r.id}: SD on its decimal point`);
+      if (r.sd_frac) near(m['sf-' + r.id].l, P.dp2, `row ${r.id}: SD fraction on its decimal point`);
+    }
+  });
+  P.ticks.forEach(([v, x]) => { ['A', 'B'].forEach((g) => { near(byId(`tick_${g}_${v}`).cx, x, `tick ${g} ${v}`, 0.06); near(byId(`ticklab_${g}_${v}`).cx, x, `tick label ${g} ${v}`, 0.2); }); });
+  near(byId('area_A').l, P.x0, 'plot area A left', 0.06); near(byId('area_A').r, P.x1, 'plot area A right', 0.06); near(byId('area_B').l, P.x0, 'plot area B left', 0.06);
+  near(byId('area_A').t, P.groups.A.top, 'plot area A top', 0.06); near(byId('area_B').b, P.groups.B.bot, 'plot area B bottom', 0.06);
+  near(m['xt-c'].cx, (P.x0 + P.x1) / 2, 'axis caption centred on the plot');
+  near(m['grp-A'].l, XR0, 'group A heading edge'); near(m['grp-B'].l, XR0, 'group B heading edge'); near(m['grp-A'].cy, P.groups.A.head_t, 'group A heading row', 0.4);
+  near(byId('key_dot_full').cx, KG.x_gx, 'key circle x', 0.06); near(byId('key_dot_full').cy, KG.t[0], 'key circle row', 0.06); near(byId('key_dot_single').cy, KG.t[1], 'key diamond row', 0.06);
+  // 6. the key of the snake plot is on its rows and its edge; the site key is on one grid
+  [0, 1, 2].forEach((i) => { near(byId('keyc' + i).cy, K0 + KP * i, `circle key ${i + 1}: row`, 0.06); near(m['keyt' + i].cy, K0 + KP * i, `circle key ${i + 1}: text row`, 0.4); near(m['keyt' + i].l, KX + 3.0, `circle key ${i + 1}: text edge`); });
+  near(m.keyt3.l, KX + 3.0, 'key: text edge'); near(m.keyt4a.l, KX + 3.0, 'key: text edge'); ['keym0', 'keym1', 'keym2', 'keyl0', 'keyl1'].forEach((k) => near(m[k].l, KX, 'key lines on the key edge'));
+  [1, 2, 3, 4].forEach((n) => { near(m['key-a' + n].l, RX + 2 * L.r_badge + 1.6, `site key ${n}: text edge`); near(m['key-b' + n].l, m['key-a' + n].l, `site key ${n}: second line on the first`, 0.15); });
+  ['def0', 'def1', 'def2'].forEach((k) => near(m[k].l, RX, 'number note on the key edge'));
+  near(m.tm1.cy, m.tm1.cy, 'tm'); // helix names are checked against the circles below
+  // 7. texts: not on a circle, not on a leader, not on another text, not off the page
+  const circles = L.beads.map(([n, x, t]) => ({ x, t, r: S.some((s) => s.num === n) ? L.r_site : L.r_bead }));
+  P.rows.forEach((r) => { if (r.x !== null) circles.push({ x: r.x, t: r.t, r: P.r_dot * 1.3 }); });
+  const segs = S.map((s) => s.tagseg);
+  const rectSegDist = (e, a, b) => { let best = 1e9; for (let i = 0; i <= 80; i++) { const x = a[0] + (b[0] - a[0]) * i / 80, y = a[1] + (b[1] - a[1]) * i / 80, dx = Math.max(e.l - x, 0, x - e.r), dy = Math.max(e.t - y, 0, y - e.b); best = Math.min(best, Math.hypot(dx, dy)); } return best; };
+  const T = Object.entries(REC).map(([k, el]) => [k, M(el)]);
+  T.forEach(([k, e]) => {
+    circles.forEach((c) => { const dx = Math.max(e.l - c.x, 0, c.x - e.r), dy = Math.max(e.t - c.t, 0, c.t - e.b); if (Math.hypot(dx, dy) < c.r + 0.15) fails.push(`text on a circle: ${k} and circle at (${c.x.toFixed(1)}, ${c.t.toFixed(1)})`); });
+    segs.forEach((sg) => { if (rectSegDist(e, sg[0], sg[1]) < 0.45) fails.push(`text on a leader: ${k}`); });
+    if (e.l < 1.0 || e.t < 0.8 || e.r > W - 1.0 || e.b > H - 0.6) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`);
+    if (e.r > (e.l < XR0 - 1 ? 100.9 : W - 1.0) && e.l < XR0 - 1 && !/^(boundary|credit)$/.test(k)) fails.push(`text of the left block runs into the right block: ${k} (${e.r.toFixed(2)})`);
+  });
+  for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) { const a = T[i][1], b = T[j][1], pad = 0.08;
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${T[i][0]} and ${T[j][0]}`); }
+  document.querySelectorAll('.plots svg text').forEach((t) => { const e = M(t); T.forEach(([k, b]) => { if (e.l + 0.08 < b.r && b.l + 0.08 < e.r && e.t + 0.08 < b.b && b.t + 0.08 < e.b) fails.push(`text on a tick label: ${k}`); }); });
+  rb.forEach((e) => { T.forEach(([k, b]) => { const dx = Math.max(b.l - e.cx, 0, e.cx - b.r), dy = Math.max(b.t - e.cy, 0, e.cy - b.b); if (Math.hypot(dx, dy) < L.r_badge + 0.05) fails.push(`badge on text ${k}`); }); });
+  // the picture is a raster: no text inside its box except the panel b title
+  T.forEach(([k, e]) => { if (e.l < img.r + 0.5 && e.r > img.l && e.t < img.b && e.b > img.t && k !== 'title-b') fails.push(`text over the 3D picture box: ${k}`); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

@@ -1,0 +1,386 @@
+row,tip,block,organism,total_area_A2,intermolecular_contacts,binding_affinity_kcal_per_mol
+0,Nif_archaeon_BMS3Abin16,Nif-III,archaeon BMS3Abin16,61705.632910886176,710,-52.6
+1,Nif_archaeon_BMS3Bbin15,Nif-III,archaeon BMS3Bbin15,59895.57437048358,703,-56.9
+2,Nif_Roseiflexus_castenholzii,Nif-III,Roseiflexus castenholzii,59805.97287200052,774,-61.0
+3,Nif_Chloroflexales_bacterium_ZM16-3,Nif-III,Chloroflexales bacterium ZM16-3,60248.263137648224,769,-63.7
+4,Nif_Oscillochloris_trichoides,Nif-III,Oscillochloris trichoides,59522.01421398721,763,-63.9
+5,Nif_Candidatus_Viridilinea_mediisalina,Nif-III,Candidatus Viridilinea mediisalina,66568.15469136697,960,-81.2
+6,Nif_Candidatus_Methanoperedens_nitroreducens,Nif-III,Candidatus Methanoperedens nitroreducens,66568.15469136697,960,-81.2
+7,Nif_uncultured_archaeon,Nif-III,uncultured archaeon,57911.22185108082,800,-60.1
+8,Nif_Candidatus_Methanoperedens_sp_BLZ2,Nif-III,Candidatus Methanoperedens sp. BLZ2,66568.15469136697,960,-81.2
+9,Nif_ANME-2_cluster_archaeon,Nif-III,ANME-2 cluster archaeon,57735.54578465501,802,-59.7
+10,Nif_Candidatus_Argoarchaeum_ethanivorans,Nif-III,Candidatus Argoarchaeum ethanivorans,65021.845822351475,924,-76.0
+11,Nif_Methanophagales_archaeon,Nif-III,Methanophagales archaeon,59269.823533130766,785,-57.0
+12,Nif_Candidatus_Methanolliviera_hydrocarbonicum,Nif-III,Candidatus Methanolliviera hydrocarbonicum,66568.15469136697,960,-81.2
+13,Nif_Candidatus_Methanolliviera_sp_GoM_asphalt,Nif-III,Candidatus Methanolliviera sp. GoM_asphalt,66568.15469136697,960,-81.2
+14,Nif_Caldicellulosiruptor_saccharolyticus,Nif-III,Caldicellulosiruptor saccharolyticus,58506.51361984691,859,-66.2
+15,Nif_Methanothermococcus_okinawensis,Nif-III,Methanothermococcus okinawensis,62830.06888202299,918,-69.5
+16,Nif_Methanocaldococcus_infernus,Nif-III,Methanocaldococcus infernus,62690.436282166,948,-71.5
+17,Nif_Methanotorris_igneus,Nif-III,Methanotorris igneus,61753.262173574076,939,-74.1
+18,Nif_Thermodesulforhabdus_norvegica,Nif-III,Thermodesulforhabdus norvegica,63656.26908480278,825,-63.6
+19,Nif_Desulfoglaeba_alkanexedens,Nif-III,Desulfoglaeba alkanexedens,63904.219603996535,848,-62.5
+20,Nif_Desulfobacteraceae_bacterium_Eth-SRB1,Nif-III,Desulfobacteraceae bacterium Eth-SRB1,65179.01350248167,927,-78.3
+21,Nif_Moorella_thermoacetica,Nif-III,Moorella thermoacetica,62070.59571034899,892,-63.0
+22,Nif_Syntrophothermus_lipocalidus,Nif-III,Syntrophothermus lipocalidus,61657.387544527395,896,-66.1
+23,Nif_Thermacetogenium_phaeum,Nif-III,Thermacetogenium phaeum,62112.93544586729,910,-64.7
+24,Nif_Thermodesulfitimonas_autotrophica,Nif-III,Thermodesulfitimonas autotrophica,62473.22633658573,911,-65.1
+25,Nif_Ammonifex_sp,Nif-III,Ammonifex sp.,61087.50055641236,1018,-74.2
+26,Nif_Methanothermobacter_thermautotrophicus,Nif-III,Methanothermobacter thermautotrophicus,62377.29051815676,768,-59.6
+27,Nif_Methanococcus_maripaludis,Nif-III,Methanococcus maripaludis,60908.183107366945,835,-65.6
+28,Nif_Methanobacteriales_archaeon_HGW-Methanobacteriales-1,Nif-III,Methanobacteriales archaeon HGW-Methanobacteriales-1,59636.852421252646,869,-70.7
+29,Nif_Methanobacterium_paludis,Nif-III,Methanobacterium paludis,60088.60106693508,890,-71.5
+30,Nif_Methanobrevibacter_curvatus,Nif-III,Methanobrevibacter curvatus,61257.020187344766,892,-72.7
+31,Vnf_Archaeoglobus_sp,Vnf,Archaeoglobus sp.,59001.331349720844,915,-71.4
+32,Vnf_Clostridium_pasteurianum,Vnf,Clostridium pasteurianum,60262.202081861135,936,-71.6
+33,Vnf_Tolumonas_lignilytica,Vnf,Tolumonas lignilytica,59409.94702715775,915,-67.2
+34,Vnf_Azotobacter_vinelandii,Vnf,Azotobacter vinelandii,58744.31458067488,982,-74.9
+35,Vnf_Azomonas_agilis,Vnf,Azomonas agilis,58547.469635128815,985,-72.8
+36,Vnf_Phaeospirillum_fulvum,Vnf,Phaeospirillum fulvum,57615.50771798259,923,-71.4
+37,Vnf_Rhodopseudomonas_palustris,Vnf,Rhodopseudomonas palustris,58663.8264104696,918,-73.2
+38,Vnf_Rhodoblastus_acidophilus,Vnf,Rhodoblastus acidophilus,57880.956563926586,912,-70.3
+39,Vnf_Methylocystis_parvus,Vnf,Methylocystis parvus,58374.24381286227,939,-74.4
+40,Vnf_Methylocystaceae_bacterium,Vnf,Methylocystaceae bacterium,58622.07493279961,949,-74.6
+41,Vnf_Ethanoligenens_harbinense,Vnf,Ethanoligenens harbinense,59017.32188657197,900,-75.4
+42,Vnf_Methanosarcina_acetivorans_C2A,Vnf,Methanosarcina acetivorans C2A,59254.083978980896,919,-68.9
+43,Vnf_Ruminiclostridium_hungatei,Vnf,Ruminiclostridium hungatei,59411.847240482806,930,-71.4
+44,Vnf_Paenibacillus_durus,Vnf,Paenibacillus durus,58583.5164348026,926,-79.1
+45,Vnf_Methylomusa_anaerophila,Vnf,Methylomusa anaerophila,58347.19678452437,894,-69.2
+46,Vnf_Lucifera_butyrica,Vnf,Lucifera butyrica,58238.84361839271,908,-71.1
+47,Vnf_Desulfobacter_curvatus,Vnf,Desulfobacter curvatus,59627.65440925317,946,-71.1
+48,Anf_Methanosarcina_acetivorans_C2A,Anf,Methanosarcina acetivorans C2A,62196.39461902539,1018,-79.7
+49,Anf_Desulfosporosinus_fructosivorans,Anf,Desulfosporosinus fructosivorans,61586.59477806629,1024,-78.9
+50,Anf_Desulfovibrio_desulfuricans,Anf,Desulfovibrio desulfuricans,61394.32768667344,1047,-81.6
+51,Anf_Sporomusa_termitida,Anf,Sporomusa termitida,60745.20347452209,1044,-80.6
+52,Anf_Clostridium_pasteurianum,Anf,Clostridium pasteurianum,62646.35054061195,1014,-76.5
+53,Anf_Pectinatus_cerevisiiphilus,Anf,Pectinatus cerevisiiphilus,62220.50580242267,1034,-79.2
+54,Anf_Dysgonomonas_capnocytophagoides,Anf,Dysgonomonas capnocytophagoides,62327.9161103196,1047,-80.7
+55,Anf_Anaerocolumna_jejuensis,Anf,Anaerocolumna jejuensis,60908.931497605474,1027,-78.9
+56,Anf_Geobacter_thiogenes,Anf,Geobacter thiogenes,61308.61421038104,1014,-75.6
+57,Anf_Thiorhodococcus_drewsii,Anf,Thiorhodococcus drewsii,61277.19215235884,996,-76.6
+58,Anf_Rahnella_sp_AA,Anf,Rahnella sp. AA,60402.41833187357,1023,-79.8
+59,Anf_Dickeya_paradisiaca,Anf,Dickeya paradisiaca,59340.079760595414,1019,-76.5
+60,Anf_Azotobacter_vinelandii,Anf,Azotobacter vinelandii,62400.766067344426,1018,-75.5
+61,Anf_Phaeospirillum_fulvum,Anf,Phaeospirillum fulvum,61808.09986811416,1013,-72.6
+62,Anf_Rhodopseudomonas_palustris,Anf,Rhodopseudomonas palustris,59812.434614774116,1021,-75.8
+63,Anf_Rhodobacter_capsulatus,Anf,Rhodobacter capsulatus,62452.60036557999,974,-70.3
+64,Anf_Rhodoblastus_acidophilus,Anf,Rhodoblastus acidophilus,60698.309216302616,999,-74.7
+65,Nif_Candidatus_Acidulodesulfobacterium_acidiphilum,Nif-I,Candidatus Acidulodesulfobacterium acidiphilum,65021.845822351475,924,-76.0
+66,Nif_Candidatus_Acididesulfobacter_diazotrophicus,Nif-I,Candidatus Acididesulfobacter diazotrophicus,65021.845822351475,924,-76.0
+67,Nif_Peptococcaceae_bacterium_CEB3,Nif-I,Peptococcaceae bacterium CEB3,66375.96890468505,927,-77.6
+68,Nif_Desulfosporosinus_fructosivorans,Nif-I,Desulfosporosinus fructosivorans,62342.909948231834,922,-70.8
+69,Nif_Heliobacterium_modesticaldum,Nif-I,Heliobacterium modesticaldum,60463.94218156681,871,-68.4
+70,Nif_Dehalobacter,Nif-I,Dehalobacter,61394.332323767514,917,-80.7
+71,Nif_Pelotomaculum_sp_FP,Nif-I,Pelotomaculum sp. FP,61028.810906942956,934,-78.8
+72,Nif_Pelobacter_acetylenicus,Nif-I,Pelobacter acetylenicus,62744.47358721972,977,-79.3
+73,Nif_Geoalkalibacter_ferrihydriticus,Nif-I,Geoalkalibacter ferrihydriticus,61898.508623611226,1016,-81.9
+74,Nif_Geothermobacter_sp_EPR-M,Nif-I,Geothermobacter sp. EPR-M,63343.6883960417,991,-74.3
+75,Nif_Malonomonas_rubra,Nif-I,Malonomonas rubra,63493.70572593387,998,-77.8
+76,Nif_Desulfuromonas_acetexigens,Nif-I,Desulfuromonas acetexigens,62206.41188769219,988,-74.7
+77,Nif_Deltaproteobacteria_bacterium_HGW-Deltaproteobacteria-4,Nif-I,Deltaproteobacteria bacterium HGW-Deltaproteobacteria-4,65274.66356289547,877,-74.7
+78,Nif_Geobacter_thiogenes,Nif-I,Geobacter thiogenes,62293.078558803914,1071,-83.5
+79,Nif_Anaeromyxobacter_sp_Fw109-5,Nif-I,Anaeromyxobacter sp. Fw109-5,60623.38301687584,1009,-76.9
+80,Nif_Desulfuromonadales_bacterium_GWC2_61_20,Nif-I,Desulfuromonadales bacterium GWC2_61_20,61097.879055095225,1031,-77.8
+81,Nif_Desulfurobacterium_atlanticum,Nif-I,Desulfurobacterium atlanticum,62169.72142358319,1014,-81.5
+82,Nif_Actinobacteria_bacterium_HGW-Actinobacteria-10,Nif-I,Actinobacteria bacterium HGW-Actinobacteria-10,62167.357071609746,1231,-94.8
+83,Nif_Thermodesulfovibrio_aggregans,Nif-I,Thermodesulfovibrio aggregans,64494.09714136711,1169,-94.6
+84,Nif_Candidatus_Magnetoovum_chiemensis,Nif-I,Candidatus Magnetoovum chiemensis,66879.45262219141,898,-77.4
+85,Nif_Nitrospirae_bacterium_GWC2_57_13,Nif-I,Nitrospirae bacterium GWC2_57_13,63549.92639725536,1113,-77.5
+86,Nif_Nitrospirae_bacterium,Nif-I,Nitrospirae bacterium,62624.9804871102,1102,-83.0
+87,Nif_bacterium_BMS3Bbin07,Nif-I,bacterium BMS3Bbin07,66147.13312714388,955,-82.4
+88,Nif_Frankia_canadensis,Nif-I,Frankia canadensis,61431.22376361659,1213,-88.8
+89,Nif_Thermicanus_aegyptius,Nif-I,Thermicanus aegyptius,61979.4496908581,1163,-91.1
+90,Nif_Gorillibacterium_timonense,Nif-I,Gorillibacterium timonense,61160.20295429741,1137,-83.1
+91,Nif_Fontibacillus_panacisegetis,Nif-I,Fontibacillus panacisegetis,61704.52039875104,1116,-86.0
+92,Nif_Anaerobacillus_alkalidiazotrophicus,Nif-I,Anaerobacillus alkalidiazotrophicus,63114.54942044924,1157,-88.6
+93,Nif_Bacillus_caseinilyticus,Nif-I,Bacillus caseinilyticus,64178.38466624447,1170,-88.7
+94,Nif_Aneurinibacillus_terranovensis,Nif-I,Aneurinibacillus terranovensis,62727.10908106912,1146,-91.8
+95,Nif_Seleniivibrio_woodruffii,Nif-I,Seleniivibrio woodruffii,61930.89194967768,1108,-89.9
+96,Nif_Geovibrio_sp_L21-Ace-BES,Nif-I,Geovibrio sp. L21-Ace-BES,63209.262210651534,1174,-90.0
+97,Nif_Calditerrivibrio_nitroreducens,Nif-I,Calditerrivibrio nitroreducens,63721.477644523984,1080,-88.2
+98,Nif_Chrysiogenes_arsenatis,Nif-I,Chrysiogenes arsenatis,62687.866418175385,1172,-89.6
+99,Nif_Candidatus_Lambdaproteobacteria_bacterium_RIFOXYC1_FULL_56_13,Nif-I,Candidatus Lambdaproteobacteria bacterium RIFOXYC1_FULL_56_13,66879.45262219141,898,-77.4
+100,Nif_Candidatus_Lambdaproteobacteria_bacterium_RIFOXYD2_FULL_50_16,Nif-I,Candidatus Lambdaproteobacteria bacterium RIFOXYD2_FULL_50_16,66879.45262219141,898,-77.4
+101,Nif_Halorhodospira_halochloris,Nif-I,Halorhodospira halochloris,62245.08866936558,1190,-89.7
+102,Nif_Candidatus_Competibacteraceae_bacterium,Nif-I,Candidatus Competibacteraceae bacterium,67465.43535761781,900,-75.9
+103,Nif_magneto-ovoid_bacterium_MO-1,Nif-I,magneto-ovoid bacterium MO-1,63395.464031509095,1203,-90.7
+104,Nif_Alphaproteobacteria_bacterium,Nif-I,Alphaproteobacteria bacterium,63334.31844398469,1212,-95.3
+105,Nif_Vibrio_aerogenes,Nif-I,Vibrio aerogenes,65029.84263689203,1186,-94.0
+106,Nif_Aliagarivorans_marinus,Nif-I,Aliagarivorans marinus,64132.10753517211,1198,-83.1
+107,Nif_Celerinatantimonas_diazotrophica,Nif-I,Celerinatantimonas diazotrophica,63860.04533741379,1176,-89.1
+108,Nif_Tolumonas_lignilytica,Nif-I,Tolumonas lignilytica,63025.83100681126,1193,-85.5
+109,Nif_Sodalis_sp_159R,Nif-I,Sodalis sp. 159R,64331.44021058403,1174,-89.3
+110,Nif_Mangrovibacter_sp_MFB070,Nif-I,Mangrovibacter sp. MFB070,64019.078830024766,1208,-89.6
+111,Nif_Serratia_sp_ATCC_39006,Nif-I,Serratia sp. ATCC 39006,63870.49034652591,1211,-92.1
+112,Nif_Pantoea_cypripedii,Nif-I,Pantoea cypripedii,63800.66862028807,1177,-83.4
+113,Nif_Klebsiella_pneumoniae,Nif-I,Klebsiella pneumoniae,62971.13850779302,1207,-87.7
+114,Nif_Biostraticola_sp_BGMRC_2031,Nif-I,Biostraticola sp. BGMRC 2031,63329.85514224574,1202,-87.8
+115,Nif_Cohaesibacter_haloalkalitolerans,Nif-I,Cohaesibacter haloalkalitolerans,63613.285410522076,1197,-88.8
+116,Nif_Ectothiorhodospira_haloalkaliphila,Nif-I,Ectothiorhodospira haloalkaliphila,63628.167163048915,1231,-95.9
+117,Nif_Magnetovibrio_blakemorei,Nif-I,Magnetovibrio blakemorei,62390.87363815536,1189,-92.7
+118,Nif_Varunaivibrio_sulfuroxidans,Nif-I,Varunaivibrio sulfuroxidans,62930.35485601462,1187,-94.2
+119,Nif_Mariprofundus_ferrooxydans,Nif-I,Mariprofundus ferrooxydans,62602.74549230636,1198,-94.7
+120,Nif_Methylomonas_koyamae,Nif-I,Methylomonas koyamae,62853.98400766372,1193,-91.9
+121,Nif_Methyloprofundus_sedimenti,Nif-I,Methyloprofundus sedimenti,63131.53826444665,1199,-94.2
+122,Nif_Ectothiorhodospiraceae_bacterium,Nif-I,Ectothiorhodospiraceae bacterium,63981.781926728036,1176,-91.3
+123,Nif_Chromatiaceae_bacterium_2141TSTBD0c01a,Nif-I,Chromatiaceae bacterium 2141T.STBD.0c.01a,63328.01392755957,1198,-92.9
+124,Nif_Candidatus_Thiosymbion_oneisti,Nif-I,Candidatus Thiosymbion oneisti,66568.15469136697,960,-81.2
+125,Nif_Thioflavicoccus_mobilis,Nif-I,Thioflavicoccus mobilis,63569.48973583617,1193,-84.8
+126,Nif_Thiorhodococcus_drewsii,Nif-I,Thiorhodococcus drewsii,63760.11979274784,1187,-85.7
+127,Nif_Proteobacteria_bacterium_CG1_02_64_396,Nif-I,Proteobacteria bacterium CG1_02_64_396,63164.66573993235,1191,-95.9
+128,Nif_Amphritea_atlantica,Nif-I,Amphritea atlantica,63166.07583277713,1224,-99.1
+129,Nif_Azotobacter_vinelandii,Nif-I,Azotobacter vinelandii,62371.85446486599,1221,-93.6
+130,Nif_Oceanospirillaceae_bacterium,Nif-I,Oceanospirillaceae bacterium,63504.049834393925,1198,-93.2
+131,Nif_Haliea_sp_SAOS-164,Nif-I,Haliea sp. SAOS-164,62725.81081574725,1209,-98.7
+132,Nif_Alteromonadaceae_bacterium_Bs31,Nif-I,Alteromonadaceae bacterium Bs31,62322.34959185206,1210,-95.2
+133,Nif_Agaribacterium_haliotis,Nif-I,Agaribacterium haliotis,63141.887874406064,1207,-93.2
+134,Nif_Alteromonadales_bacterium_BS08,Nif-I,Alteromonadales bacterium BS08,64242.36251395234,1198,-93.9
+135,Nif_Acidihalobacter_prosperus,Nif-I,Acidihalobacter prosperus,63519.62512797004,1205,-93.5
+136,Nif_bacterium_BMS3Abin12,Nif-I,bacterium BMS3Abin12,67364.68143190874,922,-71.2
+137,Nif_Blastopirellula_marina,Nif-I,Blastopirellula marina,63920.410641068214,1179,-91.5
+138,Nif_Beggiatoa_alba,Nif-I,Beggiatoa alba,63444.81404331726,1204,-96.1
+139,Nif_Thioploca_ingrica,Nif-I,Thioploca ingrica,64366.976914833336,1208,-95.7
+140,Nif_Marinobacter_sp_ES-1,Nif-I,Marinobacter sp. ES-1,65604.68195101221,1193,-93.3
+141,Nif_Propionivibrio_dicarboxylicus,Nif-I,Propionivibrio dicarboxylicus,62754.10346342068,1212,-92.8
+142,Nif_Sulfurivermis_fontis,Nif-I,Sulfurivermis fontis,63002.891721835535,1146,-92.3
+143,Nif_Gammaproteobacteria_bacterium_28-57-27,Nif-I,Gammaproteobacteria bacterium 28-57-27,63268.25041296298,1214,-96.0
+144,Nif_Hydrogenophilales_bacterium_28-61-23,Nif-I,Hydrogenophilales bacterium 28-61-23,63844.79735308899,1182,-91.2
+145,Nif_Azoarcus_sp_CC-YHH838,Nif-I,Azoarcus sp. CC-YHH838,63312.29381188461,1199,-86.9
+146,Nif_Betaproteobacteria_bacterium_HGW-Betaproteobacteria-11,Nif-I,Betaproteobacteria bacterium HGW-Betaproteobacteria-11,63064.66236523703,1176,-89.6
+147,Nif_Candidatus_Accumulibacter_aalborgensis,Nif-I,Candidatus Accumulibacter aalborgensis,63721.477644523984,1080,-88.2
+148,Nif_Rhodocyclaceae_bacterium,Nif-I,Rhodocyclaceae bacterium,63813.07320895058,1178,-92.3
+149,Nif_Sulfurovum_sp_FS08-3,Nif-I,Sulfurovum sp. FS08-3,63764.91919560735,1175,-87.4
+150,Nif_Wolinella_succinogenes,Nif-I,Wolinella succinogenes,62275.135440182654,1204,-94.2
+151,Nif_Lebetimonas_sp_JS032,Nif-I,Lebetimonas sp. JS032,64333.41527567804,1188,-91.0
+152,Nif_Sulfurimonas_sp_RIFOXYD12_FULL_33_39,Nif-I,Sulfurimonas sp. RIFOXYD12_FULL_33_39,63605.53057615497,1203,-94.4
+153,Nif_Sulfuricurvum_kujiense,Nif-I,Sulfuricurvum kujiense,63287.12910013776,1182,-85.9
+154,Nif_Fischerella_sp_PCC_9605,Nif-I,Fischerella sp. PCC 9605,63160.24103323142,1250,-93.1
+155,Nif_Desertifilum_sp_IPPAS_B-1220,Nif-I,Desertifilum sp. IPPAS B-1220,63155.9456190133,1214,-97.4
+156,Nif_filamentous_cyanobacterium_ESFC-1,Nif-I,filamentous cyanobacterium ESFC-1,63294.63555314981,1201,-93.5
+157,Nif_Euhalothece_natronophila,Nif-I,Euhalothece natronophila,63687.64863710226,1260,-96.8
+158,Nif_Gloeocapsa_sp_DLM2Bin57,Nif-I,Gloeocapsa sp. DLM2.Bin57,62458.931406970485,1186,-94.6
+159,Nif_Lyngbya_sp_PCC_8106,Nif-I,Lyngbya sp. PCC 8106,62797.924344234125,1221,-93.8
+160,Nif_cyanobacterium_endosymbiont_of_Epithemia_turgida,Nif-I,cyanobacterium endosymbiont of Epithemia turgida,62996.615340065255,1217,-91.8
+161,Nif_Planktothrix_tepida,Nif-I,Planktothrix tepida,61791.239993294286,1194,-93.1
+162,Nif_Leptolyngbya_sp_JSC-1,Nif-I,[Leptolyngbya] sp. JSC-1,63266.088978941196,1212,-94.1
+163,Nif_Vulcanococcus_limneticus,Nif-I,Vulcanococcus limneticus,62037.63107160177,1177,-91.6
+164,Nif_Kamptonema,Nif-I,Kamptonema,62189.61660210497,1209,-96.7
+165,Nif_Gallionellales_bacterium_GWA2_60_18,Nif-I,Gallionellales bacterium GWA2_60_18,61955.89152042005,1163,-89.5
+166,Nif_Acidithiobacillus_ferridurans,Nif-I,Acidithiobacillus ferridurans,62442.642700118115,1225,-97.0
+167,Nif_Rhodopseudomonas_palustris,Nif-I,Rhodopseudomonas palustris,62095.397413951476,1202,-94.2
+168,Nif_Telmatospirillum_siberiense,Nif-I,Telmatospirillum siberiense,62103.518762205094,1184,-92.5
+169,Nif_Hydrogenophilales_bacterium_16-64-40,Nif-I,Hydrogenophilales bacterium 16-64-40,64895.655445447475,938,-82.7
+170,Nif_Methyloglobulus_morosus,Nif-I,Methyloglobulus morosus,63128.81910259756,1225,-96.9
+171,Nif_Methyloferula_stellata,Nif-I,Methyloferula stellata,61859.293939497555,1186,-92.8
+172,Nif_Rhodoblastus_acidophilus,Nif-I,Rhodoblastus acidophilus,63310.872661302434,1163,-93.1
+173,Nif_Acuticoccus_sp_PTG4-2,Nif-I,Acuticoccus sp. PTG4-2,63066.43837105861,1185,-91.3
+174,Nif_Bradyrhizobium_oligotrophicum,Nif-I,Bradyrhizobium oligotrophicum,63749.34077582505,1171,-90.3
+175,Nif_Acidiferrobacter_sp_SPIII_3,Nif-I,Acidiferrobacter sp. SPIII_3,62271.42914806664,1200,-95.0
+176,Nif_Leptospirillum_ferriphilum,Nif-I,Leptospirillum ferriphilum,61810.62940231474,1222,-98.9
+177,Nif_Herbaspirillum_frisingense,Nif-I,Herbaspirillum frisingense,62600.04204147635,1214,-93.4
+178,Nif_Oxalobacter_sp,Nif-I,Oxalobacter sp.,62391.182789052655,1187,-90.4
+179,Nif_Pelomonas_saccharophila,Nif-I,Pelomonas saccharophila,63146.0789761653,1220,-94.8
+180,Nif_Derxia_gummosa,Nif-I,Derxia gummosa,61811.317552393615,1246,-97.4
+181,Nif_Solimonas_aquatica,Nif-I,Solimonas aquatica,62705.009732288556,1224,-98.0
+182,Nif_Cupriavidus_sp_amp6,Nif-I,Cupriavidus sp. amp6,62723.17966184676,1229,-92.6
+183,Nif_Polaromonas_naphthalenivorans,Nif-I,Polaromonas naphthalenivorans,63578.03090866717,1222,-90.2
+184,Nif_Skermanella_aerolata,Nif-I,Skermanella aerolata,60607.33638736533,1249,-97.8
+185,Nif_Rhodovibrio_salinarum,Nif-I,Rhodovibrio salinarum,61625.47069629508,1153,-89.3
+186,Nif_Roseospirillum_parvum,Nif-I,Roseospirillum parvum,60856.58474514651,1192,-91.0
+187,Nif_Phaeospirillum_fulvum,Nif-I,Phaeospirillum fulvum,60467.399555282114,1199,-99.2
+188,Nif_Rhodospirillaceae_bacterium_BRH_c57,Nif-I,Rhodospirillaceae bacterium BRH_c57,61484.57485726599,1273,-97.9
+189,Nif_Rhodothalassium_salexigens,Nif-I,Rhodothalassium salexigens,60727.26555312157,1199,-98.7
+190,Nif_Geminicoccaceae_bacterium,Nif-I,Geminicoccaceae bacterium,63275.77715081588,1190,-91.2
+191,Nif_Defluviimonas_alba,Nif-I,Defluviimonas alba,61684.7792731319,1218,-93.1
+192,Nif_Rhodobacteraceae_bacterium,Nif-I,Rhodobacteraceae bacterium,62321.46393184026,1220,-89.7
+193,Nif_Actibacterium_ureilyticum,Nif-I,Actibacterium ureilyticum,62167.357071609746,1231,-94.8
+194,Nif_Afifella_pfennigii,Nif-I,Afifella pfennigii,61520.717154488884,1213,-92.9
+195,Nif_Rhodopila_globiformis,Nif-I,Rhodopila globiformis,62072.345767145795,1201,-92.8
+196,Nif_Acetobacter_peroxydans,Nif-I,Acetobacter peroxydans,62181.01709856488,1247,-99.0
+197,Nif_Zymomonas_mobilis,Nif-I,Zymomonas mobilis,63538.20244361185,1188,-95.6
+198,Nif_Rhizobiales_bacterium,Nif-I,Rhizobiales bacterium,63017.00300148348,1241,-96.7
+199,Nif_Martelella_sp_BGMRC2036,Nif-I,Martelella sp. BGMRC2036,63830.14967712189,1258,-101.8
+200,Nif_Neorhizobium_galegae,Nif-I,Neorhizobium galegae,63539.65903752665,1196,-91.5
+201,Nif_Hartmannibacter_diazotrophicus,Nif-I,Hartmannibacter diazotrophicus,64267.10247181795,1215,-97.8
+202,Nif_Blastochloris_sp_GI,Nif-I,Blastochloris sp. GI,63756.19469285364,1152,-91.7
+203,Nif_Pleomorphomonas_carboxyditropha,Nif-I,Pleomorphomonas carboxyditropha,62498.39766787509,1200,-94.5
+204,Nif_Thermoanaerobacterium_thermosaccharolyticum,Nif-II,Thermoanaerobacterium thermosaccharolyticum,64549.47153541295,897,-78.8
+205,Nif_Carboxydocella_sp_ULO1,Nif-II,Carboxydocella sp. ULO1,65653.87460370632,966,-79.8
+206,Nif_Gaiellales_bacterium,Nif-II,Gaiellales bacterium,65123.274424693154,932,-82.2
+207,Nif_Methanothrix_soehngenii,Nif-II,Methanothrix soehngenii,64088.11303943585,890,-71.9
+208,Nif_Peptococcaceae_bacterium_SCADC1_2_3,Nif-II,Peptococcaceae bacterium SCADC1_2_3,65138.750737391594,897,-76.5
+209,Nif_Methanosarcina_acetivorans_C2A,Nif-II,Methanosarcina acetivorans C2A,66237.95128380792,917,-75.0
+210,Nif_Methanolobus_psychrotolerans,Nif-II,Methanolobus psychrotolerans,67045.64848307992,918,-75.3
+211,Nif_Syntrophomonas_zehnderi,Nif-II,Syntrophomonas zehnderi,65716.01780572733,928,-77.3
+212,Nif_Anaerobacterium_chartisolvens,Nif-II,Anaerobacterium chartisolvens,64613.946261887526,947,-80.3
+213,Nif_Hungateiclostridium_cellulolyticum,Nif-II,Hungateiclostridium cellulolyticum,66064.85904571056,925,-75.9
+214,Nif_Pseudobacteroides_cellulosolvens,Nif-II,Pseudobacteroides cellulosolvens,64561.272761464934,965,-80.8
+215,Nif_Oxobacter_pfennigii,Nif-II,Oxobacter pfennigii,65089.601959390064,960,-79.3
+216,Nif_Clostridium_pasteurianum,Nif-II,Clostridium pasteurianum,64000.20388189856,923,-74.5
+217,Nif_Petroclostridium_xylanilyticum,Nif-II,Petroclostridium xylanilyticum,65453.19100630691,965,-79.6
+218,Nif_Gordonibacter_sp_28C,Nif-II,Gordonibacter sp. 28C,63099.85546314343,931,-80.6
+219,Nif_Ethanoligenens_harbinense,Nif-II,Ethanoligenens harbinense,64109.704620652235,903,-79.2
+220,Nif_Clostridiales_bacterium_43-6,Nif-II,Clostridiales bacterium 43-6,65932.6558352517,940,-77.9
+221,Nif_Acetobacterium_woodii,Nif-II,Acetobacterium woodii,62077.55817250841,972,-81.1
+222,Nif_Lachnospiraceae_bacterium_Marseille-P3773,Nif-II,Lachnospiraceae bacterium Marseille-P3773,64674.49516125165,905,-77.3
+223,Nif_Anaerocolumna_jejuensis,Nif-II,Anaerocolumna jejuensis,64414.66409609362,954,-80.1
+224,Nif_Anaerosporobacter_mobilis,Nif-II,Anaerosporobacter mobilis,64859.07483457832,937,-77.8
+225,Nif_Parasporobacterium_paucivorans,Nif-II,Parasporobacterium paucivorans,64474.08292348622,895,-75.7
+226,Nif_Clostridium_populeti,Nif-II,[Clostridium] populeti,65044.04123544399,927,-81.4
+227,Nif_Cellulosilyticum_lentocellum,Nif-II,Cellulosilyticum lentocellum,64804.04971809451,890,-78.1
+228,Nif_Robinsoniella_sp_MCWD5,Nif-II,Robinsoniella sp. MCWD5,64895.62808744893,897,-78.3
+229,Nif_Lachnospiraceae_bacterium,Nif-II,Lachnospiraceae bacterium,64279.34453122855,907,-78.4
+230,Nif_Clostridium_fimetarium,Nif-II,[Clostridium] fimetarium,65209.25137609005,897,-78.5
+231,Nif_Ruminiclostridium_hungatei,Nif-II,Ruminiclostridium hungatei,63771.17616175485,926,-78.4
+232,Nif_Youngiibacter_fragilis,Nif-II,Youngiibacter fragilis,63376.21785696011,901,-74.9
+233,Nif_Desulfovibrio_desulfuricans,Nif-II,Desulfovibrio desulfuricans,63809.91109713644,963,-77.8
+234,Nif_Sporobacter_termitidis,Nif-II,Sporobacter termitidis,65456.573853358976,935,-77.6
+235,Nif_Sporolactobacillus_terrae,Nif-II,Sporolactobacillus terrae,64800.72491151767,891,-76.5
+236,Nif_Clostridium_algidixylanolyticum,Nif-II,[Clostridium] algidixylanolyticum,66554.62607241834,922,-84.6
+237,Nif_Anaerotignum_neopropionicum,Nif-II,Anaerotignum neopropionicum,65470.71906139611,908,-77.2
+238,Nif_Massilibacillus_massiliensis,Nif-II,Massilibacillus massiliensis,64112.33271200274,920,-78.9
+239,Nif_Propionispira_arboris,Nif-II,Propionispira arboris,63618.46339788886,946,-80.7
+240,Nif_Megasphaera_cerevisiae,Nif-II,Megasphaera cerevisiae,62596.6362844684,963,-79.6
+241,Nif_Pectinatus_cerevisiiphilus,Nif-II,Pectinatus cerevisiiphilus,65328.51595340672,954,-77.7
+242,Nif_Defluviitalea_phaphyphila,Nif-II,Defluviitalea phaphyphila,66417.3814843663,912,-79.3
+243,Nif_Alkalibacter_saccharofermentans,Nif-II,Alkalibacter saccharofermentans,65224.1146189924,911,-77.0
+244,Nif_Pseudoclostridium_thermosuccinogenes,Nif-II,Pseudoclostridium thermosuccinogenes,66830.51809850248,939,-78.7
+245,Nif_Firmicutes_bacterium_HGW-Firmicutes-1,Nif-II,Firmicutes bacterium HGW-Firmicutes-1,68515.52731985757,939,-77.4
+246,Nif_Natranaerovirga_hydrolytica,Nif-II,Natranaerovirga hydrolytica,66247.0650309535,932,-79.9
+247,Nif_Petrocella_atlantisensis,Nif-II,Petrocella atlantisensis,65509.94073929565,943,-80.7
+248,Nif_Dethiosulfatibacter_aminovorans,Nif-II,Dethiosulfatibacter aminovorans,65160.20777747799,906,-76.6
+249,Nif_Orenia_metallireducens,Nif-II,Orenia metallireducens,66209.80483640794,919,-75.6
+250,Nif_Orenia_marismortui,Nif-II,Orenia marismortui,67048.80840706309,967,-77.3
+251,Nif_Halanaerobium_salsuginis,Nif-II,Halanaerobium salsuginis,65514.284387308275,923,-72.5
+252,Nif_Halocella_sp_SP3-1,Nif-II,Halocella sp. SP3-1,65339.55263788049,920,-69.7
+253,Nif_Ilyobacter_polytropus,Nif-II,Ilyobacter polytropus,65239.55137095644,946,-77.9
+254,Nif_Serpentinicella_alkaliphila,Nif-II,Serpentinicella alkaliphila,66147.85352113817,969,-78.4
+255,Nif_Geosporobacter_ferrireducens,Nif-II,Geosporobacter ferrireducens,65974.929191862,929,-78.3
+256,Nif_Alkaliphilus_metalliredigens,Nif-II,Alkaliphilus metalliredigens,65923.35110527794,907,-76.5
+257,Nif_Desulfuribacillus_alkaliarsenatis,Nif-II,Desulfuribacillus alkaliarsenatis,66317.87269398318,936,-78.9
+258,Nif_Desulfotomaculum_ferrireducens,Nif-II,Desulfotomaculum ferrireducens,65644.48046356032,940,-75.3
+259,Nif_Firmicutes_bacterium_HGW-Firmicutes-8,Nif-II,Firmicutes bacterium HGW-Firmicutes-8,65362.31455914613,948,-78.1
+260,Nif_Dethiobacter_alkaliphilus,Nif-II,Dethiobacter alkaliphilus,65788.98055084766,973,-80.9
+261,Nif_Desulfofarcimen_acetoxidans,Nif-II,Desulfofarcimen acetoxidans,66362.32765777898,965,-80.8
+262,Nif_Peptococcaceae_bacterium_BRH_c4a,Nif-II,Peptococcaceae bacterium BRH_c4a,66375.96890468505,927,-77.6
+263,Nif_Peptococcaceae_bacterium_BICA1-7,Nif-II,Peptococcaceae bacterium BICA1-7,66145.29423131284,962,-80.8
+264,Nif_Desulfurispora_thermophila,Nif-II,Desulfurispora thermophila,65194.96805734671,920,-75.4
+265,Nif_Desulfallas_arcticus,Nif-II,Desulfallas arcticus,66468.51840177973,934,-78.6
+266,Nif_Desulfocucumis_palustris,Nif-II,Desulfocucumis palustris,65996.03752205397,949,-77.9
+267,Nif_Methanosphaerula_palustris,Nif-II,Methanosphaerula palustris,65528.69504872529,900,-78.7
+268,Nif_Methanospirillum_lacunae,Nif-II,Methanospirillum lacunae,65700.45303535435,931,-76.9
+269,Nif_Methanocella_arvoryzae,Nif-II,Methanocella arvoryzae,65932.38144304176,941,-83.3
+270,Nif_Methanomassiliicoccus_luminyensis,Nif-II,Methanomassiliicoccus luminyensis,66047.07682177737,916,-79.9
+271,Nif_Methanoregula_boonei,Nif-II,Methanoregula boonei,64706.53459938764,909,-79.7
+272,Nif_Methanomicrobiales_archaeon_HGW-Methanomicrobiales-1,Nif-II,Methanomicrobiales archaeon HGW-Methanomicrobiales-1,63920.37428733767,883,-75.0
+273,Nif_Methanolacinia_paynteri,Nif-II,Methanolacinia paynteri,64894.39546348994,900,-77.2
+274,Nif_Methanoculleus_taiwanensis,Nif-II,Methanoculleus taiwanensis,65337.14126020558,871,-72.5
+275,Nif_Clostridiales_bacterium_DRI-13,Nif-II,Clostridiales bacterium DRI-13,65733.90314502761,902,-73.3
+276,Nif_Gracilibacter_sp_BRH_c7a,Nif-II,Gracilibacter sp. BRH_c7a,65734.99240415187,924,-76.2
+277,Nif_Anaeroarcus_burkinensis,Nif-II,Anaeroarcus burkinensis,66963.19395567499,920,-74.7
+278,Nif_Dendrosporobacter_quercicolus,Nif-II,Dendrosporobacter quercicolus,66095.07241043901,945,-77.0
+279,Nif_Anaerosporomusa_subterranea,Nif-II,Anaerosporomusa subterranea,66432.120452873,948,-80.7
+280,Nif_Lucifera_butyrica,Nif-II,Lucifera butyrica,65070.13267664153,947,-74.5
+281,Nif_Anaerospora_hongkongensis,Nif-II,Anaerospora hongkongensis,66481.05147091515,937,-78.3
+282,Nif_Sporomusa_termitida,Nif-II,Sporomusa termitida,64266.30915595796,951,-80.6
+283,Nif_Dissulfuribacter_thermophilus,Nif-II,Dissulfuribacter thermophilus,63882.61821023111,960,-85.0
+284,Nif_Coleofasciculus_chthonoplastes,Nif-II,Coleofasciculus chthonoplastes,63605.522003047685,948,-84.4
+285,Nif_Geitlerinema_sp_PCC_9228,Nif-II,Geitlerinema sp. PCC 9228,65003.51822336222,955,-76.1
+286,Nif_Roseofilum_reptotaenium_AO1-A,Nif-II,Roseofilum reptotaenium AO1-A,64597.49825622232,951,-74.8
+287,Nif_Phormidium_sp_HE10JO,Nif-II,Phormidium sp. HE10JO,66468.84296195931,936,-74.4
+288,Nif_Desulfomonile_tiedjei,Nif-II,Desulfomonile tiedjei,65038.94321373094,959,-81.4
+289,Nif_Desulfacinum_infernum,Nif-II,Desulfacinum infernum,65802.36474822334,916,-81.2
+290,Nif_Desulfonatronovibrio_hydrogenovorans,Nif-II,Desulfonatronovibrio hydrogenovorans,64799.17526879041,957,-85.7
+291,Nif_Desulfonatronospira_thiodismutans,Nif-II,Desulfonatronospira thiodismutans,64552.57250697575,927,-82.9
+292,Nif_Propionibacterium_cyclohexanicum,Nif-II,Propionibacterium cyclohexanicum,66530.7306205985,905,-70.8
+293,Nif_Actinobacteria_bacterium_HGW-Actinobacteria-2,Nif-II,Actinobacteria bacterium HGW-Actinobacteria-2,65823.10975738609,859,-72.4
+294,Nif_Coraliomargarita_akajimensis,Nif-II,Coraliomargarita akajimensis,65341.53918992374,916,-80.1
+295,Nif_Verrucomicrobiae_bacterium_DG1235,Nif-II,Verrucomicrobiae bacterium DG1235,65271.845400366336,901,-77.7
+296,Nif_Terrimicrobium_sacchariphilum,Nif-II,Terrimicrobium sacchariphilum,64865.398534994834,916,-76.0
+297,Nif_Candidatus_Achromatium_palustre,Nif-II,Candidatus Achromatium palustre,65021.845822351475,924,-76.0
+298,Nif_Verrucomicrobia_bacterium_Tous-C9LFEB,Nif-II,Verrucomicrobia bacterium Tous-C9LFEB,65159.89336819975,896,-73.6
+299,Nif_Geminisphaera_colitermitum,Nif-II,Geminisphaera colitermitum,65420.36430513978,994,-80.3
+300,Nif_Opitutaceae_bacterium_EW11,Nif-II,Opitutaceae bacterium EW11,65452.623516608255,969,-75.5
+301,Nif_Dehalogenimonas_sp_WBC-2,Nif-II,Dehalogenimonas sp. WBC-2,65094.79339518983,946,-78.4
+302,Nif_Chloroflexi_bacterium,Nif-II,Chloroflexi bacterium,64342.85511583126,934,-81.5
+303,Nif_Lentisphaerae_bacterium_GWF2_50_93,Nif-II,Lentisphaerae bacterium GWF2_50_93,65078.90914844863,917,-76.3
+304,Nif_Lentisphaerae_bacterium_GWF2_57_35,Nif-II,Lentisphaerae bacterium GWF2_57_35,63945.86673671129,925,-74.2
+305,Nif_Dehalococcoides_mccartyi,Nif-II,Dehalococcoides mccartyi,65205.97680697139,912,-75.2
+306,Nif_Planctomycetes_bacterium,Nif-II,Planctomycetes bacterium,63311.98321233083,913,-76.8
+307,Nif_Planctomycetes_bacterium_Q31b,Nif-II,Planctomycetes bacterium Q31b,63311.98321233083,913,-76.8
+308,Nif_Planctomycetaceae_bacterium,Nif-II,Planctomycetaceae bacterium,65736.59144799825,941,-78.6
+309,Nif_Phycisphaeraceae_bacterium,Nif-II,Phycisphaeraceae bacterium,67015.11103474596,953,-75.2
+310,Nif_Planctomycetes_bacterium_V7,Nif-II,Planctomycetes bacterium V7,67351.02419915401,936,-77.8
+311,Nif_Chloroherpeton_thalassium,Nif-II,Chloroherpeton thalassium,65961.08014140163,938,-80.4
+312,Nif_Chlorobium_chlorochromatii,Nif-II,Chlorobium chlorochromatii,65158.16640567254,921,-76.5
+313,Nif_Prosthecochloris_sp_GSB1,Nif-II,Prosthecochloris sp. GSB1,65862.99812042191,935,-81.6
+314,Nif_Spirochaetaceae_bacterium,Nif-II,Spirochaetaceae bacterium,65309.40050333603,918,-75.9
+315,Nif_Sediminispirochaeta_smaragdinae,Nif-II,Sediminispirochaeta smaragdinae,65677.9587761431,932,-78.2
+316,Nif_Candidatus_Marispirochaeta_associata,Nif-II,Candidatus Marispirochaeta associata,66568.15469136697,960,-81.2
+317,Nif_Spirochaeta_cellobiosiphila,Nif-II,Spirochaeta cellobiosiphila,66303.18608433413,934,-77.5
+318,Nif_Verrucomicrobia_bacterium_S94,Nif-II,Verrucomicrobia bacterium S94,65621.5860817912,910,-74.9
+319,Nif_Kiritimatiellales_bacterium,Nif-II,Kiritimatiellales bacterium,64857.247008510174,920,-74.5
+320,Nif_Lutibacter_agarilyticus,Nif-II,Lutibacter agarilyticus,64014.90861759811,906,-71.8
+321,Nif_Marinilabilia_sp_WTE,Nif-II,Marinilabilia sp. WTE,66259.34485271134,903,-77.3
+322,Nif_Bacteroidales_bacterium,Nif-II,Bacteroidales bacterium,66320.80343807762,986,-83.2
+323,Nif_Labilibacter_aurantiacus,Nif-II,Labilibacter aurantiacus,65278.20198114536,938,-77.0
+324,Nif_Mangrovibacterium_diazotrophicum,Nif-II,Mangrovibacterium diazotrophicum,64406.16252694253,923,-74.0
+325,Nif_Draconibacterium_sediminis,Nif-II,Draconibacterium sediminis,64841.78425267793,904,-74.0
+326,Nif_Arcticibacter_svalbardensis,Nif-II,Arcticibacter svalbardensis,65088.48922866826,939,-77.8
+327,Nif_Dysgonomonas_capnocytophagoides,Nif-II,Dysgonomonas capnocytophagoides,66250.70480139916,944,-77.5
+328,Nif_Bacteroidales_bacterium_Barb6XT,Nif-II,Bacteroidales bacterium Barb6XT,66544.67958351398,921,-75.5
+329,Nif_Candidatus_Azobacteroides_pseudotrichonymphae,Nif-II,Candidatus Azobacteroides pseudotrichonymphae,67465.43535761781,900,-75.9
+330,Nif_Cytophaga_xylanolytica,Nif-II,Cytophaga xylanolytica,64742.73790664209,927,-74.6
+331,Nif_Natronoflexus_pectinivorans,Nif-II,Natronoflexus pectinivorans,65094.022191630276,945,-78.3
+332,Nif_Alkaliflexus_imshenetskii,Nif-II,Alkaliflexus imshenetskii,65623.22953991038,936,-75.7
+333,Nif_Prevotella_oryzae,Nif-II,Prevotella oryzae,66246.0040353867,936,-77.2
+334,Nif_Paludibacter_propionicigenes,Nif-II,Paludibacter propionicigenes,65644.6787884042,959,-74.0
+335,Nif_Bacteroides_graminisolvens,Nif-II,Bacteroides graminisolvens,65452.27237005632,958,-81.8
+336,Nif_Bacteroides_luti,Nif-II,Bacteroides luti,65689.20714314723,928,-75.0
+337,Nif_Spirochaetes_bacterium_GWB1_36_13,Nif-II,Spirochaetes bacterium GWB1_36_13,66753.11658775184,899,-77.2
+338,Nif_Hydrogenispora_ethanolica,Nif-II,Hydrogenispora ethanolica,64895.655445447475,938,-82.7
+339,Nif_Elusimicrobia_bacterium_RIFOXYA2_FULL_50_26,Nif-II,Elusimicrobia bacterium RIFOXYA2_FULL_50_26,65843.95298328603,890,-73.8
+340,Nif_Candidatus_Margulisbacteria_bacterium_GWD2_39_127,Nif-II,Candidatus Margulisbacteria bacterium GWD2_39_127,66664.48314670737,949,-83.2
+341,Nif_Spirochaetes_bacterium_GWB1_27_13,Nif-II,Spirochaetes bacterium GWB1_27_13,67280.6163249311,937,-78.0
+342,Nif_Spirochaeta_thermophila,Nif-II,Spirochaeta thermophila,67360.33685230128,881,-69.0
+343,Nif_Spirochaetes_bacterium_GWE1_32_154,Nif-II,Spirochaetes bacterium GWE1_32_154,66650.08610362084,890,-74.7
+344,Nif_Holophaga_foetida,Nif-II,Holophaga foetida,65538.80122776197,933,-78.0
+345,Nif_Fibrobacteres_bacterium,Nif-II,Fibrobacteres bacterium,65567.32037064931,920,-73.1
+346,Nif_Treponema_primitia,Nif-II,Treponema primitia,66096.33674072966,915,-78.5
+347,Nif_Smithella_sp_SC_K08D17,Nif-II,Smithella sp. SC_K08D17,66302.38829308102,941,-76.1
+348,Nif_Syntrophus_gentianae,Nif-II,Syntrophus gentianae,66312.59498520114,953,-77.9
+349,Nif_Syntrophorhabdaceae_bacterium_PtaU1Bin034,Nif-II,Syntrophorhabdaceae bacterium PtaU1.Bin034,66131.103051419,940,-76.5
+350,Nif_Desulfobacca_acetoxidans,Nif-II,Desulfobacca acetoxidans,65179.01350248167,927,-78.3
+351,Nif_Syntrophobacter_fumaroxidans,Nif-II,Syntrophobacter fumaroxidans,65926.93246386915,932,-81.8
+352,Nif_bacterium_BMS3Abin10,Nif-II,bacterium BMS3Abin10,67364.68143190874,922,-71.2
+353,Nif_Desulfatitalea_sp_BRH_c12,Nif-II,Desulfatitalea sp. BRH_c12,64424.124429993986,938,-79.8
+354,Nif_Desulfobacteraceae_bacterium,Nif-II,Desulfobacteraceae bacterium,65179.01350248167,927,-78.3
+355,Nif_Desulfatibacillum_aliphaticivorans,Nif-II,Desulfatibacillum aliphaticivorans,65742.35998119191,929,-83.2
+356,Nif_Desulfosarcina_cetonica,Nif-II,Desulfosarcina cetonica,65374.6537858469,916,-83.2
+357,Nif_delta_proteobacterium_NaphS2,Nif-II,delta proteobacterium NaphS2,65644.83981928806,905,-81.7
+358,Nif_Desulfobacteraceae_bacterium_Eth-SRB2,Nif-II,Desulfobacteraceae bacterium Eth-SRB2,65179.01350248167,927,-78.3
+359,Nif_Desulfobacterales_bacterium_C00003106,Nif-II,Desulfobacterales bacterium C00003106,65787.53255146033,918,-82.4
+360,Nif_Desulfamplus_magnetovallimortis,Nif-II,Desulfamplus magnetovallimortis,67714.81781668367,927,-82.1
+361,Nif_Desulfobacterium_autotrophicum,Nif-II,Desulfobacterium autotrophicum,66281.91722069585,943,-80.6
+362,Nif_Desulfospira_joergensenii,Nif-II,Desulfospira joergensenii,66015.09139534968,929,-77.6
+363,Nif_Desulforegula_conservatrix,Nif-II,Desulforegula conservatrix,65701.05104896663,940,-81.3
+364,Nif_Desulfoluna_spongiiphila,Nif-II,Desulfoluna spongiiphila,65437.68910196776,927,-78.6
+365,Nif_Desulfobotulus_alkaliphilus,Nif-II,Desulfobotulus alkaliphilus,65767.05927047349,912,-77.4
+366,Nif_Candidatus_Dadabacteria_bacterium,Nif-II,Candidatus Dadabacteria bacterium,65779.1318195553,970,-74.9
+367,Nif_Deltaproteobacteria_bacterium,Nif-II,Deltaproteobacteria bacterium,65274.66356289547,877,-74.7
+368,Nif_Desulfohalovibrio_alkalitolerans,Nif-II,Desulfohalovibrio alkalitolerans,65421.25135239349,915,-77.0
+369,Nif_Desulfonatronum_lacustre,Nif-II,Desulfonatronum lacustre,66211.07672747999,906,-76.7
+370,Nif_Desulfocurvibacter_africanus,Nif-II,Desulfocurvibacter africanus,66949.76785952793,916,-77.2
+371,Nif_Desulfocarbo_indianensis,Nif-II,Desulfocarbo indianensis,64605.57048084662,941,-80.4
+372,Nif_Desulfobulbaceae_bacterium,Nif-II,Desulfobulbaceae bacterium,65888.00650945376,938,-77.8
+373,Nif_Desulfomicrobium_apsheronum,Nif-II,Desulfomicrobium apsheronum,64853.14762688079,924,-77.0
+374,Nif_Deltaproteobacteria_bacterium_HGW-Deltaproteobacteria-8,Nif-II,Deltaproteobacteria bacterium HGW-Deltaproteobacteria-8,65876.35062497224,926,-76.0
+375,Nif_Pseudodesulfovibrio_hydrargyri,Nif-II,Pseudodesulfovibrio hydrargyri,66151.21249940191,962,-79.8
+376,Nif_Desulfopila_aestuarii,Nif-II,Desulfopila aestuarii,66294.59200406581,950,-82.9
+377,Nif_Desulfotalea_sp,Nif-II,Desulfotalea sp.,65674.17757770768,927,-82.5
+378,Nif_Desulfofustis_glycolicus,Nif-II,Desulfofustis glycolicus,65245.50180357511,938,-81.3
+379,Nif_Desulforhopalus_singaporensis,Nif-II,Desulforhopalus singaporensis,66215.55238193883,949,-80.9
+380,Nif_Desulfobulbus_elongatus,Nif-II,Desulfobulbus elongatus,65688.16715176584,912,-77.2
+381,Nif_Desulfobulbaceae_bacterium_A2,Nif-II,Desulfobulbaceae bacterium A2,63763.77593206341,945,-75.6
+382,Nif_Desulfobulbaceae_bacterium_DB1,Nif-II,Desulfobulbaceae bacterium DB1,66921.94212605666,937,-80.7
+383,Nif_bacterium_BMS3Abin13,Nif-II,bacterium BMS3Abin13,66147.13312714388,955,-82.4
+384,Nif_Candidatus_Electronema_sp_GS,Nif-II,Candidatus Electronema sp. GS,66879.45262219141,898,-77.4

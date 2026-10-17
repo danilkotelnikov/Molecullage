@@ -1,0 +1,5 @@
+badge,residue,number,mutation,generic_number_in_paper,where,z_CA_A,anchor_x_mm,anchor_t_mm
+1,L,73,L73M,2.43,TM2,-10.19,46.37,153.37
+2,F,193,F193S,ECL2,ECL2,18.76,37.57,125.16
+3,S,359,S359Y,6.36,TM6,-14.58,44.14,161.34
+4,C,415,C415R,7.56,TM7,-14.94,47.35,159.56

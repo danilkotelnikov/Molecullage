@@ -3,12 +3,14 @@
 Molecullage makes figures of protein structures, sequences, contact maps, pipelines and plots for papers. You write each figure as an HTML page in millimetres, and the build prints it to a vector PDF and a 600 dpi PNG.
 
 <!-- gallery:start -->
-| Before | After |
-|---|---|
-| ![Structure figure of the sample project before the redesign](examples/sample-project/before/structure.png) | ![Structure figure of the sample project after the redesign](examples/sample-project/after/structure.png) |
-| ![Pipeline figure of the sample project before the redesign](examples/sample-project/before/pipeline.png) | ![Pipeline figure of the sample project after the redesign](examples/sample-project/after/pipeline.png) |
+![Molecullage: a title and five figures made with it](gallery/hero/hero.png)
 
-Two figures of the sample project in `examples/sample-project`, before and after the redesign. A gallery of redesigned published figures is being added.
+The [gallery](gallery/) holds eleven figures from published open-access papers, redrawn with Molecullage from the papers' own data and from PDB entries. A few of them:
+
+| | | |
+|---|---|---|
+| [![A cryo-EM complex with 34 chains](gallery/05-atp-synthase/05-atp-synthase.thumb.png)](gallery/05-atp-synthase/) | [![An evolutionary tree with trait columns and structure insets](gallery/08-nitrogenase-tree/08-nitrogenase-tree.thumb.png)](gallery/08-nitrogenase-tree/) | [![A transport cycle drawn from six structures](gallery/01-tap-cycle/01-tap-cycle.thumb.png)](gallery/01-tap-cycle/) |
+| [![A deep mutational scan](gallery/07-rbd-mutational-scan/07-rbd-mutational-scan.thumb.png)](gallery/07-rbd-mutational-scan/) | [![A ligand pocket in 3D and in a flat drawing](gallery/02-ebola-pocket/02-ebola-pocket.thumb.png)](gallery/02-ebola-pocket/) | [![A graphical abstract rebuilt as an infographic](gallery/04-bcell-pathway/04-bcell-pathway.thumb.png)](gallery/04-bcell-pathway/) |
 <!-- gallery:end -->
 
 ## What you get
@@ -25,7 +27,7 @@ Two figures of the sample project in `examples/sample-project`, before and after
 | `claude/` | Install the Claude Code skill, the MCP server and the two optional hooks. |
 | `examples/` | See each template built, most of them on public PDB entries, each with a `how-made.md`. |
 | `docs/` | Read the drawing rules, the palette notes, the ChimeraX notes, the kit reference, a glossary and field notes. |
-| `gallery/` | Compare published figures with their redesigns (being added). |
+| `gallery/` | Look at eleven published figures redrawn with Molecullage, each with a script that fetches its data and a note on how it was made. |
 
 The other folders hold what these use: `art/` the cropped renders of the examples, `data/pdb/` the coordinate files with their RCSB records, `tokens/` the palette as a token file, and `scripts/` the install, check and example scripts.
 
@@ -88,7 +90,12 @@ Open Claude Code in the project folder and say "Redo all figures of this project
 6. It builds the rest in batches of three to five. For each figure you answer accept, change or revert, and each answer goes into `decisions.md`.
 7. Only when you ask, it copies the accepted figures into the project, keeps the old files in `molecullage/original/`, and prints suggested caption changes for you to apply.
 
-Everything it writes goes into a `molecullage/` folder inside your project. It does not overwrite your original files, and it does not edit your text, captions or code unless you ask. `examples/sample-project/` shows a finished run on three poor figures.
+Everything it writes goes into a `molecullage/` folder inside your project. It does not overwrite your original files, and it does not edit your text, captions or code unless you ask. `examples/sample-project/` shows a finished run on three poor figures. Two of them, before and after:
+
+| Before | After |
+|---|---|
+| ![Structure figure of the sample project before the redesign](examples/sample-project/before/structure.png) | ![Structure figure of the sample project after the redesign](examples/sample-project/after/structure.png) |
+| ![Pipeline figure of the sample project before the redesign](examples/sample-project/before/pipeline.png) | ![Pipeline figure of the sample project after the redesign](examples/sample-project/after/pipeline.png) |
 
 ## Settings
 

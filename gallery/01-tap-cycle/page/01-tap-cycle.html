@@ -1,0 +1,233 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>TAP transport cycle in six structures</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<!--INLINE_JS data.js-->
+<script>
+// Redesign of the TAP transport cycle (Lee, Manon and Chen 2025, Immunity 58(9):2166-2175.e4; the original draws it as four small schematics, one per figure).
+// Six deposited cryo-EM entries (PDB 9N61 to 9N66), one superposition on the TAP2 transmembrane core, one camera, one scale.
+// Art: src/render_tap.py (ChimeraX) + struct/trim.py: groups tapif (inward-facing entries) and tapof (outward-facing), layers <ID> (protein) and <ID>_lig (ligands).
+// Numbers: window.DATA (src/make_data.py): resolution and ligands from the mmCIF, NBD gap from the coordinates (src/geometry.py).
+// Grid: a left gutter for the orientation words, three columns set by the top row; the bottom row hangs from the left column and the right edge.
+// Checks at the end throw if a position is off (0.25 mm).
+const D = window.DATA.states;
+const W = 178, GL = 1.5, GR = 176.5, GUT = 4.0, LEFT = GL + GUT + 1.0;
+const S = 0.43;                                           // millimetres per angstrom: one scale for all six renders
+const MMPX = 96 / 25.4;
+const TOK = window.TOKENS.color, FAMS = TOK.family;
+const INK = TOK.ink, SUB = TOK.sub, GUIDE = TOK.guide;
+const DARK = { tap1: FAMS.peri.edge, tap2: FAMS.apricot.edge, nuc: FAMS.mint.edge, pep: FAMS.rose.edge };   // text tones of the roles
+const TOP = ['9N65', '9N62', '9N61'], BOT = ['9N66', '9N63', '9N64'];   // top row inward-facing, bottom row outward-facing; one loop, clockwise
+const STEP = { '9N65': 1, '9N62': 2, '9N61': 3, '9N63': 4, '9N64': 4, '9N66': 5 };
+// box titles use the wording of the entry titles (RCSB): "bound to ATP and ADP in the inward-facing conformation", "EQ mutant bound to ATP in the inward-facing state",
+// "bound to the 9-mer peptide RRYQKSTEL and ATP" (the title is silent on facing; the paper's text says inward-facing), "...outward-facing open/kinked state",
+// "bound to ATP and ADP in the outward-facing open state". A genotype is printed only where an entry title says it (EQ mutant).
+const HEAD_TXT = {
+  '9N65': 'Inward-facing, ATP + ADP', '9N62': 'Inward-facing, EQ mutant', '9N61': 'Inward-facing, peptide bound',
+  '9N66': 'Outward-facing, ATP + ADP', '9N63': '4a  Open, EQ mutant', '9N64': '4b  Kinked, EQ mutant',
+};
+const grp = (id) => (TOP.includes(id) ? 'tapif__' : 'tapof__') + id;
+const art = (id, lig) => window.ART[grp(id) + (lig ? '_lig' : '')];
+const pxA = art('9N62').meta.px_per_A;                    // canvas pixels per angstrom, written by render_tap.py
+const iw = (id) => art(id).w / pxA * S, ih = (id) => art(id).h / pxA * S;
+
+// ---- grid (millimetres, top-down; Tp converts to the kit's y-up)
+const IFW = iw('9N62'), IFH = ih('9N62'), OFW = iw('9N63'), OFH = ih('9N63');
+const HEAD = 5.4, LAB = 11.4, PADB = 1.6;                 // header strip, label slot (three lines), bottom padding of a box
+const CW1 = IFW + 2.0, G1 = (GR - LEFT - 3 * CW1) / 2;    // top-row box width and the gap between boxes
+const CH1 = HEAD + IFH + LAB + PADB;
+const TB = 21.5;                                          // top band
+const T1 = TB + 1.5;                                      // top of row 1
+const RG = 16.5;                                          // gap between the rows (vertical arrows)
+const GRP_PAD = 2.2, GRP_TOP = 4.4;                       // pair frame: padding and title strip
+const CW5 = 42.8, CWP = 33.2, GAPP = 3.0;                 // box 5, the two boxes of step 4, the gap between them
+const CH2 = HEAD + OFH + LAB + PADB;
+const T2 = T1 + CH1 + RG + GRP_TOP;                       // top of the bottom boxes (the pair frame starts GRP_TOP above)
+const H = T2 + CH2 + GRP_PAD + 11.6;                      // figure height: two foot lines
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const fails = [];
+const tol = 0.25;                                         // mm
+const chk = (name, got, want, t = tol) => { if (!(Math.abs(got - want) <= t)) fails.push(`${name}: ${got.toFixed(2)} vs ${want.toFixed(2)}`); };
+const rt = (pts, o = {}) => f.route(pts.map(([x, t]) => [x, Tp(t)]), o);
+const fig0 = () => document.getElementById('fig').getBoundingClientRect();
+const rectOf = (el) => { const r = el.getBoundingClientRect(), g = fig0(); return { l: (r.left - g.left) / MMPX, r: (r.right - g.left) / MMPX, t: (r.top - g.top) / MMPX, b: (r.bottom - g.top) / MMPX }; };
+const hit = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
+const FLOOR = (window.CONFIG || {}).floorPt || 6.55;
+const NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs) { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); f.svg.appendChild(e); return e; }
+
+// text helpers: R = plain text (supports $maths$), HT = coloured spans; both return the element so that the checks can measure it (t is top-down)
+const R = (x, t, s, o = {}) => f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o });
+function HT(x, t, html, { fs = 7, ha = 'left', bold = false, color = INK, bg = '' } = {}) {
+  const d = document.createElement('div');
+  d.className = 'lab'; d.id = f.id('label');
+  const tr = ha === 'right' ? 'translate(-100%,-50%)' : ha === 'center' ? 'translate(-50%,-50%)' : 'translate(0,-50%)';
+  d.style.cssText = `left:${x}mm;top:${t}mm;font-size:${fs}pt;color:${color};font-weight:${bold ? 700 : 400};transform:${tr};text-align:${ha}${bg ? `;background:${bg};padding:0 1mm` : ''}`;
+  d.innerHTML = html;
+  f.el.appendChild(d);
+  return d;
+}
+const role = (k, s) => `<span style="color:${DARK[k]}">${s}</span>`;
+// a dot for a C-alpha atom: chain tone with a white halo
+function dot(cx, cyUp, tone, r = 0.95, halo = 1.35) { svgEl('circle', { cx, cy: f.Y(cyUp), r: halo, fill: '#fff' }); svgEl('circle', { cx, cy: f.Y(cyUp), r, fill: tone }); }
+function swatch(x, t, fam, text, tone) {
+  const sw = document.createElement('div'); sw.className = `sw fam-${fam}`; sw.id = f.id('swatch'); sw.style.cssText = `left:${x}mm;top:${t - 1.5}mm`; f.el.appendChild(sw);
+  return HT(x + 5.2, t, text, { color: tone });
+}
+
+// ---- top band: title, what TAP is, key
+const textEls = [];
+textEls.push(R(GL, 2.6, 'TAP transport cycle in six structures', { bold: true, fs: 7.5 }));
+const guide = f.note({ x: GL, y: Tp(4.9), w: 86, fs: 7, color: INK,
+  text: 'TAP (transporter associated with antigen processing) moves peptides into the endoplasmic reticulum (ER). Read clockwise from 1.' });
+const legendEls = [];
+legendEls.push(swatch(GL, 14.2, 'peri', 'TAP1', DARK.tap1), swatch(GL + 17, 14.2, 'apricot', 'TAP2', DARK.tap2),
+  swatch(GL + 34, 14.2, 'mint', 'ATP', DARK.nuc), swatch(GL + 49, 14.2, 'palemint', 'ADP', DARK.nuc));
+legendEls.push(swatch(GL, 18.6, 'rose', `peptide ${D['9N61'].peptide} (${D['9N61'].peptide.length} residues)`, DARK.pep));
+dot(GL + 52.0, Tp(18.6), DARK.tap1); dot(GL + 55.4, Tp(18.6), DARK.tap2);
+legendEls.push(HT(GL + 58.4, 18.6, 'Cα atoms of the gap', { color: INK }));
+const KX = 92;
+const keyNote = f.note({ x: KX, y: Tp(2.0), w: GR - KX, fs: 7, color: INK,
+  text: 'NBD: nucleotide-binding domain. Dashed line: NBD gap, Cα distance from TAP1 Asp674 (D-loop) to TAP2 His661 (H-loop). '
+    + 'The paper reports these loops moving apart about 3 Å after hydrolysis. Right of each PDB id: map resolution, Å.' });
+
+// ---- boxes
+const cards = {};
+function card(id, x, t, w, h, { tint = false, badge = true } = {}) {
+  const c = { id, x, t, w, h };
+  f.state({ x, y: Tp(t + h), w, h });
+  if (tint) f.el.lastElementChild.style.background = '#EFEFEF';   // grey box: the place of this box in the cycle is not given in the paper
+  if (badge) f.badge({ x: x + 3.4, y: Tp(t + 2.9), n: STEP[id], fam: 'grey' });
+  c.hx = x + (badge ? 6.9 : 2.2);
+  c.head = R(c.hx, t + 2.9, HEAD_TXT[id], { bold: true, fs: 7.5 });
+  const iwid = iw(id), ihei = ih(id);
+  c.ix = x + (w - iwid) / 2; c.it = t + HEAD; c.iw = iwid; c.ih = ihei;
+  const o = { x: c.ix, y: Tp(c.it + ihei), w: iwid };
+  c.img = f.image({ ...o, name: grp(id) });
+  c.lig = f.image({ ...o, name: grp(id) + '_lig' });
+  // the two C-alpha atoms of the NBD gap, from the render anchors; the dashed line joins them
+  c.pa = c.img.pt('gapA'); c.pb = c.img.pt('gapB');
+  const L = { x1: c.pa[0], y1: f.Y(c.pa[1]), x2: c.pb[0], y2: f.Y(c.pb[1]) };
+  svgEl('line', { ...L, stroke: '#fff', 'stroke-width': 1.15, 'stroke-linecap': 'round' });
+  svgEl('line', { ...L, stroke: INK, 'stroke-width': 0.34, 'stroke-dasharray': '1.0 0.7' });
+  dot(c.pa[0], c.pa[1], DARK.tap1); dot(c.pb[0], c.pb[1], DARK.tap2);
+  // label slot: three lines at the same offsets on every box
+  const d = D[id], ly = c.it + ihei + 2.4;
+  c.l1 = R(x + 2.2, ly, id, { bold: true, fs: 7.5 });
+  c.l1r = R(x + w - 2.2, ly, `${d.resolution.toFixed(1)} Å`, { ha: 'right', fs: 7 });
+  const nuc = `${role('tap1', 'TAP1')} ${role('nuc', d.nucA.join(' '))}, ${role('tap2', 'TAP2')} ${role('nuc', d.nucB.join(' '))}` + (d.peptide ? `, ${role('pep', 'peptide')}` : '');
+  c.l2 = HT(x + 2.2, ly + 3.5, nuc);
+  rt([[x + 2.2, ly + 7.0], [x + 6.6, ly + 7.0]], { head: false, color: INK, dashed: true, width: 0.34 });
+  c.l3 = HT(x + 7.6, ly + 7.0, `gap ${d.gap.toFixed(1)} Å`);
+  cards[id] = c;
+  return c;
+}
+// row 1: inward-facing; the grey box is 9N62, whose place in the cycle the paper does not give
+TOP.forEach((id, i) => card(id, LEFT + i * (CW1 + G1), T1, CW1, CH1, { tint: id === '9N62' }));
+const c1x = LEFT + CW1 / 2, c3x = LEFT + 2 * (CW1 + G1) + CW1 / 2;       // centres of the left and right column
+// row 2: box 5 under the left column; the two forms of step 4 in one frame at the right edge
+const PGW = 2 * CWP + GAPP + 2 * GRP_PAD, PGX = GR - PGW, PGT = T2 - GRP_TOP, PGH = GRP_TOP + CH2 + GRP_PAD;
+f.group({ x: PGX, y: Tp(PGT + PGH), w: PGW, h: PGH });
+card('9N66', c1x - CW5 / 2, T2, CW5, CH2);
+card('9N63', PGX + GRP_PAD, T2, CWP, CH2, { badge: false });
+card('9N64', PGX + GRP_PAD + CWP + GAPP, T2, CWP, CH2, { badge: false });
+f.badge({ x: PGX + 4.6, y: Tp(PGT), n: 4, fam: 'grey' });
+const pairTitle = HT(PGX + 7.6, PGT, 'Outward-facing, two forms', { bold: true, fs: 7.5, bg: '#fff' });
+
+// ---- arrows: each says what changes
+const arrowLabels = [];
+const ymid1 = T1 + HEAD + IFH / 2, ymid2 = T2 + 2.9;       // the horizontal arrow into box 5 runs at the height of the box titles
+function harrow(xa, xb, t, lines) {
+  const sg = Math.sign(xb - xa);                         // +1 to the right, -1 to the left
+  rt([[xa + sg * 0.9, t], [xb - sg * 0.9, t]]);
+  arrowLabels.push(HT((xa + xb) / 2, t - 3.4 - 1.55 * (lines.length - 1), lines.join('\n'), { ha: 'center' }));
+}
+harrow(cards['9N65'].x + CW1, cards['9N62'].x, ymid1, ['ADP out,', 'ATP in']);
+harrow(cards['9N62'].x + CW1, cards['9N61'].x, ymid1, ['peptide', 'binds']);
+const xg1 = PGX, xg0 = cards['9N66'].x + CW5;
+harrow(xg1, xg0, ymid2, ['ATP hydrolysed', '(wild type, next box)']);   // from the frame of step 4 (right) to box 5 (left): the arrow points left
+// vertical: the pre-dimer box to the frame of step 4 (right column), box 5 to box 1 (left column)
+const yb1 = T1 + CH1;
+rt([[c3x, yb1 + 0.9], [c3x, PGT - 0.9]]);
+arrowLabels.push(HT(c3x - 2.6, (yb1 + PGT) / 2, 'NBDs dimerize,\npeptide released', { ha: 'right' }));
+rt([[c1x, T2 - 0.9], [c1x, yb1 + 0.9]]);
+arrowLabels.push(HT(c1x + 2.6, (yb1 + T2) / 2, 'NBDs separate', { ha: 'left' }));
+
+// ---- orientation words, once per row, in the left gutter: a grey arrow points towards the ER lumen
+const gx = GL + 1.6, gutterEls = [];
+[[T1 + HEAD, IFH], [T2 + HEAD, OFH]].forEach(([top, hgt]) => {
+  gutterEls.push(f.rich(gx, Tp(top + 5.2), 'ER lumen', { color: SUB, fs: 7, ha: 'center', rot: true }));
+  gutterEls.push(f.rich(gx, Tp(top + hgt - 4.8), 'cytosol', { color: SUB, fs: 7, ha: 'center', rot: true }));
+  rt([[gx, top + hgt - 10.6], [gx, top + 10.8]], { color: GUIDE, width: 0.3 });
+});
+
+// ---- how to read: framed, with a heading, between box 5 and the frame of step 4, below the arrow
+const HX = cards['9N66'].x + CW5 + 3.0, HW = PGX - 3.0 - HX, HY = T2 + 6.2, HH = T2 + CH2 - HY;
+f.group({ x: HX, y: Tp(HY + HH), w: HW, h: HH, title: 'How to read' });
+const para = (s) => `<div style="margin-top:1.5mm">${s}</div>`;
+const notes = f.note({ x: HX + 2.0, y: Tp(HY + 3.4), w: HW - 4.0, fs: 7, color: INK,
+  text: 'Arrows join separate samples, not the steps of one molecule. Numbers give the reading order only.'
+    + para('Grey box: order not given in the paper; peptide and ATP bind independently.')
+    + para('EQ mutant (entry title): TAP2 catalytic Glu changed to Gln; ATP hydrolysis diminished.')
+    + para('Open and kinked: the entries’ names for two forms of TAP2 helix 3.')
+    + para('Inward-facing: cavity open to the cytosol. Outward-facing: open to the ER lumen.')
+    + para('Superposed on the TAP2 transmembrane core; dots and ligands are drawn in front.') });
+
+// ---- foot
+const foot1 = f.label(GL, 5.0, 'Separate cryo-EM samples. Order follows the paper’s cycle, except box 2, which the paper does not place.', { fs: FLOOR, color: SUB });
+const CREDIT = 'After Fig. 1A, 2A, 4A, 5A of Lee et al., Immunity 2025, doi:10.1016/j.immuni.2025.08.003, CC BY 4.0. Data: PDB 9N61-66. Redesigned; gaps computed, rest as in entries.';
+const creditEl = f.label(GL, 1.6, CREDIT, { fs: FLOOR, color: SUB });
+
+// ================================================================ build-time checks
+{
+  const IDS = [...TOP, ...BOT];
+  // 1. columns: label slot, badge and header share the box's inner edges (0.25 mm)
+  IDS.forEach((id) => {
+    const c = cards[id];
+    chk(`${id} label 1 left`, rectOf(c.l1).l, c.x + 2.2);
+    chk(`${id} label 2 left`, rectOf(c.l2).l, c.x + 2.2);
+    chk(`${id} resolution right edge`, rectOf(c.l1r).r, c.x + c.w - 2.2);
+    chk(`${id} gap label left`, rectOf(c.l3).l, c.x + 7.6);
+    chk(`${id} header left`, rectOf(c.head).l, c.hx);
+    chk(`${id} label rows`, rectOf(c.l2).t - rectOf(c.l1).t, rectOf(cards['9N65'].l2).t - rectOf(cards['9N65'].l1).t);
+    const r = rectOf(c.l2); if (r.r > c.x + c.w - 1.0) fails.push(`${id} nucleotide line is wider than its box`);
+    const hd = rectOf(c.head); if (hd.r > c.x + c.w - 1.0) fails.push(`${id} title is wider than its box`);
+  });
+  // titles differ: no two boxes carry the same title
+  const titles = IDS.map((id) => HEAD_TXT[id]); if (new Set(titles).size !== titles.length) fails.push('two boxes have the same title');
+  // rows: same tops, same image offsets
+  TOP.forEach((id) => { chk(`${id} box top`, cards[id].t, T1); chk(`${id} image top`, cards[id].it, T1 + HEAD); });
+  BOT.forEach((id) => { chk(`${id} box top`, cards[id].t, T2); chk(`${id} image top`, cards[id].it, T2 + HEAD); });
+  chk('top-row pitch', cards['9N62'].x - cards['9N65'].x, cards['9N61'].x - cards['9N62'].x);
+  chk('step 4 box gap', cards['9N64'].x - cards['9N63'].x - CWP, GAPP);
+  chk('left column centre of box 5 and box 1', cards['9N66'].x + CW5 / 2, cards['9N65'].x + CW1 / 2);
+  chk('right edge of box 3 and the frame of step 4', cards['9N61'].x + CW1, PGX + PGW);
+  // 2. the NBD gap markers: computed from the render anchors; the length in mm at the scale must be the in-plane distance of the coordinates
+  IDS.forEach((id) => {
+    const c = cards[id], d = D[id];
+    const Lg = Math.hypot(c.pa[0] - c.pb[0], c.pa[1] - c.pb[1]) / S;       // angstrom, from the picture
+    chk(`${id} gap marker length (A)`, Lg, d.gapInplane, 0.35);
+    if (!(c.pa[0] < c.pb[0])) fails.push(`${id}: TAP1 end of the gap is not left of the TAP2 end`);
+    [c.pa, c.pb].forEach((p) => { if (p[0] < c.ix || p[0] > c.ix + c.iw || p[1] < H - c.it - c.ih || p[1] > H - c.it) fails.push(`${id}: gap marker outside its render`); });
+  });
+  // 3. no text on text or on a box: arrow labels clear of every box and frame; the key box clear of arrows and boxes
+  const boxes = IDS.map((id) => ({ n: id, l: cards[id].x, r: cards[id].x + cards[id].w, t: cards[id].t, b: cards[id].t + cards[id].h }));
+  boxes.push({ n: 'frame of step 4', l: PGX, r: PGX + PGW, t: PGT, b: PGT + PGH });
+  arrowLabels.forEach((el, i) => { const r = rectOf(el); boxes.forEach((b) => { if (hit(r, b)) fails.push(`arrow label ${i + 1} overlaps ${b.n}`); }); });
+  { const hb = { l: HX, r: HX + HW, t: HY, b: HY + HH };
+    boxes.forEach((b) => { if (hit(hb, b)) fails.push(`how-to-read box overlaps ${b.n}`); });
+    arrowLabels.forEach((el, i) => { if (hit(hb, rectOf(el))) fails.push(`how-to-read box overlaps arrow label ${i + 1}`); });
+    const r = rectOf(notes); if (r.b > hb.b - 1.0) fails.push(`how-to-read text runs out of its box (${r.b.toFixed(1)} > ${(hb.b - 1).toFixed(1)})`); if (r.r > hb.r - 1.0) fails.push('how-to-read text too wide'); }
+  { const r = rectOf(guide), k = rectOf(keyNote);
+    if (r.r > KX - 1.0) fails.push('guide runs into the key');
+    if (k.r > GR + 0.1) fails.push('key note runs past the right margin');
+    legendEls.forEach((el) => { const q = rectOf(el); if (q.r > KX - 1.0) fails.push('legend runs into the key'); if (q.t < r.b) fails.push('legend touches the guide'); if (q.b > TB - 0.3) fails.push('legend runs into row 1'); });
+    if (r.b > TB - 0.3 || k.b > TB - 0.3) fails.push('top band text runs into row 1'); }
+  // 4. everything that is text stays inside the margins
+  document.querySelectorAll('.lab, .tbox').forEach((el) => { const r = rectOf(el); if (r.r > GR + 0.1 || r.l < GL - 0.1) fails.push(`text outside the margins: "${el.textContent.slice(0, 30)}" (${r.l.toFixed(1)} to ${r.r.toFixed(1)})`); });
+  // 5. the gutter words sit left of every box
+  gutterEls.forEach((el) => { const r = rectOf(el); if (r.r > LEFT - 0.5) fails.push('orientation word runs into a box'); });
+  window.__layout = { H, S, IFW, IFH, OFW, OFH, CW1, G1, T1, T2, fails };
+  if (fails.length) throw new Error('layout checks failed: ' + fails.join(' | '));
+}
+</script></body></html>

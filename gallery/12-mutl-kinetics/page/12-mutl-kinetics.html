@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>12-mutl-kinetics</title></head><body>
+<!--INLINE_JS layer.js-->
+<div class="page"><div class="fig" id="fig" style="padding:0"><!--INLINE_SVG layer.svg--></div></div>
+<script>
+// Redesign of Fig. 1D and E of Fukui et al., eLife 15:RP111443 (doi 10.7554/eLife.111443, CC BY 4.0): ATPase curves of wild-type and mutant aqMutL NTDs with Table 1.
+// a  the two glutamates in PDB 6LZJ (ChimeraX inset, art/pocket__full_t.png) and the naming of the variants
+// b  one tile per variant: kapp / kcat against [ATP]; five variants with numbers, seven N.D. tiles
+// c  Table 1 as dots on log axes, ranked by kcat/Km
+// matplotlib (src/make_layer.py) draws plot areas, axes, marks, bands and key glyphs as one SVG layer; this page draws every word at the positions of window.DATA
+// (millimetres, top-down, origin top-left), puts the inset and its leaders on the anchors computed from the render, and at the end measures the rendered page:
+// checkAlign() throws one Error that lists every position that is off its grid by more than TOL.
+const D = window.DATA, W = D.W, H = D.H, TOL = 0.25;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const REC = {};
+for (const t of D.texts) {
+  if (!t.s) continue;
+  REC[t.id] = f.rich(t.x, Tp(t.t), t.s, { fs: t.fs, ha: t.ha, bold: t.bold, rot: t.rot, color: t.color, mfs: t.mfs || 8.4 });
+}
+// ---------------------------------------------------------------- inset and leaders
+const IM = D.img;
+const im = f.image({ x: IM.x, y: Tp(IM.t + IM.h), w: IM.w, name: IM.name });
+const P = (k) => { const p = im.pt(k); return [p[0], H - p[1]]; };            // anchor of the render in page millimetres, t down
+const LEAD = {};
+for (const L of D.leaders) {
+  const to = P(L.anchor);
+  f.route([[L.from_x, Tp(L.from_t)], [to[0], Tp(to[1])]], { head: false, width: 0.25 });
+  LEAD[L.id] = f.svg.lastElementChild;
+  f.dot(to[0], Tp(to[1]));
+}
+
+// ================================================================ alignment checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const svgEl = (id) => { const e = document.getElementById(id); if (!e) { fails.push('missing layer element ' + id); return { l: 0, t: 0, r: 0, b: 0, w: 0, h: 0, cx: 0, cy: 0 }; } return M(e); };
+  const m = {}; for (const [k, el] of Object.entries(REC)) m[k] = M(el);
+  // 1. every text sits on its anchor: left edge, centre or right edge on x; centre line on t; inside its tile when it has one
+  for (const t of D.texts) {
+    if (!t.s) continue;
+    const e = m[t.id];
+    if (t.rot) near(e.cx, t.x, `${t.id}: centre x`, 0.35);
+    else near(t.ha === 'left' ? e.l : t.ha === 'right' ? e.r : e.cx, t.x, `${t.id}: ${t.ha} edge on its column`);
+    near(t.rot ? e.cy : e.cy, t.t, `${t.id}: centre line on its row`, 0.45);
+    if (t.within) { const [l, tt, r, b] = t.within; if (e.l < l + 0.2 || e.r > r - 0.2 || e.t < tt + 0.1 || e.b > b - 0.1) fails.push(`${t.id}: leaves its tile (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)}) in (${l.toFixed(2)}, ${tt.toFixed(2)}, ${r.toFixed(2)}, ${b.toFixed(2)})`); }
+  }
+  // 2. plot areas sit on the boxes of window.DATA; tiles of one row share top and bottom, columns of the dot plot share top and bottom
+  for (const [k, b] of Object.entries(D.boxes)) { const a = svgEl('area-' + k); near(a.l, b.x, `${k}: area left`, 0.1); near(a.t, b.t, `${k}: area top`, 0.1); near(a.w, b.w, `${k}: area width`, 0.1); near(a.h, b.h, `${k}: area height`, 0.1); }
+  // 3. dots on their data position (tile dots from kapp / kcat and [ATP]; dot-plot dots from the log axes)
+  for (const [name, ds] of Object.entries(D.dots)) for (const d of ds) { const e = svgEl(d.id); near(e.cx, d.x, `${d.id}: x`, 0.12); near(e.cy, d.t, `${d.id}: y`, 0.12); }
+  for (const d of Object.values(D.cdots)) { const e = svgEl(d.id); near(e.cx, d.x, `${d.id}: x`, 0.12); near(e.cy, d.t, `${d.id}: row`, 0.12); }
+  // 4. dot-plot rows: label and dot on one line, row pitch constant
+  const dp = D.dotplot;
+  dp.rows.forEach((r, i) => { near(m['row-' + r.name].cy, r.t, `row ${r.name}: label on its row`, 0.45); near(r.t - dp.t0, (i + 0.5) * dp.pitch, `row ${r.name}: pitch`, 1e-6); });
+  for (const k of Object.keys(D.ratio_rows)) near(m['fold-' + k].cy, dp.rows.find((r) => r.name === k).t, `fold lower ${k}: on its row`, 0.45);
+  { const xs = Object.keys(D.ratio_rows).map((k) => m['fold-' + k].l); near(Math.max(...xs), Math.min(...xs), 'fold-lower texts: one column'); }
+  // 5. inset: placed where DATA says; every leader starts at its label and ends on the anchor computed from the render
+  const imEl = document.querySelector('img.art'), I = M(imEl);
+  near(I.l, IM.x, 'inset: left'); near(I.t, IM.t, 'inset: top'); near(I.w, IM.w, 'inset: width'); near(I.h, IM.h, 'inset: height');
+  for (const L of D.leaders) {
+    const a = D.img.anchors[L.anchor], e = M(LEAD[L.id]), lab = m[L.label];
+    const x0 = Math.min(e.l, e.r), x1 = Math.max(e.l, e.r), t0 = Math.min(e.t, e.b), t1 = Math.max(e.t, e.b);
+    near(L.side === 'r' ? x1 : x0, L.from_x, `${L.id}: starts at its label (x)`); near(L.side === 'r' ? x0 : x1, a[0], `${L.id}: ends on its anchor (x)`);
+    near(Math.min(t0, t1), Math.min(L.from_t, a[1]), `${L.id}: top`); near(Math.max(t0, t1), Math.max(L.from_t, a[1]), `${L.id}: bottom`);
+    near(L.side === 'r' ? lab.l - 0.7 : lab.r + 0.7, L.from_x, `${L.id}: gap to its label`, 0.3);
+  }
+  // leaders do not cross each other and do not run through another label
+  const seg = (L) => { const a = D.img.anchors[L.anchor]; return [[L.from_x, L.from_t], [a[0], a[1]]]; };
+  const cross = (p, q, r, s) => { const d = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]); return d(p, q, r) * d(p, q, s) < 0 && d(r, s, p) * d(r, s, q) < 0; };
+  for (let i = 0; i < D.leaders.length; i++) for (let j = i + 1; j < D.leaders.length; j++) { const [p, q] = seg(D.leaders[i]), [r, s] = seg(D.leaders[j]); if (cross(p, q, r, s)) fails.push(`leaders cross: ${D.leaders[i].id} and ${D.leaders[j].id}`); }
+  for (const L of D.leaders) { const [p, q] = seg(L); for (const t of D.texts) { if (!t.s || t.id === L.label || !(t.id.startsWith('lab-') || t.id.startsWith('sub-') || t.id.startsWith('cap-'))) continue; const e = m[t.id];
+    const edges = [[[e.l, e.t], [e.r, e.t]], [[e.r, e.t], [e.r, e.b]], [[e.r, e.b], [e.l, e.b]], [[e.l, e.b], [e.l, e.t]]];
+    if (edges.some(([a, b]) => cross(p, q, a, b))) fails.push(`leader ${L.id} runs through text ${t.id}`); } }
+  // 6. text on text, text inside the page
+  const T = [...Object.entries(REC).map(([k, el]) => [k, M(el)]), ...[...document.querySelectorAll('.plots svg text, svg text')].map((t, i) => ['tick:' + t.textContent + '#' + i, M(t)])];
+  for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) { const a = T[i][1], b = T[j][1], pad = 0.08;
+    if (T[i][0].startsWith('tick:') && T[j][0].startsWith('tick:')) continue;
+    if (a.l + pad < b.r && b.l + pad < a.r && a.t + pad < b.b && b.t + pad < a.b) fails.push(`text on text: ${T[i][0]} and ${T[j][0]}`); }
+  T.forEach(([k, e]) => { if (e.l < 1.0 || e.t < 1.0 || e.r > W - 1.0 || e.b > H - 0.8) fails.push(`text too near the page edge: ${k} (${e.l.toFixed(2)}, ${e.t.toFixed(2)}, ${e.r.toFixed(2)}, ${e.b.toFixed(2)})`); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

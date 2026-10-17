@@ -1,0 +1,6 @@
+# Computed from the coordinates of PDB 6LZJ chain A (1.73 A). Paper numbering = file numbering + 7 (Glu29 = file residue 22, Glu32 = file residue 25). Heavy-atom distances in angstrom.
+from,to,distance_A
+Glu29 OE1 (file Glu22),water HOH 565 O,2.89
+Glu32 OE1 (file Glu25),water HOH 565 O,2.76
+water HOH 565 O,AMPPCP PG,3.54
+water HOH 565 O,Mg,4.66

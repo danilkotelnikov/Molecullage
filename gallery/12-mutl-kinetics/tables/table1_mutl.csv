@@ -1,0 +1,15 @@
+# Table 1 of Fukui et al., eLife 15:RP111443 (CC BY 4.0), the 12 aqMutL rows, as printed in the Europe PMC full text (PMC13614785). N.D. = the activity was not detected (table footnote).
+# kcat in min-1, Km in mM, kcat/Km in M-1 s-1; the table prints no error for kcat/Km. rank: by kcat/Km high to low, N.D. rows last in table order.
+rank,variant,kcat,kcat_err,Km,Km_err,kcat_over_Km
+1,WT,0.65,0.10,0.14,0.026,77
+2,E32A,0.10,0.022,2.1,0.39,0.79
+3,E29Q,0.069,0.010,1.5,0.20,0.77
+4,E32Q,0.10,0.018,3.5,0.46,0.48
+5,E32V,0.15,0.057,5.5,1.3,0.45
+6,E29A,N.D.,,N.D.,,N.D.
+7,E29V,N.D.,,N.D.,,N.D.
+8,E29K,N.D.,,N.D.,,N.D.
+9,E29G,N.D.,,N.D.,,N.D.
+10,E32K,N.D.,,N.D.,,N.D.
+11,E32G,N.D.,,N.D.,,N.D.
+12,E29Q/E32Q,N.D.,,N.D.,,N.D.

@@ -1,0 +1,750 @@
+{
+ "modules": [
+  {
+   "id": "F1",
+   "name": "F1",
+   "family": "indigo",
+   "ladder_hex": [
+    "#D9EAFE",
+    "#A2D1FF",
+    "#63A6E7",
+    "#3475B3",
+    "#2A4588",
+    "#262066"
+   ]
+  },
+  {
+   "id": "Fo",
+   "name": "Fo",
+   "family": "apricot",
+   "ladder_hex": [
+    "#DBA936",
+    "#A67C0B",
+    "#775002",
+    "#4B3202"
+   ]
+  },
+  {
+   "id": "Stalk",
+   "name": "Stalk",
+   "family": "rose",
+   "ladder_hex": [
+    "#FEDEE2",
+    "#FFBCBB",
+    "#FD8885",
+    "#D4645A",
+    "#B64B39",
+    "#992E49",
+    "#640325"
+   ]
+  }
+ ],
+ "subunits": [
+  {
+   "key": "alpha",
+   "label": "α",
+   "module": "F1",
+   "entities": [
+    16
+   ],
+   "gene": "ACANB15922",
+   "mark": "dot",
+   "chains": [
+    "a",
+    "b",
+    "c"
+   ],
+   "copies": 3,
+   "entity_names": [
+    "ATP synthase subunit alpha, mitochondrial"
+   ],
+   "hex": "#3475B3",
+   "family": "indigo",
+   "L": 0.55,
+   "dh": -13.973273099380517
+  },
+  {
+   "key": "beta",
+   "label": "β",
+   "module": "F1",
+   "entities": [
+    17
+   ],
+   "gene": "ACANB02410",
+   "mark": "dot",
+   "chains": [
+    "d",
+    "e",
+    "f"
+   ],
+   "copies": 3,
+   "entity_names": [
+    "ATP synthase subunit beta"
+   ],
+   "hex": "#2A4588",
+   "family": "indigo",
+   "L": 0.40695898249439744,
+   "dh": 1.1951332836060282
+  },
+  {
+   "key": "gamma",
+   "label": "γ",
+   "module": "F1",
+   "entities": [
+    3
+   ],
+   "gene": "ACANB07530",
+   "mark": "dot",
+   "chains": [
+    "A"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "F-ATPase gamma subunit,ATP synthase gamma subunit, mitochondrial"
+   ],
+   "hex": "#63A6E7",
+   "family": "indigo",
+   "L": 0.7064751325762271,
+   "dh": -14.790076901494457
+  },
+  {
+   "key": "delta",
+   "label": "δ",
+   "module": "F1",
+   "entities": [
+    5
+   ],
+   "gene": "ACANB02409",
+   "mark": "dot",
+   "chains": [
+    "C"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase, Delta/Epsilon chain, betasandwich domain containing protein"
+   ],
+   "hex": "#262066",
+   "family": "indigo",
+   "L": 0.3,
+   "dh": 16.0
+  },
+  {
+   "key": "epsilon",
+   "label": "ε",
+   "module": "F1",
+   "entities": [
+    9
+   ],
+   "gene": "ACANB12077",
+   "mark": "star",
+   "chains": [
+    "H"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase subunit epsilon, mitochondrial, putative"
+   ],
+   "hex": "#D9EAFE",
+   "family": "indigo",
+   "L": 0.93,
+   "dh": -10.968304995148788
+  },
+  {
+   "key": "IF1",
+   "label": "IF1",
+   "module": "F1",
+   "entities": [
+    7
+   ],
+   "gene": "ACANB08262",
+   "mark": "star",
+   "chains": [
+    "E"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase inhibitory factor 1 (IF1)"
+   ],
+   "hex": "#A2D1FF",
+   "family": "indigo",
+   "L": 0.842935515918553,
+   "dh": -16.0
+  },
+  {
+   "key": "Atp6",
+   "label": "Atp6",
+   "module": "Fo",
+   "entities": [
+    1
+   ],
+   "gene": "ACANB15943",
+   "mark": "dot",
+   "chains": [
+    "6"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase subunit a"
+   ],
+   "hex": "#A67C0B",
+   "family": "apricot",
+   "L": 0.6110776510963503,
+   "dh": 13.758460681638676
+  },
+  {
+   "key": "c",
+   "label": "c",
+   "module": "Fo",
+   "entities": [
+    14
+   ],
+   "gene": "ACANB15917",
+   "mark": "star",
+   "chains": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X"
+   ],
+   "copies": 9,
+   "entity_names": [
+    "ATP synthase subunit 9, mitochondrial"
+   ],
+   "hex": "#DBA936",
+   "family": "apricot",
+   "L": 0.7620799144404817,
+   "dh": 14.0
+  },
+  {
+   "key": "f",
+   "label": "f",
+   "module": "Fo",
+   "entities": [
+    12
+   ],
+   "gene": "ACANB14194",
+   "mark": "dot",
+   "chains": [
+    "K"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase subunit f, mitochondrial"
+   ],
+   "hex": "#4B3202",
+   "family": "apricot",
+   "L": 0.33945926630188006,
+   "dh": 7.636299764205126
+  },
+  {
+   "key": "ij",
+   "label": "i/j",
+   "module": "Fo",
+   "entities": [
+    11
+   ],
+   "gene": "ACANB04724",
+   "mark": "dot",
+   "chains": [
+    "J"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase subunit i/j, mitochondrial"
+   ],
+   "hex": "#775002",
+   "family": "apricot",
+   "L": 0.46310674046297484,
+   "dh": 6.224581925177933
+  },
+  {
+   "key": "s8",
+   "label": "8",
+   "module": "Stalk",
+   "entities": [
+    2
+   ],
+   "gene": "ACANB15938",
+   "mark": "dot",
+   "chains": [
+    "8"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ORFB"
+   ],
+   "hex": "#FEDEE2",
+   "family": "rose",
+   "L": 0.9284585513576342,
+   "dh": -14.0
+  },
+  {
+   "key": "b",
+   "label": "b",
+   "module": "Stalk",
+   "entities": [
+    4
+   ],
+   "gene": "ACANB15939",
+   "mark": "dot",
+   "chains": [
+    "B"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ORF25"
+   ],
+   "hex": "#FD8885",
+   "family": "rose",
+   "L": 0.753865225929818,
+   "dh": -1.420481979781866
+  },
+  {
+   "key": "d",
+   "label": "d",
+   "module": "Stalk",
+   "entities": [
+    6
+   ],
+   "gene": "ACANB10705",
+   "mark": "dot",
+   "chains": [
+    "D"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase subunit d, mitochondrial"
+   ],
+   "hex": "#992E49",
+   "family": "rose",
+   "L": 0.469416406840314,
+   "dh": -14.0
+  },
+  {
+   "key": "OSCP",
+   "label": "OSCP",
+   "module": "Stalk",
+   "entities": [
+    8
+   ],
+   "gene": "ACANB01783",
+   "mark": "dot",
+   "chains": [
+    "G"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ATP synthase OSCP, mitochondrial"
+   ],
+   "hex": "#640325",
+   "family": "rose",
+   "L": 0.32469844071516174,
+   "dh": -14.0
+  },
+  {
+   "key": "s04460",
+   "label": "04460",
+   "module": "Stalk",
+   "entities": [
+    15
+   ],
+   "gene": "ACANB04460",
+   "mark": "star",
+   "chains": [
+    "Z"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ACANB04460"
+   ],
+   "hex": "#D4645A",
+   "family": "rose",
+   "L": 0.6361830140935458,
+   "dh": 3.628163774109827
+  },
+  {
+   "key": "MASA",
+   "label": "MASA",
+   "module": "Stalk",
+   "entities": [
+    13
+   ],
+   "gene": "ACANB14707",
+   "mark": "dot",
+   "chains": [
+    "M"
+   ],
+   "copies": 1,
+   "entity_names": [
+    "ACANB14707"
+   ],
+   "hex": "#FFBCBB",
+   "family": "rose",
+   "L": 0.8565470026493835,
+   "dh": -3.8545131556949226
+  },
+  {
+   "key": "MDH",
+   "label": "MDH",
+   "module": "Stalk",
+   "entities": [
+    10
+   ],
+   "gene": "ACANB11954",
+   "mark": "dot",
+   "chains": [
+    "I",
+    "L"
+   ],
+   "copies": 2,
+   "entity_names": [
+    "malate dehydrogenase"
+   ],
+   "hex": "#B64B39",
+   "family": "rose",
+   "L": 0.55,
+   "dh": 8.0
+  }
+ ],
+ "unassigned": {
+  "key": "unk",
+  "label": "unassigned",
+  "module": null,
+  "entities": [
+   18,
+   19,
+   20,
+   21
+  ],
+  "gene": null,
+  "mark": null,
+  "chains": [
+   "1",
+   "2",
+   "3",
+   "5"
+  ],
+  "copies": 4,
+  "entity_names": [
+   "unknown protein",
+   "unknown protein",
+   "unknown protein",
+   "unknown protein"
+  ],
+  "hex": "#777777",
+  "family": "grey",
+  "L": null,
+  "dh": null
+ },
+ "chain_colour": {
+  "6": "#A67C0B",
+  "8": "#FEDEE2",
+  "A": "#63A6E7",
+  "B": "#FD8885",
+  "C": "#262066",
+  "D": "#992E49",
+  "E": "#A2D1FF",
+  "G": "#640325",
+  "H": "#D9EAFE",
+  "I": "#B64B39",
+  "J": "#775002",
+  "K": "#4B3202",
+  "L": "#B64B39",
+  "M": "#FFBCBB",
+  "P": "#DBA936",
+  "Q": "#DBA936",
+  "R": "#DBA936",
+  "S": "#DBA936",
+  "T": "#DBA936",
+  "U": "#DBA936",
+  "V": "#DBA936",
+  "W": "#DBA936",
+  "X": "#DBA936",
+  "Z": "#D4645A",
+  "a": "#3475B3",
+  "b": "#3475B3",
+  "c": "#3475B3",
+  "d": "#2A4588",
+  "e": "#2A4588",
+  "f": "#2A4588",
+  "1": "#777777",
+  "2": "#777777",
+  "3": "#777777",
+  "5": "#777777"
+ },
+ "chain_subunit": {
+  "6": "Atp6",
+  "8": "s8",
+  "A": "gamma",
+  "B": "b",
+  "C": "delta",
+  "D": "d",
+  "E": "IF1",
+  "G": "OSCP",
+  "H": "epsilon",
+  "I": "MDH",
+  "J": "ij",
+  "K": "f",
+  "L": "MDH",
+  "M": "MASA",
+  "P": "c",
+  "Q": "c",
+  "R": "c",
+  "S": "c",
+  "T": "c",
+  "U": "c",
+  "V": "c",
+  "W": "c",
+  "X": "c",
+  "Z": "s04460",
+  "a": "alpha",
+  "b": "alpha",
+  "c": "alpha",
+  "d": "beta",
+  "e": "beta",
+  "f": "beta",
+  "1": "unk",
+  "2": "unk",
+  "3": "unk",
+  "5": "unk"
+ },
+ "contacts": [
+  {
+   "a": "Atp6",
+   "b": "b",
+   "atom_pairs": 133
+  },
+  {
+   "a": "Atp6",
+   "b": "c",
+   "atom_pairs": 76
+  },
+  {
+   "a": "Atp6",
+   "b": "d",
+   "atom_pairs": 153
+  },
+  {
+   "a": "Atp6",
+   "b": "f",
+   "atom_pairs": 248
+  },
+  {
+   "a": "Atp6",
+   "b": "ij",
+   "atom_pairs": 157
+  },
+  {
+   "a": "Atp6",
+   "b": "s8",
+   "atom_pairs": 307
+  },
+  {
+   "a": "IF1",
+   "b": "alpha",
+   "atom_pairs": 64
+  },
+  {
+   "a": "IF1",
+   "b": "beta",
+   "atom_pairs": 217
+  },
+  {
+   "a": "MASA",
+   "b": "MDH",
+   "atom_pairs": 275
+  },
+  {
+   "a": "MASA",
+   "b": "OSCP",
+   "atom_pairs": 36
+  },
+  {
+   "a": "MDH",
+   "b": "OSCP",
+   "atom_pairs": 51
+  },
+  {
+   "a": "MDH",
+   "b": "unk",
+   "atom_pairs": 79
+  },
+  {
+   "a": "OSCP",
+   "b": "alpha",
+   "atom_pairs": 67
+  },
+  {
+   "a": "OSCP",
+   "b": "beta",
+   "atom_pairs": 41
+  },
+  {
+   "a": "OSCP",
+   "b": "unk",
+   "atom_pairs": 158
+  },
+  {
+   "a": "alpha",
+   "b": "beta",
+   "atom_pairs": 3978
+  },
+  {
+   "a": "alpha",
+   "b": "gamma",
+   "atom_pairs": 145
+  },
+  {
+   "a": "b",
+   "b": "d",
+   "atom_pairs": 210
+  },
+  {
+   "a": "b",
+   "b": "f",
+   "atom_pairs": 44
+  },
+  {
+   "a": "b",
+   "b": "s8",
+   "atom_pairs": 145
+  },
+  {
+   "a": "b",
+   "b": "unk",
+   "atom_pairs": 101
+  },
+  {
+   "a": "beta",
+   "b": "gamma",
+   "atom_pairs": 266
+  },
+  {
+   "a": "beta",
+   "b": "unk",
+   "atom_pairs": 21
+  },
+  {
+   "a": "c",
+   "b": "delta",
+   "atom_pairs": 125
+  },
+  {
+   "a": "c",
+   "b": "gamma",
+   "atom_pairs": 56
+  },
+  {
+   "a": "d",
+   "b": "s04460",
+   "atom_pairs": 137
+  },
+  {
+   "a": "d",
+   "b": "s8",
+   "atom_pairs": 163
+  },
+  {
+   "a": "d",
+   "b": "unk",
+   "atom_pairs": 24
+  },
+  {
+   "a": "delta",
+   "b": "epsilon",
+   "atom_pairs": 118
+  },
+  {
+   "a": "delta",
+   "b": "gamma",
+   "atom_pairs": 286
+  },
+  {
+   "a": "epsilon",
+   "b": "gamma",
+   "atom_pairs": 286
+  },
+  {
+   "a": "ij",
+   "b": "s8",
+   "atom_pairs": 135
+  },
+  {
+   "a": "s04460",
+   "b": "s8",
+   "atom_pairs": 220
+  },
+  {
+   "a": "s8",
+   "b": "unk",
+   "atom_pairs": 89
+  }
+ ],
+ "check": {
+  "touching_pairs_worst_case_min": 14.25,
+  "touching_pair": [
+   "alpha",
+   "beta"
+  ],
+  "touching_pairs_normal_vision_min": 14.7,
+  "touching_pair_normal": [
+   "Atp6",
+   "c"
+  ],
+  "all_pairs_worst_case_min": 8.49,
+  "all_pairs_pair": [
+   "s8",
+   "MASA"
+  ],
+  "all_pairs_normal_vision_min": 10.45,
+  "all_pairs_normal_pair": [
+   "s04460",
+   "MDH"
+  ],
+  "touch_min_asserted": 10.0,
+  "hue_range_deg": {
+   "indigo": [
+    -16.0,
+    16.0
+   ],
+   "apricot": [
+    -8.0,
+    14.0
+   ],
+   "rose": [
+    -14.0,
+    8.0
+   ]
+  },
+  "l_range": [
+   0.3,
+   0.93
+  ],
+  "l_by_subunit": {
+   "alpha": [
+    0.55,
+    0.8
+   ],
+   "beta": [
+    0.35,
+    0.6
+   ],
+   "c": [
+    0.65,
+    0.88
+   ],
+   "MDH": [
+    0.35,
+    0.55
+   ]
+  },
+  "contact_rule": "heavy atoms of two subunits within 4.5 A, at least 20 atom pairs",
+  "n_touching_pairs": 34,
+  "e_g_in_9ZFW": "Membrane region of Acanthamoeba castellanii mitochondrial ATP synthase dimer"
+ }
+}

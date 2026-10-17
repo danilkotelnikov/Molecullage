@@ -1,0 +1,38 @@
+# RCSB core/entry record of every PDB id of Table 1 of He, Zhao and Xu 2026 (Cell Discovery 12:61), read 2026-10-17 from data.rcsb.org, next to the table's technique and resolution. Written by src/rcsb_check.py.
+pdb,receptor,table_technique,rcsb_method,rcsb_xray_source,technique_match,table_resolution_A,rcsb_resolution_A,resolution_match,initial_release_date,rcsb_title
+4ZWJ,Rhodopsin,XFEL,X-RAY DIFFRACTION,FREE ELECTRON LASER,True,3.30,3.302,True,2015-07-29,Crystal structure of rhodopsin bound to arrestin by femtosecond X-ray laser
+5DGY,Rhodopsin,XFEL,X-RAY DIFFRACTION,SYNCHROTRON,False,7.70,7.7,True,2016-03-23,Crystal structure of rhodopsin bound to visual arrestin
+5W0P,Rhodopsin,XFEL,X-RAY DIFFRACTION,FREE ELECTRON LASER,True,3.01,3.013,True,2017-08-09,Crystal structure of rhodopsin bound to visual arrestin determined by X-ray free electron laser
+6PWC,NTSR1,Cryo-EM,ELECTRON MICROSCOPY,,True,4.90,4.9,True,2019-12-04,A complex structure of arrestin-2 bound to neurotensin receptor 1
+6UP7,NTSR1,Cryo-EM,ELECTRON MICROSCOPY,,True,4.20,4.2,True,2020-02-26,neurotensin receptor and arrestin2 complex
+6U1N,M2R,Cryo-EM,ELECTRON MICROSCOPY,,True,4.00,4,True,2020-02-26,GPCR-Beta arrestin structure in lipid bilayer
+6TKO,Turkey β1AR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.30,3.3,True,2020-06-17,Phosphorylated turkey beta1 adrenoceptor with bound agonist formoterol coupled to arrestin-2 in lipid nanodisc.
+7R0C,V2R,Cryo-EM,ELECTRON MICROSCOPY,,True,4.73,4.73,True,2022-09-14,Structure of the AVP-V2R-arrestin2-ScFv30 complex
+7SRS,5-HT2BR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.30,3.3,True,2022-09-21,5-HT2B receptor bound to LSD in complex with beta-arrestin1 obtained by cryo-electron microscopy (cryoEM)
+8JRV,GCGR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.30,3.3,True,2023-08-16,Cryo-EM structure of the glucagon receptor bound to glucagon and beta-arrestin 1
+8JRU,GCGR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.50,3.5,True,2023-08-16,Cryo-EM structure of the glucagon receptor bound to beta-arrestin 1 in ligand-free state
+8WRZ,CB1R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.60,3.6,True,2024-02-28,Cry-EM structure of cannabinoid receptor-beta-arrestin-1 complex
+8WU1,CB1R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.20,3.2,True,2024-03-20,Cryo-EM structure of CB1-beta-arrestin1 complex
+9II2,mGlu3R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.70,3.7,True,2025-03-05,Cryo-EM Structure of the 2:2 Complex of mGlu3 and beta-arrestin1
+9II3,mGlu3R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.90,3.9,True,2025-03-05,Cryo-EM Structure of the 2:1 Complex of mGlu3 and beta-arrestin1
+8ZYT,NTSR1,Cryo-EM,ELECTRON MICROSCOPY,,True,2.65,2.65,True,2025-04-09,Cryo-EM structure of neurotensin receptor 1 in complex with beta-arrestin1 and SBI-553 (complex 3)
+9M0D,NTSR1,Cryo-EM,ELECTRON MICROSCOPY,,True,3.41,3.41,True,2025-04-09,Cryo-EM structure of neurotensin receptor 1 in complex with beta-arrestin 1
+8ZYU,NTSR1,Cryo-EM,ELECTRON MICROSCOPY,,True,2.65,2.65,True,2025-04-16,Cryo-EM structure of neurotensin receptor 1 in complex with beta-arrestin1 and SBI-553 (complex 1)
+8ZYY,NTSR1,Cryo-EM,ELECTRON MICROSCOPY,,True,2.83,2.83,True,2025-04-09,Cryo-EM structure of neurotensin receptor 1 in complex with beta-arrestin1 and SBI-553 (complex 2)
+9E82,ACKR3,Cryo-EM,ELECTRON MICROSCOPY,,True,3.40,3.4,True,2025-04-02,ACKR3 phosphorylated by GRK5 in complex with arrestin2 and Fab7
+9IJR,GPR52,Cryo-EM,ELECTRON MICROSCOPY,,True,3.86,3.86,True,2025-09-03,Cryo-EM structure of the orphan GPR52 beta-arrestin 1 complex bound to ligand c17
+9IJS,GPR52,Cryo-EM,ELECTRON MICROSCOPY,,True,3.64,3.64,True,2025-09-03,Cryo-EM structure of the orphan GPR52 bound to beta-arrestin 1 in ligand-free state
+9KUV,APJR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.21,3.21,True,2025-09-17,Mechanistic insights into the versatile stoichiometry and biased signaling of the apelin receptor-arrestin complex
+9KUW,APJR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.49,3.49,True,2025-09-17,Cryo-EM structure of dimeric APJR and two Beta-arrestins complex with small molecules
+9KUX,APJR,Cryo-EM,ELECTRON MICROSCOPY,,True,3.57,3.57,True,2025-09-17,Cryo-EM structure of dimeric APJR and one Beta-arrestin complex with small molecules
+9MBA,mGlu8R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.14,3.14,True,2025-10-01,Cryo-EM structure of complex of transducer-bound GPCR
+9UYH,GPR1,Cryo-EM,ELECTRON MICROSCOPY,,True,3.30,3.3,True,2025-11-19,Cryo-EM structure of the G protein-coupled receptor 1 (GPR1) bound to chemerin and beta-arrestin 1 (Conformation 1)
+9UYI,GPR1,Cryo-EM,ELECTRON MICROSCOPY,,True,3.20,3.2,True,2025-11-19,Cryo-EM structure of the G protein-coupled receptor 1 (GPR1) bound to chemerin and beta-arrestin 1 (Conformation 2)
+9UYJ,GPR1,Cryo-EM,ELECTRON MICROSCOPY,,True,3.30,3.3,True,2025-11-19,Cryo-EM structure of the G protein-coupled receptor 1 (GPR1) bound to chemerin and beta-arrestin 1 (Conformation 3)
+9UYL,GPR1,Cryo-EM,ELECTRON MICROSCOPY,,True,3.30,3.3,True,2025-11-19,Cryo-EM structure of the G protein-coupled receptor 1 (GPR1) bound to chemerin and beta-arrestin 1 (Conformation 4)
+9UYN,GPR1,Cryo-EM,ELECTRON MICROSCOPY,,True,2.90,2.9,True,2025-11-19,Cryo-EM structure of the G protein-coupled receptor 1 (GPR1) bound to beta-arrestin 1 in ligand-free state
+9UYM,GPR1,Cryo-EM,ELECTRON MICROSCOPY,,True,3.50,3.5,True,2025-11-19,Composite map of the G protein-coupled receptor 1 (GPR1) bound to chemerin and beta-arrestin 2
+9WSV,MOR,Cryo-EM,ELECTRON MICROSCOPY,,True,2.80,2.8,True,2025-11-26,Cryo-EM structure of DAMGO-muOR-arrestin-1-Fab30 complex
+9WSX,MOR,Cryo-EM,ELECTRON MICROSCOPY,,True,2.80,2.8,True,2025-11-26,Cryo-EM structure of endomorphin-1-muOR-arrestin2-Fab30 complex
+9LXR,PTH1R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.07,3.07,True,2025-09-10,A Cryo-EM structure of LA-PTH-PTH1R-Beta-arrestin1 complex (state 1 conformation)
+9LXP,PTH1R,Cryo-EM,ELECTRON MICROSCOPY,,True,3.20,3.2,True,2026-03-04,A Cryo-EM structure of LA-PTH-PTH1R-Beta-arrestin1 complex (state 2 conformation)

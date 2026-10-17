@@ -1,0 +1,6 @@
+NIHMS2120106-supplement-5.xlsx	Table S1	https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12594101/supplementaryFiles	30540 bytes	sha256 1dda66a603e27a90f1ba1170516da459ae8ed960c12d18cc47c936490f3cd88d	pinned, matches
+NIHMS2120106-supplement-7.xlsx	Table S3	https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12594101/supplementaryFiles	463381 bytes	sha256 cca5f9725452df1aa193ed89590f974a9b965ae259c3d79b7c93bb731523e4a6	pinned, matches
+NIHMS2120106-supplement-9.xlsx	Table S5	https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12594101/supplementaryFiles	287443 bytes	sha256 cf5ee90e4e941d1cce3f76f437a6ef691179decb719b78627214dd7ae8304c20	pinned, matches
+NIHMS2120106-supplement-10.xlsx	Table S6	https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12594101/supplementaryFiles	551063 bytes	sha256 f296de20e855b4f0a8ba2ae6d06172143cbced15d8236bbd35c1bd3fa604288c	pinned, matches
+NIHMS2120106-supplement-2.xlsx	Table S9	https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12594101/supplementaryFiles	65153 bytes	sha256 507c89fdf3b57b577449a9312afc91f00db5f3452944433640c8dc4bcc8cc147	pinned, matches
+NIHMS2120106-supplement-3.xlsx	Table S10	https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12594101/supplementaryFiles	106690 bytes	sha256 bd24ab1f184c9e54e443fac9acd8b9d1379e89c55e52000eb31d3a32a36ea1e1	pinned, matches

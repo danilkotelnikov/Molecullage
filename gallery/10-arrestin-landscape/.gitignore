@@ -1,0 +1,5 @@
+data/
+art/*.png
+!art/*_t.png
+/10-arrestin-landscape.html
+__pycache__/

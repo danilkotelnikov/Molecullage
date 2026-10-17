@@ -1,0 +1,9 @@
+# Refit of the source file (Figure 1 - source data 2): unweighted least squares of kapp = kcat [ATP] / (Km + [ATP]) to the means (scipy curve_fit, (0, 0) included),
+# against Table 1 of Fukui et al., eLife 15:RP111443 as printed. se = standard error of the fit. kcat in min-1, Km in mM, kcat/Km in M-1 s-1 (kcat/Km x 1000/60).
+# E32A and E32Q: the file's two columns fit the OTHER name's Table 1 row; the file and Table 1 disagree and the figure draws the file as labelled.
+variant,n_points,refit_kcat,refit_kcat_se,refit_Km,refit_Km_se,refit_kcat_over_Km,corr_kcat_Km,table_kcat,table_kcat_err,table_Km,table_Km_err,table_kcat_over_Km
+WT,8,0.6889,0.0354,0.1407,0.0250,81.574,0.865,0.65,0.10,0.14,0.026,77
+E29Q,12,0.0716,0.0039,1.4942,0.2031,0.799,0.917,0.069,0.010,1.5,0.20,0.77
+E32A,12,0.1004,0.0070,3.4788,0.4557,0.481,0.972,0.10,0.022,2.1,0.39,0.79
+E32V,12,0.1456,0.0217,5.4727,1.3184,0.443,0.987,0.15,0.057,5.5,1.3,0.45
+E32Q,12,0.1045,0.0086,2.1151,0.3888,0.823,0.945,0.10,0.018,3.5,0.46,0.48

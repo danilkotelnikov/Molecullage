@@ -1,0 +1,99 @@
+[
+  {
+    "slug": "01-tap-cycle",
+    "kind": "Mechanism, six cryo-EM structures",
+    "paper": "Lee, Manon and Chen, Immunity 2025, 58(9):2166",
+    "doi": "10.1016/j.immuni.2025.08.003",
+    "original": "Fig. 1A, 2A, 4A and 5A",
+    "change": "One cycle of six states in a common orientation, with the measured gap between the nucleotide-binding domains, in place of four small schematics spread over four figures."
+  },
+  {
+    "slug": "02-ebola-pocket",
+    "kind": "Ligand pocket, 3D and 2D",
+    "paper": "Bu et al., Nature Communications 2026, 17:10401",
+    "doi": "10.1038/s41467-026-77332-3",
+    "original": "Fig. 5A and B",
+    "change": "The same 20 contacts in a 3D view and in a flat drawing of the compound, every line typed (hydrogen bond, cation-pi, hydrophobic) and measured from the coordinates."
+  },
+  {
+    "slug": "03-colabfold-benchmark",
+    "kind": "Benchmark plots",
+    "paper": "Mirdita et al., Nature Methods 2022, 19:679",
+    "doi": "10.1038/s41592-022-01488-1",
+    "original": "Fig. 2",
+    "change": "Four plots on one colour code, with the means, the caveats and the units printed next to the data."
+  },
+  {
+    "slug": "04-bcell-pathway",
+    "kind": "Graphical abstract as an infographic",
+    "paper": "Kalchschmidt et al., Cell Reports 2025, 44:116361",
+    "doi": "10.1016/j.celrep.2025.116361",
+    "original": "Graphical abstract and Fig. 2A",
+    "change": "The 47 reporter genes in readable type, the screen counts as proportional bars and the drug effects as aligned bars with real values."
+  },
+  {
+    "slug": "05-atp-synthase",
+    "kind": "Large complex, 34 chains",
+    "paper": "Fry et al., Cell 2026, 189:6307",
+    "doi": "10.1016/j.cell.2026.08.057",
+    "original": "Fig. 1",
+    "change": "All 34 chains as flat surfaces coloured by module, with a key that ties every subunit to its PDB chain ids."
+  },
+  {
+    "slug": "06-gpcr-snake-plot",
+    "kind": "Snake plot linked to a structure",
+    "paper": "Nakajima et al., Protein Science 2026, 35:e70408",
+    "doi": "10.1002/pro.70408",
+    "original": "Fig. 1 and 4, Tables 1 and 2",
+    "change": "Four mutation sites on the snake plot and on the crystal structure, with the EC50 of every mutant on one log axis."
+  },
+  {
+    "slug": "07-rbd-mutational-scan",
+    "kind": "Deep mutational scan heat map",
+    "paper": "Taylor and Starr, PLoS Pathogens 2026, 22:e1014074",
+    "doi": "10.1371/journal.ppat.1014074",
+    "original": "Fig. 2A",
+    "change": "Both backgrounds on shared columns, the ACE2-contact sites first, and the structure coloured with the same scores."
+  },
+  {
+    "slug": "08-nitrogenase-tree",
+    "kind": "Annotated evolutionary tree",
+    "paper": "Cuevas Zuviria et al., eLife 2025, 14:RP105613",
+    "doi": "10.7554/elife.105613",
+    "original": "Fig. 3A and 4A, B",
+    "change": "A tree that can be read: clades as bands, insertion events marked, structural attributes in a side matrix and structure insets tied to their clades."
+  },
+  {
+    "slug": "09-alphapulldown-workflow",
+    "kind": "Software workflow",
+    "paper": "Yu et al., Bioinformatics 2023, 39:btac749",
+    "doi": "10.1093/bioinformatics/btac749",
+    "original": "Fig. 1",
+    "change": "CPU and GPU steps colour-coded and named, the four modes drawn as what they pair, file names on the files."
+  },
+  {
+    "slug": "10-arrestin-landscape",
+    "kind": "Landscape of structures",
+    "paper": "He, Zhao and Xu, Cell Discovery 2026, 12:61",
+    "doi": "10.1038/s41421-026-00909-1",
+    "original": "Fig. 2 and Table 1",
+    "change": "All 36 structures of a table on one grid by receptor and engagement mode, with resolution, technique and arrestin type, and three renders."
+  },
+  {
+    "slug": "11-virus-network",
+    "hold": true,
+    "kind": "Interaction network",
+    "paper": "Safi et al., The EMBO Journal 2026, 45:3514",
+    "doi": "10.1038/s44318-026-00770-8",
+    "original": "Fig. 3",
+    "change": "Ten baits and 433 prey on a ring sorted by region, with the counts, the shared prey and the homology to known complexes in separate panels."
+  },
+  {
+    "slug": "12-mutl-kinetics",
+    "kind": "Enzyme kinetics, small multiples",
+    "paper": "Fukui et al., eLife 2026, 15:RP111443",
+    "doi": "10.7554/elife.111443",
+    "original": "Fig. 1A, D, E and Table 1",
+    "change": "Efficiency ranked in one panel, each variant's curve and fit in its own tile, and the two Table 1 rows that look exchanged marked."
+  }
+]

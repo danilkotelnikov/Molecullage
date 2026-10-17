@@ -1,0 +1,4 @@
+pdb/9PEL.cif	https://files.rcsb.org/download/9PEL.cif	1164917 bytes	sha256 4a723c2d4034aa5f18e4a91e964ed88617412cceed5dce5afe6ac2268ed9399a	pinned
+pdb/5JQ7.cif	https://files.rcsb.org/download/5JQ7.cif	666217 bytes	sha256 715561fb3758ee83e684bbfd85079e29aa8035ee71a34817be041796ea36715c	pinned
+pdb/9BSV.cif	https://files.rcsb.org/download/9BSV.cif	1137571 bytes	sha256 0f5c3302489f0b8ad084f39fa286b23f3c28229d3205b2283b52a8de96b5923d	pinned
+source_data/41467_2026_77332_MOESM4_ESM.xlsx	https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-026-77332-3/MediaObjects/41467_2026_77332_MOESM4_ESM.xlsx	64359 bytes	sha256 c2d28d41e03d08547c2d2e8754aed1efbd937655427215a111c20e4588c700f6	pinned

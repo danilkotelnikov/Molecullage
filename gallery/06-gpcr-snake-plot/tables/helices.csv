@@ -1,0 +1,13 @@
+helix,first_residue,last_residue,residues,deposited_records,fit_deviation_A
+TM1,30,62,33,HELX_P1,1.44
+TM2,67,98,32,HELX_P3+HELX_P4,1.41
+TM3,102,138,37,HELX_P5,2.74
+TM4,148,178,31,HELX_P7,1.94
+TM5,195,230,36,HELX_P8,1.14
+TM6,348,384,37,HELX_P10,2.78
+TM7,390,416,27,HELX_P11,1.78
+short helix (loop),63,66,4,HELX_P2,
+short helix (loop),138,146,9,HELX_P6,
+short helix (loop),234,241,8,HELX_P9,
+short helix (helix 8),416,428,13,HELX_P12,
+short helix (helix 8),429,432,4,HELX_P13,

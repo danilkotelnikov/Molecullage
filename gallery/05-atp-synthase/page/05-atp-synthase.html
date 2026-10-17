@@ -1,0 +1,213 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>05 ATP synthase of Acanthamoeba by module</title></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<!--INLINE_JS data.js-->
+<script>
+// Redesign of Fig. 1C-F of Fry et al. 2026 (Cell 189:6307). ChimeraX draws the two views of PDB 9ZFT (src/render_atp.py, flat surfaces, one per chain);
+// src/anchors.py finds where each ring ends (the deepest point of the largest flat piece of the chain, checked on an id render of the same camera);
+// src/make_layout.py gives every position in window.DATA (millimetres, origin top left). This page draws the text, the leaders and the key table at those
+// positions and, at the end, measures the rendered page: checkAlign() throws one Error that lists every position that is off its grid line by more than TOL,
+// every text on text, every leader that misses its label or its anchor.
+const D = window.DATA, TOL = 0.25;
+const W = D.W, X0 = D.X0, FL = (window.CONFIG || {}).floorPt || 6.55;
+const INK = '#0A0A0A', SUB = '#2B2B2B';
+const RP = 3.2;                                   // row pitch of the key tables, mm
+const HA = D.layout.A.h;
+const RING = 0.62;                                // mm: radius of the ring that marks the chain
+// ---- geometry of row 2 (the key), top-down mm
+const T2 = D.T_IMG + HA + 4.0;                    // panel head of c
+const T_TAB = T2 + 13.2;                          // first header line of the tables
+const XL = X0, TW = 86.0, XR = X0 + TW + 3.0;     // the two table blocks
+const COLX = { sw: 0, nm: 5.0, pn: 18.8, en: 27.2, ge: 42.0, ch: 58.5, mk: 84.4 };
+const rowsL = [], rowsR = [];
+D.rows.forEach((r) => { (r.module === 'F1' || r.module === 'Fo' ? rowsL : rowsR).push(r); });
+const gapAbove = (rows, i) => (rows[i].kind === 'module' && i > 0 ? 0.7 : (rows[i].module === 'none' && rows[i].kind === 'sub' ? 0.7 : 0));
+const place = (rows, t0) => { let t = t0; return rows.map((r, i) => { t += RP + gapAbove(rows, i); return { ...r, t: t - RP / 2 }; }); };
+const T_ROWS = T_TAB + 8.6;
+const PL = place(rowsL, T_ROWS), PR = place(rowsR, T_ROWS);
+const NOTE_P = 3.0;
+const notesL = ['Gene ID: as in the entry; Fig. 1F lists ε also as 06500.',
+  '04460: no subunit name in the paper; it is a gene number.',
+  'MDH: malate dehydrogenase, an enzyme of the tricarboxylic acid cycle.',
+  'MASA: MDH-ATP synthase adaptor. IF1: inhibitory factor 1.',
+  'OSCP: oligomycin sensitivity-conferral protein.'];
+const notesR = ['– : the entry gives no gene ID (entities named unknown protein).',
+  'Grey: helices “visible, but unassigned” in the map (paper, Fig. 1D).',
+  '† Fig. 1F marks δ de novo, but the Results group δ with',
+  '  c, ε, IF1 and 04460, found by complexomics.',
+  'Stalk includes MASA and MDH, the “hat” above OSCP (paper).',
+  'Subunits e and g (Fig. 1F) are built in PDB 9ZFW,',
+  '  the membrane part of the dimer, not in 9ZFT.',
+  'Example: Atp6 is entity 1, chain id 6; entity 6 is subunit d.'];
+const tNotesL = PL[PL.length - 1].t + RP / 2 + 2.6, tNotesR = PR[PR.length - 1].t + RP / 2 + 2.6;
+const tNotesEnd = Math.max(tNotesL + (notesL.length - 1) * NOTE_P, tNotesR + (notesR.length - 1) * NOTE_P) + 1.6;
+const H = Math.ceil((tNotesEnd + 3.2 + 3.4 + 1.4) * 10) / 10;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });
+const Tp = (t) => H - t;
+const REC = {};
+const R = (name, x, t, s, o = {}) => { const el = f.rich(x, Tp(t), s, { color: INK, fs: 7, ...o }); if (name) REC[name] = el; return el; };
+const svgNS = 'http://www.w3.org/2000/svg';
+const mkPath = (id, d, stroke, width) => { const p = document.createElementNS(svgNS, 'path'); p.setAttribute('id', id); p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', stroke); p.setAttribute('stroke-width', width); p.setAttribute('stroke-linecap', 'butt'); f.svg.appendChild(p); return p; };
+// a ring marks the chain: a white band under a thin ink ring, nothing inside, so that the tone under it stays visible
+const mkRing = (id, x, t) => { const g = document.createElementNS(svgNS, 'g'); g.setAttribute('id', id);
+  const a = document.createElementNS(svgNS, 'circle'); a.setAttribute('cx', x); a.setAttribute('cy', t); a.setAttribute('r', RING); a.setAttribute('fill', 'none'); a.setAttribute('stroke', '#fff'); a.setAttribute('stroke-width', 0.6);
+  const b = document.createElementNS(svgNS, 'circle'); b.setAttribute('cx', x); b.setAttribute('cy', t); b.setAttribute('r', RING); b.setAttribute('fill', 'none'); b.setAttribute('stroke', INK); b.setAttribute('stroke-width', 0.2);
+  g.append(a, b); f.svg.appendChild(g); };
+const box = (id, x, t, w, h, bg) => { const d = document.createElement('div'); d.id = id; d.className = 'cell'; d.style.cssText = `left:${x}mm;top:${t}mm;width:${w}mm;height:${h}mm;background:${bg};border:0.5pt solid ${INK}`; f.el.appendChild(d); return d; };
+
+// ================================================================ headline (the finding), line 2 and panel heads
+R('top', X0, 3.0, 'A TCA-cycle enzyme, malate dehydrogenase (MDH), is integrated into Acanthamoeba ATP synthase.', { bold: true, fs: 7.5 });
+R('top2', X0, 6.7, 'TCA: tricarboxylic acid. Structure PDB 9ZFT, one monomer, coloured by module.', { color: SUB });
+const head = (ch, x, T, title, subs) => {
+  f.letter(ch, x, Tp(T + 0.6));
+  R('title-' + ch, x + 4.6, T + 2.2, title, { bold: true, fs: 7.5 });
+  subs.forEach((s, k) => R(`sub${k + 1}-${ch}`, x + 4.6, T + 5.8 + 3.2 * k, s, { color: SUB }));
+};
+head('a', X0, D.T_HEAD, 'Side view of the monomer', ['All 34 chains drawn, one surface each.', 'Rings mark the chain that a label names.']);
+head('b', D.layout.B.x, D.T_HEAD, 'Second view of the monomer', ['Same colours as a, turned 90° about', 'the vertical axis.']);
+head('c', X0, T2, 'Key: subunits by module', ['Entity numbers and chain ids are different things; chain ids are case-sensitive.',
+  'Panel: where the subunit is labelled, in the view that shows it best. ×N: copies; a label names one.']);
+
+// ================================================================ the two renders
+['A', 'B'].forEach((v) => {
+  const L = D.layout[v];
+  f.image({ x: L.x, y: Tp(L.y + L.h), w: L.w, name: D.imgs[v] });
+});
+
+// ================================================================ leaders (a white halo under each), rings, labels
+const endOf = (i) => { const dx = i.start[0] - i.ax, dy = i.start[1] - i.ay, n = Math.hypot(dx, dy); return [i.ax + dx / n * RING, i.ay + dy / n * RING]; };
+D.labels.forEach((i) => { const e = endOf(i); mkPath('halo-' + i.key, `M${i.start[0]} ${i.start[1]}L${e[0]} ${e[1]}`, '#fff', 0.7); });
+D.labels.forEach((i) => {
+  const e = endOf(i);
+  mkPath('lead-' + i.key, `M${i.start[0]} ${i.start[1]}L${e[0]} ${e[1]}`, INK, 0.22);
+  mkRing('dot-' + i.key, i.ax, i.ay);
+  R('lab-' + i.key, i.lx, i.ly, i.text, { ha: i.side === 'L' ? 'right' : 'left' });
+});
+
+// ================================================================ module key (right of row 1)
+const KX = D.XK;
+R('mk-head', KX, D.T_HEAD + 2.2, 'Modules', { bold: true, fs: 7.5 });
+R('mk-h1', KX, D.T_HEAD + 5.8, 'Family = module,', { color: SUB });
+R('mk-h2', KX, D.T_HEAD + 9.0, 'tone = subunit.', { color: SUB });
+const DESC = { F1: ['F1', 'catalytic head', 'with γ δ ε, IF1'], Fo: ['Fo', 'membrane part', ''], Stalk: ['Stalk', 'peripheral stalk', 'incl. MASA, MDH'] };
+const ramp = (id, x, t, hexes) => hexes.forEach((h, k) => box(`${id}-${k}`, x + k * 2.9, t, 2.6, 2.6, h));
+D.modules.forEach((m, k) => {
+  const t0 = D.T_IMG + k * 17.0;
+  R('mod-' + m.id + '-n', KX, t0 + 1.2, DESC[m.id][0], { bold: true });
+  R('mod-' + m.id + '-d', KX, t0 + 4.4, DESC[m.id][1], { color: SUB });
+  if (DESC[m.id][2]) R('mod-' + m.id + '-e', KX, t0 + 7.4, DESC[m.id][2], { color: SUB });
+  ramp('ramp-' + m.id, KX, t0 + 9.9, D.ladder[m.id]);
+});
+{
+  const t0 = D.T_IMG + 3 * 17.0;
+  R('mod-none-n', KX, t0 + 1.2, 'Unassigned', { bold: true });
+  R('mod-none-d', KX, t0 + 4.4, 'grey, no module', { color: SUB });
+  box('ramp-none-0', KX, t0 + 7.0, 2.6, 2.6, D.tones.unk);
+}
+
+// ================================================================ key tables
+const hdr = (x0, name) => {
+  R(`${name}-h-A`, x0 + TW, T_TAB, '● identified from map density, * identified by homology', { ha: 'right', fs: FL, color: SUB });
+  R(`${name}-h-nm`, x0 + COLX.nm, T_TAB + 6.0, 'Subunit', { bold: true });
+  R(`${name}-h-nm2`, x0 + COLX.nm, T_TAB + 3.0, '× copies', { fs: FL, color: SUB });
+  R(`${name}-h-pn`, x0 + COLX.pn, T_TAB + 6.0, 'Panel', { bold: true });
+  R(`${name}-h-en`, x0 + COLX.en, T_TAB + 6.0, 'Entity', { bold: true });
+  R(`${name}-h-ge`, x0 + COLX.ge, T_TAB + 6.0, 'Gene ID', { bold: true });
+  R(`${name}-h-ch`, x0 + COLX.ch, T_TAB + 6.0, 'Chain ids', { bold: true });
+  R(`${name}-h-ch2`, x0 + COLX.ch, T_TAB + 3.0, 'case matters', { fs: FL, color: SUB });
+  R(`${name}-h-mk`, x0 + TW, T_TAB + 6.0, 'Identified', { bold: true, ha: 'right' });
+  mkPath(`${name}-rule`, `M${x0} ${T_TAB + 8.0}L${x0 + TW} ${T_TAB + 8.0}`, INK, 0.3);
+};
+hdr(XL, 'tl'); hdr(XR, 'tr');
+const MOD_DESC = { F1: 'catalytic head', Fo: 'membrane part', Stalk: 'peripheral stalk' };
+const drawRows = (rows, x0, name) => rows.forEach((r, n) => {
+  const id = `${name}${n}`;
+  if (r.kind === 'module') {
+    R(`${id}-mod`, x0 + COLX.nm - 5.0, r.t, r.name === 'Unassigned' ? '' : r.name, { bold: true });
+    if (MOD_DESC[r.module]) R(`${id}-moddesc`, x0 + COLX.nm + 3.5 + (r.name.length > 3 ? 1.5 : 0), r.t, MOD_DESC[r.module], { color: SUB, fs: FL });
+    return;
+  }
+  box(`${id}-sw`, x0 + COLX.sw, r.t - 1.1, 3.4, 2.2, r.hex);
+  R(`${id}-nm`, x0 + COLX.nm, r.t, (r.module === 'none' ? 'unassigned' : r.label) + (r.copies > 1 && r.module !== 'none' ? ' ×' + r.copies : ''));
+  R(`${id}-pn`, x0 + COLX.pn, r.t, r.panel);
+  R(`${id}-en`, x0 + COLX.en, r.t, String(r.entity));
+  R(`${id}-ge`, x0 + COLX.ge, r.t, r.gene || '–');
+  const tag = R(`${id}-ch`, x0 + COLX.ch, r.t, r.chains.join(' '), { fs: FL });
+  tag.style.border = `0.5pt solid ${INK}`; tag.style.borderRadius = '0.6mm'; tag.style.padding = '0.1mm 0.8mm'; tag.style.lineHeight = '1'; tag.style.background = '#fff';
+  if (r.mark) R(`${id}-mk`, x0 + COLX.mk, r.t, (r.mark === 'dot' ? '●' : '*') + (r.key === 'delta' ? ' †' : ''), { ha: 'center' });
+});
+drawRows(PL, XL, 'tl'); drawRows(PR, XR, 'tr');
+notesL.forEach((s, k) => R('nl' + k, XL, tNotesL + NOTE_P * k, s, { fs: FL, color: SUB }));
+notesR.forEach((s, k) => R('nr' + k, XR, tNotesR + NOTE_P * k, s, { fs: FL, color: SUB }));
+
+// ================================================================ foot: claim boundary and credit
+R('boundary', X0, H - 5.4, 'Deposited structure 9ZFT (entry 4.3 Å, paper 4.2 Å); nucleotides, ions, membrane not drawn.', { fs: FL, color: SUB });
+R('credit', X0, H - 2.2, 'After Fig. 1 of Fry et al., Cell 2026, 189:6307, doi:10.1016/j.cell.2026.08.057, CC BY 4.0. Data: PDB 9ZFT. Redesigned; values as published.', { fs: FL, color: SUB });
+
+// ================================================================ alignment and leader checks, measured on the rendered page (mm, origin top-left)
+function checkAlign() {
+  const K = 25.4 / 96, o = f.el.getBoundingClientRect();
+  const M = (el) => { const r = el.getBoundingClientRect(); const m = { l: (r.left - o.left) * K, t: (r.top - o.top) * K, r: (r.right - o.left) * K, b: (r.bottom - o.top) * K }; m.w = m.r - m.l; m.h = m.b - m.t; m.cx = (m.l + m.r) / 2; m.cy = (m.t + m.b) / 2; return m; };
+  const fails = [], near = (a, b, msg, tol = TOL) => { if (!(Math.abs(a - b) <= tol)) fails.push(`${msg}: ${a.toFixed(3)} vs ${b.toFixed(3)}`); };
+  const m = {}; Object.entries(REC).forEach(([k, el]) => { m[k] = M(el); });
+  // 1. panel letters and titles
+  [['a', X0], ['b', D.layout.B.x], ['c', X0]].forEach(([c, x]) => { near(M(document.getElementById('panel-' + c)).l, x, `panel ${c}: letter x`); near(m['title-' + c].l, x + 4.6, `panel ${c}: title x`); });
+  near(m['title-a'].cy, m['title-b'].cy, 'a and b: title row');
+  // 2. renders on their boxes
+  const imgs = [...document.querySelectorAll('img.art')];
+  [['A', 0], ['B', 1]].forEach(([v, k]) => { const e = M(imgs[k]), L = D.layout[v]; near(e.l, L.x, `render ${v}: left`); near(e.t, L.y, `render ${v}: top`); near(e.w, L.w, `render ${v}: width`); near(e.h, L.h, `render ${v}: height`); });
+  // 3. labels: column edge, row, leader ends on the label side and on the ring, ring on the anchor pixel
+  const segs = [], rings = [];
+  D.labels.forEach((i) => {
+    const e = m['lab-' + i.key], left = i.side === 'L';
+    near(left ? e.r : e.l, i.lx, `label ${i.key}: column edge`); near(e.cy, i.ly, `label ${i.key}: row`, 0.35);
+    near(left ? i.start[0] - e.r : e.l - i.start[0], 0.9, `label ${i.key}: gap to its leader`);
+    near(e.cy, i.start[1], `label ${i.key}: leader starts at the label height`, 0.35);
+    const p = document.getElementById('lead-' + i.key).getAttribute('d').match(/-?\d+\.?\d*/g).map(Number);
+    const c = document.getElementById('dot-' + i.key).querySelector('circle');
+    const cx = +c.getAttribute('cx'), cy = +c.getAttribute('cy');
+    near(p[0], i.start[0], `leader ${i.key}: start x`, 0.01);
+    near(Math.hypot(p[2] - cx, p[3] - cy), RING, `leader ${i.key}: ends on its ring`, 0.01);
+    near(cx, i.ax, `ring ${i.key}: x`, 0.01); near(cy, i.ay, `ring ${i.key}: y`, 0.01);
+    const im = M(imgs[i.view === 'A' ? 0 : 1]), cp = D.crop_px[i.view], ap = D.anchor_px[i.key];
+    near((cx - im.l) / im.w * cp[0], ap[0], `ring ${i.key}: centre on the anchor pixel (x, px)`, TOL * D.S_px_per_mm);
+    near((cy - im.t) / im.h * cp[1], ap[1], `ring ${i.key}: centre on the anchor pixel (y, px)`, TOL * D.S_px_per_mm);
+    segs.push({ k: i.key, a: [p[0], p[1]], b: [p[2], p[3]] }); rings.push({ k: i.key, c: [cx, cy] });
+  });
+  const o3 = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  const cross = (p, q, r, s) => o3(p, q, r) * o3(p, q, s) < 0 && o3(r, s, p) * o3(r, s, q) < 0;
+  const pd = (p, q, a) => { const dx = q[0] - p[0], dy = q[1] - p[1], t = Math.max(0, Math.min(1, ((a[0] - p[0]) * dx + (a[1] - p[1]) * dy) / (dx * dx + dy * dy))); return Math.hypot(p[0] + t * dx - a[0], p[1] + t * dy - a[1]); };
+  const sd = (s1, s2) => cross(s1.a, s1.b, s2.a, s2.b) ? 0 : Math.min(pd(s1.a, s1.b, s2.a), pd(s1.a, s1.b, s2.b), pd(s2.a, s2.b, s1.a), pd(s2.a, s2.b, s1.b));
+  for (let a = 0; a < segs.length; a++) for (let b = a + 1; b < segs.length; b++) {
+    if (cross(segs[a].a, segs[a].b, segs[b].a, segs[b].b)) fails.push(`leaders ${segs[a].k} and ${segs[b].k} cross`);
+    if (sd(segs[a], segs[b]) < 1.5 - 0.05) fails.push(`leaders ${segs[a].k} and ${segs[b].k} are ${sd(segs[a], segs[b]).toFixed(2)} mm apart (least 1.5)`);
+    if (Math.hypot(rings[a].c[0] - rings[b].c[0], rings[a].c[1] - rings[b].c[1]) < 2.5 - 0.05) fails.push(`rings ${rings[a].k} and ${rings[b].k} closer than 2.5 mm`);
+  }
+  // a leader must not pass within 1.5 mm of another ring, nor cut through the box of another label
+  segs.forEach((s) => rings.forEach((r) => { if (r.k !== s.k && pd(s.a, s.b, r.c) < 1.5 - 0.05) fails.push(`leader ${s.k} passes ${pd(s.a, s.b, r.c).toFixed(2)} mm from the ring ${r.k}`); }));
+  const hit = (s, e) => { const pts = 40; for (let q = 0; q <= pts; q++) { const x = s.a[0] + (s.b[0] - s.a[0]) * q / pts, y = s.a[1] + (s.b[1] - s.a[1]) * q / pts; if (x > e.l - 0.1 && x < e.r + 0.1 && y > e.t - 0.1 && y < e.b + 0.1) return true; } return false; };
+  segs.forEach((s) => D.labels.forEach((i) => { if (i.key !== s.k && hit(s, m['lab-' + i.key])) fails.push(`leader ${s.k} runs through the label ${i.key}`); }));
+  // 4. key tables: shared column edges, equal row pitch, both blocks start on one line
+  const col = (name, rows, x0) => {
+    const idx = rows.map((r, n) => [r, n]).filter(([r]) => r.kind === 'sub');
+    ['nm', 'pn', 'en', 'ge', 'ch'].forEach((c) => idx.forEach(([r, n]) => near(m[`${name}${n}-${c}`].l, x0 + COLX[c], `table ${name}: ${c} column, row ${n}`)));
+    idx.forEach(([r, n]) => { if (r.mark) near(m[`${name}${n}-mk`].cx, x0 + COLX.mk, `table ${name}: mark column, row ${n}`); near(m[`${name}${n}-nm`].cy, r.t, `table ${name}: row ${n} height`, 0.35);
+      const sw = M(document.getElementById(`${name}${n}-sw`)); near(sw.cy, r.t, `table ${name}: swatch row ${n}`, 0.35); near(sw.l, x0 + COLX.sw, `table ${name}: swatch column`);
+      if (m[`${name}${n}-ch`].r > x0 + COLX.mk - 2.5) fails.push(`table ${name}: chain ids of row ${n} reach the mark column`); });
+    ['nm', 'pn', 'en', 'ge', 'ch'].forEach((c) => near(m[`${name}-h-${c}`].l, x0 + COLX[c], `table ${name}: header ${c}`));
+    near(m[`${name}-h-mk`].r, x0 + TW, `table ${name}: header mark column ends at the table edge`);
+  };
+  col('tl', PL, XL); col('tr', PR, XR);
+  near(m['tl-h-nm'].cy, m['tr-h-nm'].cy, 'tables: header rows on one line');
+  // 5. nothing past the outer margin, no text on text
+  const keys = Object.keys(m);
+  keys.forEach((k) => { const e = m[k]; if (e.l < X0 - TOL) fails.push(`${k}: left edge ${e.l.toFixed(2)} inside the outer margin`); if (e.r > W - X0 + TOL) fails.push(`${k}: right edge ${e.r.toFixed(2)} inside the outer margin`); if (e.b > H - 0.8) fails.push(`${k}: bottom ${e.b.toFixed(2)} too near the page edge`); });
+  for (let a = 0; a < keys.length; a++) for (let b = a + 1; b < keys.length; b++) { const p = m[keys[a]], q = m[keys[b]]; if (p.l < q.r - 0.05 && q.l < p.r - 0.05 && p.t < q.b - 0.05 && q.t < p.b - 0.05) fails.push(`text on text: ${keys[a]} and ${keys[b]}`); }
+  // text must not sit on a render (labels are in their columns), except the leaders
+  imgs.forEach((im, k) => { const e = M(im); keys.forEach((kk) => { const p = m[kk]; if (/^lab-/.test(kk) && p.l < e.r - 0.2 && p.r > e.l + 0.2 && p.t < e.b && p.b > e.t) fails.push(`${kk} overlaps render ${k ? 'B' : 'A'}`); }); });
+  // panel b's sub-lines must stop before the module key column
+  ['sub1-b', 'sub2-b'].forEach((k) => { if (m[k].r > KX - 1) fails.push(`${k} reaches the module key column`); });
+  if (fails.length) throw new Error('alignment, tolerance ' + TOL + ' mm: ' + fails.join('; '));
+}
+checkAlign();
+</script></body></html>

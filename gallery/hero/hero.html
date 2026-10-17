@@ -1,0 +1,623 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Molecullage hero banner</title><style>:root{--ink:#0A0A0A;--sub:#2B2B2B;--line:#0A0A0A;--rule:#3A3A3A;--guide:#777777;--fs-letter:9pt;--fs-title:7.5pt;--fs-label:7pt;--fs-floor:6.55pt;--fs-math:8.4pt;--data0:#1D397B;--data1:#AC3F3F;--data2:#317F45;--data3:#7A29BB;--data4:#9A5600;--data5:#9B2D61}
+.fam-mint{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.fam-rose{background:#E16F6B;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-peri{background:#9B51E1;border-color:#7A29BB;--edge:#7A29BB}
+.fam-apricot{background:#FBB153;border-color:#9A5600;--edge:#9A5600}
+.fam-indigo{background:#1D397B;border-color:#1D397B;--edge:#1D397B}
+.fam-violet{background:#F1C3DD;border-color:#9B2D61;--edge:#9B2D61}
+.fam-grey{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-full{background:#FFFFFF;border-color:#151515;--edge:#151515}
+.fam-full{border-style:dashed}
+.fam-green{background:#01B151;border-color:#317F45;--edge:#317F45}
+.fam-purple{background:#9B51E1;border-color:#7A29BB;--edge:#7A29BB}
+.fam-maroon{background:#9B2D61;border-color:#9B2D61;--edge:#9B2D61}
+.fam-palemint{background:#D1F1EB;border-color:#317F45;--edge:#317F45}
+.fam-palelilac{background:#EFCBFF;border-color:#7A29BB;--edge:#7A29BB}
+.fam-palepink{background:#FFD9D7;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-palesky{background:#E9F3F9;border-color:#1D397B;--edge:#1D397B}
+.fam-antigen{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.fam-target{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.fam-binder{background:#E16F6B;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-heavy{background:#E16F6B;border-color:#AC3F3F;--edge:#AC3F3F}
+.fam-light{background:#9B51E1;border-color:#7A29BB;--edge:#7A29BB}
+.fam-epitope{background:#FBB153;border-color:#9A5600;--edge:#9A5600}
+.fam-model{background:#1D397B;border-color:#1D397B;--edge:#1D397B}
+.fam-base{background:#1D397B;border-color:#1D397B;--edge:#1D397B}
+.fam-complex{background:#F1C3DD;border-color:#9B2D61;--edge:#9B2D61}
+.fam-neutral{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-module{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-cream{background:#FFEDD1;border-color:#151515;--edge:#151515}
+.fam-ok{background:#91D7AB;border-color:#317F45;--edge:#317F45}
+.dashed{background:#fff !important}
+/* Molecullage kit styles. Type sizes come from the ladder in molecullage.json (typeLadder), injected by build.mjs as --fs-* variables:
+   letter 9, title 7.5, label 7, floor 6.5 (written 6.55 so that the PDF reports at least 6.5), math 8.4. Arial only. */
+:root{--fs-letter:9pt;--fs-title:7.5pt;--fs-label:7pt;--fs-floor:6.55pt;--fs-math:8.4pt;--guide:#777777;--data0:#1D397B}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+.page{padding:0;display:inline-block}
+.card{position:absolute;border-width:1pt;border-style:solid;border-radius:.6mm;padding:1.8mm 2.2mm;display:flex;gap:2mm;align-items:center;overflow:hidden}
+.card .tx{min-width:0}
+.card .tx.center{width:100%;text-align:center}
+.card .t{font-size:var(--fs-title);font-weight:700;line-height:1.2;margin:0;color:var(--ink)}
+.card .s{font-size:var(--fs-label);line-height:1.2;margin:.4mm 0 0;color:var(--sub)}
+.chip{flex:none;width:6.4mm;height:6.4mm;border-radius:50%;background:#fff;border:.6pt solid var(--edge);display:flex;align-items:center;justify-content:center;font-size:11pt;color:var(--edge)}
+.ic{display:inline-flex}.ic svg{display:block}
+.dashed{border-style:dashed}
+.card.stack{flex-direction:column;align-items:flex-start;justify-content:center;gap:.9mm}
+.card .head{display:flex;gap:1.8mm;align-items:center}
+.card.stack .chip{width:5mm;height:5mm;font-size:9pt}
+.route{fill:none;stroke:var(--line);stroke-width:.3;stroke-linecap:butt;stroke-linejoin:miter}
+.route.dashed{stroke-dasharray:1.0 .7}
+.route.nohead{marker-end:none}
+.dot{fill:var(--line)}
+.node{fill:#fff;stroke:var(--line);stroke-width:.3}
+.mark{fill:none;stroke:var(--line);stroke-width:.3}
+.lab{position:absolute;white-space:pre;line-height:1.15}
+.sw{position:absolute;width:3.8mm;height:3mm;border-width:1pt;border-style:solid;border-radius:.6mm}
+.card.tile{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.8mm;padding:1.2mm 1mm}
+.card.tile .s{margin:0}
+.ic.big{font-size:15pt;color:var(--ink)}
+.group{position:absolute;border:.8pt solid var(--rule);border-radius:2mm}
+.group .gt{position:absolute;left:2mm;top:-1.9mm;background:#fff;padding:0 1mm;font-size:var(--fs-title);font-weight:700;color:var(--ink)}
+.tensor{position:absolute;display:flex;border:.4pt solid var(--rule);overflow:hidden}
+.tensor i{flex:1;display:block}
+.card.plain{align-items:center;gap:2.2mm;padding:1.6mm 2.4mm}
+.band{position:absolute;display:flex;align-items:center;gap:2.2mm;padding:0 5mm 0 2.4mm;border:0;clip-path:polygon(0 0,calc(100% - 2.6mm) 0,100% 50%,calc(100% - 2.6mm) 100%,0 100%)}
+.band b{font-size:var(--fs-title);font-weight:700;color:var(--ink)}.band span{font-size:var(--fs-floor);font-style:italic;color:var(--sub)}
+.band.dashed{background:#F2F2F2!important}
+.letter{position:absolute;display:flex;align-items:center;gap:1.2mm;line-height:1}
+.letter b{font-size:var(--fs-letter);font-weight:700;color:var(--ink)}
+.letter .mk{font-size:8.5pt;color:var(--sub)}
+.chipbox{position:absolute;display:flex;align-items:center;justify-content:center;border:.8pt solid var(--edge);border-radius:.8mm;color:var(--ink)}
+.picto{position:absolute;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.tbox{position:absolute;line-height:1.25}
+.plots svg{display:block}
+.group.dashed{border-style:dashed;background:transparent!important}
+.card.fam-full,.card.dashed{border-style:dashed}
+.sw.dashed,.sw.fam-full{border-style:dashed}
+.art{position:absolute;display:block}
+.mth{font-family:Arial,Helvetica,sans-serif;white-space:pre}
+.mth i{font-style:italic}.mth .up{font-style:normal}
+.mth sub,.mth sup{font-size:.78em;line-height:0;position:relative;vertical-align:baseline}
+.mth sub{top:.28em}.mth sup{top:-.42em}
+.state{position:absolute;border:1pt solid var(--rule);border-radius:1.2mm;background:#fff}
+.state.dashed{border-style:dashed}
+.state .st{position:absolute;left:1.8mm;top:1.3mm;font-size:var(--fs-title);font-weight:700;line-height:1.15;color:var(--ink);white-space:pre}
+.card.tool{padding:1mm 1.6mm;border-radius:1mm}
+.card.tool .t{font-size:var(--fs-title)}.card.tool .s{font-size:var(--fs-label);margin:.3mm 0 0}.card.tool .rep{font-weight:400}
+.pill{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-width:.8pt;border-style:solid;line-height:1.2;color:var(--ink);overflow:hidden;padding:0 1.4mm}
+.pill em{font-style:normal;font-size:var(--fs-floor);color:var(--sub)}
+.stage{position:absolute;display:flex;align-items:center;justify-content:center;border-width:.8pt;border-style:solid;border-radius:1mm;overflow:hidden}
+.stage span{display:block;transform:rotate(-90deg);white-space:nowrap;font-weight:700;line-height:1;color:inherit}
+.stage i{font-style:normal;font-weight:400;font-size:var(--fs-floor)}
+.badge{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;border-width:.8pt;border-style:solid;font-weight:700;line-height:1}
+.bar{position:absolute;border:.8pt solid var(--rule);border-radius:.4mm;background:#fff;overflow:hidden}
+.bar i{display:block;height:100%}
+/* small helpers that templates share */
+.cell{position:absolute;box-sizing:border-box}
+.fig{position:relative}
+.card,.state,.chipbox,.sw,.group,.bar{border-color:#0A0A0A!important}.card.fam-peri .t,.card.fam-peri .s,.band.fam-peri b,.band.fam-peri span,.bar.fam-peri b,.state.fam-peri .t,.card.fam-indigo .t,.card.fam-indigo .s,.band.fam-indigo b,.band.fam-indigo span,.bar.fam-indigo b,.state.fam-indigo .t,.card.fam-purple .t,.card.fam-purple .s,.band.fam-purple b,.band.fam-purple span,.bar.fam-purple b,.state.fam-purple .t,.card.fam-maroon .t,.card.fam-maroon .s,.band.fam-maroon b,.band.fam-maroon span,.bar.fam-maroon b,.state.fam-maroon .t{color:#fff!important}.stage.fam-peri,.badge.fam-peri,.stage.fam-indigo,.badge.fam-indigo,.stage.fam-purple,.badge.fam-purple,.stage.fam-maroon,.badge.fam-maroon{color:#fff!important}.stage.fam-mint,.badge.fam-mint,.stage.fam-rose,.badge.fam-rose,.stage.fam-apricot,.badge.fam-apricot,.stage.fam-violet,.badge.fam-violet,.stage.fam-grey,.badge.fam-grey,.stage.fam-full,.badge.fam-full,.stage.fam-green,.badge.fam-green,.stage.fam-palemint,.badge.fam-palemint,.stage.fam-palelilac,.badge.fam-palelilac,.stage.fam-palepink,.badge.fam-palepink,.stage.fam-palesky,.badge.fam-palesky{color:#0A0A0A!important}.stage,.badge{border-color:#0A0A0A!important}</style><script>window.ICONS={"device-desktop":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10\" /><path d=\"M7 20h10\" /><path d=\"M9 16v4\" /><path d=\"M15 16v4\" /></svg>","flask":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M9 3l6 0\" /><path d=\"M10 9l4 0\" /><path d=\"M10 3v6l-4 11a.7 .7 0 0 0 .5 1h11a.7 .7 0 0 0 .5 -1l-4 -11v-6\" /></svg>","arrow-narrow-right":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M5 12l14 0\" /><path d=\"M15 16l4 -4\" /><path d=\"M15 8l4 4\" /></svg>"};window.ART={};window.ART_DIR="art";window.CONFIG={"claimBoundary":"","floorPt":6.55,"typeLadder":{"letter":9,"title":7.5,"label":7,"floor":6.5,"math":8.4},"strictness":"normal"};window.TOKENS={"color":{"ink":"#0A0A0A","sub":"#2B2B2B","line":"#0A0A0A","rule":"#3A3A3A","guide":"#777777","white":"#FFFFFF","family":{"mint":{"fill":"#91D7AB","edge":"#317F45"},"rose":{"fill":"#E16F6B","edge":"#AC3F3F"},"peri":{"fill":"#9B51E1","edge":"#7A29BB"},"apricot":{"fill":"#FBB153","edge":"#9A5600"},"indigo":{"fill":"#1D397B","edge":"#1D397B"},"violet":{"fill":"#F1C3DD","edge":"#9B2D61"},"grey":{"fill":"#FFEDD1","edge":"#151515"},"full":{"fill":"#FFFFFF","edge":"#151515","dash":true},"green":{"fill":"#01B151","edge":"#317F45"},"purple":{"fill":"#9B51E1","edge":"#7A29BB"},"maroon":{"fill":"#9B2D61","edge":"#9B2D61"},"palemint":{"fill":"#D1F1EB","edge":"#317F45"},"palelilac":{"fill":"#EFCBFF","edge":"#7A29BB"},"palepink":{"fill":"#FFD9D7","edge":"#AC3F3F"},"palesky":{"fill":"#E9F3F9","edge":"#1D397B"}},"alias":{"antigen":"mint","target":"mint","binder":"rose","heavy":"rose","light":"peri","epitope":"apricot","model":"indigo","base":"indigo","complex":"violet","neutral":"grey","module":"grey","cream":"grey","ok":"mint"},"data":["#1D397B","#AC3F3F","#317F45","#7A29BB","#9A5600","#9B2D61"]},"meta":{"source":"sampled from Fig. 8 of Int. J. Mol. Sci. 2025, 26, 9262 (doi 10.3390/ijms26199262, open access); plot colours from Figs 1, 4 and 7","method":"mode of exact pixel colours of a 300 dpi page render, colours grouped at 2 levels (palette/sample_palette.py)","core_six":["#91D7AB","#E16F6B","#9B51E1","#FBB153","#1D397B","#F1C3DD"],"core_six_min_ciede2000":11.5,"core_six_worst_case":{"vision":"tritan","pair":["#FBB153","#F1C3DD"]},"white_text_on":["peri","indigo","purple","maroon"]},"provenance":{"mint":{"fill":"#91D7AB","edge":"#317F45","role":"antigen, target","fill_origin":"sampled","edge_origin":"sampled or chosen"},"rose":{"fill":"#E16F6B","edge":"#AC3F3F","role":"binder, heavy chain","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"peri":{"fill":"#9B51E1","edge":"#7A29BB","role":"light chain","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"apricot":{"fill":"#FBB153","edge":"#9A5600","role":"contact patch, epitope","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"indigo":{"fill":"#1D397B","edge":"#1D397B","role":"implemented model, tool blocks","fill_origin":"sampled","edge_origin":"sampled or chosen"},"violet":{"fill":"#F1C3DD","edge":"#9B2D61","role":"complexes","fill_origin":"sampled","edge_origin":"sampled or chosen"},"grey":{"fill":"#FFEDD1","edge":"#151515","role":"neutral cards and inputs","fill_origin":"sampled","edge_origin":"sampled or chosen"},"full":{"fill":"#FFFFFF","edge":"#151515","role":"designed, not implemented: white and dashed","fill_origin":"chosen","edge_origin":"sampled or chosen"},"green":{"fill":"#01B151","edge":"#317F45","role":"stage hue: selection","fill_origin":"sampled","edge_origin":"sampled or chosen"},"purple":{"fill":"#9B51E1","edge":"#7A29BB","role":"stage hue: dynamics","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"maroon":{"fill":"#9B2D61","edge":"#9B2D61","role":"stage hue: evaluation, held-out set","fill_origin":"sampled","edge_origin":"sampled or chosen"},"palemint":{"fill":"#D1F1EB","edge":"#317F45","role":"data pill","fill_origin":"sampled","edge_origin":"sampled or chosen"},"palelilac":{"fill":"#EFCBFF","edge":"#7A29BB","role":"data pill","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"palepink":{"fill":"#FFD9D7","edge":"#AC3F3F","role":"data pill","fill_origin":"sampled","edge_origin":"derived (OKLab lightness lowered)"},"palesky":{"fill":"#E9F3F9","edge":"#1D397B","role":"pass zone, good-region shading","fill_origin":"chosen","edge_origin":"sampled or chosen"}}};</script><script>/* Molecullage kit. Coordinates are millimetres, origin bottom-left, like a plotting canvas.
+   Cards are HTML (real text layout, Tabler icon SVGs); connectors are one SVG overlay.
+   Usage: const f = new Fig(document.getElementById('fig'), 100, 92, { svgTop: true });
+          f.module({x,y,w,h,title,sub:[...],icon:'database',fam:'indigo',dashed:false});
+          f.route([[x,y],...],{dashed}); f.plus(x,y); f.dot(x,y); f.bracket(x,y0,y1,'x N'); f.label(x,y,'text');
+          f.boundary('one-line claim boundary');   // no argument: the claimBoundary of molecullage.json
+   Family names (fam:) come from the token file; see docs/palette.md. */
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  // ---- Arial-only maths (Nature asks for Arial or Helvetica): a small LaTeX subset to HTML with italic variables and real scripts.
+  // Supported: letters, digits, _x _{xy} ^2 ^{-2}, \theta \phi \sigma \mu \tau \lambda \alpha \beta, \to \sim \cdot \times, \mathrm{..}, \, and + = - .
+  const GREEK = { theta: 'θ', phi: 'φ', sigma: 'σ', mu: 'μ', tau: 'τ', lambda: 'λ', alpha: 'α', beta: 'β' };
+  const OPS = { to: '→', sim: '~', cdot: '·', times: '×' };
+  const grp = (s, i) => {
+    if (s[i] === '{') { let d = 1, j = i + 1; for (; j < s.length && d; j++) { if (s[j] === '{') d++; else if (s[j] === '}') d--; } return [s.slice(i + 1, j - 1), j]; }
+    if (s[i] === '\\') { const m = /^\\([a-zA-Z]+)/.exec(s.slice(i)); if (m) return [m[0], i + m[0].length]; }
+    return [s[i], i + 1];
+  };
+  function M(s) {
+    let out = '', i = 0;
+    while (i < s.length) {
+      const c = s[i];
+      if (c === '_' || c === '^') { const [g, n] = grp(s, i + 1); const tag = c === '_' ? 'sub' : 'sup'; out += `<${tag}>${M(g)}</${tag}>`; i = n; }
+      else if (c === '\\') {
+        const m = /^\\([a-zA-Z]+|.)/.exec(s.slice(i)); i += m[0].length; const nm = m[1];
+        if (nm === 'mathrm') { const [g, n] = grp(s, i); out += `<span class="up">${g}</span>`; i = n; }
+        else if (nm === ',' || nm === ' ') out += ' ';
+        else if (GREEK[nm]) out += `<i>${GREEK[nm]}</i>`;
+        else if (OPS[nm]) out += ` ${OPS[nm]} `;
+        else out += nm;
+      }
+      else if (/[a-zA-Z]/.test(c)) { out += `<i>${c}</i>`; i++; }
+      else if (c === '-') { out += out && !/[( ]$/.test(out) ? ' − ' : '−'; i++; }
+      else if (c === '=' || c === '+') { out += ` ${c} `; i++; }
+      else if (c === '{' || c === '}') i++;
+      else { out += c; i++; }
+    }
+    return out;
+  }
+  const MS = (s, pt) => `<span class="mth"${pt ? ` style="font-size:${pt}pt"` : ''}>${M(s)}</span>`;
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  window.M = M; window.MS = MS;
+  class Fig {
+    // opts.svgTop: draw routes, leaders and ghosts above cards and pictures (pages written to the grammar use it); default draws them under the cards.
+    constructor(el, w, h, opts = {}) {
+      this.el = el; this.w = w; this.h = h;
+      el.style.position = 'relative'; el.style.width = w + 'mm'; el.style.height = h + 'mm';
+      this.svg = document.createElementNS(NS, 'svg');
+      this.svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      this.svg.setAttribute('width', w + 'mm'); this.svg.setAttribute('height', h + 'mm');
+      this.svg.style.cssText = 'position:absolute;left:0;top:0;overflow:visible;pointer-events:none' + (opts.svgTop ? ';z-index:5' : '');
+      this.svg.innerHTML = '<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="1.15" markerHeight="1.15" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--line)"/></marker></defs>';
+      el.appendChild(this.svg);
+      this.n = 0;
+    }
+    Y(y) { return this.h - y; }
+    mk(color) {
+      const id = 'c' + color.replace(/[^0-9a-z]/gi, '');
+      if (!this.svg.querySelector('#ah-' + id)) {
+        const m = document.createElementNS(NS, 'marker');
+        m.setAttribute('id', 'ah-' + id); m.setAttribute('viewBox', '0 0 10 10'); m.setAttribute('refX', '9'); m.setAttribute('refY', '5');
+        m.setAttribute('markerWidth', '1.15'); m.setAttribute('markerHeight', '1.15'); m.setAttribute('markerUnits', 'userSpaceOnUse'); m.setAttribute('orient', 'auto');
+        m.innerHTML = `<path d="M0 0L10 5L0 10z" fill="${color}"/>`;
+        this.svg.querySelector('defs').appendChild(m);
+      }
+      return id;
+    }
+    // The claim-boundary line: one short line at the bottom edge, in the floor size. Text defaults to molecullage.json "claimBoundary".
+    boundary(text, { x = 1.5, color = 'var(--sub)' } = {}) {
+      const s = text || (window.CONFIG || {}).claimBoundary || '';
+      if (s) this.label(x, 1.6, s, { fs: (window.CONFIG || {}).floorPt || 6.55, color });
+    }
+    letter(ch, x, y, marker = null) {
+      const d = document.createElement('div');
+      d.className = 'letter'; d.id = 'panel-' + ch;
+      d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm`;
+      const ic = marker && window.ICONS ? `<span class="ic mk">${window.ICONS[marker === 'computer' ? 'device-desktop' : 'flask'] || ''}</span>` : '';
+      d.innerHTML = `<b>${ch}</b>${ic}`;
+      this.el.appendChild(d);
+    }
+    chip({ x, y, w, h, text, fam = 'indigo', fs = 6.2 }) {
+      const d = document.createElement('div');
+      d.className = `chipbox fam-${fam}`; d.id = this.id('chip');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt`;
+      d.textContent = text; this.el.appendChild(d);
+    }
+    pictogram(icon, x, y, size = 5) {
+      const d = document.createElement('div');
+      d.className = 'picto'; d.id = this.id('pictogram');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + size)}mm;width:${size}mm;height:${size}mm;font-size:${size * 2.83}pt`;
+      d.innerHTML = `<span class="ic">${(window.ICONS || {})[icon] || ''}</span>`; this.el.appendChild(d);
+    }
+    // Raster render (ChimeraX), trimmed by struct/trim.py; `name` is "<group>__<layer>", size and anchors from window.ART.
+    // x, y: bottom-left corner in mm; w: width in mm (height follows the aspect ratio). Returns the bounds like module().
+    image({ x, y, w, name, flipX = false }) {
+      const a = (window.ART || {})[name];
+      if (!a) throw new Error('image not in struct index: ' + name);
+      const h = w / a.ar;
+      const im = document.createElement('img');
+      im.className = 'art'; im.id = this.id('structure'); im.src = `${window.ART_DIR || 'art'}/${name}_t.png`;
+      im.style.cssText = `position:absolute;left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm${flipX ? ';transform:scaleX(-1)' : ''}`;
+      this.el.appendChild(im);
+      const A = a.anchors || {};
+      // pt(name): anchor of the render (CDR tip, epitope, ...) as [x, y] in mm; outline: silhouette polyline in mm (closed)
+      const pt = (n) => (A[n] ? [x + A[n][0] * w, y + (1 - A[n][1]) * h] : null);
+      const outline = a.outline ? a.outline.map(([fx, fy]) => [x + fx * w, y + (1 - fy) * h]) : null;
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h, pt, outline };
+    }
+    // Dashed silhouette of a missing partner (rule: absence is drawn as a dashed outline in place).
+    ghost(poly, { color = 'var(--guide)', width = 0.3, dash = '1.1 0.8' } = {}) {
+      this.route(poly.concat([poly[0]]), { head: false, color, width });
+      const p = this.svg.lastElementChild; p.style.strokeDasharray = dash; p.style.strokeLinejoin = 'round';
+    }
+    // State card: a pale frame that holds a picture; the title sits top left (design rule: two kinds of rectangle, state and operation).
+    state({ x, y, w, h, title = '', dashed = false }) {
+      const d = document.createElement('div');
+      d.className = 'state' + (dashed ? ' dashed' : ''); d.id = this.id('state');   // two kinds of rectangle: state (holds a picture) and operation (a module)
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      if (title) d.innerHTML = `<span class="st">${title}</span>`;
+      this.el.appendChild(d);
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+    }
+    // Progress bar: value in [0, 1]; the fill carries the colour, the frame is a hairline.
+    bar({ x, y, w, h = 1.8, value = 0, color = 'var(--data0)', edge = 'var(--rule)' }) {
+      const d = document.createElement('div');
+      d.className = 'bar'; d.id = this.id('bar');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;border-color:${edge}`;
+      d.innerHTML = `<i style="width:${Math.max(0, Math.min(1, value)) * 100}%;background:${color}"></i>`;
+      this.el.appendChild(d);
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+    }
+    box({ x, y, w, h, html, fs = 6.2, color = 'var(--sub)', ha = 'left', bold = false }) {
+      const d = document.createElement('div');
+      d.className = 'tbox'; d.id = this.id('text');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt;color:${color};text-align:${ha};font-weight:${bold ? 700 : 400}`;
+      d.innerHTML = html; this.el.appendChild(d);
+    }
+    band({ x, y, w, h, text, sub = '', fam = 'indigo', dashed = false }) {
+      const d = document.createElement('div');
+      d.className = `band fam-${fam}` + (dashed ? ' dashed' : ''); d.id = this.id('band');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      d.innerHTML = `<b>${text}</b>${sub ? `<span>${sub}</span>` : ''}`;
+      this.el.appendChild(d);
+    }
+    group({ x, y, w, h, title = '', fam = 'grey', dashed = false }) {
+      const d = document.createElement('div');
+      d.className = 'group' + (dashed ? ' dashed' : ''); d.id = this.id('group');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      if (title) d.innerHTML = `<span class="gt">${title}</span>`;
+      this.el.appendChild(d);
+    }
+    tensor({ x, y, w = 5, h = 3, stripes = ['var(--data0)'], label = '', side = 'right' }) {
+      const d = document.createElement('div');
+      d.className = 'tensor'; d.id = this.id('tensor');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      d.innerHTML = stripes.map(c => `<i style="background:${c}"></i>`).join('');
+      this.el.appendChild(d);
+      if (label) this.label(side === 'right' ? x + w + 1.2 : x - 1.2, y + h / 2, label, { ha: side === 'right' ? 'left' : 'right', fs: 5.8 });
+    }
+    id(kind) { this.n += 1; return `${kind}-${String(this.n).padStart(3, '0')}`; }
+    module({ x, y, w, h, title = '', sub = [], icon = null, fam = 'grey', dashed = false, layout = 'row', gid = null }) {
+      const d = document.createElement('div');
+      d.className = `card fam-${fam}` + (dashed ? ' dashed' : '');
+      d.id = gid || this.id('module');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm`;
+      const ic = icon && window.ICONS && window.ICONS[icon] ? `<div class="chip"><span class="ic">${window.ICONS[icon]}</span></div>` : '';
+      const tt = (Array.isArray(title) ? title : [title]).filter(Boolean).map(t => `<p class="t">${t}</p>`).join('');
+      const ss = (Array.isArray(sub) ? sub : [sub]).filter(Boolean).map(t => `<p class="s">${t}</p>`).join('');
+      if (layout === 'tile') {
+        d.classList.add('tile');
+        const pic = icon && window.ICONS && window.ICONS[icon] ? `<span class="ic big">${window.ICONS[icon]}</span>` : '';
+        const t2 = (Array.isArray(title) ? title : [title]).filter(Boolean).map(t => `<p class="t">${t}</p>`).join('');
+        const s2 = (Array.isArray(sub) ? sub : [sub]).filter(Boolean).map(t => `<p class="s">${t}</p>`).join('');
+        d.innerHTML = `${pic}${t2}${s2}`; this.el.appendChild(d);
+        return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+      }
+      if (layout === 'plain') {
+        d.classList.add('plain');
+        const pic = icon && window.ICONS && window.ICONS[icon] ? `<span class="ic big">${window.ICONS[icon]}</span>` : '';
+        const t2 = (Array.isArray(title) ? title : [title]).filter(Boolean).map(t => `<p class="t">${t}</p>`).join('');
+        const s2 = (Array.isArray(sub) ? sub : [sub]).filter(Boolean).map(t => `<p class="s">${t}</p>`).join('');
+        d.innerHTML = `${pic}<div class="tx">${t2}${s2}</div>`; this.el.appendChild(d);
+        return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+      }
+      d.innerHTML = layout === 'stack'
+        ? `<div class="head">${ic}<div class="tx">${tt}</div></div><div class="tx">${ss}</div>`
+        : `${ic}<div class="tx${ic ? '' : ' center'}">${tt}${ss}</div>`;
+      if (layout === 'stack') d.classList.add('stack');
+      this.el.appendChild(d);
+      return { x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h };
+    }
+    route(pts, { dashed = false, head = true, color = null, width = null } = {}) {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${this.Y(y)}`).join(''));
+      p.setAttribute('class', 'route' + (dashed ? ' dashed' : ''));
+      p.setAttribute('id', this.id('route'));
+      if (color) { p.style.stroke = color; if (head) { p.setAttribute('marker-end', `url(#ah-${this.mk(color)})`); } }
+      else if (head) p.setAttribute('marker-end', 'url(#ah)');
+      if (width) p.style.strokeWidth = width;
+      this.svg.appendChild(p);
+    }
+    dot(x, y) {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', this.Y(y)); c.setAttribute('r', 0.5);
+      c.setAttribute('class', 'dot'); c.setAttribute('id', this.id('junction'));
+      this.svg.appendChild(c);
+    }
+    plus(x, y, r = 1.7) {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('id', this.id('plus'));
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', this.Y(y)); c.setAttribute('r', r); c.setAttribute('class', 'node');
+      const k = r * 0.62;
+      const a = document.createElementNS(NS, 'path');
+      a.setAttribute('d', `M${x - k} ${this.Y(y)}H${x + k}M${x} ${this.Y(y) - k}V${this.Y(y) + k}`); a.setAttribute('class', 'mark');
+      g.append(c, a); this.svg.appendChild(g);
+    }
+    bracket(x, y0, y1, text) {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', `M${x + 1.6} ${this.Y(y0)}H${x}V${this.Y(y1)}H${x + 1.6}`); p.setAttribute('class', 'route nohead');
+      p.setAttribute('id', this.id('bracket')); this.svg.appendChild(p);
+      this.label(x - 2.6, (y0 + y1) / 2, text, { rot: true, fs: 6.2, color: 'var(--ink)', ha: 'center' });
+    }
+    label(x, y, text, { fs = 7, color = 'var(--sub)', ha = 'left', rot = false, bold = false, italic = false } = {}) {
+      const d = document.createElement('div');
+      d.className = 'lab'; d.id = this.id('label'); d.textContent = text;
+      const tr = ha === 'center' ? 'translate(-50%,-50%)' : ha === 'right' ? 'translate(-100%,-50%)' : 'translate(0,-50%)';
+      d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm;font-size:${fs}pt;color:${color};font-weight:${bold ? 700 : 400};font-style:${italic ? 'italic' : 'normal'};transform:${tr}${rot ? ' rotate(-90deg)' : ''};`;
+      this.el.appendChild(d);
+    }
+    // Text with $maths$ pieces, in Arial throughout. x, y in mm (y up); ha left, center or right. mfs: size of the maths pieces, pt (default 7.2).
+    rich(x, y, s, { fs = 7, color = 'var(--sub)', ha = 'left', bold = false, rot = false, mfs = 8.4 } = {}) {
+      const d = document.createElement('div');
+      d.className = 'lab'; d.id = this.id('label');
+      const tr = (ha === 'center' ? 'translate(-50%,-50%)' : ha === 'right' ? 'translate(-100%,-50%)' : 'translate(0,-50%)') + (rot ? ' rotate(-90deg)' : '');
+      d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm;font-size:${fs}pt;color:${color};font-weight:${bold ? 700 : 400};transform:${tr}`;
+      d.innerHTML = s.split('$').map((p, i) => (i % 2 ? MS(p, mfs) : esc(p))).join('');
+      this.el.appendChild(d);
+      return d;
+    }
+    legend(x, y, items, dx = 28) {
+      items.forEach(([fam, text, dashed], i) => {
+        const s = document.createElement('div');
+        s.className = `sw fam-${fam}` + (dashed ? ' dashed' : '');
+        s.style.cssText = `left:${x + i * dx}mm;top:${this.Y(y) - 1.5}mm`;
+        this.el.appendChild(s);
+        this.label(x + i * dx + 5.2, y, text, { fs: 7, color: 'var(--ink)' });
+      });
+    }
+  }
+  window.Fig = Fig;
+})();
+
+/* Molecullage kit, block grammar of a stage-coded pipeline figure: tool blocks, data pills, stage strips, step badges.
+   Loaded after kit.js by build.mjs. Coordinates in millimetres, origin bottom-left (y up), as in kit.js. Text colour on dark families comes from the tokens CSS.
+     f.tool({x,y,w,h,title,sub,fam,dashed,repeat})  saturated block with a bold name and one plain line; repeat: n draws n-1 offset copies behind it and a x n badge
+     f.pill({x,y,w,h,text,sub,fam,dashed})            rounded data object (pale family): what flows between the blocks
+     f.stage({x,y,w,h,text,fam})                      strip, text rotated by default, one per stage (left edge of a block column; reset the rotation to lay it flat on top of a column)
+     f.badge({x,y,n,fam})                             numbered circle for a reading order
+     f.note({x,y,w,text,fs,color,ha})                 wrapped plain-language text block (top-left anchored at x, y = top edge)
+   Each returns bounds {x,y,w,h,cx,cy,l,r,b,t} plus pt(side) = anchor on the side: 'l','r','t','b' in mm. */
+(function () {
+  const F = window.Fig.prototype;
+  const bounds = (x, y, w, h) => ({
+    x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: x, r: x + w, b: y, t: y + h,
+    pt(s) { return s === 'l' ? [x, y + h / 2] : s === 'r' ? [x + w, y + h / 2] : s === 't' ? [x + w / 2, y + h] : [x + w / 2, y]; },
+  });
+  F.tool = function ({ x, y, w, h, title, sub = '', fam = 'indigo', dashed = false, repeat = 0, fs = 7.5 }) {
+    if (repeat) {   // repeat: a number n, or a text such as 'N' for a toy size; up to two copies behind the block
+      for (let k = Math.min(typeof repeat === 'number' ? repeat - 1 : 2, 2); k >= 1; k--) {   // up to two copies behind: a stack means "repeated"
+        const d = document.createElement('div');
+        d.className = `card tool fam-${fam}`; d.id = this.id('module');
+        d.style.cssText = `left:${x + k * 1.0}mm;top:${this.Y(y + h - k * 1.0)}mm;width:${w}mm;height:${h}mm`;
+        this.el.appendChild(d);
+      }
+    }
+    const d = document.createElement('div');
+    d.className = `card tool fam-${fam}` + (dashed ? ' dashed' : ''); d.id = this.id('module');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;justify-content:center;text-align:center`;
+    d.innerHTML = `<div class="tx center"><p class="t" style="font-size:${fs}pt">${title}${repeat ? ` <span class="rep">×${repeat}</span>` : ''}</p>${sub ? `<p class="s">${sub}</p>` : ''}</div>`;
+    this.el.appendChild(d);
+    return bounds(x, y, w, h);
+  };
+  F.pill = function ({ x, y, w, h = 4.6, text, sub = '', fam = 'palemint', dashed = false, fs = 7 }) {
+    const d = document.createElement('div');
+    d.className = `pill fam-${fam}` + (dashed ? ' dashed' : ''); d.id = this.id('pill');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt;border-radius:${Math.min(h / 2, 3)}mm`;
+    d.innerHTML = `<span>${text}</span>${sub ? `<em>${sub}</em>` : ''}`;
+    this.el.appendChild(d);
+    return bounds(x, y, w, h);
+  };
+  F.stage = function ({ x, y, w = 4.4, h, text, fam = 'indigo', fs = 7.5 }) {
+    const d = document.createElement('div');
+    d.className = `stage fam-${fam}`; d.id = this.id('stage');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y + h)}mm;width:${w}mm;height:${h}mm;font-size:${fs}pt`;
+    d.innerHTML = `<span>${text}</span>`;
+    this.el.appendChild(d);
+    return bounds(x, y, w, h);
+  };
+  F.badge = function ({ x, y, n, fam = 'indigo', r = 1.9 }) {
+    const d = document.createElement('div');
+    d.className = `badge fam-${fam}`; d.id = this.id('badge');
+    d.style.cssText = `left:${x - r}mm;top:${this.Y(y + r)}mm;width:${2 * r}mm;height:${2 * r}mm;font-size:7pt`;
+    d.textContent = n; this.el.appendChild(d);
+    return bounds(x - r, y - r, 2 * r, 2 * r);
+  };
+  F.note = function ({ x, y, w, text, fs = 7, color = 'var(--ink)', ha = 'left', bold = false }) {
+    const d = document.createElement('div');
+    d.className = 'tbox'; d.id = this.id('text');
+    d.style.cssText = `left:${x}mm;top:${this.Y(y)}mm;width:${w}mm;font-size:${fs}pt;color:${color};text-align:${ha};font-weight:${bold ? 700 : 400};line-height:1.22`;
+    d.innerHTML = text.split('$').map((p, i) => (i % 2 ? window.MS(p, fs * 1.2) : p)).join('');
+    this.el.appendChild(d);
+    return d;
+  };
+})();
+</script></head><body>
+<div class="page"><div class="fig" id="fig" style="padding:0"></div></div>
+<script>window.DATA = {
+ "W": 178.0,
+ "H": 52.0,
+ "X0": 47.0,
+ "XR": 176.5,
+ "GAP": 2.0,
+ "TOP": 1.8,
+ "TH": 35.7142,
+ "tiles": [
+  {
+   "key": "atp",
+   "file": "art/tile_atp.png",
+   "x": 47.0,
+   "w": 24.062,
+   "px": [
+    568,
+    844
+   ],
+   "cap": [
+    "Cryo-EM complex",
+    "PDB 9ZFT"
+   ],
+   "source": "gallery/05-atp-synthase/art/atp_A__full.png",
+   "box": [
+    49,
+    43,
+    2348,
+    3557
+   ]
+  },
+  {
+   "key": "tree",
+   "file": "art/tile_tree.png",
+   "x": 73.062,
+   "w": 24.7026,
+   "px": [
+    584,
+    844
+   ],
+   "cap": [
+    "Evolutionary tree",
+    "with traits"
+   ],
+   "source": "gallery/08-nitrogenase-tree/08-nitrogenase-tree.png",
+   "box": [
+    125,
+    944,
+    2207,
+    4037
+   ]
+  },
+  {
+   "key": "tap",
+   "file": "art/tile_tap.png",
+   "x": 99.7646,
+   "w": 23.4851,
+   "px": [
+    555,
+    844
+   ],
+   "cap": [
+    "Transport cycle",
+    "PDB 9N61"
+   ],
+   "source": "gallery/01-tap-cycle/01-tap-cycle.png",
+   "box": [
+    3319,
+    729,
+    4092,
+    2011
+   ]
+  },
+  {
+   "key": "rbd",
+   "file": "art/tile_rbd.png",
+   "x": 125.2496,
+   "w": 23.5556,
+   "px": [
+    556,
+    844
+   ],
+   "cap": [
+    "Mutational scan",
+    "SARS-CoV-2 RBD"
+   ],
+   "source": "gallery/07-rbd-mutational-scan/07-rbd-mutational-scan.png",
+   "box": [
+    652,
+    712,
+    1401,
+    1906
+   ]
+  },
+  {
+   "key": "ebola",
+   "file": "art/tile_ebola.png",
+   "x": 150.8052,
+   "w": 25.6948,
+   "px": [
+    607,
+    844
+   ],
+   "cap": [
+    "Ligand pocket",
+    "PDB 9PEL"
+   ],
+   "source": "gallery/02-ebola-pocket/art/overview__full.png",
+   "box": [
+    628,
+    217,
+    1659,
+    1594
+   ]
+  }
+ ]
+};
+</script>
+<script>
+// Hero banner of the README, 178 x 52 mm. Left: the name and one tagline. Right: five picture tiles of equal height with equal gaps,
+// each a crop of a finished gallery figure (src/make_crops.py cuts them and writes window.DATA, the grid in millimetres, origin top left).
+// At the end the page measures itself: checkHero() throws one Error that lists every tile, caption or text box that is off the grid by more
+// than TOL, and a title that is not spelled 'Molecullage'. The build prints that error and exits with 1.
+const D = window.DATA, TOL = 0.25;
+const W = D.W, H = D.H;
+const FL = (window.CONFIG || {}).floorPt || 6.55;
+const f = new Fig(document.getElementById('fig'), W, H, { svgTop: true });   // svgTop: the hairlines are drawn over the pictures
+const HAIR = 0.12;                                                              // mm, tile frame stroke (0.34 pt); CSS borders under 1 px are widened by the browser, SVG strokes are not
+const INK = 'var(--ink)', SUB = 'var(--sub)';
+const T = (cls, x, t, html, css) => {       // a text box at x, top t (mm, top-down); it keeps its own width, one line per <br>
+  const d = document.createElement('div');
+  d.className = cls;
+  d.style.cssText = `position:absolute;left:${x}mm;top:${t}mm;white-space:nowrap;margin:0;${css}`;
+  d.innerHTML = html; f.el.appendChild(d); return d;
+};
+
+// ---- left block, centred on the tiles and their captions
+const CAP_T = D.TOP + D.TH + 1.6, CAP_LH = 3.1;                 // caption block: top, line pitch (7 pt = 2.47 mm)
+const CAP_B = CAP_T + 2 * CAP_LH;
+const TITLE_H = 7.06, TAG_LH = 3.6, TAG_GAP = 2.3;              // 20 pt line; 8 pt tagline lines; gap between them
+const BLOCK_H = TITLE_H + TAG_GAP + 3 * TAG_LH;
+const BT = (D.TOP + CAP_B) / 2 - BLOCK_H / 2;
+const title = T('title', 1.5, BT, 'Molecullage', `font-size:20pt;font-weight:700;line-height:${TITLE_H}mm;color:${INK}`);
+const tag = T('tag', 1.5, BT + TITLE_H + TAG_GAP, 'Figures of protein structures,<br>sequences, plots and workflows,<br>built from small web pages.',
+  `font-size:8pt;line-height:${TAG_LH}mm;color:${INK}`);
+
+// ---- the five tiles, their captions (two lines on common baselines) and the hairline frames
+const tiles = D.tiles.map((t) => {
+  const box = document.createElement('div');
+  box.className = 'tile'; box.id = 'tile-' + t.key;
+  box.style.cssText = `position:absolute;left:${t.x}mm;top:${D.TOP}mm;width:${t.w}mm;height:${D.TH}mm;background:#fff`;
+  const im = document.createElement('img');
+  im.src = t.file; im.alt = '';
+  im.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
+  box.append(im); f.el.appendChild(box);
+  const l = t.x + HAIR / 2, r = t.x + t.w - HAIR / 2, b = H - D.TOP - D.TH + HAIR / 2, tp = H - D.TOP - HAIR / 2;   // frame stroke lies inside the tile; y up
+  f.route([[(l + r) / 2, tp], [r, tp], [r, b], [l, b], [l, tp], [(l + r) / 2, tp]], { head: false, color: 'var(--ink)', width: HAIR });
+  const c1 = T('cap1', t.x, CAP_T, t.cap[0], `font-size:7pt;font-weight:700;line-height:${CAP_LH}mm;color:${INK}`);
+  const c2 = T('cap2', t.x, CAP_T + CAP_LH, t.cap[1], `font-size:7pt;line-height:${CAP_LH}mm;color:${INK}`);
+  return { t, box, im, c1, c2 };
+});
+
+// ---- credit, below everything, at the floor size, under a hairline rule that also keeps the empty band across the page short
+const CREDIT_T = H - 1.5 - 2.4;
+const credit = T('credit', 1.5, CREDIT_T, 'Redesigns of figures from open-access papers: see gallery/.', `font-size:${FL}pt;line-height:2.4mm;color:${INK}`);
+const RULE_Y = (CAP_T + CAP_LH + 2.1 + CREDIT_T + 0.2) / 2;       // midway between the baseline of caption line 2 and the cap height of the credit (offsets measured on the PNG)
+f.route([[1.5, H - RULE_Y], [D.XR, H - RULE_Y]], { head: false, color: 'var(--rule)', width: 0.1 });
+const rule = f.svg.lastElementChild;
+
+// ---- checks, in millimetres from the page's top left
+const PXMM = 96 / 25.4;
+const mm = (e) => { const r = e.getBoundingClientRect(), o = f.el.getBoundingClientRect();
+  return { l: (r.left - o.left) / PXMM, r: (r.right - o.left) / PXMM, t: (r.top - o.top) / PXMM, b: (r.bottom - o.top) / PXMM, w: r.width / PXMM, h: r.height / PXMM }; };
+function checkHero() {
+  const bad = [];
+  const near = (what, a, b) => { if (Math.abs(a - b) > TOL) bad.push(`${what}: ${a.toFixed(3)} vs ${b.toFixed(3)} mm`); };
+  const R = tiles.map((o) => mm(o.box));
+  R.forEach((r, i) => { near(`tile ${i + 1} height`, r.h, D.TH); near(`tile ${i + 1} top`, r.t, D.TOP); near(`tile ${i + 1} width`, r.w, D.tiles[i].w); });
+  for (let i = 1; i < R.length; i++) near(`gap ${i}-${i + 1}`, R[i].l - R[i - 1].r, D.GAP);
+  near('first tile left', R[0].l, D.X0); near('last tile right', R[R.length - 1].r, D.XR);
+  R.forEach((r, i) => { if (r.w < 22 || r.w > 26) bad.push(`tile ${i + 1} width ${r.w.toFixed(2)} mm is outside 22 to 26`); });
+  tiles.forEach((o, i) => {
+    const a = mm(o.c1), b = mm(o.c2), r = R[i];
+    near(`caption ${i + 1} line 1 left`, a.l, r.l); near(`caption ${i + 1} line 2 left`, b.l, r.l);
+    near(`caption ${i + 1} line 1 top`, a.t, CAP_T); near(`caption ${i + 1} line 2 top`, b.t, CAP_T + CAP_LH);
+    const next = R[i + 1] ? R[i + 1].l : D.XR + D.GAP;
+    if (Math.max(a.r, b.r) > next - 1.0) bad.push(`caption ${i + 1} (${o.t.cap.join(' / ')}) runs ${(Math.max(a.r, b.r) - next).toFixed(2)} mm into its neighbour`);
+    if (Math.max(a.r, b.r) > r.r) bad.push(`caption ${i + 1} is wider than its tile`);
+    if (o.t.cap.join(' ').split(/\s+/).length > 4) bad.push(`caption ${i + 1} has more than 4 words`);
+    const asp = o.im.naturalWidth / o.im.naturalHeight;
+    if (!o.im.naturalWidth) bad.push(`image ${o.t.file} did not load`);
+    else if (Math.abs(asp / (r.w / r.h) - 1) > 0.005) bad.push(`image ${o.t.file} aspect ${asp.toFixed(4)} is not the tile's ${(r.w / r.h).toFixed(4)}`);
+  });
+  if (title.textContent !== 'Molecullage') bad.push(`title reads '${title.textContent}', not 'Molecullage'`);
+  const ti = mm(title), tg = mm(tag), cr = mm(credit);
+  if (Math.max(ti.r, tg.r) > D.X0 - 3) bad.push(`left block ends at ${Math.max(ti.r, tg.r).toFixed(2)} mm; tiles start at ${D.X0} mm`);
+  near('title left', ti.l, 1.5); near('tagline left', tg.l, 1.5); near('credit left', cr.l, 1.5);
+  if (cr.r > W - 1.5) bad.push('credit runs past the right margin');
+  if (cr.t < CAP_B + 1.0) bad.push(`credit is ${(cr.t - CAP_B).toFixed(2)} mm below the captions`);
+  const ru = mm(rule);
+  near('rule left', ru.l, 1.5); near('rule right', ru.r, D.XR);
+  if (ru.t < CAP_B || ru.t > cr.t) bad.push('the rule is not between the captions and the credit');
+  if (tag.textContent.replace(/\s+/g, ' ') !== 'Figures of protein structures,sequences, plots and workflows,built from small web pages.') bad.push('tagline text changed');
+  if (!document.fonts.check('7pt Arial')) bad.push('Arial is not available');
+  if (bad.length) throw new Error('hero banner checks failed:\n' + bad.join('\n'));
+  window.HERO_OK = true;
+}
+window.addEventListener('load', checkHero);
+</script></body></html>

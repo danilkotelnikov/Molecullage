@@ -1,0 +1,989 @@
+{
+ "entry": "9PEL",
+ "ligand": {
+  "component": "A1CIK",
+  "chain": "A",
+  "seq_num": 401,
+  "heavy_atoms": 53
+ },
+ "cutoff_A": 4.5,
+ "numbering": "author residue numbers and chain letters of the deposited entry (GP precursor numbering)",
+ "chains_in_contact": [
+  "A",
+  "a"
+ ],
+ "residues": [
+  {
+   "chain": "A",
+   "num": 38,
+   "res": "ILE",
+   "name3": "Ile",
+   "code": "I",
+   "subunit": "GP1",
+   "n_pairs": 6,
+   "d_min": 3.1,
+   "lig_atom_nearest": "F33",
+   "res_atom_nearest": "CD1",
+   "contact_atoms": {
+    "CD1": {
+     "d": 3.1,
+     "lig": "F33"
+    },
+    "CG1": {
+     "d": 3.82,
+     "lig": "F33"
+    },
+    "CG2": {
+     "d": 4.16,
+     "lig": "O41"
+    }
+   },
+   "cc_lig_atoms": [
+    "C32",
+    "C36"
+   ],
+   "n_cc_pairs": 2,
+   "lig_atoms": {
+    "C32": 1,
+    "C36": 1,
+    "F33": 2,
+    "O41": 2
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 41,
+   "res": "SER",
+   "name3": "Ser",
+   "code": "S",
+   "subunit": "GP1",
+   "n_pairs": 1,
+   "d_min": 4.44,
+   "lig_atom_nearest": "N39",
+   "res_atom_nearest": "OG",
+   "contact_atoms": {
+    "OG": {
+     "d": 4.44,
+     "lig": "N39"
+    }
+   },
+   "cc_lig_atoms": [],
+   "n_cc_pairs": 0,
+   "lig_atoms": {
+    "N39": 1
+   },
+   "types": [
+    "contact"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 43,
+   "res": "LEU",
+   "name3": "Leu",
+   "code": "L",
+   "subunit": "GP1",
+   "n_pairs": 5,
+   "d_min": 3.56,
+   "lig_atom_nearest": "F33",
+   "res_atom_nearest": "CD1",
+   "contact_atoms": {
+    "CD1": {
+     "d": 3.56,
+     "lig": "F33"
+    },
+    "CD2": {
+     "d": 4.26,
+     "lig": "F34"
+    },
+    "CG": {
+     "d": 4.48,
+     "lig": "F33"
+    }
+   },
+   "cc_lig_atoms": [
+    "C32"
+   ],
+   "n_cc_pairs": 1,
+   "lig_atoms": {
+    "C32": 1,
+    "F33": 2,
+    "F34": 2
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 64,
+   "res": "ARG",
+   "name3": "Arg",
+   "code": "R",
+   "subunit": "GP1",
+   "n_pairs": 38,
+   "d_min": 3.16,
+   "lig_atom_nearest": "N15",
+   "res_atom_nearest": "NH2",
+   "contact_atoms": {
+    "NH2": {
+     "d": 3.16,
+     "lig": "N15"
+    },
+    "CB": {
+     "d": 3.39,
+     "lig": "C10"
+    },
+    "CZ": {
+     "d": 3.62,
+     "lig": "C14"
+    },
+    "NH1": {
+     "d": 3.73,
+     "lig": "C08"
+    },
+    "CG": {
+     "d": 3.93,
+     "lig": "C10"
+    },
+    "NE": {
+     "d": 4.23,
+     "lig": "C13"
+    },
+    "C": {
+     "d": 4.23,
+     "lig": "CL11"
+    },
+    "CA": {
+     "d": 4.45,
+     "lig": "CL11"
+    }
+   },
+   "cc_lig_atoms": [
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C12",
+    "C13",
+    "C14",
+    "C16"
+   ],
+   "n_cc_pairs": 14,
+   "lig_atoms": {
+    "C06": 1,
+    "C07": 2,
+    "C08": 4,
+    "C09": 3,
+    "C10": 2,
+    "C12": 4,
+    "C13": 5,
+    "C14": 4,
+    "C16": 3,
+    "C17": 2,
+    "CL11": 4,
+    "N15": 3,
+    "N18": 1
+   },
+   "types": [
+    "cation_pi",
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 65,
+   "res": "SER",
+   "name3": "Ser",
+   "code": "S",
+   "subunit": "GP1",
+   "n_pairs": 8,
+   "d_min": 3.51,
+   "lig_atom_nearest": "C12",
+   "res_atom_nearest": "O",
+   "contact_atoms": {
+    "O": {
+     "d": 3.51,
+     "lig": "C12"
+    },
+    "C": {
+     "d": 4.3,
+     "lig": "C12"
+    },
+    "N": {
+     "d": 4.37,
+     "lig": "CL11"
+    }
+   },
+   "cc_lig_atoms": [
+    "C12"
+   ],
+   "n_cc_pairs": 1,
+   "lig_atoms": {
+    "C10": 1,
+    "C12": 3,
+    "C13": 1,
+    "CL11": 3
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 66,
+   "res": "VAL",
+   "name3": "Val",
+   "code": "V",
+   "subunit": "GP1",
+   "n_pairs": 3,
+   "d_min": 4.1,
+   "lig_atom_nearest": "CL11",
+   "res_atom_nearest": "CB",
+   "contact_atoms": {
+    "CB": {
+     "d": 4.1,
+     "lig": "CL11"
+    },
+    "CG2": {
+     "d": 4.34,
+     "lig": "C47"
+    }
+   },
+   "cc_lig_atoms": [
+    "C47",
+    "C53"
+   ],
+   "n_cc_pairs": 2,
+   "lig_atoms": {
+    "C47": 1,
+    "C53": 1,
+    "CL11": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 100,
+   "res": "GLU",
+   "name3": "Glu",
+   "code": "E",
+   "subunit": "GP1",
+   "n_pairs": 3,
+   "d_min": 3.98,
+   "lig_atom_nearest": "C13",
+   "res_atom_nearest": "CB",
+   "contact_atoms": {
+    "CB": {
+     "d": 3.98,
+     "lig": "C13"
+    },
+    "C": {
+     "d": 4.31,
+     "lig": "C13"
+    }
+   },
+   "cc_lig_atoms": [
+    "C12",
+    "C13"
+   ],
+   "n_cc_pairs": 3,
+   "lig_atoms": {
+    "C12": 1,
+    "C13": 2
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 101,
+   "res": "ALA",
+   "name3": "Ala",
+   "code": "A",
+   "subunit": "GP1",
+   "n_pairs": 10,
+   "d_min": 3.34,
+   "lig_atom_nearest": "C13",
+   "res_atom_nearest": "CB",
+   "contact_atoms": {
+    "CB": {
+     "d": 3.34,
+     "lig": "C13"
+    },
+    "N": {
+     "d": 4.16,
+     "lig": "C13"
+    },
+    "CA": {
+     "d": 4.28,
+     "lig": "C13"
+    }
+   },
+   "cc_lig_atoms": [
+    "C10",
+    "C12",
+    "C13",
+    "C14",
+    "C46",
+    "C47"
+   ],
+   "n_cc_pairs": 8,
+   "lig_atoms": {
+    "C10": 1,
+    "C12": 3,
+    "C13": 3,
+    "C14": 1,
+    "C46": 1,
+    "C47": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 184,
+   "res": "LEU",
+   "name3": "Leu",
+   "code": "L",
+   "subunit": "GP1",
+   "n_pairs": 6,
+   "d_min": 3.11,
+   "lig_atom_nearest": "F35",
+   "res_atom_nearest": "CD1",
+   "contact_atoms": {
+    "CD1": {
+     "d": 3.11,
+     "lig": "F35"
+    },
+    "CD2": {
+     "d": 4.09,
+     "lig": "F35"
+    },
+    "CG": {
+     "d": 4.21,
+     "lig": "F35"
+    }
+   },
+   "cc_lig_atoms": [
+    "C32",
+    "C52"
+   ],
+   "n_cc_pairs": 2,
+   "lig_atoms": {
+    "C32": 1,
+    "C52": 1,
+    "CL11": 1,
+    "F35": 3
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 186,
+   "res": "LEU",
+   "name3": "Leu",
+   "code": "L",
+   "subunit": "GP1",
+   "n_pairs": 18,
+   "d_min": 3.52,
+   "lig_atom_nearest": "C19",
+   "res_atom_nearest": "CD1",
+   "contact_atoms": {
+    "CD1": {
+     "d": 3.52,
+     "lig": "C19"
+    },
+    "CB": {
+     "d": 3.84,
+     "lig": "C20"
+    },
+    "CD2": {
+     "d": 3.98,
+     "lig": "C51"
+    },
+    "CG": {
+     "d": 4.39,
+     "lig": "C20"
+    }
+   },
+   "cc_lig_atoms": [
+    "C04",
+    "C06",
+    "C09",
+    "C10",
+    "C19",
+    "C20",
+    "C21",
+    "C36",
+    "C50",
+    "C51"
+   ],
+   "n_cc_pairs": 15,
+   "lig_atoms": {
+    "C04": 1,
+    "C06": 1,
+    "C09": 1,
+    "C10": 1,
+    "C19": 2,
+    "C20": 3,
+    "C21": 2,
+    "C36": 1,
+    "C50": 1,
+    "C51": 2,
+    "CL11": 1,
+    "N03": 1,
+    "N18": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 187,
+   "res": "PRO",
+   "name3": "Pro",
+   "code": "P",
+   "subunit": "GP1",
+   "n_pairs": 8,
+   "d_min": 3.74,
+   "lig_atom_nearest": "C21",
+   "res_atom_nearest": "O",
+   "contact_atoms": {
+    "O": {
+     "d": 3.74,
+     "lig": "C21"
+    },
+    "CD": {
+     "d": 4.19,
+     "lig": "C21"
+    },
+    "CG": {
+     "d": 4.23,
+     "lig": "O41"
+    },
+    "N": {
+     "d": 4.41,
+     "lig": "C21"
+    },
+    "C": {
+     "d": 4.45,
+     "lig": "C21"
+    }
+   },
+   "cc_lig_atoms": [
+    "C21",
+    "C23"
+   ],
+   "n_cc_pairs": 3,
+   "lig_atoms": {
+    "C20": 1,
+    "C21": 4,
+    "C23": 1,
+    "N24": 1,
+    "O41": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "A",
+   "num": 189,
+   "res": "ALA",
+   "name3": "Ala",
+   "code": "A",
+   "subunit": "GP1",
+   "n_pairs": 5,
+   "d_min": 3.51,
+   "lig_atom_nearest": "C21",
+   "res_atom_nearest": "CB",
+   "contact_atoms": {
+    "CB": {
+     "d": 3.51,
+     "lig": "C21"
+    }
+   },
+   "cc_lig_atoms": [
+    "C20",
+    "C21",
+    "C22",
+    "C23"
+   ],
+   "n_cc_pairs": 4,
+   "lig_atoms": {
+    "C20": 1,
+    "C21": 1,
+    "C22": 1,
+    "C23": 1,
+    "O43": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 515,
+   "res": "LEU",
+   "name3": "Leu",
+   "code": "L",
+   "subunit": "GP2",
+   "n_pairs": 1,
+   "d_min": 4.45,
+   "lig_atom_nearest": "C53",
+   "res_atom_nearest": "CD2",
+   "contact_atoms": {
+    "CD2": {
+     "d": 4.45,
+     "lig": "C53"
+    }
+   },
+   "cc_lig_atoms": [
+    "C53"
+   ],
+   "n_cc_pairs": 1,
+   "lig_atoms": {
+    "C53": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 517,
+   "res": "TYR",
+   "name3": "Tyr",
+   "code": "Y",
+   "subunit": "GP2",
+   "n_pairs": 17,
+   "d_min": 3.47,
+   "lig_atom_nearest": "C46",
+   "res_atom_nearest": "CD1",
+   "contact_atoms": {
+    "CD1": {
+     "d": 3.47,
+     "lig": "C46"
+    },
+    "CE1": {
+     "d": 3.64,
+     "lig": "C45"
+    },
+    "CG": {
+     "d": 3.75,
+     "lig": "C46"
+    },
+    "OH": {
+     "d": 3.77,
+     "lig": "C01"
+    },
+    "CZ": {
+     "d": 4.01,
+     "lig": "C45"
+    },
+    "CB": {
+     "d": 4.15,
+     "lig": "C46"
+    },
+    "CD2": {
+     "d": 4.35,
+     "lig": "C46"
+    },
+    "CE2": {
+     "d": 4.45,
+     "lig": "C45"
+    }
+   },
+   "cc_lig_atoms": [
+    "C01",
+    "C45",
+    "C46",
+    "C47"
+   ],
+   "n_cc_pairs": 16,
+   "lig_atoms": {
+    "C01": 3,
+    "C45": 5,
+    "C46": 6,
+    "C47": 3
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 519,
+   "res": "THR",
+   "name3": "Thr",
+   "code": "T",
+   "subunit": "GP2",
+   "n_pairs": 8,
+   "d_min": 3.2,
+   "lig_atom_nearest": "N15",
+   "res_atom_nearest": "OG1",
+   "contact_atoms": {
+    "OG1": {
+     "d": 3.2,
+     "lig": "N15"
+    },
+    "CB": {
+     "d": 3.96,
+     "lig": "N15"
+    },
+    "CG2": {
+     "d": 3.97,
+     "lig": "N15"
+    }
+   },
+   "cc_lig_atoms": [
+    "C16"
+   ],
+   "n_cc_pairs": 2,
+   "lig_atoms": {
+    "C13": 1,
+    "C14": 1,
+    "C16": 3,
+    "N15": 3
+   },
+   "types": [
+    "hbond",
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 548,
+   "res": "MET",
+   "name3": "Met",
+   "code": "M",
+   "subunit": "GP2",
+   "n_pairs": 14,
+   "d_min": 3.79,
+   "lig_atom_nearest": "C29",
+   "res_atom_nearest": "CE",
+   "contact_atoms": {
+    "CE": {
+     "d": 3.79,
+     "lig": "C29"
+    },
+    "SD": {
+     "d": 4.06,
+     "lig": "C29"
+    }
+   },
+   "cc_lig_atoms": [
+    "C28",
+    "C29",
+    "C30",
+    "C48",
+    "C49",
+    "C50",
+    "C51",
+    "C52",
+    "C53"
+   ],
+   "n_cc_pairs": 9,
+   "lig_atoms": {
+    "C28": 2,
+    "C29": 2,
+    "C30": 1,
+    "C48": 1,
+    "C49": 2,
+    "C50": 2,
+    "C51": 2,
+    "C52": 1,
+    "C53": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 551,
+   "res": "GLN",
+   "name3": "Gln",
+   "code": "Q",
+   "subunit": "GP2",
+   "n_pairs": 8,
+   "d_min": 3.73,
+   "lig_atom_nearest": "C40",
+   "res_atom_nearest": "CG",
+   "contact_atoms": {
+    "CG": {
+     "d": 3.73,
+     "lig": "C40"
+    },
+    "NE2": {
+     "d": 3.79,
+     "lig": "C40"
+    },
+    "OE1": {
+     "d": 3.99,
+     "lig": "C29"
+    },
+    "CD": {
+     "d": 4.08,
+     "lig": "C40"
+    }
+   },
+   "cc_lig_atoms": [
+    "C28",
+    "C29",
+    "C40"
+   ],
+   "n_cc_pairs": 4,
+   "lig_atoms": {
+    "C28": 2,
+    "C29": 3,
+    "C40": 3
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": "B"
+  },
+  {
+   "chain": "a",
+   "num": 554,
+   "res": "LEU",
+   "name3": "Leu",
+   "code": "L",
+   "subunit": "GP2",
+   "n_pairs": 17,
+   "d_min": 3.31,
+   "lig_atom_nearest": "F34",
+   "res_atom_nearest": "O",
+   "contact_atoms": {
+    "O": {
+     "d": 3.31,
+     "lig": "F34"
+    },
+    "CD1": {
+     "d": 3.44,
+     "lig": "C40"
+    },
+    "CB": {
+     "d": 3.86,
+     "lig": "F34"
+    },
+    "C": {
+     "d": 3.91,
+     "lig": "F34"
+    },
+    "CA": {
+     "d": 4.25,
+     "lig": "F34"
+    },
+    "CD2": {
+     "d": 4.46,
+     "lig": "F34"
+    }
+   },
+   "cc_lig_atoms": [
+    "C27",
+    "C28",
+    "C29",
+    "C30",
+    "C31",
+    "C36",
+    "C38",
+    "C40"
+   ],
+   "n_cc_pairs": 11,
+   "lig_atoms": {
+    "C27": 1,
+    "C28": 1,
+    "C29": 2,
+    "C30": 2,
+    "C31": 2,
+    "C36": 1,
+    "C38": 1,
+    "C40": 1,
+    "F34": 5,
+    "N39": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 555,
+   "res": "ILE",
+   "name3": "Ile",
+   "code": "I",
+   "subunit": "GP2",
+   "n_pairs": 2,
+   "d_min": 4.3,
+   "lig_atom_nearest": "C30",
+   "res_atom_nearest": "CD1",
+   "contact_atoms": {
+    "CD1": {
+     "d": 4.3,
+     "lig": "C30"
+    }
+   },
+   "cc_lig_atoms": [
+    "C29",
+    "C30"
+   ],
+   "n_cc_pairs": 2,
+   "lig_atoms": {
+    "C29": 1,
+    "C30": 1
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  },
+  {
+   "chain": "a",
+   "num": 558,
+   "res": "LEU",
+   "name3": "Leu",
+   "code": "L",
+   "subunit": "GP2",
+   "n_pairs": 8,
+   "d_min": 3.82,
+   "lig_atom_nearest": "F34",
+   "res_atom_nearest": "CB",
+   "contact_atoms": {
+    "CB": {
+     "d": 3.82,
+     "lig": "F34"
+    },
+    "CD1": {
+     "d": 3.99,
+     "lig": "F35"
+    },
+    "CD2": {
+     "d": 4.07,
+     "lig": "F35"
+    },
+    "CG": {
+     "d": 4.42,
+     "lig": "F35"
+    }
+   },
+   "cc_lig_atoms": [
+    "C52"
+   ],
+   "n_cc_pairs": 1,
+   "lig_atoms": {
+    "C52": 1,
+    "F34": 4,
+    "F35": 3
+   },
+   "types": [
+    "hydrophobic"
+   ],
+   "altloc": ""
+  }
+ ],
+ "hbond_candidates": [
+  {
+   "chain": "A",
+   "num": 64,
+   "res": "ARG",
+   "atom": "NH2",
+   "lig_atom": "N15",
+   "dist": 3.16,
+   "accepted": false,
+   "note": "78 deg from the lone-pair direction"
+  },
+  {
+   "chain": "a",
+   "num": 519,
+   "res": "THR",
+   "atom": "OG1",
+   "lig_atom": "N15",
+   "dist": 3.2,
+   "accepted": true,
+   "note": "30 deg from the lone-pair direction"
+  }
+ ],
+ "cation_pi": [
+  {
+   "chain": "A",
+   "num": 64,
+   "res": "ARG",
+   "ring": [
+    "C10",
+    "C09",
+    "C08",
+    "C14",
+    "C13",
+    "C12"
+   ],
+   "dist": 3.98,
+   "offset": 1.69,
+   "height": 3.6,
+   "centre": [
+    146.31,
+    147.183,
+    118.086
+   ],
+   "in_contact_set": true
+  },
+  {
+   "chain": "A",
+   "num": 64,
+   "res": "ARG",
+   "ring": [
+    "C17",
+    "C07",
+    "C08",
+    "C14",
+    "N15",
+    "C16"
+   ],
+   "dist": 3.84,
+   "offset": 1.34,
+   "height": 3.6,
+   "centre": [
+    145.062,
+    149.243,
+    118.389
+   ],
+   "in_contact_set": true
+  }
+ ],
+ "thresholds": {
+  "contact": 4.5,
+  "hbond_max": 3.5,
+  "lone_pair_max_deg": 60.0,
+  "cation_pi_dist": 6.0,
+  "cation_pi_offset": 2.0
+ }
+}
