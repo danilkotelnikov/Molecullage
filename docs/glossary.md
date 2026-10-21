@@ -9,7 +9,7 @@ Words used in the README, the QA script and the templates.
 | band | The tallest horizontal strip across the whole width that holds no ink, as a share of the figure height. |
 | blank rectangle | The largest empty rectangle anywhere on the page, as a share of the area. It is found on tiles of 1/60 of the width. |
 | QA checks | The measurements that `qa/qa_fig.py` makes on a built figure: ink, empty cells, band, blank rectangle, type size, picture width, words, fonts, pages and width. Each is reported as ok, FAIL or warn. In the JSON output they are called `marks`. |
-| drawing rules | The 25 rules in `docs/grammar.md` that decide how a figure is drawn. |
+| drawing rules | The 28 rules in `docs/grammar.md` that decide how a figure is drawn. |
 | pill | A rounded label for a piece of data. It sits between blocks and says what passes from one to the next. |
 | tool block | A saturated rectangle with a bold white name, for a step that computes something. |
 | stage strip | A coloured bar that names a stage of a pipeline. It stands at the left edge of a column of blocks, or lies flat across the top of one. |

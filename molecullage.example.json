@@ -5,10 +5,24 @@
   "words": { "schematic": 130, "plate": 90, "box": 6, "arrow": 3, "footnote": 14 },
   "widthMm": [178, 89],
   "review": "blind+overclaim",
-  "claimBoundary": "Deposited structures from the PDB; sets and spans are illustrative.",
+  "claimBoundary": "Real data and deposited structures; sets and spans are illustrative.",
   "art": "art",
   "hook": true,
   "hookBlocks": false,
+  "autotrigger": true,
+  "standards": {
+    "defaultMode": "gallery",
+    "structureRendering": {
+      "chimeraxLighting": "flat",
+      "silhouettePx": 3,
+      "minCellWidthMm": 20,
+      "fullCellWidthMm": 45
+    },
+    "literatureGrounding": {
+      "requiredDoi": true,
+      "licenseCredit": "CC BY 4.0"
+    }
+  },
   "structures": {
     "complex": { "entry": "1MEL", "pdb": "data/pdb/1MEL.pdb", "binder": "A", "antigen": "L", "drop": "B,M", "cdr": "1mel_vhh" }
   }

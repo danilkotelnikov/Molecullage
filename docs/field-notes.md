@@ -59,3 +59,12 @@ Practical notes on building structural-biology figures with HTML pages, matplotl
 - Draw status by fill: implemented is a solid hue, designed is white and dashed.
 - Real public data can illustrate a concept. Check every id and date. Say what is computed, and with which tool and version.
 - Write placeholder sizes as symbols ("d numbers"), and say in the footnote that they are placeholders.
+
+## Schematics for readers outside the field (added from the RNAv thesis)
+
+- Put a purpose line at the top and a real thumbnail in each important block (rules 26 to 28 of `docs/grammar.md`). The user's words on the first accepted schematics were "very good design, but non-intuitive" and "lacks schematics and some sort of representative thumbnails, like matrices, structures, small figure of a data manipulation".
+- Take thumbnails from existing renders and plot layers of the same project, and write one small script per figure that builds the thumbnail data and asserts its counts, so no number is typed by hand (a 24-cell grid of walks, a contact graph, a rotation matrix).
+- Readers found the same faults every time: a full-colour picture on a solid block reads as an output; a fragment of a structure is called a capsid; a picture from another system (a curve of the cage mi3 beside an MS2 input) reads as the same system; an arrow label that implies a table is built by counting. Fix them in the figure: label "example" on or under the frame, name the stand-in, say "part of", and key the picture type.
+- Claim lines must say what solid means ("solid blocks run in part") when parts of a design already run. "Nothing run" is false if one module was fitted alone.
+- A word budget of 130 fills quickly once thumbnails need captions. Spend words on the purpose line and the "example" labels; move definitions to the caption.
+- Look: heavy navy slabs with white type, cream numbered discs, fat pills and saturated dots were called "too toyish" and "lost its Nature-like look" by the user, even though they were easy to read. A journal-like block schematic is mostly white: pale-tint cards with a 0.25 mm outline (solid for what runs, white dashed for specified), left-aligned text, plain arrow labels, small step numerals, and one small thumbnail size (14 to 16 mm) at the same inset in every card. Expect the ink and render-width checks to fail at `normal` for such a figure and write the waiver reasons in the notes; both pass at `loose`.

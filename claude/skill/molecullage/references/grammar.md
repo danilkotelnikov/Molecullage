@@ -1,6 +1,6 @@
 # Drawing rules
 
-These 25 rules decide how a Molecullage figure is drawn. Each one can be checked on the finished figure, by the QA script or by eye, and each says what goes wrong when it is broken. Sizes are for a figure 178 mm wide; at 89 mm, halve the widths and keep the type sizes. The numeric limits are close to values measured on a set of published antibody-design figures. Treat them as a guide.
+These 28 rules decide how a Molecullage figure is drawn. Each one can be checked on the finished figure, by the QA script or by eye, and each says what goes wrong when it is broken. Sizes are for a figure 178 mm wide; at 89 mm, halve the widths and keep the type sizes. The numeric limits are close to values measured on a set of published antibody-design figures. Treat them as a guide.
 
 ## A. What a figure is made of
 
@@ -38,6 +38,14 @@ These 25 rules decide how a Molecullage figure is drawn. Each one can be checked
 
 24. `qa/qa_fig.py` measures ink, empty cells, empty band, blank rectangle, type size, render widths, words, fonts, pages and width on the built PNG and PDF. Every check passes, or the notes file gives the reason it does not apply. Without a written reason, the next person who builds the figure cannot tell a deliberate exception from a fault.
 25. Before a figure is used, it gets three reads. The first is an overclaim read: an independent reader asks what a reviewer could say this picture proves that the work has not shown. The second is a blind read: a reader who sees only the PNG says what it shows. The third is the author's own look. Authors do not certify their own figures, because they know what a figure should show and see that in it.
+
+## E. Schematics read by someone outside the field
+
+These three rules came from a thesis, where the first block schematics were called "very good design, but non-intuitive" and "lacking schematics and representative thumbnails". A reader who does not know the field needs to be told what the system is for and shown one real example of what each block holds.
+
+26. Say in one line at the top of a schematic what the drawn system is for, in plain words: at most 14 words, 7.5 to 8 pt bold. Write "proposed" when the system is a design. Without it a reader sees clean boxes and arrows and cannot tell what they serve. The line claims no more than the claim-boundary line allows.
+27. Put one real example object in each block that matters: a thumbnail 12 to 22 mm wide (a structure render, a small matrix, or a mini plot made from the project's own data), with one frame style and the same place in every block, and its source (file, entry id, data file) in the notes. A thumbnail replaces words, so the word budget of rule 20 still holds. Structure renders must also pass the render-width check, so plan the page for it; the page then grows in height.
+28. A thumbnail never shows a result for a block that has not run. On a designed (white, dashed) block it shows an input or an intended object, drawn grey. Say on the picture or in the key that it is an example, name a stand-in system ("mi3", "toy square"), and call a fragment a fragment ("part of MS2, 5TC1"). The status key says what solid and dashed mean, and a picture does not use dashed strokes for content, because the reader then cannot tell a drawn dash from the status dash. Readers who did not know the figure mistook full-colour pictures on solid blocks for outputs until the key said otherwise.
 
 ## Common faults
 

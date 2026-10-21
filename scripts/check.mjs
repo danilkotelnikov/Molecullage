@@ -44,12 +44,12 @@ await step('mcp', async () => {
   await client.connect(new StdioClientTransport({ command: process.execPath, args: [path.join(REPO, 'claude', 'mcp', 'server.mjs')], cwd: REPO, env: { ...process.env } }));
   try {
     const tools = (await client.listTools()).tools.length;
-    need(tools === 12, `${tools} tools, expected 12`);
+    need(tools === 15, `${tools} tools, expected 15`);
     const res = await client.callTool({ name: 'list_templates', arguments: {} });
     need(!res.isError, 'list_templates returned an error');
     const n = JSON.parse(res.content[0].text).length;
     need(n >= 8, `${n} templates, expected 8`);
-    return `12 tools, ${n} templates`;
+    return `15 tools, ${n} templates`;
   } finally { await client.close(); }
 });
 
@@ -107,6 +107,16 @@ await step('make_brief', async () => {
   need(made('figures', 'pipeline', 'BRIEF.md'), 'no BRIEF.md');
   need(!fs.readFileSync(r.brief, 'utf8').includes('{{'), 'unfilled placeholder in the brief');
   return `brief for pipeline, template ${r.template}`;
+});
+
+await step('film tools', async () => {
+  fs.cpSync(path.join(REPO, 'film'), path.join(proj, 'film'), { recursive: true, filter: (src) => !['node_modules', 'out', 'dist'].includes(path.basename(src)) });
+  const r = await json('new_film_beat', { id: 'checkbeat', seconds: 12, dir: 'film' });
+  need(fs.existsSync(r.scene) && fs.existsSync(r.narration), 'no scene or narration written');
+  const again = await call('new_film_beat', { id: 'checkbeat', dir: 'film' });
+  const outside = await call('render_film', { beat: 'checkbeat', dir: '..' });
+  need(again.error && outside.error, 'a second scaffold or an outside folder was accepted');
+  return 'a beat scaffolded, a repeat and an outside folder refused';
 });
 
 await step('project tools refuse outside paths', async () => {

@@ -24,6 +24,7 @@ The [gallery](gallery/) holds twelve figures from published open-access papers, 
 | `struct/` | Render a PDB entry in ChimeraX in a flat style, crop the layers to one box, and list typed contacts. |
 | `qa/` | Measure a built figure (ink, empty space, type size, words, fonts, width) and give the two readers their instructions. |
 | `templates/` | Copy one of eight figure pages and edit it. |
+| `film/` | Make a short narrated film of a method or a structure: scenes in code, subtitles, a voice-over, an MP4 (see [film/README.md](film/README.md)). |
 | `claude/` | Install the Claude Code skill, the MCP server and the two optional hooks. |
 | `examples/` | See each template built, most of them on public PDB entries, each with a `how-made.md`. |
 | `docs/` | Read the drawing rules, the palette notes, the ChimeraX notes, the kit reference, a glossary and field notes. |
@@ -61,7 +62,7 @@ The build writes `out/pipeline.pdf`, `out/pipeline.png` and `out/pipeline.html`,
 
 ## Use it with Claude Code
 
-The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL.md`) gives Claude the drawing rules and the order of work. The MCP server (`claude/mcp/server.mjs`) gives Claude the twelve tools below; they run the build, the QA script, the palette scripts and ChimeraX on your machine, and only `render_structure` with `fetch=true` goes to the network. The auto-trigger hook adds one line to any prompt that mentions a figure, plot, diagram or render, so that Claude loads the skill. To install them, open [INSTALL.md](INSTALL.md) and paste its first block into Claude Code. Claude installs the skill and the server, and prints the hook entries for you to paste into your settings. After a restart, ask for a figure in plain words, for example: "Make a contact map of a nanobody and its antigen from PDB 1MEL."
+The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL.md`) gives Claude the drawing rules and the order of work. The MCP server (`claude/mcp/server.mjs`) gives Claude the fifteen tools below; they run the build, the QA script, the palette scripts and ChimeraX on your machine, and only `render_structure` with `fetch=true` goes to the network. The auto-trigger hook adds one line to any prompt that mentions a figure, plot, diagram or render, so that Claude loads the skill. To install them, open [INSTALL.md](INSTALL.md) and paste its first block into Claude Code. Claude installs the skill and the server, and prints the hook entries for you to paste into your settings. After a restart, ask for a figure in plain words, for example: "Make a contact map of a nanobody and its antigen from PDB 1MEL."
 
 | Tool | What it does |
 |---|---|
@@ -77,6 +78,9 @@ The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL
 | `plan_redesign` | Writes one palette, one type ladder, a template per figure and the order of work. |
 | `contact_sheet` | Puts figures side by side with their measurements, for example old next to new. |
 | `make_brief` | Writes the instructions for rebuilding one figure. |
+| `new_film_beat` | Scaffolds one scene of a narrated film in `film/`. |
+| `narrate_film` | Speaks the narration, writes the subtitles and the soundtrack, and reports sentences that overlap. |
+| `render_film` | Renders a scene to an MP4 with sound, a stills sheet and a page audit. |
 
 ## Redesign every figure of a project
 
@@ -96,6 +100,10 @@ Everything it writes goes into a `molecullage/` folder inside your project. It d
 |---|---|
 | ![Structure figure of the sample project before the redesign](examples/sample-project/before/structure.png) | ![Structure figure of the sample project after the redesign](examples/sample-project/after/structure.png) |
 | ![Pipeline figure of the sample project before the redesign](examples/sample-project/before/pipeline.png) | ![Pipeline figure of the sample project after the redesign](examples/sample-project/after/pipeline.png) |
+
+## Narrated films
+
+The `film/` folder turns the same palette, radii and renders into short films. A scene is a React page that depends only on the clock; the renderer photographs it frame by frame in headless Chrome, checks it against the style rules, and joins the frames with a voice-over and soft music. Subtitles come from the narration text, word by word. The demo (`film/src/beats/demo`) is the Fv fragment of antibody D1.3, PDB 1VFB. Open [film/README.md](film/README.md) for the commands and [film/STYLE.md](film/STYLE.md) for the style rules.
 
 ## Settings
 
@@ -128,7 +136,7 @@ At `normal`, a figure passes when ink is at least 9 %, empty cells at most 25 %,
 
 ## Drawing rules and palette
 
-`docs/grammar.md` lists the 25 drawing rules, and each one says what goes wrong when you break it. `docs/palette.md` explains how the palette was sampled, how colours get their roles, and how to swap in your own.
+`docs/grammar.md` lists the 28 drawing rules, and each one says what goes wrong when you break it. `docs/palette.md` explains how the palette was sampled, how colours get their roles, and how to swap in your own.
 
 ## Licence
 
