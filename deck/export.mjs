@@ -41,7 +41,7 @@ export async function withDeck(htmlFile, fn, { scale = 1, live = false } = {}) {
 
 const ready = (page) => page.evaluate(() => DECK.ready());
 
-/** Python script of the owner that strips text chunks from PNG files, when present next to the repository; otherwise a built-in pass. */
+/** Strips text, Exif and time chunks from a PNG file with a built-in pass. */
 function stripPng(file) {
   const b = fs.readFileSync(file);
   if (b.readUInt32BE(0) !== 0x89504e47) return;
