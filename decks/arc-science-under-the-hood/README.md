@@ -59,5 +59,3 @@ A picture carries tags: Measured, Published structure, Computed, Concept values,
 ![Memory: a question is typed and followed through four searches](media/memory.gif)
 
 ![Science: machine learning basics, shape and charge, a small-molecule method](media/science.gif)
-
-The full recordings are assets of the release [deck-videos-2026-11-05](https://github.com/danilkotelnikov/Molecullage/releases/tag/deck-videos-2026-11-05): Harness, Memory and Science.
