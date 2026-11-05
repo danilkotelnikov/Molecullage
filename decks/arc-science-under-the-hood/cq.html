@@ -1,0 +1,198 @@
+<style>
+.cq{width:100%;display:flex;flex-direction:column;gap:clamp(10px,1.8vh,20px)}
+.cq .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.cq .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+.cq .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.cq-top{display:flex;flex-direction:column;gap:10px}
+.cq-form{display:flex;gap:10px;align-items:stretch}
+.cq-in{flex:1;min-width:0;background:rgba(236,236,234,.06);border:1px solid rgba(236,236,234,.22);border-radius:12px;color:var(--fg);font:400 clamp(16px,1.35vw,22px) "Geist",sans-serif;padding:11px 16px;outline:none}
+.cq-in:focus{border-color:var(--teal);background:rgba(127,178,170,.08)}
+.cq-go{border:1px solid var(--teal);background:rgba(127,178,170,.16);color:var(--teal);border-radius:12px;padding:0 22px;font:600 clamp(14px,1.1vw,18px) "Geist",sans-serif;cursor:pointer}
+.cq-go:hover{background:rgba(127,178,170,.3)}
+.cq-chips{display:flex;gap:8px;flex-wrap:wrap}
+.cq-chip{border:1px solid rgba(236,236,234,.2);background:none;color:var(--soft);border-radius:999px;padding:4px 12px;font:400 clamp(12px,.95vw,15px) "Geist",sans-serif;cursor:pointer}
+.cq-chip:hover{border-color:var(--teal);color:var(--fg)}
+.cq-board{display:grid;grid-template-columns:1.3fr 1fr 1fr .95fr;gap:clamp(10px,1.2vw,18px);align-items:start}
+.cq-col{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.cq-col h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.cq-col h3 b{color:var(--fg);font-weight:600;margin-right:.5em}
+.cq-sub{font-size:clamp(12px,.95vw,15px);color:var(--soft);line-height:1.35}
+.cq-lists{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.cq-l h4{margin:0 0 3px;font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase}
+.cq-l.w h4{color:var(--teal)}.cq-l.m h4{color:var(--blue)}.cq-l.g h4{color:var(--violet)}.cq-l.t h4{color:var(--amber)}
+.cq-r{display:flex;gap:6px;align-items:baseline;font-size:clamp(12px,.98vw,15px);line-height:1.5;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:6px;padding:0 4px}
+.cq-r i{font:400 11px "Geist Mono",monospace;color:var(--mute);font-style:normal;min-width:1.1em}
+.cq-r.hit{color:var(--fg)}
+.cq-r.sel{background:rgba(127,178,170,.18);color:var(--fg)}
+.cq-m{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;padding:3px 6px;border-radius:8px;font-size:clamp(12px,.98vw,15px);color:var(--soft)}
+.cq-m:hover,.cq-m.sel{background:rgba(127,178,170,.14);color:var(--fg)}
+.cq-m span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cq-m em{font:500 12px "Geist Mono",monospace;color:var(--fg);font-style:normal}
+.cq-m u{grid-column:1 / -1;height:4px;border-radius:3px;background:var(--teal);opacity:.75;display:block;text-decoration:none}
+.cq-c{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:baseline;padding:3px 6px;border-radius:8px;font-size:clamp(12px,.98vw,15px);color:var(--soft)}
+.cq-c span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cq-c em{font:500 12px "Geist Mono",monospace;font-style:normal;color:var(--mute)}
+.cq-c b{font:600 11px "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:1px 8px;border:1px solid}
+.cq-c.keep{color:var(--fg)}.cq-c.keep b{color:var(--teal);border-color:var(--teal)}
+.cq-c.drop{opacity:.55}.cq-c.drop b{color:var(--mute);border-color:rgba(236,236,234,.25)}
+.cq-a{font-size:clamp(13px,1.05vw,16px);line-height:1.4;color:var(--fg);padding:6px 8px;border-left:3px solid var(--teal);background:rgba(127,178,170,.08);border-radius:0 8px 8px 0}
+.cq-math{display:flex;flex-direction:column;gap:4px;min-height:3.4em}
+.cq-eq{font:500 clamp(14px,1.3vw,21px) "Geist Mono",monospace;color:var(--fg);line-height:1.4;overflow-wrap:anywhere}
+.cq-eq .w{color:var(--teal)}.cq-eq .m{color:var(--blue)}.cq-eq .g{color:var(--violet)}.cq-eq .t{color:var(--amber)}
+.cq-note{font-size:clamp(13px,1.05vw,17px);color:var(--soft);line-height:1.4}
+.cq-note b{color:var(--fg);font-weight:600}
+@media (max-width:1100px){.cq-board{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+  .cq-board{grid-template-columns:1fr}
+  .cq-col:not(.on){display:none}
+  .cq-chips{display:none}
+  .cq-form{flex-direction:column}.cq-go{padding:8px}
+  .cq-note{display:none}
+}
+</style>
+<section class="slide" data-k="cq" data-film>
+  <div class="cq">
+    <div class="mh" data-in><h2 class="big grad">Cammut query</h2><span class="tag">Concept values</span></div>
+    <div class="cq-top" data-st="q" data-hold>
+      <form class="cq-form" id="cq-form" autocomplete="off">
+        <input class="cq-in" id="cq-in" aria-label="Question for Cammut" value="Why did the connection fail" maxlength="80" data-hold>
+        <button class="cq-go" type="submit">Run</button>
+      </form>
+      <div class="cq-chips" id="cq-chips"></div>
+    </div>
+    <div class="cq-board">
+      <div class="cq-col" data-st="c1"><h3><b>1</b>Search the bank</h3><div class="cq-sub" id="cq-bank">54,087 notes in the bank</div><div class="cq-lists" id="cq-lists"></div></div>
+      <div class="cq-col" data-st="c2"><h3><b>2</b>Merge</h3><div class="cq-sub">Pick a note to see its score.</div><div id="cq-merge"></div></div>
+      <div class="cq-col" data-st="c3"><h3><b>3</b>Reorder and cut</h3><div class="cq-sub" id="cq-cutsub"></div><div id="cq-cut"></div></div>
+      <div class="cq-col" data-st="c4"><h3><b>4</b>Answer</h3><div class="cq-sub" id="cq-size"></div><div id="cq-ans" style="display:flex;flex-direction:column;gap:6px"></div></div>
+    </div>
+    <div class="cq-math" data-st="c2"><div class="cq-eq" id="cq-eq"></div><div class="cq-note" id="cq-note"></div></div>
+  </div>
+</section>
+<script>
+(() => {
+  const s = document.currentScript.previousElementSibling;
+  const Q = (q) => s.querySelector(q), QA = (q) => [...s.querySelectorAll(q)];
+  /* Example notes. The wording follows facts of the Cammut plan; the ages are teaching values. */
+  const N = [
+    ['Bank size', 'The Hindsight bank holds over fifty thousand notes.', 0, 'hindsight bank'],
+    ['Local port', 'The gateway runs on a fixed local port.', 1, 'gateway'],
+    ['Gateway fix', 'Starting the local gateway fixed ECONNREFUSED.', 0, 'gateway lesson'],
+    ['Reranker live', 'The reranker is live.', 0, 'reranker'],
+    ['Student score', 'The student reranker finds a good note in the top 5 for most questions.', 3, 'reranker student'],
+    ['Teacher speed', 'The teacher reranker needs a few seconds per question.', 3, 'reranker teacher'],
+    ['9,000 characters', 'The governor cuts an answer to 9,000 characters.', 2, 'governor gateway'],
+    ['Ratio 0.8', 'The governor drops notes that score under 0.8 of the best note.', 2, 'governor'],
+    ['Plain English', 'The user wants plain English replies.', 14, 'user style'],
+    ['Review failure', 'The review call failed: the service refused the request.', 1, 'review lesson'],
+    ['Nightly pass', 'A nightly pass refreshes the state cards.', 5, 'nightly hindsight'],
+    ['Tidy of 4 Nov', 'A tidy retired many raw notes.', 0, 'hindsight tidy'],
+    ['Four searches', 'Hindsight searches four ways: meaning, words, links and time.', 8, 'hindsight search'],
+    ['English variant', 'A Russian question gets an English variant.', 6, 'search russian'],
+    ['Rank fusion', 'Searches are merged by reciprocal rank fusion with k = 60.', 6, 'search merge'],
+    ['One fact per note', 'The policy keeps one fact in each note.', 20, 'policy hindsight'],
+    ['Linux restart', 'Restarting Linux did not fix the refused connection.', 0, 'gateway lesson linux'],
+    ['Memory link', 'A link connects the laptop to the memory server.', 4, 'link hindsight server'],
+    ['Remote server', 'The Hindsight bank runs on a remote server.', 12, 'hindsight server'],
+    ['Student size', 'The student reranker is small enough for a server.', 1, 'reranker student server'],
+    ['Answer size', 'Answers got shorter after the clean-up.', 1, 'governor tidy'],
+    ['State cards', 'Three state cards sum up the project, the rules and the lessons.', 5, 'nightly hindsight policy'],
+  ].map(([label, text, age, ents], id) => ({ id, label, text, age, ents: ents.split(' ') }));
+  const STOP = new Set('why did the does how are was its for and which what when can with from that this have has will you your our not but too get got'.split(' '));
+  const GROUPS = ['connection refuse econnrefused fail failed down error link server gateway restart', 'size large big limit cut trim long characters tokens answer governor', 'rerank reranker reorder sort score student teacher live',
+    'english language russian translate variant', 'merge fuse fusion combine rank', 'night nightly daily schedule refresh state card summary', 'memory bank notes hindsight'].map((g) => g.split(' '));
+  const stem = (w) => w.replace(/ies$/, 'y').replace(/(ch|sh|ss|x)es$/, '$1').replace(/([^s])s$/, '$1').replace(/ed$/, '');
+  const toks = (t) => t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter((w) => w.length > 2 && !STOP.has(w)).map(stem);
+  N.forEach((n) => { n.t = new Set(toks(n.text + ' ' + n.label)); });
+  const df = {}; N.forEach((n) => n.t.forEach((w) => (df[w] = (df[w] || 0) + 1)));
+  const idf = (w) => Math.log(1 + N.length / (df[w] || 1));
+  const NAMES = [['w', 'Words'], ['m', 'Meaning'], ['g', 'Links'], ['t', 'Time']];
+
+  function run(q) {
+    const qt = [...new Set(toks(q))];
+    const ex = new Set(qt); qt.forEach((w) => GROUPS.forEach((g) => { if (g.map(stem).includes(w)) g.forEach((x) => ex.add(stem(x))); }));
+    const words = N.map((n) => ({ n, v: qt.reduce((a, w) => a + (n.t.has(w) ? idf(w) : 0), 0) }));
+    const mean = N.map((n) => { const hit = [...n.t].filter((w) => ex.has(w)).length; return { n, v: hit / Math.sqrt(n.t.size * ex.size || 1) }; });
+    const rank = (a) => a.filter((x) => x.v > 0).sort((x, y) => y.v - x.v || x.n.id - y.n.id).map((x) => x.n);
+    const W = rank(words), M = rank(mean), top = new Set(W.slice(0, 2).flatMap((n) => n.ents));
+    const G = rank(N.map((n) => ({ n, v: n.ents.filter((e) => top.has(e)).length }))).filter((n) => !W.slice(0, 2).includes(n) || top.size);
+    const seen = new Set([...W, ...M].map((n) => n.id));
+    const T = N.filter((n) => seen.has(n.id)).sort((a, b) => a.age - b.age || a.id - b.id);
+    const lists = { w: W, m: M, g: G, t: T };
+    const K = 60, fused = new Map();
+    NAMES.forEach(([k]) => lists[k].slice(0, 10).forEach((n, i) => {
+      const f = fused.get(n.id) || { n, s: 0, p: {} }; f.s += 1 / (K + i + 1); f.p[k] = i + 1; fused.set(n.id, f);
+    }));
+    const merged = [...fused.values()].sort((a, b) => b.s - a.s || a.n.id - b.n.id).slice(0, 7);
+    const wv = Object.fromEntries(words.map((x) => [x.n.id, x.v])), mv = Object.fromEntries(mean.map((x) => [x.n.id, x.v]));
+    const nw = Math.max(...merged.map((f) => wv[f.n.id]), 1e-9), nm = Math.max(...merged.map((f) => mv[f.n.id]), 1e-9);
+    merged.forEach((f) => { f.r = .6 * wv[f.n.id] / nw + .4 * mv[f.n.id] / nm + (f.p.g ? .08 : 0); });
+    const re = [...merged].sort((a, b) => b.r - a.r || a.n.id - b.n.id), best = re[0] ? re[0].r : 1;
+    let kept = 0, chars = 0;
+    re.forEach((f) => { f.ratio = best ? f.r / best : 0; f.keep = (f.ratio >= .8 || kept < 3) && kept < 5 && chars + f.n.text.length <= 9000; if (f.keep) { kept++; chars += f.n.text.length; } });
+    return { lists, merged, re, chars };
+  }
+
+  let R = null, sel = 0;
+  const el = (cls, html, tag = 'div') => { const e = document.createElement(tag); e.className = cls; e.innerHTML = html; return e; };
+  const esc = (t) => t.replace(/[&<]/g, (c) => ({ '&': '&amp;', '<': '&lt;' }[c]));
+  function eqFor(f) {
+    if (!f) { Q('#cq-eq').textContent = ''; Q('#cq-note').textContent = 'No note matches. Try other words.'; return; }
+    const parts = NAMES.filter(([k]) => f.p[k]).map(([k]) => `<span class="${k}">1/(60+${f.p[k]})</span>`);
+    Q('#cq-eq').innerHTML = `${esc(f.n.label)} = ${parts.join(' + ')} = <b>${f.s.toFixed(4)}</b>`;
+    const lists = NAMES.filter(([k]) => f.p[k]).map(([k, nm]) => `${nm} place ${f.p[k]}`).join(', ');
+    Q('#cq-note').innerHTML = `<b>${lists}.</b> A first place gives 1/61 = 0.0164 and a tenth place gives 1/70 = 0.0143. The gaps are small, so the notes that several searches agree on win.`;
+  }
+  function render() {
+    const L = Q('#cq-lists'); L.textContent = '';
+    NAMES.forEach(([k, nm]) => {
+      const box = el('cq-l ' + k, `<h4>${nm}</h4>`);
+      const rows = R.lists[k].slice(0, 4);
+      if (!rows.length) box.appendChild(el('cq-r', '<i>-</i>none'));
+      rows.forEach((n, i) => box.appendChild(el('cq-r hit', `<i>${i + 1}</i>${esc(n.label)}`)));
+      L.appendChild(box);
+    });
+    const M = Q('#cq-merge'); M.textContent = '';
+    const max = R.merged[0] ? R.merged[0].s : 1;
+    R.merged.forEach((f, i) => {
+      const row = el('cq-m' + (i === sel ? ' sel' : ''), `<span>${esc(f.n.label)}</span><em>${f.s.toFixed(4)}</em><u style="width:${Math.max(8, 100 * f.s / max)}%"></u>`);
+      row.onclick = () => { sel = i; QA('.cq-m').forEach((r, j) => r.classList.toggle('sel', j === i)); eqFor(f); };
+      M.appendChild(row);
+    });
+    Q('#cq-cutsub').textContent = 'Reordered by a closer read. Keep a note within 0.8 of the best, at least 3 and at most 5.';
+    const C = Q('#cq-cut'); C.textContent = '';
+    R.re.forEach((f) => C.appendChild(el('cq-c ' + (f.keep ? 'keep' : 'drop'), `<span>${esc(f.n.label)}</span><em>${f.ratio.toFixed(2)}</em><b>${f.keep ? 'Keep' : 'Drop'}</b>`)));
+    const A = Q('#cq-ans'); A.textContent = '';
+    R.re.filter((f) => f.keep).forEach((f) => A.appendChild(el('cq-a', esc(f.n.text))));
+    if (!R.re.length) A.appendChild(el('cq-a', 'Nothing found.'));
+    Q('#cq-size').textContent = `${R.chars.toLocaleString('en-US')} of 9,000 characters`;
+    sel = 0; eqFor(R.merged[0]);
+  }
+  function ask(q) { R = run(q); render(); }
+  const chips = Q('#cq-chips');
+  ['Why did the connection fail', 'How large can an answer be', 'When do state cards refresh', 'Which reranker is live'].forEach((t) => {
+    const b = el('cq-chip', t, 'button'); b.type = 'button'; b.setAttribute('data-hold', '');
+    b.onclick = () => { Q('#cq-in').value = t; ask(t); window.showStep && showStep(s, 1); };
+    chips.appendChild(b);
+  });
+  Q('#cq-form').onsubmit = (e) => { e.preventDefault(); ask(Q('#cq-in').value); Q('#cq-in').blur(); window.showStep && showStep(s, 1); };
+  ask(Q('#cq-in').value);
+  if (window.CORPUS) Q('#cq-bank').textContent = window.CORPUS.notes.toLocaleString('en-US') + ' notes in the bank';
+
+  window.STEPS = window.STEPS || {};
+  const rise = (sel2) => () => gsap.timeline().fromTo(QA(sel2), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, stagger: .05, ease: 'power2.out' });
+  const step = (cap, on, rows) => ({ cap, on: `[data-st="q"],${on}`, run: (sc, rm) => {
+    QA('.cq-col').forEach((c) => c.classList.toggle('on', c.matches(on)));
+    return rm ? null : rise(rows)();
+  } });
+  window.STEPS.cq = [
+    step('A question reaches Cammut. Type your own or pick one.', '[data-st="q"]', '.cq-chip'),
+    step('Four searches rank the notes: words, meaning, links and time.', '[data-st="c1"]', '#cq-lists .cq-r'),
+    step('The lists merge. A note gets 1 over 60 plus its place in each list.', '[data-st="c2"]', '#cq-merge .cq-m'),
+    step('A closer read reorders the best notes.', '[data-st="c3"]', '#cq-cut .cq-c'),
+    step('The cut keeps notes within 0.8 of the best score.', '[data-st="c3"]', '#cq-cut .cq-c.drop'),
+    step('The agent receives these notes and nothing else.', '[data-st="c4"]', '#cq-ans .cq-a'),
+  ];
+  window.ENTER = window.ENTER || {};
+})();
+</script>

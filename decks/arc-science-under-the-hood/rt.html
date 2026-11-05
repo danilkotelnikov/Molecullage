@@ -1,0 +1,65 @@
+<style>
+/* rt: route slides, in the look of cq.html. One clock runs left to right. A picture shows the moment, and three cards explain
+   the same moment: STEP (what the workflow does, in plain words), MATHS (the small formula with live numbers),
+   UNDER THE HOOD (code, data and what changes). Use these classes inside a fragment; prefix your own ids with the slide key. */
+.rt{width:100%;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(12px,1.8vw,28px);align-items:stretch}
+.rt-main{display:flex;flex-direction:column;gap:clamp(8px,1.4vh,16px);min-width:0}
+.rt-side{display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);min-width:0;justify-content:center}
+.rt .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.rt .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+.rt .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.rt-card{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;min-width:0;transition:border-color .4s,background .4s}
+.rt-card.on{border-color:var(--teal);background:rgba(127,178,170,.07)}
+.rt-card h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.rt-card h3 b{color:var(--fg);font-weight:600;margin-right:.5em}
+.rt-say{font-size:clamp(14px,1.15vw,19px);color:var(--fg);line-height:1.4;margin:0}
+.rt-sub{font-size:clamp(12px,.95vw,15px);color:var(--soft);line-height:1.35;margin:0}
+.rt-eq{font:500 clamp(13px,1.15vw,19px) "Geist Mono",monospace;color:var(--fg);line-height:1.5;overflow-wrap:anywhere}
+.rt-eq .t{color:var(--teal)}.rt-eq .b{color:var(--blue)}.rt-eq .v{color:var(--violet)}.rt-eq .a{color:var(--amber)}.rt-eq .m{color:var(--mute)}
+.rt-code{font:400 clamp(11px,.9vw,14px) "Geist Mono",monospace;color:var(--soft);line-height:1.55;white-space:pre-wrap;background:rgba(0,0,0,.28);border-radius:8px;padding:8px 10px;margin:0;overflow:hidden}
+.rt-code .k{color:var(--blue)}.rt-code .n{color:var(--amber)}.rt-code .c{color:var(--mute)}.rt-code .h{color:var(--fg);background:rgba(127,178,170,.24);border-radius:3px}
+.rt-chg{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;margin:0;font-size:clamp(12px,.98vw,15px);line-height:1.35}
+.rt-chg dt{color:var(--mute);font:500 11px "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+.rt-chg dd{margin:0;color:var(--soft)}
+.rt-chg dd b{color:var(--fg);font-weight:600}
+/* the clock: one tick for each step; a tick is a button, so a viewer can jump */
+.rt-rail{display:flex;gap:6px;align-items:stretch}
+.rt-tk{flex:1;min-width:0;border:1px solid rgba(236,236,234,.16);background:none;color:var(--mute);border-radius:10px;padding:5px 6px;font:500 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt-tk:hover{color:var(--fg);border-color:var(--teal)}
+.rt-tk.on{color:var(--teal);border-color:var(--teal);background:rgba(127,178,170,.12)}
+@media (max-width:760px){
+  .rt{grid-template-columns:1fr;gap:8px}
+  .rt-side .rt-card:not(.on){display:none}
+  .rt-code,.rt-chg{display:none}
+  .rt-tk{font-size:0}.rt-tk::before{content:attr(data-n);font-size:11px}
+}
+</style>
+<script>
+/* RT: helpers for route slides.
+   RT.rail(host, labels, section): builds the clock ticks inside host; a tick calls showStep(section, i). Mark the tick of the current step with RT.mark(host, i).
+   RT.count(el, to, opts): animates a number up to `to` (opts: from, dur, dec, ease); returns the tween.
+   RT.lit(section, ids): lights the cards whose data-card is in ids (others dim). */
+window.RT = (() => {
+  const nf = (n, dec = 0) => Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  return {
+    nf,
+    rail(host, labels, section) {
+      host.textContent = ''; host.classList.add('rt-rail'); host.setAttribute('data-hold', '');
+      labels.forEach((t, i) => {
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'rt-tk'; b.textContent = t; b.dataset.n = i + 1;
+        b.onclick = () => window.showStep && showStep(section, i);
+        host.appendChild(b);
+      });
+    },
+    mark(host, i) { [...host.children].forEach((b, j) => b.classList.toggle('on', j === i)); },
+    count(el, to, o = {}) {
+      const from = o.from == null ? 0 : o.from, st = { v: from }, dec = o.dec || 0;
+      el.textContent = nf(from, dec);
+      return gsap.to(st, { v: to, duration: o.dur == null ? 1 : o.dur, ease: o.ease || 'power2.out', onUpdate: () => (el.textContent = nf(st.v, dec)) });
+    },
+    lit(section, ids) {
+      section.querySelectorAll('.rt-card').forEach((c) => c.classList.toggle('on', ids.includes(c.dataset.card)));
+    },
+  };
+})();
+</script>

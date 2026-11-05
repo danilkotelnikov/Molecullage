@@ -1,0 +1,291 @@
+<style>
+/* m1: the patch gate. Flat glass cards in the look of cq.html. Every id and class starts with m1. */
+.m1{width:100%;display:flex;flex-direction:column;gap:clamp(12px,2.2vh,24px)}
+.m1 .mh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.m1 .mh h2{font-size:clamp(30px,3vw,52px);margin:0 8px 0 0;line-height:1.05}
+.m1 .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.m1-stage{display:grid}
+.m1-pn{grid-area:1/1;display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,1.8vh,18px);min-width:0;visibility:hidden}
+.m1-pn:not(.on){opacity:0!important}
+.m1-pn.on{visibility:inherit}
+.m1-card{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:clamp(14px,2vh,22px) clamp(16px,1.4vw,22px);display:flex;flex-direction:column;gap:clamp(9px,1.4vh,14px);min-width:0}
+.m1-card h3,.m1-vh{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.m1-say{font-size:clamp(15px,1.5vw,24px);color:var(--fg);line-height:1.4;margin:0}
+.m1-sub{font-size:clamp(12px,1.1vw,17px);color:var(--soft);line-height:1.4;margin:0}
+/* step 1: agent, patch, gate */
+.m1-flow{display:grid;grid-template-columns:minmax(0,.9fr) auto minmax(0,1.7fr) auto minmax(0,1fr);gap:clamp(8px,1.2vw,20px);align-items:center}
+.m1-ar{display:flex;flex-direction:column;align-items:center;gap:4px;font:400 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.m1-ar svg{width:clamp(34px,4vw,64px);height:12px;fill:none;stroke:var(--mute);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.m1-df{font:400 clamp(12px,1.05vw,17px) "Geist Mono",monospace;color:var(--soft);line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,.28);border-radius:8px;padding:10px 12px;margin:0}
+.m1-df i{font-style:normal;color:var(--mute)}
+.m1-df b{font-weight:400;color:var(--fg);background:rgba(127,178,170,.24);border-radius:3px;display:block}
+.m1-mini{display:flex;gap:8px}
+.m1-mini i{width:clamp(16px,1.5vw,22px);height:clamp(16px,1.5vw,22px);border-radius:50%;border:2px solid rgba(236,236,234,.28);background:rgba(0,0,0,.3)}
+/* steps 2 to 4: five checks and three verdicts */
+.m1-chip{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:9px 14px;border:1px solid rgba(236,236,234,.12);border-radius:12px;background:rgba(236,236,234,.04);font-size:clamp(13px,1.05vw,17px);color:var(--fg)}
+.m1-chip b{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.m1-chip em{font-style:normal;color:var(--mute);margin-left:auto;font-size:.9em}
+.m1-five{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1vw,16px)}
+.m1-ck{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:clamp(14px,2vh,20px) 16px;display:flex;flex-direction:column;gap:10px;min-width:0;transition:border-color .4s,background .4s}
+.m1-ck.lit{border-color:rgba(127,178,170,.7);background:rgba(127,178,170,.07)}
+.m1-ck.bad{border-color:rgba(207,174,126,.85);background:rgba(207,174,126,.07)}
+.m1-top{display:flex;align-items:center;gap:10px}
+.m1-top h3{font:500 clamp(11px,1vw,15px) "Geist Mono",monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--fg);margin:0}
+.m1-lamp{flex:none;width:clamp(22px,2.2vw,32px);height:clamp(22px,2.2vw,32px);border-radius:50%;border:2px solid rgba(236,236,234,.3);background:rgba(0,0,0,.3);transition:background .4s,border-color .4s,box-shadow .4s}
+.m1-ck.lit .m1-lamp{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 5px rgba(127,178,170,.16)}
+.m1-ck.bad .m1-lamp{background:rgba(0,0,0,.3);border-color:rgba(207,174,126,.6);box-shadow:none}
+.m1-q{font-size:clamp(14px,1.2vw,19px);color:var(--soft);line-height:1.4;margin:0}
+.m1-ev{font-size:clamp(14px,1.2vw,19px);color:var(--fg);line-height:1.35;margin:0;border-top:1px solid rgba(236,236,234,.12);padding-top:9px;opacity:0;transition:opacity .4s;margin-top:auto}
+.m1-ev small{display:block;font:400 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:3px}
+.m1-ck.lit .m1-ev,.m1-ck.bad .m1-ev{opacity:1}
+.m1-vd{display:flex;flex-direction:column;gap:8px;transition:opacity .5s}
+.m1-vd.off{opacity:0}
+.m1-vs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1vw,16px)}
+.m1-v{--c:var(--teal);--cb:rgba(127,178,170,.08);background:rgba(236,236,234,.03);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:clamp(12px,1.8vh,18px) 16px;display:flex;flex-direction:column;gap:6px;opacity:.4;transition:opacity .4s,border-color .4s,background .4s}
+.m1-v[data-v="unmet"]{--c:var(--amber);--cb:rgba(207,174,126,.08)}
+.m1-v[data-v="blocked"]{--c:var(--violet);--cb:rgba(156,143,196,.09)}
+.m1-v.on{opacity:1;border-color:var(--c);background:var(--cb)}
+.m1-v h3{display:flex;align-items:center;gap:9px;color:var(--c);font-size:clamp(12px,1vw,15px)}
+.m1-v h3::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--c)}
+/* steps 5 and 6: the ledger */
+.m1-chain{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:clamp(4px,.6vw,10px)}
+.m1-b{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.14);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:border-color .4s,background .4s}
+.m1-b h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.m1-b.bad{border-color:rgba(207,174,126,.85);background:rgba(207,174,126,.07)}
+.m1-en{min-height:clamp(36px,4.6vh,44px);display:flex;align-items:center;font-size:clamp(14px,1.2vw,19px);color:var(--violet)}
+.m1-in{width:100%;min-width:0;background:rgba(236,236,234,.07);border:1px solid rgba(156,143,196,.7);border-radius:9px;color:var(--violet);font:400 clamp(14px,1.2vw,19px) "Geist",sans-serif;padding:7px 10px;outline:none}
+.m1-in:focus{border-color:var(--violet);background:rgba(156,143,196,.12)}
+.m1-row{display:flex;flex-direction:column;gap:1px}
+.m1-row em{font:400 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-style:normal}
+.m1-row code{font:500 clamp(14px,1.2vw,19px) "Geist Mono",monospace;transition:color .4s}
+.m1-row.p code{color:var(--blue)}.m1-row.h code{color:var(--teal)}
+.m1-row.p.bad code,.m1-row.h.bad code{color:var(--amber)}
+.m1-lk{font:300 clamp(18px,1.8vw,28px) "Geist Mono",monospace;color:var(--teal);transition:color .4s}
+.m1-lk.bad{color:var(--amber)}
+.m1-lf{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(10px,1.6vw,24px);align-items:center}
+.m1-eq{font:500 clamp(13px,1.15vw,19px) "Geist Mono",monospace;color:var(--fg);line-height:1.6}
+.m1-eq .b{color:var(--blue)}.m1-eq .v{color:var(--violet)}.m1-eq .t{color:var(--teal)}.m1-eq .m{color:var(--mute)}
+#m1-st{min-height:2.8em}
+.m1-ctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.m1-rs{border:1px solid rgba(236,236,234,.28);background:none;color:var(--soft);border-radius:999px;padding:5px 16px;font:500 clamp(12px,.95vw,15px) "Geist",sans-serif;cursor:pointer}
+.m1-rs:hover{border-color:var(--teal);color:var(--fg)}
+/* step 7: lessons */
+.m1-les{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.15fr) auto minmax(0,1fr);gap:clamp(8px,1.2vw,20px);align-items:center}
+.m1-ct{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px;align-items:baseline}
+.m1-ct b{font:600 clamp(26px,3vw,48px) "Geist Mono",monospace;color:var(--fg);letter-spacing:-.02em;text-align:right;line-height:1.1}
+.m1-ct span{font-size:clamp(13px,1.1vw,17px);color:var(--soft)}
+.m1-dt{font:400 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:0}
+@media (max-width:1100px){.m1-five{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){
+  .m1-pn:not(.on){display:none}
+  .m1{gap:8px}
+  .m1 .tag{font-size:11px;padding:3px 9px}
+  .m1-card,.m1-ck,.m1-b{padding:10px 12px;gap:6px}
+  .m1-flow,.m1-les{grid-template-columns:1fr;gap:6px}
+  .m1-ar{flex-direction:row;justify-content:center}
+  .m1-ar svg{transform:rotate(90deg);width:30px}
+  .m1-flow .m1-sub,.m1-les .m1-sub{display:none}
+  .m1-say{font-size:14px}
+  .m1-chip{display:none}
+  .m1-five{grid-template-columns:1fr;gap:6px}
+  .m1-ck{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;align-items:center}
+  .m1-top{display:contents}
+  .m1-q,.m1-ev{grid-column:2;margin:0;padding:0;border:0;font-size:13px}
+  .m1-ev small{display:none}
+  .m1-ev{display:none}.m1-ck.lit .m1-ev,.m1-ck.bad .m1-ev{display:block}
+  .m1[data-ph="2"] .m1-q,.m1[data-ph="3"] .m1-q{display:none}
+  .m1[data-ph="1"] .m1-vd{display:none}
+  .m1-v:not(.on){display:none}
+  .m1-vs{grid-template-columns:1fr}
+  .m1-chain{grid-template-columns:1fr;gap:6px}
+  .m1-lk{display:none}
+  .m1-b{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center}
+  .m1-b h3{grid-column:1}
+  .m1-en{grid-column:1;min-height:0;font-size:14px}
+  .m1-b .m1-row.p{grid-column:2;grid-row:1;align-items:flex-end}
+  .m1-b .m1-row.h{grid-column:2;grid-row:2;align-items:flex-end}
+  .m1-row code{font-size:13px}
+  .m1-in{font-size:14px;padding:5px 8px}
+  .m1-lf{grid-template-columns:1fr;gap:6px}
+  .m1-lf .m1-eq,.m1-lf h3{display:none}
+  .m1-ct b{font-size:26px}
+}
+</style>
+<section class="slide" data-k="m1" data-film>
+  <div class="m1" data-ph="0">
+    <div class="mh" data-in><h2 class="big grad">Patch gate</h2><span class="tag" id="m1-tag">Concept values</span></div>
+    <div class="m1-stage">
+      <div class="m1-pn on" data-p="flow" data-st="flow">
+        <div class="m1-flow">
+          <div class="m1-card m1-x"><h3>Agent</h3><p class="m1-say">An agent finds a rule that could work better. It writes a patch.</p></div>
+          <div class="m1-ar m1-x"><span>Proposes</span><svg viewBox="0 0 60 12" aria-hidden="true"><path d="M1 6H57M50 1l7 5-7 5"/></svg></div>
+          <div class="m1-card m1-x"><h3>Patch</h3><pre class="m1-df"><i>Rules of the agent</i>
+<b>+ Read the lessons of the area before you start</b></pre><p class="m1-sub">A patch is one small change to the rules.</p></div>
+          <div class="m1-ar m1-x"><span>Goes to</span><svg viewBox="0 0 60 12" aria-hidden="true"><path d="M1 6H57M50 1l7 5-7 5"/></svg></div>
+          <div class="m1-card m1-x"><h3>Gate</h3><div class="m1-mini"><i></i><i></i><i></i><i></i><i></i></div><p class="m1-say">Five checks decide. The agent does not.</p></div>
+        </div>
+      </div>
+      <div class="m1-pn" data-p="gate" data-st="gate">
+        <div class="m1-chip m1-x"><b>Patch</b><span>Read the lessons of the area before you start</span><em>From an agent</em></div>
+        <div class="m1-five" id="m1-five">
+          <div class="m1-ck m1-x"><div class="m1-top"><i class="m1-lamp"></i><h3>Frozen</h3></div><p class="m1-q">Was the patch recorded before it was built? Are the files unchanged since?</p><p class="m1-ev" data-ok="Proposal and freeze are on record"><small>Evidence</small><span></span></p></div>
+          <div class="m1-ck m1-x"><div class="m1-top"><i class="m1-lamp"></i><h3>Checks</h3></div><p class="m1-q">Did every check end with exit code 0, which means no error? Did every probe, a test of an edge case, pass?</p><p class="m1-ev" data-ok="12 checks, all exit 0" data-bad="One check was skipped"><small>Evidence</small><span></span></p></div>
+          <div class="m1-ck m1-x"><div class="m1-top"><i class="m1-lamp"></i><h3>Kept behaviour</h3></div><p class="m1-q">Does what worked before still work? The agent lists it, and each item must hold.</p><p class="m1-ev" data-ok="Earlier behaviour still holds"><small>Evidence</small><span></span></p></div>
+          <div class="m1-ck m1-x"><div class="m1-top"><i class="m1-lamp"></i><h3>Reviewer</h3></div><p class="m1-q">Did a different agent review it? A builder never certifies its own work.</p><p class="m1-ev" data-ok="Builder and reviewer differ"><small>Evidence</small><span></span></p></div>
+          <div class="m1-ck m1-x"><div class="m1-top"><i class="m1-lamp"></i><h3>Requirements</h3></div><p class="m1-q">Is every requirement verified? Is no blocking or major finding still open?</p><p class="m1-ev" data-ok="Every requirement verified"><small>Evidence</small><span></span></p></div>
+        </div>
+        <div class="m1-vd off" id="m1-vd">
+          <h3 class="m1-vh">Verdict</h3>
+          <div class="m1-vs">
+            <div class="m1-v" data-v="ok"><h3>Accepted</h3><p class="m1-sub">All five lamps are lit.</p></div>
+            <div class="m1-v" data-v="unmet"><h3>Unmet</h3><p class="m1-sub">A lamp is off because evidence is missing. A skipped check never counts as a pass.</p></div>
+            <div class="m1-v" data-v="blocked"><h3>Blocked</h3><p class="m1-sub">After three failed cycles the gate stops and asks the user.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="m1-pn" data-p="ledger" data-st="ledger" data-hold>
+        <div class="m1-chain" id="m1-chain"></div>
+        <div class="m1-card m1-lf m1-x">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <h3>How a hash forms</h3>
+            <div class="m1-eq"><span class="b">Previous hash</span> + new line + <span class="v">entry</span> &rarr; SHA-256 &rarr; <span class="t">hash</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <p class="m1-say" id="m1-st"></p>
+            <div class="m1-ctl"><span class="m1-sub">Change a word in block 2.</span><button type="button" class="m1-rs" id="m1-rs" data-hold>Reset</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="m1-pn" data-p="lessons" data-st="lessons">
+        <div class="m1-les">
+          <div class="m1-card m1-x"><h3>Stop hook</h3><p class="m1-say">A hook is a small program that Claude Code runs at fixed moments. The Stop hook runs when a session ends. It writes every failed step into an inbox.</p></div>
+          <div class="m1-ar m1-x"><span>Writes</span><svg viewBox="0 0 60 12" aria-hidden="true"><path d="M1 6H57M50 1l7 5-7 5"/></svg></div>
+          <div class="m1-card m1-x"><h3>Inbox</h3>
+            <div class="m1-ct"><b id="m1-n1">120</b><span>Tool errors, a call that failed</span><b id="m1-n2">45</b><span>Corrections by the user</span><b id="m1-n3">30</b><span>Rejected calls</span></div>
+            <p class="m1-dt">Example counts</p>
+          </div>
+          <div class="m1-ar m1-x"><span>Becomes</span><svg viewBox="0 0 60 12" aria-hidden="true"><path d="M1 6H57M50 1l7 5-7 5"/></svg></div>
+          <div class="m1-card m1-x"><h3>Lesson</h3><p class="m1-say">A failure seen in two or more sessions becomes a lesson. An agent reads the lessons of its area before it starts.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const S = document.currentScript.previousElementSibling;
+  const $ = (q) => S.querySelector(q), $$ = (q) => [...S.querySelectorAll(q)];
+  const root = $('.m1');
+  /* sha256: exact and synchronous, so the hashes on screen are computed from the formula */
+  const sha256 = (str) => {
+    const P = []; for (let n = 2; P.length < 64; n++) if (P.every((p) => n % p)) P.push(n);
+    const fr = (x) => Math.floor((x - Math.floor(x)) * 2 ** 32) >>> 0;
+    const K = P.map((p) => fr(Math.cbrt(p))), H = P.slice(0, 8).map((p) => fr(Math.sqrt(p)));
+    const rr = (x, n) => (x >>> n) | (x << (32 - n));
+    const m = [...new TextEncoder().encode(str)], bits = m.length * 8;
+    m.push(128); while (m.length % 64 !== 56) m.push(0);
+    for (let i = 7; i >= 0; i--) m.push(i > 3 ? 0 : (bits >>> (i * 8)) & 255);
+    let h = H.slice();
+    for (let o = 0; o < m.length; o += 64) {
+      const w = [];
+      for (let i = 0; i < 16; i++) w[i] = ((m[o + 4 * i] << 24) | (m[o + 4 * i + 1] << 16) | (m[o + 4 * i + 2] << 8) | m[o + 4 * i + 3]) >>> 0;
+      for (let i = 16; i < 64; i++) { const a = w[i - 15], b = w[i - 2]; w[i] = (w[i - 16] + (rr(a, 7) ^ rr(a, 18) ^ (a >>> 3)) + w[i - 7] + (rr(b, 17) ^ rr(b, 19) ^ (b >>> 10))) >>> 0; }
+      let [a, b, c, dd, e, f, g, k] = h;
+      for (let i = 0; i < 64; i++) {
+        const t1 = (k + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & f) ^ (~e & g)) + K[i] + w[i]) >>> 0;
+        const t2 = ((rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) >>> 0;
+        k = g; g = f; f = e; e = (dd + t1) >>> 0; dd = c; c = b; b = a; a = (t1 + t2) >>> 0;
+      }
+      h = h.map((x, i) => (x + [a, b, c, dd, e, f, g, k][i]) >>> 0);
+    }
+    return h.map((x) => x.toString(16).padStart(8, '0')).join('');
+  };
+  /* ledger: hash of block n = sha256(hash of block n-1, a new line, the entry). The first previous hash is "genesis", as in gates.js. */
+  const E0 = ['Patch proposed', 'Patch frozen', 'Verdict unmet', 'Verdict accepted'], EDIT = 'Patch unfrozen';
+  const chainOf = (es) => { const out = []; let p = 'genesis'; es.forEach((e) => { p = sha256(p + '\n' + e); out.push(p); }); return out; };
+  const H0 = chainOf(E0);
+  const box = $('#m1-chain'), blocks = [];
+  E0.forEach((e, i) => {
+    const b = document.createElement('div'); b.className = 'm1-b m1-x';
+    b.innerHTML = `<h3>Block ${i + 1}</h3><div class="m1-en">${i === 1 ? '<input class="m1-in" id="m1-in" maxlength="32" spellcheck="false" autocomplete="off" aria-label="Entry of block 2" data-hold>' : '<span></span>'}</div><div class="m1-row p"><em>Previous</em><code></code></div><div class="m1-row h"><em>Hash</em><code></code></div>`;
+    if (i !== 1) b.querySelector('.m1-en span').textContent = e;
+    box.appendChild(b);
+    if (i < 3) { const l = document.createElement('span'); l.className = 'm1-lk m1-x'; l.textContent = '→'; box.appendChild(l); }
+    blocks.push({ el: b, p: b.querySelector('.m1-row.p'), h: b.querySelector('.m1-row.h') });
+  });
+  const links = $$('.m1-lk'), inp = $('#m1-in'), stat = $('#m1-st');
+  inp.value = E0[1];
+  const list = (a) => (a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]);
+  function render() {
+    const H = chainOf([E0[0], inp.value, E0[2], E0[3]]), bad = H.map((h, i) => h !== H0[i]);
+    blocks.forEach((b, i) => {
+      b.p.querySelector('code').textContent = i ? H[i - 1].slice(0, 8) : 'genesis';
+      b.h.querySelector('code').textContent = H[i].slice(0, 8);
+      b.el.classList.toggle('bad', bad[i]); b.h.classList.toggle('bad', bad[i]); b.p.classList.toggle('bad', i > 0 && bad[i - 1]);
+    });
+    links.forEach((l, i) => l.classList.toggle('bad', bad[i]));
+    const ids = bad.map((x, i) => (x ? i + 1 : 0)).filter(Boolean);
+    stat.textContent = ids.length ? `Blocks ${list(ids)} show new hashes, so the edit is visible.` : 'Each block holds the hash of the block before it.';
+  }
+  inp.addEventListener('input', render);
+  $('#m1-rs').onclick = () => { inp.value = E0[1]; render(); };
+  $('#m1-rs').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });   /* the deck steps on Enter and Space; a focused button keeps them */
+  render();
+  /* the gate: five lamps, three verdicts */
+  const ck = $$('.m1-ck'), vd = $$('.m1-v'), vbox = $('#m1-vd');
+  function gate(n) {   /* 1 listed, 2 accepted, 3 unmet */
+    ck.forEach((c, i) => {
+      const bad = n === 3 && i === 1;
+      c.classList.toggle('lit', n === 2 || (n === 3 && !bad)); c.classList.toggle('bad', bad);
+      const ev = c.querySelector('.m1-ev'); ev.querySelector('span').textContent = bad ? ev.dataset.bad : ev.dataset.ok;
+    });
+    vd.forEach((v) => v.classList.toggle('on', (n === 2 && v.dataset.v === 'ok') || (n === 3 && v.dataset.v === 'unmet')));
+    vbox.classList.toggle('off', n < 2);
+  }
+  gate(1);
+  /* the steps. A step draws its state from scratch, then plays what is new. */
+  const PANEL = ['flow', 'gate', 'gate', 'gate', 'ledger', 'ledger', 'lessons'];
+  const NUM = [['#m1-n1', 120], ['#m1-n2', 45], ['#m1-n3', 30]];   /* example counts */
+  let last = null;
+  const run = (n) => (s, rm) => {
+    gsap.killTweensOf($$('.m1-x'));
+    root.dataset.ph = n;
+    $('#m1-tag').textContent = 'Concept values';
+    const p = PANEL[n], fresh = last !== p && !rm; last = p;
+    $$('.m1-pn').forEach((e) => e.classList.toggle('on', e.dataset.p === p));
+    gsap.set($$('.m1-x'), { clearProps: 'opacity,transform' });
+    const tl = gsap.timeline(), t0 = fresh ? .9 : .15;
+    if (fresh) tl.fromTo($$(`[data-p="${p}"] .m1-x`), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .55, stagger: .1, ease: 'power2.out' });
+    inp.value = E0[1]; render();   /* the ledger starts intact in every step, hidden or not */
+    gate(n >= 4 ? 3 : 1);
+    if (n === 2) {
+      gate(1);
+      if (rm) gate(2); else {
+        ck.forEach((c, i) => tl.call(() => c.classList.add('lit'), null, t0 + i * .5));
+        tl.call(() => gate(2), null, t0 + ck.length * .5 + .1);
+      }
+    }
+    if (n === 3) {
+      gate(2);
+      if (rm) gate(3); else tl.call(() => gate(3), null, t0 + .2);
+    }
+    if (n === 5) { if (rm) { inp.value = EDIT; render(); } else tl.call(() => { inp.value = EDIT; render(); }, null, fresh ? 1.6 : .6); }
+    if (n === 6) NUM.forEach(([q, v]) => { const el = $(q); el.textContent = RT.nf(v); if (!rm) tl.add(RT.count(el, v, { dur: 1.1 }), t0 - .3); });
+    return tl;
+  };
+  window.STEPS = window.STEPS || {};
+  const cap = [
+    'An agent proposes a change to its own rules.',
+    'Five independent checks look at the patch, each with its own question.',
+    'A lamp lights when its evidence is there. The verdict needs all five.',
+    'Missing evidence gives the verdict unmet. A skipped check never passes.',
+    'Each ledger block holds the hash of the block before it.',
+    'Edit one word in block 2 and every hash after it changes.',
+    'A failure seen in two or more sessions becomes a lesson.',
+  ];
+  const on = ['flow', 'gate', 'gate', 'gate', 'ledger', 'ledger', 'lessons'];
+  window.STEPS.m1 = cap.map((c, n) => ({ cap: c, on: `[data-st="${on[n]}"]`, run: run(n) }));
+  window.ENTER = window.ENTER || {};
+  window.ENTER.m1 = () => { last = null; };
+})();
+</script>

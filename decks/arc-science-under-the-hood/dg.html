@@ -1,0 +1,122 @@
+<style>
+/* dg: one diagram grammar for every schematic slide.
+   op = a step (grey box, bold name, one sub-line, number badge); card = a real object (tinted by its type);
+   route = solid arrow with a short label; stage = column header; key = one row of types. */
+.dgs{width:100%;display:flex;flex-direction:column;gap:clamp(6px,1.4vh,14px)}
+.dgs .dg-h{display:flex;align-items:baseline;gap:clamp(14px,2vw,32px);flex-wrap:wrap}
+.dgs .dg-h h2{font-size:clamp(34px,3.4vw,60px);margin:0;line-height:1.05}
+.dgs .dg-h p{font-size:clamp(17px,1.4vw,24px);color:var(--soft);font-weight:300}
+.dg{width:100%;height:auto;max-height:70vh;overflow:visible;display:block}
+.dg text{font-family:Geist,system-ui,sans-serif}
+.dg-op{fill:#1b1d23;stroke:#4b4f5a;stroke-width:1.5}
+.dg-opt{font-size:20px;font-weight:600;fill:var(--fg)}
+.dg-ops{font-size:15.5px;fill:var(--soft)}
+.dg-card{stroke-width:1.6}
+.t-task{fill:rgba(125,147,196,.16);stroke:var(--blue)}
+.t-note{fill:rgba(127,178,170,.16);stroke:var(--teal)}
+.t-rule{fill:rgba(156,143,196,.18);stroke:var(--violet)}
+.dg-ct{font-size:17px;font-weight:600;fill:var(--fg)}
+.dg-cl{font:15px "Geist Mono",monospace;fill:var(--soft)}
+.dg-st rect{fill:rgba(236,236,234,.05)}
+.dg-st text{font:500 14px "Geist Mono",monospace;letter-spacing:.08em;fill:var(--mute)}
+.dg-r{fill:none;stroke:#9a9994;stroke-width:2;marker-end:url(#dg-ah)}
+.dg-r.n{marker-end:none}
+.dg-r.both{marker-start:url(#dg-ah)}
+.dg .pk text.m{font-size:14px}
+.dg-rl{font-size:15px;fill:var(--mute)}
+.dg-b circle{fill:var(--fg)}
+.dg-b text{font:700 15px Geist,system-ui,sans-serif;fill:var(--bg)}
+.dg-k text{font-size:15px;fill:var(--soft)}
+.dg-tb text{font-size:16px;fill:var(--soft)}
+.dg-tb .h{font:500 14px "Geist Mono",monospace;letter-spacing:.08em;fill:var(--mute)}
+.dg-tb .v{fill:var(--fg)}
+.dg-tb line{stroke:#4b4f5a;stroke-width:1}
+.hero{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:3vw;align-items:center;width:100%}
+.hero .say{max-width:24em;margin:1.1rem 0 1.6rem;color:var(--soft)}
+.hero .dg{max-height:76vh}
+.hero .list div{padding:.6rem 0;border-top:1px solid rgba(236,236,234,.12);font-size:clamp(18px,1.5vw,24px)}
+.hero .stats{display:flex;gap:clamp(20px,3vw,48px)}
+.hero .stats b{display:block;font-size:clamp(34px,3.4vw,58px);font-weight:600;letter-spacing:-.02em}
+.hero .stats span{color:var(--mute);font-size:clamp(15px,1.1vw,18px)}
+@media (max-width:760px){
+  .dgs .dg-h{flex-direction:column;gap:6px}
+  .dg,.hero .dg{height:46vh;max-height:none;overflow:hidden}
+  .hero{grid-template-columns:1fr;gap:12px}
+  .hero .say{margin:.5rem 0 .6rem}
+  .hero .list,.hero .stats{display:none}
+}
+</style>
+<script>
+/* DG(svg) draws into an svg with a viewBox; coordinates are viewBox units, origin top left.
+   Every block returns {x,y,w,h,cx,cy,l,r,t,b} where l,r,t,b are [x,y] side midpoints. */
+window.DG = (svg) => {
+  const NS = 'http://www.w3.org/2000/svg';
+  let layer = svg;
+  const el = (tag, a, parent) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); (parent || layer).appendChild(e); return e; };
+  const tx = (x, y, s, cls, anchor, parent) => { const t = el('text', { x, y, class: cls, 'text-anchor': anchor || 'start' }, parent); t.textContent = s; return t; };
+  const B = (x, y, w, h) => ({ x, y, w, h, cx: x + w / 2, cy: y + h / 2, l: [x, y + h / 2], r: [x + w, y + h / 2], t: [x + w / 2, y], b: [x + w / 2, y + h] });
+  const g = {};
+  g.el = el; g.text = (x, y, s, cls, anchor) => tx(x, y, s, cls, anchor);
+  g.group = (st) => { layer = el('g', st ? { 'data-st': st } : {}, svg); return layer; };
+  g.end = () => { layer = svg; };
+  g.badge = (x, y, n) => { const b = el('g', { class: 'dg-b' }); el('circle', { cx: x, cy: y, r: 14 }, b); tx(x, y + 5, String(n), '', 'middle', b); return b; };
+  g.op = ({ x, y, w, h = 66, title, sub, n }) => {
+    el('rect', { x, y, width: w, height: h, rx: 10, class: 'dg-op' });
+    const c = y + h / 2;
+    tx(x + w / 2, sub ? c - 4 : c + 7, title, 'dg-opt', 'middle');
+    if (sub) tx(x + w / 2, c + 20, sub[0].toUpperCase() + sub.slice(1), 'dg-ops', 'middle');
+    if (n) g.badge(x, y, n);
+    return B(x, y, w, h);
+  };
+  g.card = ({ x, y, w, h, type, title, lines = [] }) => {
+    h = h || 34 + lines.length * 21;
+    el('rect', { x, y, width: w, height: h, rx: 14, class: 'dg-card t-' + type });
+    tx(x + 14, y + 25, title, 'dg-ct');
+    lines.forEach((s, i) => tx(x + 14, y + 47 + i * 21, s, 'dg-cl'));
+    return B(x, y, w, h);
+  };
+  g.stage = ({ x, y, w, text }) => { const s = el('g', { class: 'dg-st' }); el('rect', { x, y, width: w, height: 30, rx: 6 }, s); tx(x + w / 2, y + 20, text.toUpperCase(), '', 'middle', s); return B(x, y, w, 30); };
+  g.route = (pts, { label, at, head = true, id, both } = {}) => {
+    const d = 'M' + pts.map((p) => p.join(',')).join(' L');
+    const p = el('path', { d, class: 'dg-r' + (head ? '' : ' n') + (both ? ' both' : '') }); if (id) p.id = id;
+    if (label) { const [lx, ly, a] = at || [(pts[0][0] + pts[1][0]) / 2, (pts[0][1] + pts[1][1]) / 2 - 9, 'middle']; tx(lx, ly, label, 'dg-rl', a || 'middle'); }
+    return p;
+  };
+  g.path = (id, d) => el('path', { id, d, fill: 'none', stroke: 'none' });
+  g.table = ({ x, y, w, head, rows, split }) => {
+    const t = el('g', { class: 'dg-tb' }); const c2 = x + (split || w * .55);
+    tx(x, y, head[0].toUpperCase(), 'h', 'start', t); tx(c2, y, head[1].toUpperCase(), 'h', 'start', t);
+    rows.forEach(([a, b], i) => { const yy = y + 34 + i * 34; el('line', { x1: x, x2: x + w, y1: yy - 22, y2: yy - 22 }, t); tx(x, yy, a, '', 'start', t); tx(c2, yy, b, 'v', 'start', t); });
+    return B(x, y - 16, w, 34 * rows.length + 22);
+  };
+  g.key = (x, y, items, vertical) => {
+    const k = el('g', { class: 'dg-k' }); let xx = x;
+    items.forEach(([type, s]) => {
+      el('rect', { x: xx, y: y - 13, width: 26, height: 17, rx: type === 'op' ? 4 : 8, class: type === 'op' ? 'dg-op' : 'dg-card t-' + type }, k);
+      tx(xx + 36, y, s, '', 'start', k); if (vertical) y += 32; else xx += 36 + s.length * 8.4 + 34;
+    });
+    return k;
+  };
+  return g;
+};
+
+/* token(d, id, w, type): a hidden moving card. runs(s, [[id, label, [pathIds]], ...]): tokens ride paths in turn, fade, repeat. */
+window.DGtoken = (d, id, w, type) => { const g = d.el('g', { class: 'pk', id, opacity: 0 }); d.el('rect', { x: -w / 2, y: -12, width: w, height: 24, rx: 7, class: 'dg-card t-' + type, style: 'fill:#0b0b0d' }, g); d.el('text', { 'text-anchor': 'middle', y: 5, class: 'm' }, g); return g; };
+window.DGruns = (s, legs) => {
+  const P = (id) => s.querySelector('#' + id), tl = gsap.timeline({ repeat: -1, repeatDelay: .5 });
+  legs.forEach(([id, label, paths]) => {
+    const g = P(id);
+    tl.call(() => { g.querySelector('text').textContent = label; const w = label.length * 8.4 + 18, r = g.querySelector('rect'); r.setAttribute('width', w); r.setAttribute('x', -w / 2); }).set(g, { opacity: 1 });
+    paths.forEach((p) => tl.add(window.ride(g, P(p), 1.1)));
+    tl.to(g, { opacity: 0, duration: .3 });
+  });
+  legs.forEach(([id]) => gsap.set(P(id), { opacity: 0 }));
+  return tl;
+};
+/* labels start with a capital letter (Danil's rule); maths symbols, ids and units stay as they are */
+addEventListener('DOMContentLoaded', () => document.querySelectorAll('svg.dg text').forEach((t) => {
+  const s = t.textContent, w = s.split(/[\s,]/)[0];
+  if (/^[a-z]{2,}$/.test(w) && !t.children.length) t.textContent = s[0].toUpperCase() + s.slice(1);
+}));
+window.DGenter = (s) => { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.fromTo(s.querySelectorAll('.dg [data-st] > *, .dg .dg-st, .dg .dg-k'), { opacity: 0 }, { opacity: 1, duration: .5, stagger: .012, delay: .2, ease: 'power1.out' }); };
+</script>

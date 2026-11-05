@@ -1,0 +1,269 @@
+<style>
+/* m5: context cut. Flat glass cards in the look of cq.html. Every id and class starts with m5. */
+.m5{width:100%;display:flex;flex-direction:column;gap:clamp(10px,1.7vh,18px);--hot:var(--teal);--warm:var(--violet);--cold:var(--blue)}
+.m5 .mh{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap}
+.m5 .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+.m5 .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.m5-say{font-size:clamp(15px,1.3vw,21px);color:var(--fg);line-height:1.4;margin:0;max-width:56em;min-height:2.8em}
+.m5-card{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.m5-card h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.m5-hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.m5-tt{font-size:clamp(13px,1.05vw,17px);color:var(--soft)}
+.m5-tt b{font:600 clamp(22px,2vw,32px) "Geist Mono",monospace;color:var(--fg);margin:0 .15em}
+/* the shelf: six notes end to end, width follows size in tokens; the window frame covers one eighth of the shelf */
+.m5-tape{position:relative;display:flex;height:clamp(44px,7vh,62px);margin:7px 6px 0}
+.m5-bl{flex:none;min-width:3px;height:100%;position:relative;cursor:pointer;z-index:1}
+.m5-bl>div{position:absolute;inset:0 .5px;container-type:inline-size;border:1px solid rgba(236,236,234,.34);background:rgba(236,236,234,.12);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;overflow:hidden;color:var(--fg);transition:background .5s,border-color .5s}
+.m5-bl b{font:600 clamp(13px,1.05vw,16px) "Geist Mono",monospace}
+@container (max-width:6px){.m5-bl b{display:none}}
+.m5-bl:hover>div{border-color:var(--fg)}
+.m5-bl.hot>div{background:rgba(127,178,170,.26);border-color:var(--hot)}
+.m5-bl.warm>div{background:rgba(156,143,196,.26);border-color:var(--warm)}
+.m5-bl.cold>div{background:rgba(125,147,196,.26);border-color:var(--cold)}
+.m5-gh{position:absolute;z-index:0;top:0;bottom:0;border:1px dashed rgba(236,236,234,.3);border-radius:6px;display:flex;align-items:flex-start;justify-content:center;padding-top:3px;font:500 11px "Geist Mono",monospace;color:var(--mute);pointer-events:none;opacity:0;box-sizing:border-box}
+.m5-beyond{position:absolute;z-index:2;left:12.5%;top:0;bottom:0;width:0;background:rgba(10,12,16,.64);border-radius:0 6px 6px 0;pointer-events:none;opacity:0}
+.m5-win{position:absolute;z-index:3;left:-6px;top:-6px;bottom:-6px;width:calc(12.5% + 12px);border:1.5px solid var(--fg);border-radius:9px;pointer-events:none;opacity:0;transition:border-color .5s,box-shadow .5s}
+.m5-win.hi{border-color:var(--teal);box-shadow:0 0 0 1px rgba(127,178,170,.3)}
+.m5-foot{position:relative;height:1.9em;margin:6px 6px 0;font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase}
+.m5-wl{position:absolute;left:-6px;width:calc(12.5% + 12px);text-align:center;color:var(--fg);opacity:0}
+.m5-nf{position:absolute;left:calc(12.5% + 18px);color:var(--mute);opacity:0;white-space:nowrap}
+.m5-eq{position:absolute;right:0;bottom:-.2em;white-space:nowrap;font:500 clamp(14px,1.3vw,21px) "Geist Mono",monospace;color:var(--soft);line-height:1.4;opacity:0}
+.m5-eq b{color:var(--teal);font-weight:600}
+/* panels that follow the step: zones share one grid cell */
+.m5-work{display:grid}
+.m5-zone{grid-area:1/1;display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px);min-width:0;visibility:hidden;opacity:0}
+.m5-tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.2vw,18px)}
+.m5-tier h3{color:var(--c)}
+.m5-tier.hot{--c:var(--hot)}.m5-tier.warm{--c:var(--warm)}.m5-tier.cold{--c:var(--cold)}
+.m5-rule{font-size:clamp(13px,1.05vw,16px);color:var(--soft);line-height:1.35;margin:0;min-height:2.7em}
+.m5-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:34px;align-content:flex-start}
+.m5-chip{display:flex;align-items:center;gap:7px;border:1px solid var(--c);background:rgba(236,236,234,.05);color:var(--fg);border-radius:999px;padding:4px 12px 4px 9px;font:500 clamp(12px,.95vw,15px) "Geist Mono",monospace;cursor:pointer}
+.m5-chip:hover{background:rgba(236,236,234,.14)}
+.m5-chip b{font-weight:700}
+.m5-chip span{color:var(--soft)}
+.m5-chip.hot{--c:var(--hot)}.m5-chip.warm{--c:var(--warm)}.m5-chip.cold{--c:var(--cold)}
+.m5-chip svg{width:12px;height:14px;stroke:var(--c);fill:none;stroke-width:1.6;stroke-linecap:round;flex:none}
+.m5-after{font-size:clamp(14px,1.15vw,19px);color:var(--soft);margin:0;opacity:0}
+.m5-after b{font:600 clamp(16px,1.4vw,22px) "Geist Mono",monospace;color:var(--fg)}
+.m5-terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:clamp(10px,1.2vw,18px)}
+.m5-term{background:rgba(236,236,234,.04);border:1px solid var(--c);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.m5-term.hot{--c:var(--hot)}.m5-term.warm{--c:var(--warm)}.m5-term.cold{--c:var(--cold)}
+.m5-th{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.m5-th b{color:var(--fg);font-weight:700;margin-right:.5em;font-size:1.25em}
+.m5-tx{font:400 clamp(12px,.95vw,15px) "Geist Mono",monospace;color:var(--soft)}
+.m5-tv{font:600 clamp(22px,2vw,32px) "Geist Mono",monospace;color:var(--fg);line-height:1.1}
+.m5-none{font-size:clamp(14px,1.15vw,18px);color:var(--soft)}
+.m5-gate{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(12px,1.6vw,26px);align-items:center}
+.m5-gl{display:grid}
+.m5-gl>*{grid-area:1/1}
+.m5-sum{display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;font-size:clamp(13px,1.05vw,17px);color:var(--soft)}
+.m5-sl{flex:0 0 100%;font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.m5-se{font:500 clamp(16px,1.5vw,24px) "Geist Mono",monospace;color:var(--soft)}.m5-se::after{content:' ='}
+.m5-sum b{font:600 clamp(26px,2.4vw,40px) "Geist Mono",monospace;color:var(--fg)}
+.m5-pills{display:flex;flex-direction:column;gap:6px;visibility:hidden;opacity:0}
+.m5-pill{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;font-size:clamp(13px,1.05vw,16px);color:var(--soft)}
+.m5-pill b{font:600 clamp(15px,1.3vw,21px) "Geist Mono",monospace;color:var(--fg);margin-left:.4em}
+.m5-pill u{text-decoration:none;font:600 11px "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:2px 10px;}
+.m5-pill u.ok{color:var(--teal)}.m5-pill u.no{color:var(--amber)}
+.m5-gr{display:flex;flex-direction:column;gap:7px;visibility:hidden;opacity:0}
+.m5-verdict{font-size:clamp(14px,1.15vw,19px);color:var(--fg);line-height:1.4;margin:0;border-left:3px solid var(--amber);padding:3px 0 3px 10px}
+.m5-verdict.ok{border-left-color:var(--teal)}
+.m5-hint{font:400 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.03em;color:var(--mute);margin:0;line-height:1.45}
+@media (max-width:1100px){.m5-gate{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .m5{gap:8px}
+  .m5-say{min-height:0;font-size:15px}
+  .m5-pn:not(.on){display:none}
+  .m5-tiers{grid-template-columns:1fr;gap:8px}
+  .m5-tier{padding:8px 12px;gap:5px}.m5-rule{min-height:0}
+  .m5-tape{height:42px}
+  .m5-foot{font-size:10px}
+  .m5-tt b{font-size:22px}
+  .m5-terms{grid-template-columns:1fr 1fr;gap:8px}
+  .m5-term{padding:8px 10px}.m5-tv{font-size:22px}
+  .m5-bl b{font-size:10px}
+  .m5:not([data-p="7"]) .m5-gr{display:none}
+  .m5-se{font-size:15px}
+  .m5-hint{display:none}
+}
+</style>
+<section class="slide" data-k="m5" data-film>
+  <div class="m5">
+    <div class="mh" data-in><h2 class="big grad">Context cut</h2><span class="tag">Targets</span><span class="tag">Concept values</span><span class="tag">Design, not built</span></div>
+    <p class="m5-say" id="m5-say"></p>
+    <div class="m5-card m5-pn m5-shelf" data-st="shelf">
+      <div class="m5-hd"><h3>Memory shelf</h3><div class="m5-tt"><span id="m5-totl">On the shelf</span><b id="m5-tot">8,000</b>tokens</div></div>
+      <div class="m5-tape" id="m5-tape" data-hold><div class="m5-beyond" id="m5-beyond"></div><div class="m5-win" id="m5-win"></div></div>
+      <div class="m5-foot"><span class="m5-wl" id="m5-wl">Window</span><span class="m5-nf" id="m5-nf">Does not fit in the window</span><span class="m5-eq" id="m5-ratio"></span></div>
+    </div>
+    <div class="m5-work">
+      <div class="m5-zone" id="m5-zt">
+        <div class="m5-tiers">
+          <div class="m5-card m5-pn m5-tier hot" data-st="tiers"><h3>Hot</h3><p class="m5-rule">Likely needed. Stays whole.</p><div class="m5-chips" id="m5-c-hot" data-hold></div></div>
+          <div class="m5-card m5-pn m5-tier warm" data-st="tiers"><h3>Warm</h3><p class="m5-rule">Shortened to a summary of 40 tokens.</p><div class="m5-chips" id="m5-c-warm" data-hold></div></div>
+          <div class="m5-card m5-pn m5-tier cold" data-st="tiers"><h3>Cold</h3><p class="m5-rule">Replaced by a pointer of 8 tokens, the address of the note.</p><div class="m5-chips" id="m5-c-cold" data-hold></div></div>
+        </div>
+        <p class="m5-after" id="m5-after"></p>
+      </div>
+      <div class="m5-zone" id="m5-zs">
+        <div class="m5-terms m5-pn" data-st="er" id="m5-terms"></div>
+        <div class="m5-card m5-pn m5-gate" data-st="gate">
+          <div class="m5-gl">
+            <div class="m5-sum" id="m5-sum"><span class="m5-sl">Expected recall, E[R], is the sum of the cards</span><span class="m5-se" id="m5-se"></span><b id="m5-sumv">0.768</b></div>
+            <div class="m5-pills" id="m5-pills"></div>
+          </div>
+          <div class="m5-gr" id="m5-gr">
+            <p class="m5-verdict" id="m5-verdict"></p>
+            <p class="m5-hint">Move a note to the next tier and watch the gate. No packing of these six notes meets both limits.</p>
+            <div class="m5-chips" id="m5-try" data-hold></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const s = document.currentScript.previousElementSibling;
+  const Q = (q) => s.querySelector(q), QA = (q) => [...s.querySelectorAll(q)];
+  const nf = (n) => Number(n).toLocaleString('en-US');
+  /* Concept values. p is the chance (in hundredths) that a question needs the note; t is its size in tokens.
+     A summary costs 40 tokens and a pointer 8. A hot note keeps all of its chance, a warm one 0.6, a cold one none. */
+  const NOTES = [['A', 35, 300], ['B', 25, 500], ['C', 18, 1500], ['D', 10, 1200], ['E', 8, 2400], ['F', 4, 2100]].map(([id, p, t]) => ({ id, p, t }));
+  const DEF = { A: 'hot', B: 'hot', C: 'warm', D: 'warm', E: 'cold', F: 'cold' }, NEXT = { hot: 'warm', warm: 'cold', cold: 'hot' };
+  const AFTER = { warm: 40, cold: 8 }, KEEP = { hot: 100, warm: 60, cold: 0 }, KEEPS = { hot: '1', warm: '0.6' };
+  const TOTAL = 8000, WIN = TOTAL / 8;   /* the window frame is one eighth of the shelf: the size at which the ratio is 8 */
+  let tier = { ...DEF }, ph = 0, mvTl = null;
+  const size = (n, sh) => (!sh || tier[n.id] === 'hot' ? n.t : AFTER[tier[n.id]]);
+  const packed = () => NOTES.reduce((a, n) => a + size(n, true), 0);
+  const erInt = () => NOTES.reduce((a, n) => a + n.p * KEEP[tier[n.id]], 0);   /* in ten-thousandths: 7680 is 0.768 */
+  const trim = (v) => v.toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
+  const el = (cls, html, tag = 'div') => { const e = document.createElement(tag); e.className = cls; e.innerHTML = html; return e; };
+  const GLYPH = {
+    hot: '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M1 2h10M1 5.5h10M1 9h10M1 12.5h10"/></svg>',
+    warm: '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M1 4h10M1 8h6"/></svg>',
+    cold: '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M6 13V8M6 1.2a3.6 3.6 0 0 1 3.6 3.6c0 1.9-1.8 3-3.6 3.2c-1.8-.2-3.6-1.3-3.6-3.2A3.6 3.6 0 0 1 6 1.2z"/></svg>',
+  };
+  const SAY = [
+    'Memory holds many notes. A token is a small piece of text. Each note here is as wide as its size in tokens.',
+    'A model reads only what fits in its window. The window has a fixed size, one eighth of this shelf. The rest cannot be read.',
+    'A context packer sorts the notes into three tiers. Click a note to move it to the next tier.',
+    'Warm notes shrink to a summary. Cold notes shrink to a pointer, a short address of the note. Now the notes fit.',
+    'The window holds far less than the shelf. The ratio is tokens before divided by tokens after.',
+    'Each note has a chance that a question needs it. Expected recall adds up that chance for every note that survives.',
+    'The gate asks for expected recall of 0.85 or more at a ratio of 8 or more. This is a target.',
+  ];
+  const CAP = [
+    'Six notes sit on a shelf. Each is as wide as its size in tokens.',
+    'The window has a fixed size. The shelf does not fit.',
+    'The packer sorts the notes into hot, warm and cold.',
+    'Warm notes shrink to a summary. Cold notes shrink to a pointer.',
+    'Now 896 tokens sit in the window instead of 8,000.',
+    'Expected recall adds the chance of each note that survives.',
+    'The gate needs 0.85 at a ratio of 8. The toy gives 0.768.',
+  ];
+  const ON = ['[data-st="shelf"]', '[data-st="shelf"]', '[data-st="shelf"],[data-st="tiers"]', '[data-st="shelf"],[data-st="tiers"]', '[data-st="shelf"]', '[data-st="er"],[data-st="gate"]', '[data-st="gate"]'];
+
+  /* build the tape once */
+  const tape = Q('#m5-tape'), blk = {};
+  NOTES.forEach((n) => {
+    const b = el('m5-bl', `<div><b>${n.id}</b></div>`);
+    b.setAttribute('role', 'button'); b.tabIndex = 0; b.setAttribute('aria-label', `Note ${n.id}, ${nf(n.t)} tokens`);
+    b.onclick = () => move(n.id); b.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); move(n.id); } };
+    b.style.width = n.t / 80 + '%'; tape.appendChild(b); blk[n.id] = b;
+  });
+  /* dashed outlines keep the size of each note on the shelf, so a viewer sees what shrank */
+  let acc = 0; const ghosts = NOTES.map((n) => { const g = el('m5-gh', n.id); g.style.left = acc / 80 + '%'; g.style.width = n.t / 80 + '%'; acc += n.t; tape.appendChild(g); return g; });
+  const E = { win: Q('#m5-win'), beyond: Q('#m5-beyond'), wl: Q('#m5-wl'), nf: Q('#m5-nf'), tot: Q('#m5-tot'), totl: Q('#m5-totl'), ratio: Q('#m5-ratio'), zt: Q('#m5-zt'), zs: Q('#m5-zs'),
+    after: Q('#m5-after'), terms: Q('#m5-terms'), sum: Q('#m5-sum'), sumv: Q('#m5-sumv'), pills: Q('#m5-pills'), gr: Q('#m5-gr'), verdict: Q('#m5-verdict'), tryc: Q('#m5-try'), say: Q('#m5-say') };
+  let totTween = null;
+
+  const chip = (n, sh, plain) => {
+    const t = tier[n.id], b = el('m5-chip ' + t, `${GLYPH[t]}<b>${n.id}</b>${plain ? '' : `${sh && t !== 'hot' ? `<span>→ ${AFTER[t]}</span>` : ''}`}`, 'button');
+    b.type = 'button'; b.setAttribute('data-hold', ''); b.setAttribute('aria-label', `Note ${n.id}, ${t}. Move to the next tier.`);
+    b.onclick = () => move(n.id); return b;
+  };
+  function move(id) {
+    if (ph < 3) return;
+    tier[id] = NEXT[tier[id]];
+    if (mvTl) mvTl.kill();
+    mvTl = gsap.timeline(); draw(ph, mvTl);
+  }
+
+  /* draw(p, tl): the whole state of phase p from the tiers. With a timeline it tweens, without one it sets. */
+  function draw(p, tl) {
+    const S = (t, v, at = 0) => (tl ? tl.to(t, { duration: .7, ease: 'power2.out', ...v }, at) : gsap.set(t, v));
+    const sh = p >= 4, tot = sh ? packed() : TOTAL, over = p >= 2 && tot > WIN;
+    NOTES.forEach((n, i) => {
+      blk[n.id].className = 'm5-bl' + (p >= 3 ? ' ' + tier[n.id] : '');
+      gsap.set(blk[n.id], { opacity: p >= 1 ? 1 : 0 });
+      S(blk[n.id], { width: size(n, sh) / 80 + '%', ease: 'power3.inOut', duration: 1 }, i * .07);
+    });
+    ghosts.forEach((g, i) => { g.textContent = tier[NOTES[i].id] === 'hot' ? '' : NOTES[i].id; });
+    S(ghosts, { opacity: p >= 4 ? 1 : 0 });
+    E.win.classList.toggle('hi', p >= 5);
+    S(E.win, { opacity: p >= 2 ? 1 : 0 }); S(E.wl, { opacity: p >= 2 ? 1 : 0 });
+    S(E.beyond, { opacity: over ? 1 : 0, width: Math.max(0, tot / 80 - 12.5) + '%', ease: 'power3.inOut', duration: 1 });
+    S(E.nf, { opacity: over ? 1 : 0 });
+    E.totl.textContent = sh ? 'Packed' : 'On the shelf';
+    const from = +E.tot.dataset.v || TOTAL;
+    if (totTween) totTween.kill();
+    E.tot.dataset.v = tot;
+    if (tl && from !== tot) { totTween = RT.count(E.tot, tot, { from, dur: 1, ease: 'power3.inOut' }); tl.add(totTween, 0); } else E.tot.textContent = nf(tot);
+    E.ratio.innerHTML = `<span style="color:var(--mute)">Ratio</span> ${nf(TOTAL)} ÷ ${nf(tot)} = <b>${(TOTAL / tot).toFixed(2)}</b>`;
+    S(E.ratio, { opacity: p >= 5 ? 1 : 0 });
+    /* tiers */
+    ['hot', 'warm', 'cold'].forEach((t) => { const h = Q('#m5-c-' + t); h.textContent = ''; if (p >= 3) NOTES.filter((n) => tier[n.id] === t).forEach((n) => h.appendChild(chip(n, sh))); });
+    E.after.innerHTML = `After packing: <b>${nf(packed())}</b> tokens in the window`;
+    S(E.after, { opacity: p === 3 ? 1 : 0 });
+    S(E.zt, { autoAlpha: p >= 3 && p <= 5 ? 1 : 0 });
+    /* survival and gate */
+    S(E.zs, { autoAlpha: p >= 6 ? 1 : 0 });
+    E.terms.textContent = '';
+    const live = NOTES.filter((n) => KEEP[tier[n.id]] > 0);
+    live.forEach((n) => {
+      const t = tier[n.id];
+      E.terms.appendChild(el('m5-term ' + t, `<div class="m5-th"><b>${n.id}</b>${t === 'hot' ? 'whole' : 'summary'}</div><div class="m5-tx">${(n.p / 100).toFixed(2)} × ${KEEPS[t]}</div><div class="m5-tv">${trim(n.p * KEEP[t] / 10000)}</div>`));
+    });
+    if (!live.length) E.terms.appendChild(el('m5-none', 'Nothing survives. Every note is a pointer.'));
+    const er = erInt(), erOk = er >= 8500, ratio = TOTAL / packed();
+    E.sumv.textContent = (er / 10000).toFixed(3);
+    Q('#m5-se').textContent = live.map((n) => trim(n.p * KEEP[tier[n.id]] / 10000)).join(' + ') || '0';
+    const pl = (name, val, need, ok) => `<div class="m5-pill"><span>${name}<b>${val}</b>, needs ${need}</span><u class="${ok ? 'ok' : 'no'}">${ok ? 'Met' : 'Below'}</u></div>`;
+    E.pills.innerHTML = pl('Ratio', ratio.toFixed(2), '8 or more', packed() <= WIN) + pl('E[R]', (er / 10000).toFixed(3), '0.85 or more', erOk);
+    const both = packed() <= WIN && erOk;
+    E.verdict.className = 'm5-verdict' + (both ? ' ok' : '');
+    E.verdict.textContent = both ? 'This packing meets both limits. The real design has to show it on real notes.' : 'The toy is below the gate. The design has to improve before it is built.';
+    E.tryc.textContent = ''; NOTES.forEach((n) => E.tryc.appendChild(chip(n, true, true)));
+    S(E.sum, { autoAlpha: p >= 7 ? 0 : 1 }); S(E.pills, { autoAlpha: p >= 7 ? 1 : 0 }); S(E.gr, { autoAlpha: p >= 7 ? 1 : 0 });
+  }
+
+  const lights = (p) => {
+    const lit = new Set(QA(ON[p - 1]));
+    QA('.m5-pn').forEach((c) => c.classList.toggle('on', lit.has(c)));
+  };
+  const anim = (p, tl) => {
+    if (p === 1) tl.fromTo(Object.values(blk), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, stagger: .09, ease: 'power2.out' }, 0);
+    if (p === 3) tl.fromTo(QA('.m5-tier'), { y: 16 }, { y: 0, duration: .6, stagger: .12, ease: 'expo.out' }, .1).fromTo(QA('#m5-zt .m5-chip'), { opacity: 0 }, { opacity: 1, duration: .4, stagger: .06 }, .4);
+    if (p === 4) tl.fromTo(QA('#m5-zt .m5-chip span'), { opacity: .3 }, { opacity: 1, duration: .5, stagger: .06 }, .5);
+    if (p === 6) tl.fromTo(QA('.m5-term'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .55, stagger: .14, ease: 'expo.out' }, .3);
+    if (p === 7) tl.fromTo(QA('.m5-pill'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, stagger: .2 }, .2);
+    if (p === 5) tl.fromTo(E.ratio, { y: 8 }, { y: 0, duration: .6, ease: 'power2.out' }, 0);
+  };
+  window.STEPS = window.STEPS || {};
+  window.STEPS.m5 = CAP.map((cap, i) => ({ cap, on: ON[i], run: (sec, rm) => {
+    const p = i + 1;
+    gsap.killTweensOf(QA('.m5 *').filter((x) => !x.hasAttribute('data-st'))); if (mvTl) mvTl.kill();
+    gsap.set([...Object.values(blk), ...QA('.m5-tier'), E.ratio], { y: 0 });
+    draw(p - 1); ph = p; lights(p);
+    E.say.textContent = SAY[i]; Q('.m5').dataset.p = p;
+    if (rm) { draw(p); return null; }
+    const tl = gsap.timeline();
+    draw(p, tl); anim(p, tl);
+    tl.fromTo(E.say, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .5 }, 0);
+    return tl;
+  } }));
+  window.ENTER = window.ENTER || {};
+  window.ENTER.m5 = () => { tier = { ...DEF }; ph = 0; E.tot.dataset.v = TOTAL; draw(0); };
+})();
+</script>

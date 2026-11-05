@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+/* mk: maths scenes in the deck style. A scene is a film beat: one headline, equations on the left,
+   a drawn object on the right, one subtitle sentence per step. Concept values carry a pill. */
+.ms{width:100%;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:3.2vw;align-items:center}
+.ms .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:2.4vh}
+.ms .mh h2{font-size:clamp(32px,3.2vw,56px);margin:0;line-height:1.05}
+.ms .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.ms .eqs{display:flex;flex-direction:column;gap:2.4vh}
+.ms .eq{font-size:clamp(20px,1.9vw,32px);color:var(--fg);min-height:1.4em}
+.ms .eq .katex{font-size:1.12em}
+.ms .def{font-size:clamp(15px,1.2vw,20px);color:var(--soft);line-height:1.4}
+.ms .def b{color:var(--fg);font-weight:600}
+.ms .dg{max-height:72vh}
+.ms .k-t{color:var(--teal)}.ms .k-b{color:var(--blue)}.ms .k-v{color:var(--violet)}.ms .k-a{color:var(--amber)}
+.ms .k-hi{background:rgba(127,178,170,.18);border-radius:6px;padding:0 .12em}
+.mk-ax line{stroke:#4b4f5a;stroke-width:1}
+.mk-ax text{font-size:14px;fill:var(--mute)}
+.mk-lab{font-size:16px;fill:var(--soft)}
+.mk-val{font:600 16px "Geist Mono",monospace;fill:var(--fg)}
+.mk-big{font-size:20px;font-weight:600;fill:var(--fg)}
+@media (max-width:760px){
+  .ms{grid-template-columns:1fr;gap:10px}
+  .ms .mh{margin-bottom:6px}
+  .ms .eqs{gap:8px}
+  .ms .eq{font-size:17px}
+  .ms .def{font-size:14px}
+  .ms .dg{height:34vh}
+  .ms .mh{max-width:100%;flex-wrap:wrap}
+  .ms .mh h2.big{font-size:clamp(22px,6.6vw,28px);white-space:normal;max-width:100%}
+  .ms .eq{max-width:100%;overflow:hidden}
+}
+</style>
+<script>
+/* MK.tex(el, tex): render maths; \htmlClass{name}{...} marks a term that a step can reveal or colour. */
+window.MK = {
+  tex(el, tex) { if (window.katex) katex.render(tex, el, { trust: (c) => c.command === '\\htmlClass', strict: 'ignore', throwOnError: false, displayMode: false }); else el.textContent = tex; },
+  /* show(s, sel, dur): fade and lift elements in; returns the tween */
+  show(s, sel, dur = .7, delay = 0) { const e = typeof sel === 'string' ? s.querySelectorAll(sel) : sel; return gsap.fromTo(e, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: dur, delay, stagger: .12, ease: 'expo.out' }); },
+  hide(s, sel) { gsap.set(typeof sel === 'string' ? s.querySelectorAll(sel) : sel, { opacity: 0 }); },
+  /* film beats: reset(s) clears the scene; play(s, fast) builds one beat (fast = no animation).
+     A step resets, replays all earlier beats fast, then plays its own beat and returns its timeline. */
+  beats(reset, list) {
+    return list.map((b, i) => ({ cap: b.cap, on: '*', run: (s, rm) => {
+      gsap.killTweensOf(s.querySelectorAll('.ms *'));
+      reset(s);
+      list.slice(0, i).forEach((p) => p.play && p.play(s, true));
+      return b.play ? b.play(s, !!rm) || null : null;
+    } }));
+  },
+};
+</script>

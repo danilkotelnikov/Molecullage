@@ -1,0 +1,54 @@
+<section class="slide" data-k="harness">
+  <div class="hero">
+    <div>
+      <h2 class="big" data-in>Arc <span class="grad">Harness</span></h2>
+      <p class="say" data-in>One policy runs every agent I use. No agent accepts its own work.</p>
+      <div class="stats" data-in>
+        <div><b class="grad">149</b><span>Tests</span></div>
+        <div><b class="grad">4</b><span>Agents</span></div>
+        <div><b class="grad">5</b><span>Checks</span></div>
+      </div>
+    </div>
+    <svg class="dg" id="hz-dg" viewBox="-10 -6 760 520" role="img" aria-label="Arc Harness: one policy runs four agents; an agent builds and freezes; a different model checks; only my approval accepts"></svg>
+  </div>
+</section>
+<script>
+(() => {
+  const svg = document.getElementById('hz-dg'), d = DG(svg);
+  const A = 0, B = 400, W = 330;
+  d.stage({ x: A, y: 0, w: W, text: 'Build' }); d.stage({ x: B, y: 0, w: W, text: 'Check' });
+  d.group('pol');
+  const pol = d.card({ x: A, y: 46, w: W, type: 'rule', title: 'Policy', lines: ['One check per deliverable'] });
+  const ag = d.op({ x: A, y: 132, w: W, title: 'Four agents', sub: 'Claude Code, Gemini, Codex, GLM', n: 1 });
+  d.route([pol.b, ag.t], { id: 'hz-r1' });
+  d.group('build');
+  const bd = d.op({ x: A, y: 228, w: W, title: 'Build and freeze', sub: 'test first, never self-graded', n: 2 });
+  const dr = d.card({ x: A, y: 324, w: W, type: 'task', title: 'Frozen slice', lines: ['Commit abc1234'] });
+  d.route([ag.b, bd.t], { id: 'hz-r2' }); d.route([bd.b, dr.t], { id: 'hz-r3' });
+  d.group('check');
+  const ck = d.op({ x: B, y: 46, w: W, title: 'Outside check', sub: 'gates, then a different model', n: 3 });
+  const vd = d.card({ x: B, y: 142, w: W, type: 'rule', title: 'Verdict', lines: ['0 blocking findings'] });
+  d.route([dr.r, [365, dr.cy], [365, ck.cy], ck.l], { id: 'hz-r4' }); d.route([ck.b, vd.t], { id: 'hz-r5' });
+  d.group('accept');
+  const ap = d.op({ x: B, y: 228, w: W, title: 'My approval', sub: 'typed, used once', n: 4 });
+  const lg = d.card({ x: B, y: 324, w: W, type: 'rule', title: 'Ledger', lines: ['Accepted, append-only'] });
+  d.route([vd.b, ap.t], { id: 'hz-r6' }); d.route([ap.b, lg.t], { id: 'hz-r7' });
+  d.end();
+  d.key(A, 452, [['rule', 'Rule or verdict'], ['task', 'Task'], ['op', 'Step']]);
+  DGtoken(d, 'hz-ka', 160, 'task'); DGtoken(d, 'hz-kc', 160, 'rule');
+})();
+window.STEPS = window.STEPS || {};
+window.STEPS.harness = [
+  { cap: 'One policy file runs Claude Code, Gemini, Codex and GLM.', on: '[data-st="pol"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['hz-kc', 'Policy', ['hz-r1']]]) },
+  { cap: 'An agent builds and freezes its work. It never grades itself.', on: '[data-st="build"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['hz-ka', 'Draft', ['hz-r2', 'hz-r3']]]) },
+  { cap: 'Scripted gates and a different model check the frozen work.', on: '[data-st="check"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['hz-ka', 'Slice', ['hz-r4', 'hz-r5']]]) },
+  { cap: 'Only my approval moves the work into the ledger.', on: '[data-st="accept"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['hz-kc', 'Verdict', ['hz-r6', 'hz-r7']]]) },
+  { cap: 'One policy, four agents, and no agent accepts its own work.', on: '*' },
+];
+window.ENTER = window.ENTER || {};
+window.ENTER.harness = DGenter;
+</script>
