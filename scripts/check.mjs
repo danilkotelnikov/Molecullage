@@ -1,6 +1,7 @@
 // One smoke check:  npm run check
 // Builds the pipeline template, runs the QA marks on it, asks the MCP server for its tools over stdio,
 // fires the hooks with harmless payloads, calls the five project tools on a scratch copy of examples/sample-project,
+// the six deck tools on a starter deck, the deck tests and the demo deck audit,
 // and compares the skill's reference copies with their sources.
 // Prints one pass or FAIL line per step; exits 1 if any step fails.
 import fs from 'node:fs';
@@ -44,12 +45,12 @@ await step('mcp', async () => {
   await client.connect(new StdioClientTransport({ command: process.execPath, args: [path.join(REPO, 'claude', 'mcp', 'server.mjs')], cwd: REPO, env: { ...process.env } }));
   try {
     const tools = (await client.listTools()).tools.length;
-    need(tools === 15, `${tools} tools, expected 15`);
+    need(tools === 21, `${tools} tools, expected 21`);
     const res = await client.callTool({ name: 'list_templates', arguments: {} });
     need(!res.isError, 'list_templates returned an error');
     const n = JSON.parse(res.content[0].text).length;
     need(n >= 8, `${n} templates, expected 8`);
-    return `15 tools, ${n} templates`;
+    return `21 tools, ${n} templates`;
   } finally { await client.close(); }
 });
 
@@ -147,6 +148,35 @@ await step('trigger hook', async () => {
   const qa = spawnSync(process.execPath, [hook], { input: prompt('make a plot'), encoding: 'utf8', cwd: out });
   need(qa.status === 0 && !qa.stdout, 'the QA hook answers prompts: that would be a second reminder');
   return 'one line for a figure prompt, silent otherwise, off with autotrigger false, QA hook silent on prompts';
+});
+
+await step('deck tests', async () => {
+  const r = spawnSync(process.execPath, [path.join(REPO, 'deck', 'test.mjs')], { encoding: 'utf8', cwd: REPO });
+  need(r.status === 0, (r.stdout + r.stderr).trim().split(/\r?\n/).slice(-3).join(' | '));
+  return r.stdout.trim().split(/\r?\n/).pop();
+});
+
+await step('deck demo audit', async () => {
+  const r = spawnSync(process.execPath, [path.join(REPO, 'qa', 'qa_deck.mjs'), path.join(REPO, 'examples', 'deck-demo'), '--json'], { encoding: 'utf8', cwd: REPO });
+  const res = JSON.parse(r.stdout.trim().split(/\r?\n/).reverse().find((l) => l.startsWith('{')) || 'null');
+  need(res && res.ok, 'checks failed: ' + (res ? res.failures.join('; ') : (r.stderr || 'no output')));
+  return `${res.slides.length} slides pass, ${res.warnings.length} warnings`;
+});
+
+await step('deck tools', async () => {
+  const made = await json('new_deck', { dir: 'talk', title: 'Check deck' });
+  need(fs.existsSync(made.deck), 'no deck.json');
+  const b = await json('build_deck', { deck: 'talk' });
+  need(fs.existsSync(path.join(proj, 'talk', 'dist', 'talk.html')), 'no standalone HTML: ' + b.log);
+  const a = await json('audit_deck', { deck: 'talk' });
+  need(a.ok, 'audit failed: ' + a.failures.join('; '));
+  await json('export_deck', { deck: 'talk', format: 'png' });
+  need(fs.readdirSync(path.join(proj, 'talk', 'dist', 'png')).length === 3, 'expected 3 slide PNGs');
+  const s = await json('deck_contact_sheet', { deck: 'talk' });
+  need(s.sheet.length === 1, 'no contact sheet');
+  const out1 = await call('build_deck', { deck: '../..' });
+  need(out1.error, 'a deck outside the project was accepted');
+  return 'new, build, audit, png export and contact sheet on a 3-slide starter; a folder outside the project refused';
 });
 
 await step('skill references', async () => {
