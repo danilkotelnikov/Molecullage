@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// Molecullage MCP server (stdio). Fifteen tools that call the repository's scripts as subprocesses.
+// Molecullage MCP server (stdio). Twenty-one tools that call the repository's scripts as subprocesses.
 //   list_templates, new_figure, build_figure, qa_figure, palette_sample, palette_check, render_structure
 //   project-wide (claude/mcp/tools/): inventory_figures, audit_figure, plan_redesign, contact_sheet, make_brief
 //   films (claude/mcp/tools/film.mjs, engine in film/): new_film_beat, narrate_film, render_film
+//   decks (claude/mcp/tools/deck.mjs): new_deck, build_deck, preview_deck, export_deck, deck_contact_sheet, audit_deck
 // The repository is found through $MOLECULLAGE_HOME, else from the location of this file.
 // Every argument is checked before it reaches a command or a path (lib/validate.mjs). Files are written only inside the project folder,
 // the folder of the nearest molecullage.json, else the working directory. Files may be read from the project and from the repository.
@@ -20,6 +21,7 @@ import { register as registerPlan } from './tools/plan.mjs';
 import { register as registerContact } from './tools/contact.mjs';
 import { register as registerBrief } from './tools/brief.mjs';
 import { register as registerFilm } from './tools/film.mjs';
+import { register as registerDeck } from './tools/deck.mjs';
 import { RE_ID, RE_ENTRY, RE_LOCAL_PATH, GROUPS, RENDER_KEYS, idOf, projectRoot, within, renderWords } from './lib/validate.mjs';
 
 const ok = (obj) => ({ content: [{ type: 'text', text: typeof obj === 'string' ? obj : JSON.stringify(obj, null, 1) }] });
@@ -187,7 +189,7 @@ export function buildServer() {
     return ok({ png: Object.keys(index).map((k) => path.join(outDir, `${k}_t.png`)), anchors: Object.fromEntries(Object.entries(index).map(([k, v]) => [k, v.anchors])), art_dir: outDir });
   }));
 
-  for (const reg of [registerInventory, registerAudit, registerPlan, registerContact, registerBrief, registerFilm]) reg(server);
+  for (const reg of [registerInventory, registerAudit, registerPlan, registerContact, registerBrief, registerFilm, registerDeck]) reg(server);
   return server;
 }
 

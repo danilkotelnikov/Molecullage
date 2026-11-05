@@ -11,3 +11,7 @@ Give an independent reviewer the page text (words as drawn), the notes file, and
 > Be adversarial. Do not praise. Say "cannot check" where the source does not decide.
 
 How to use the answer: change the figure or the line, never the source, to remove an overclaim. Record each finding and its fix in the notes file. If no second model or person is available, use a fresh agent with this brief and write in the notes that the reader was the same kind of model as the author.
+
+## For a slide deck
+
+Give the reviewer `<deck>/out/overclaim-pack.md`, which `node deck/cli.mjs audit <deck>` writes: every title, text, caption, number and speaker note, slide by slide, and the boundary line. Add the source for each number. Question 5 applies to the boundary line at the foot of the slides. Speaker notes count: a claim made out loud is a claim. A number on a "big number" slide has no caption beside it, so check that the label under it says what is counted.

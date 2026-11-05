@@ -16,3 +16,7 @@ Sizes are the final sizes in points on a figure of 178 mm (two columns) or 89 mm
 - Nothing at 6.2, 5.8 or below. Pass `mfs` 8.4 to `f.rich` so that scripts stay at 6.5 pt.
 - Words: at most 6 per box or label, 3 per arrow, 130 in a schematic, 90 in a plate, one footnote line of 14 words. A short title per panel (6 words), a name on every block, one plain sub-line where the job is not obvious, arrows labelled with what flows, a "Look for:" line on maths plates.
 - Change the sizes in `molecullage.json` (`typeLadder`); the build turns it into CSS variables (`--fs-letter`, `--fs-title`, `--fs-label`, `--fs-floor`, `--fs-math`).
+
+## Slides
+
+A slide is 1920 x 1080 px, and the ladder is the figure ladder at 3.8 times, rounded: smallest text 25 px, label 28, body 36, subtitle 44, title 64, display 110, number 220. Nothing is smaller than 25 px. The word budget is 70 words on a slide, 12 in a title, 16 in a list item and 14 in the boundary line. `deckLadder` and `deckWords` in `molecullage.json` change them.

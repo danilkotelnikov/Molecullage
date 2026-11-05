@@ -1,6 +1,6 @@
 ---
 name: molecullage
-description: Use for any figure work, new or old. A figure, panel, schematic, diagram, pipeline picture, graphical abstract, infographic, poster or slide picture, a plot to style or fix, a colour palette for figures, a render of a protein or molecule, a contact map, a sequence view. Also when someone says "make this figure look publishable", "redo all figures", "unify the figures", "check my figures" or "the figures look different from each other". Works on one figure or on every figure of a project, with or without ChimeraX and with any plotting library. Covers ChimeraX renders, figure pages in millimetres, the PDF and PNG build, the palette, the QA checks, the blind read (a reader who sees only the PNG and says what it shows), and a project-wide audit and redesign. Also short narrated films of a method or a structure: scenes in code, subtitles, a voice-over, an MP4 (the film engine in film/).
+description: Use for any figure work, new or old. A figure, panel, schematic, diagram, pipeline picture, graphical abstract, infographic, poster or slide picture, a plot to style or fix, a colour palette for figures, a render of a protein or molecule, a contact map, a sequence view. Also when someone says "make this figure look publishable", "redo all figures", "unify the figures", "check my figures" or "the figures look different from each other". Works on one figure or on every figure of a project, with or without ChimeraX and with any plotting library. Covers ChimeraX renders, figure pages in millimetres, the PDF and PNG build, the palette, the QA checks, the blind read (a reader who sees only the PNG and says what it shows), and a project-wide audit and redesign. Also short narrated films of a method or a structure: scenes in code, subtitles, a voice-over, an MP4 (the film engine in film/). Also for presentations: a talk, slides, a pitch deck, a speaker-notes PDF, or an animated video of a structure, built from a JSON manifest into HTML, PDF, PNG, MP4 and GIF.
 ---
 
 # Molecullage
@@ -16,6 +16,7 @@ The repository is the folder in `$MOLECULLAGE_HOME`. The `page` paths that `list
 - A figure whose numbers, ids or dates need checking against a public record.
 - A whole project: "redo all figures", "unify the figures", "make these figures publishable". Go to "Redesign every figure of a project" below.
 - Figures for a poster or slides. The same rules and the same palette apply; use the width of the page.
+- A whole talk: slides with speaker notes, build steps, a 3D scene, an MP4 or a PDF. Go to "Slides and talks" below.
 
 Do not use it for photos, micrographs, or images that would need generative art. No figure in this work comes from an image model.
 
@@ -91,6 +92,21 @@ py -3 -I palette/sample_palette.py <image-or-pdf>
 py -3 -I palette/check_palette.py <tokens.json>
 ```
 
+## Slides and talks
+
+A talk is a folder with one `deck.json`: slides in ten layouts, speaker notes, build steps and 3D scenes. The deck module turns it into a standalone HTML file, a PDF with one page of 1920 x 1080 px for each slide, PNG files, a frame-exact MP4 or GIF, and a notes PDF. The video is made by setting the time of the page and taking a frame, not by recording the screen. Read `references/deck.md` before you write a deck; the manual is `docs/deck.md`.
+
+| Tool | Use |
+|---|---|
+| `new_deck(dir, title?, audience?)` | a starter `deck.json` with three slides and notes |
+| `build_deck(deck, audience?, fetch?)` | check the manifest, render ChimeraX loops, write the standalone HTML |
+| `preview_deck(deck, port?, audience?)` | live preview with hot reload, presenter view and overview; returns the address and pid |
+| `export_deck(deck, format, fps?, width?, duration?, slides?)` | `html`, `pdf`, `png`, `mp4`, `gif`, `notes` or `all` |
+| `deck_contact_sheet(deck)` | every slide on one PNG, for the blind read |
+| `audit_deck(deck, strictness?)` | palette, text size, overflow, overlap, contrast, words, media; writes the overclaim pack |
+
+The same rules apply as for figures: one message for each slide, the token palette, Arial, one claim-boundary line. Authors do not certify their own decks: the blind read takes the contact sheet, the overclaim read takes `out/overclaim-pack.md`. Look at the PDF pages and some video frames before you say a deck is done.
+
 ## The drawing rules in ten lines
 
 1. One message and one object running through the figure; the caption states the message in 20 words.
@@ -149,4 +165,4 @@ Every figure has `<key>.notes.md` with: the message in one sentence; what each p
 
 ## References
 
-`grammar.md` (the 28 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`. `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md` and `overclaim-read.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.
+`grammar.md` (the 28 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `deck.md` (talks and slides; the manual is `docs/deck.md`), `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`. `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md` and `overclaim-read.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.
