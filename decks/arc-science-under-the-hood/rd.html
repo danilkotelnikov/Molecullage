@@ -1,0 +1,150 @@
+<style>
+/* rd: Roadmap. Five gates on one line, one card under each gate, chips for the parts. Look of cq.html. */
+section[data-k="rd"] .rd{width:100%;display:flex;flex-direction:column;gap:clamp(12px,2.2vh,26px)}
+.rd .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.rd .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+.rd .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.rd-track{position:relative;height:72px}
+.rd-line,.rd-fill{position:absolute;left:10%;width:80%;top:37px;height:2px;border-radius:2px;transform-origin:0 50%}
+.rd-line{background:rgba(236,236,234,.2)}
+.rd-fill{background:var(--teal)}
+.rd-g{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;background:none;border:0;padding:0 6px;cursor:pointer;color:var(--mute)}
+.rd-t{font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;height:18px;line-height:18px;white-space:nowrap;transition:color .4s}
+.rd-d{width:20px;height:20px;transform:rotate(45deg);border:2px solid rgba(236,236,234,.38);background:#0e0f12;border-radius:3px;transition:border-color .4s,background .4s}
+.rd-g:hover .rd-t{color:var(--fg)}.rd-g:hover .rd-d{border-color:var(--teal)}
+.rd-g.past .rd-t{color:var(--soft)}.rd-g.past .rd-d{border-color:var(--teal);background:linear-gradient(rgba(127,178,170,.3),rgba(127,178,170,.3)),#0e0f12}
+.rd-g.cur .rd-t{color:var(--teal)}.rd-g.cur .rd-d{border-color:var(--teal);background:var(--teal)}
+.rd-me{position:absolute;top:38px;left:10%;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;border:1.5px solid var(--teal);box-shadow:0 0 18px rgba(127,178,170,.5);pointer-events:none}
+.rd-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.rd-cell{padding:0 clamp(5px,.6vw,9px);min-width:0;display:flex}
+.rd-card{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;min-width:0;width:100%;transition:border-color .4s,background .4s}
+.rd-card.on{border-color:var(--teal);background:rgba(127,178,170,.07)}
+.rd-card h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.rd-say{font-size:clamp(14px,1.2vw,19px);color:var(--fg);line-height:1.4;margin:0}
+.rd-use{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,5fr);gap:clamp(10px,1.2vw,18px)}
+.rd-chips{display:flex;gap:8px;flex-wrap:wrap}
+.rd-chip{flex:1 1 auto;display:flex;flex-direction:column;gap:2px;border:1px solid rgba(236,236,234,.2);border-radius:10px;padding:6px 12px;min-width:0;transition:border-color .4s,background .4s}
+.rd-chip b{font:500 clamp(14px,1.15vw,18px) "Geist",sans-serif;color:var(--fg);white-space:nowrap}
+.rd-chip i{font:500 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;font-style:normal;color:var(--mute);min-height:1.3em;white-space:nowrap}
+.rd-chip.ex{border-style:dashed;border-color:rgba(236,236,234,.4)}.rd-chip.ex i{color:var(--soft)}
+.rd-chip.use{border-color:var(--teal);background:rgba(127,178,170,.14)}.rd-chip.use i{color:var(--teal)}
+.rd-chip.chk{border-color:var(--blue);background:rgba(125,147,196,.14)}.rd-chip.chk i{color:var(--blue)}
+.rd-chip.par{border-color:var(--violet);background:rgba(156,143,196,.14)}.rd-chip.par i{color:var(--violet)}
+.rd-end{margin:0;font-size:clamp(15px,1.3vw,21px);line-height:1.4;color:var(--fg);padding:8px 12px;border-left:3px solid var(--teal);background:rgba(127,178,170,.08);border-radius:0 8px 8px 0;align-self:flex-start}
+@media (max-width:760px){
+  .rd{gap:12px}
+  .rd-t{font-size:10px;letter-spacing:.03em}
+  .rd-g{padding:0 1px}
+  .rd-cards{display:block}
+  .rd-cell{display:none;padding:0}.rd-cell.cur{display:flex}
+  .rd-use{grid-template-columns:1fr;gap:8px}
+  .rd-card{padding:10px 12px}
+  .rd-chips{gap:6px}.rd-chip{padding:4px 9px}.rd-chip i{font-size:9.5px;letter-spacing:.03em}
+  .rd-use .rd-card h3{display:none}
+}
+</style>
+<section class="slide" data-k="rd" data-film>
+  <div class="rd">
+    <div class="mh" data-in><h2 class="big grad">Roadmap</h2><span class="tag">Plan</span></div>
+    <div class="rd-track" data-hold>
+      <div class="rd-line"></div><div class="rd-fill"></div><div class="rd-me"></div>
+    </div>
+    <div class="rd-cards"></div>
+    <div class="rd-use">
+      <div class="rd-card"><h3>Shared parts</h3><div class="rd-chips" id="rd-sh"></div></div>
+      <div class="rd-card"><h3>Projects</h3><div class="rd-chips" id="rd-pr"></div></div>
+    </div>
+    <p class="rd-end">Each gate has one check. The gate opens when that check passes.</p>
+  </div>
+</section>
+<script>
+(() => {
+  const s = document.currentScript.previousElementSibling;
+  const Q = (q) => s.querySelector(q), QA = (q) => [...s.querySelectorAll(q)];
+  /* Gates are relative times. Wording is deliberately general. */
+  const GATES = [
+    ['Now', 'Example', 'Each project has a worked example.'],
+    ['Month 3', 'End to end', 'Each project runs end to end on its example.'],
+    ['Month 6', 'Independent test', 'Each project is checked against an independent test.'],
+    ['Month 12', 'Partner data', 'Partners try the projects on their own data.'],
+    ['Month 18', 'Open platform', 'The platform is open to partners.'],
+  ];
+  const SHARED = ['Arc Harness', 'Cammut', 'Molecullage'], PROJ = ['Omniverso', 'RNAv', 'Snöggo'];
+  const track = Q('.rd-track'), cards = Q('.rd-cards');
+  GATES.forEach(([t, name, say], k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'rd-g'; b.style.left = 10 + 20 * k + '%';
+    b.setAttribute('aria-label', `${t}: ${name}`); b.innerHTML = `<span class="rd-t">${t}</span><span class="rd-d"></span>`;
+    b.onclick = () => window.showStep && showStep(s, k + 1);
+    track.appendChild(b);
+    const c = document.createElement('div'); c.className = 'rd-cell';
+    c.innerHTML = `<div class="rd-card"><h3>${name}</h3><p class="rd-say">${say}</p></div>`;
+    cards.appendChild(c);
+  });
+  const mkChips = (host, names) => names.forEach((n) => { const c = document.createElement('div'); c.className = 'rd-chip'; c.innerHTML = `<b>${n}</b><i></i>`; host.appendChild(c); });
+  mkChips(Q('#rd-sh'), SHARED); mkChips(Q('#rd-pr'), PROJ);
+  const gates = QA('.rd-g'), cells = QA('.rd-cell'), cardEls = QA('.rd-cell .rd-card'), shared = QA('#rd-sh .rd-chip'), proj = QA('#rd-pr .rd-chip');
+  const chips = [...shared, ...proj], line = Q('.rd-line'), fill = Q('.rd-fill'), me = Q('.rd-me'), end = Q('.rd-end');
+
+  /* what a chip says at step i (0 is the opening, 1 to 5 are the five gates) */
+  const SH_ST = (i) => (i === 0 ? ['', ''] : i < 5 ? ['use', 'In use'] : ['par', 'Open']);
+  const PR_ST = (i) => [['', ''], ['ex', 'Example'], ['use', 'Runs'], ['chk', 'Checked'], ['par', 'With partners'], ['par', 'With partners']][i];
+  const paintChips = (i) => {
+    [[shared, SH_ST(i)], [proj, PR_ST(i)]].forEach(([list, [cls, txt]]) => list.forEach((c) => { c.className = 'rd-chip ' + cls; c.querySelector('i').textContent = txt; }));
+  };
+  const paintGates = (g) => {
+    gates.forEach((b, k) => { b.classList.toggle('cur', k === g); b.classList.toggle('past', k < g); });
+    cells.forEach((c, k) => c.classList.toggle('cur', k === g));
+    cardEls.forEach((c, k) => c.classList.toggle('on', k === g));
+  };
+  /* final state of step i, drawn from scratch; i = -1 is the state before the opening */
+  const settle = (i) => {
+    const g = i - 1;
+    gsap.set(line, { scaleX: i >= 0 ? 1 : 0 });
+    gsap.set(fill, { scaleX: g > 0 ? g / 4 : 0 });
+    gsap.set(gates, { opacity: i >= 0 ? 1 : 0 });
+    gsap.set(me, { opacity: i >= 0 ? 1 : 0, left: 10 + 20 * Math.max(g, 0) + '%' });
+    gsap.set(cardEls, { opacity: (k) => (k < g ? .5 : k === g ? 1 : 0), y: (k) => (k <= g ? 0 : 16) });
+    gsap.set(chips, { opacity: i >= 1 ? 1 : .3, scale: 1 });
+    gsap.set(end, { opacity: i === 5 ? 1 : 0, y: 0 });
+    paintGates(g); paintChips(Math.max(i, 0));
+  };
+
+  const CAPS = [
+    'Five gates over about a year and a half.',
+    'Now: each project has a worked example, and the shared parts run.',
+    'Month 3: each project runs end to end on its example.',
+    'Month 6: an independent test checks each project.',
+    'Month 12: partners try the projects on their own data.',
+    'Month 18: the platform is open to partners.',
+  ];
+  const step = (i) => ({ cap: CAPS[i], on: '*', run: (sc, rm) => {
+    gsap.killTweensOf([s, ...QA('*')]);
+    settle(i - 1);
+    if (rm) { settle(i); return null; }
+    const g = i - 1, tl = gsap.timeline();
+    if (i === 0) {
+      tl.to(line, { scaleX: 1, duration: 1.1, ease: 'power2.inOut' }, 0)
+        .to(gates, { opacity: 1, duration: .4, stagger: .26, ease: 'power2.out' }, .1)
+        .to(me, { opacity: 1, duration: .5, ease: 'power2.out' }, .9);
+      return tl;
+    }
+    const arrive = i === 1 ? 0 : 1;   /* the marker travels for one second, except at the first gate */
+    if (i > 1) {
+      tl.to(me, { left: 10 + 20 * g + '%', duration: 1, ease: 'power3.inOut' }, 0)
+        .to(fill, { scaleX: g / 4, duration: 1, ease: 'power3.inOut' }, 0)
+        .to(cardEls[g - 1], { opacity: .5, duration: .4, ease: 'power2.out' }, 0);
+    }
+    tl.call(() => { paintGates(g); paintChips(i); }, null, arrive)
+      .fromTo(cardEls[g], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .6, ease: 'expo.out' }, arrive);
+    if (i === 1) tl.to(chips, { opacity: 1, duration: .5, stagger: .05, ease: 'power2.out' }, 0);
+    const changed = i === 5 ? shared : i >= 2 && i <= 4 ? proj : [];
+    if (changed.length) tl.fromTo(changed, { scale: .94 }, { scale: 1, duration: .5, stagger: .06, ease: 'power2.out' }, arrive);
+    if (i === 5) tl.fromTo(end, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .6, ease: 'expo.out' }, arrive + .2);
+    return tl;
+  } });
+  window.STEPS = window.STEPS || {};
+  window.STEPS.rd = CAPS.map((_, i) => step(i));
+  window.ENTER = window.ENTER || {};
+  window.ENTER.rd = () => settle(-1);   /* gsap loads after the fragments, so nothing draws at load time */
+})();
+</script>

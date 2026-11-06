@@ -16,7 +16,12 @@
     "build": "node build/build.mjs",
     "examples": "node scripts/build_examples.mjs",
     "check": "node scripts/check.mjs",
-    "install-notes": "node scripts/install.mjs"
+    "install-notes": "node scripts/install.mjs",
+    "deck": "node deck/cli.mjs",
+    "deck:preview": "node deck/cli.mjs preview",
+    "deck:build": "node deck/cli.mjs build",
+    "deck:export": "node deck/cli.mjs export",
+    "deck:test": "node deck/test.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",

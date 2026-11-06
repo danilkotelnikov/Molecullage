@@ -1,0 +1,161 @@
+<section class="slide" data-k="o7" data-film>
+  <div class="x3s">
+    <div>
+      <div class="mh" data-in><h2 class="big grad">Shape and charge</h2><span class="tag">Published structures, computed charge</span></div>
+      <p class="lede" data-in>Open a nanobody complex like a book and look at the two faces that touch. <b>1MEL</b> fits by shape. <b>4KRL</b> fits by charge.</p>
+      <ul class="facts" data-in>
+        <li style="--c:#7d93c4"><b>1MEL</b>, 2.5 Å, DOI 10.1038/nsb0996-803: camel nanobody on hen lysozyme.</li>
+        <li style="--c:#cfae7e"><b>4KRL</b>, DOI 10.1016/j.str.2013.05.008: nanobody 7D12 on EGFR domain III.</li>
+        <li style="--c:#7fb2aa">Charge match at the contact, computed from the coordinates: <b>weak</b> for 1MEL, <b>strong</b> for 4KRL.</li>
+        <li style="--c:#8d8c88">A match of 1 is perfect. Salt at 0.15 M screens charge over 7.85 Å.</li>
+      </ul>
+    </div>
+    <div class="x3" id="o7-x3"></div>
+  </div>
+</section>
+<script>
+(() => {
+  const s = document.currentScript.previousElementSibling;
+  window.STEPS = window.STEPS || {}; window.ENTER = window.ENTER || {};
+  const S = X3.stage(s.querySelector('#o7-x3'), { cam: [0, 20, 280], tgt: [0, 0, 0], floor: null, spin: 0.12 });
+  if (!S) { window.STEPS.o7 = [{ cap: '1MEL fits by shape and 4KRL fits by charge.', on: '*' }]; return; }
+  const T = S.three, MX = window.X3M, DX = window.X3D;
+  const C = { blue: '#7d93c4', amber: '#cfae7e', teal: '#7fb2aa', mute: '#8d8c88', soft: '#cfcec9', fg: '#ececea' };
+  const lin = (c) => new T.Color(c).convertSRGBToLinear();
+  const BLUE = lin(C.blue), AMBER = lin(C.amber), TEAL = lin(C.teal), MUTE = lin(C.mute);
+  const cl01 = (a) => (a < 0 ? 0 : a > 1 ? 1 : a), sm = (a) => { a = cl01(a); return a * a * (3 - 2 * a); };
+  const XA = new T.Vector3(1, 0, 0), YA = new T.Vector3(0, 1, 0), HALF = Math.PI / 2;
+
+  /* ---- one book: a nanobody complex that opens at the contact like a page turn ----
+     closed: the contact midpoint sits at the origin and the axis between the two contact patches runs along x.
+     open: each partner swings 90 degrees about y and slides aside, so the two touching faces look at the viewer, mirror to mirror. */
+  function makeBook(key, nbCh, tgCh) {
+    const D = DX[key], M = MX[key], bk = new T.Group(); S.root.add(bk);
+    const ca = (ch) => { const a = D.chains[ch], r = []; for (let i = 0; i < a.length / 3; i++) r.push(X3.V(a, i)); return r; };
+    const mean = (pts) => pts.reduce((a, p) => a.add(p), new T.Vector3()).multiplyScalar(1 / pts.length);
+    const cN = ca(nbCh), cT = ca(tgCh), pN = mean(D.iface[nbCh].map((i) => cN[i])), pT = mean(D.iface[tgCh].map((i) => cT[i]));
+    const mid = pN.clone().add(pT).multiplyScalar(0.5), ax = pN.clone().sub(pT).normalize();
+    const Q0 = new T.Quaternion().setFromUnitVectors(ax, XA), v0 = mean(cN).sub(mid).applyQuaternion(Q0);
+    const Qc = new T.Quaternion().setFromAxisAngle(XA, Math.atan2(-v0.z, v0.y)).multiply(Q0);   // roll: the nanobody body points up
+    const mol = (ch, rib, sg, pts) => {
+      const g = new T.Group(), inner = new T.Group(); inner.position.copy(mid).negate(); g.add(inner); bk.add(g);
+      const cs = new Set(D.iface[ch].map((i) => M[ch].nums.indexOf(D.nums[ch][i])));
+      const surf = X3.mesh(M[ch].surface, { mat: X3.matte({ transparent: true }) }); inner.add(surf);
+      const rb = rib ? X3.mesh(M[ch].ribbon, { mat: X3.matte({ transparent: true }) }) : null; if (rb) inner.add(rb);
+      return { g, inner, cs, surf, rib: rb, sg, ca: pts, ch };
+    };
+    const nb = mol(nbCh, true, 1, cN), tg = mol(tgCh, false, -1, cT);
+    // extents of each page after the turn (Angstrom, relative to its contact point), with a margin for the surface
+    const ext = (mo) => { const q = new T.Quaternion().setFromAxisAngle(YA, mo.sg * HALF).multiply(Qc), e = { x0: 1e9, x1: -1e9, y0: 1e9, y1: -1e9 }; mo.ca.forEach((p) => { const w = p.clone().sub(mid).applyQuaternion(q); e.x0 = Math.min(e.x0, w.x - 5); e.x1 = Math.max(e.x1, w.x + 5); e.y0 = Math.min(e.y0, w.y - 5); e.y1 = Math.max(e.y1, w.y + 5); }); return e; };
+    const eN = ext(nb), eT = ext(tg), sh = Math.max(-eN.x0, eT.x1) + 4;   // half gap: the pages sit 8 A apart at least
+    const x0 = -sh + eT.x0, x1 = sh + eN.x1, y0 = Math.min(eN.y0, eT.y0), y1 = Math.max(eN.y1, eT.y1);
+    let R = 0; cN.concat(cT).forEach((p) => { R = Math.max(R, p.distanceTo(mid)); });
+    return { key, D, bk, nb, tg, Qc, mid, sh, w: x1 - x0, h: y1 - y0, ctr: new T.Vector2((x0 + x1) / 2, (y0 + y1) / 2), R: R + 6, cN, cT, pN, pT };
+  }
+  const B1 = makeBook('mel', 'A', 'L'), B2 = makeBook('krl', 'B', 'A'), BOOKS = [B1, B2];
+  // the CDR3 finger: contact residues of the 1MEL nanobody between residue 99 and 122
+  const finger = (() => { const idx = B1.D.iface.A.filter((i) => B1.D.nums.A[i] >= 99 && B1.D.nums.A[i] <= 122); return B1.cN && idx.length ? idx.reduce((a, i) => a.add(B1.cN[i]), new T.Vector3()).multiplyScalar(1 / idx.length) : B1.pN; })();
+
+  /* ---- quiet scenery: water and a few ions, behind the books, at true size ---- */
+  X3.depth(S, 300, 560); X3.water(S, { n: 170, inner: 90, outer: 175, opacity: 0.26 });
+  const ionRng = (a) => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const ions = (() => {
+    const R = ionRng(2026), list = [], mk = (n, r, col) => {
+      const m = new T.InstancedMesh(new T.SphereGeometry(r, 18, 12), X3.matte({ color: lin(col).multiplyScalar(0.45), transparent: true, opacity: 0.7 }), n); m.frustumCulled = false; S.root.add(m);
+      const P = []; while (P.length < n) { const u = 2 * R() - 1, th = 6.283 * R(), rr = 70 + 85 * Math.cbrt(R()), q = Math.sqrt(1 - u * u), p = [rr * q * Math.cos(th), rr * u, rr * q * Math.sin(th)]; if (p[2] > 4) continue; P.push({ p, f: R() * 6, w: 0.3 + R() * 0.4 }); }
+      list.push({ m, P }); return m;
+    };
+    mk(8, 1.0, C.blue); mk(8, 1.8, C.amber);   // Na+ and Cl-, ionic radii in Angstrom
+    return list;
+  })();
+  const M4 = new T.Matrix4(), V3 = new T.Vector3();
+
+  /* ---- colour: one function of the state, painted onto the baked meshes only when a value changes ---- */
+  const tmp = new T.Color(), tmp2 = new T.Color();
+  const chargeCol = (phi) => tmp2.copy(MUTE).lerp(phi > 0 ? BLUE : AMBER, Math.min(1, Math.abs(phi) / 0.6));
+  const repaint = (mesh, mo, st, shut) => {
+    if (!mesh.visible) return;
+    const dim = mo.sg > 0 ? st.dN : st.dT, dimC = mo.sg > 0 ? st.cN : st.cT, key = [dim, dimC, st.teal, st.ch, shut].map((v) => v.toFixed(2)).join();
+    if (mesh.userData.key === key) return; mesh.userData.key = key;
+    const base = mo.sg > 0 ? BLUE : AMBER;
+    const lift = mesh === mo.rib ? 1.2 : 1;   // the thin ribbon is shaded harder by its baked light: lift it so the lit side reaches the palette colour
+    X3.paint(mesh, (r, phi) => { const c = mo.cs.has(r); tmp.copy(base); if (st.ch > 0) tmp.lerp(chargeCol(phi), st.ch); if (c && st.teal > 0) tmp.lerp(TEAL, st.teal); return tmp.multiplyScalar((1 - 0.45 * (c ? dimC : dim)) * lift * (c && st.ch > 0 ? 1 + 0.3 * st.ch : 1)); }, shut);
+  };
+
+  /* ---- labels: beside the model, the leader line touches the part ---- */
+  const W3 = (b, mo, v) => () => mo.inner.localToWorld(v.clone());
+  const far = (mo, dir) => () => { let best = null, bd = -1e9; mo.ca.forEach((p) => { const w = mo.inner.localToWorld(p.clone()), d = w.dot(dir); if (d > bd) { bd = d; best = w; } }); return best; };
+  const gap = (B) => () => B.bk.localToWorld(new T.Vector3(0, 0, 0));
+  let ASP = 1.3; const UP = new T.Vector3(0, 1, 0), DN = new T.Vector3(0, -1, 0), RT = new T.Vector3(1, 0, 0);
+  const lab = {
+    nb1: S.label('Nanobody 1MEL', C.blue, far(B1.nb, new T.Vector3(1, 0.5, 0)), 0, 0),
+    tg1: S.label('Hen lysozyme', C.amber, far(B1.tg, new T.Vector3(-1, 0.5, 0)), 0, 0),
+    fing: S.label('CDR3 finger', C.teal, W3(B1, B1.nb, finger), 0, 0),
+    cleft: S.label('Cleft', C.teal, W3(B1, B1.tg, B1.pT), 0, 0),
+    m1: S.label('Charge match: weak', C.fg, W3(B1, B1.nb, B1.pN), 0, 0),
+    nb2: S.label('Nanobody 7D12', C.blue, far(B2.nb, new T.Vector3(1, 0.5, 0)), 0, 0),
+    tg2: S.label('EGFR domain III', C.amber, far(B2.tg, new T.Vector3(-1, 0.5, 0)), 0, 0),
+    m2: S.label('Charge match: strong', C.fg, W3(B2, B2.nb, B2.pN), 0, 0),
+    sh: S.label('1MEL: shape-led', C.fg, () => far(B1.nb, ASP < 1.15 ? UP : RT)(), 0, 0),
+    ch: S.label('4KRL: charge-led', C.fg, () => far(B2.nb, ASP < 1.15 ? DN : RT)(), 0, 0),
+  };
+  // lane = [fraction of stage width, fraction of height] for a wide stage and a narrow one
+  const LANES = { nb1: [[0.87, 0.1], [0.8, 0.06]], tg1: [[0.13, 0.1], [0.2, 0.06]], fing: [[0.87, 0.1], [0.8, 0.06]], cleft: [[0.13, 0.1], [0.2, 0.06]], m1: [[0.5, 0.94], [0.62, 0.86]], nb2: [[0.87, 0.1], [0.8, 0.06]], tg2: [[0.13, 0.1], [0.2, 0.06]], m2: [[0.5, 0.94], [0.62, 0.86]], sh: [[0.87, 0.28], [0.5, 0.05]], ch: [[0.87, 0.72], [0.5, 0.95]] };
+  const SETS = [[], ['tg1', 'nb1'], ['cleft', 'fing'], ['tg1', 'nb1', 'm1'], ['tg2', 'nb2'], ['tg2', 'nb2', 'm2'], ['sh', 'ch']];
+  const chg = S.host.appendChild(Object.assign(document.createElement('div'), { className: 'hud', innerHTML: '<i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#7d93c4;margin-right:7px"></i>Positive<i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#cfae7e;margin:0 7px 0 18px"></i>Negative' }));
+  S.renderer.compile(S.scene, S.camera);   // build every shader once, before the first frame
+
+  /* ---- state: one source of truth, drawn every frame ---- */
+  const fc = (B) => 2 * B.R * 0.88;
+  const INIT = { spin: 0.12, v1: 1, o1: 0, x1: 0, y1: 0, v2: 0, o2: 0, x2: 0, y2: 0, dN: 0, cN: 0, dT: 1, cT: 1, teal: 0, ch: 0, gx: 0, gy: 0, vw: fc(B1), vh: fc(B1), lb: 0 };
+  const st = Object.assign({}, INIT);
+  let lastLb = -1;
+  const Q = new T.Quaternion();
+  const place = (B, o, v, X, Y) => {
+    const pull = sm(o / 0.5), turn = sm((o - 0.35) / 0.65), k = sm(o);
+    B.nb.g.position.set(B.sh * pull, 0, 0); B.tg.g.position.set(-B.sh * pull, 0, 0);
+    B.nb.g.quaternion.copy(Q.setFromAxisAngle(YA, turn * HALF).multiply(B.Qc)); B.tg.g.quaternion.copy(Q.setFromAxisAngle(YA, -turn * HALF).multiply(B.Qc));
+    B.bk.position.set(X - B.ctr.x * k, Y - B.ctr.y * k, 0); B.bk.visible = v > 0.01;
+    const shut = +(0.45 * (1 - k)).toFixed(2);   // the partner darkens the contact only a little: the contact must stay readable
+    const set = (mesh, mo, op) => { mesh.material.opacity = op; mesh.visible = op > 0.01; repaint(mesh, mo, st, shut); };
+    set(B.nb.surf, B.nb, v * sm((o - 0.1) / 0.4)); set(B.nb.rib, B.nb, v * (1 - sm(o / 0.4))); set(B.tg.surf, B.tg, v);
+  };
+  S.onFrame((dt, t) => {
+    const asp = S.camera.aspect || 1, tf = Math.tan(S.camera.fov * Math.PI / 360), d = Math.max(st.vh / (2 * tf), st.vw / (2 * tf * asp));
+    S.cam.set(st.gx, st.gy + d * 0.12, d); S.tgt.set(st.gx, st.gy, 0); S.spin = st.spin;
+    if (S.scene.fog) { S.scene.fog.near = d + 70; S.scene.fog.far = d + 330; }
+    place(B1, st.o1, st.v1, st.x1, st.y1); place(B2, st.o2, st.v2, st.x2, st.y2);
+    ions.forEach((g) => { g.P.forEach((q, i) => { V3.set(q.p[0] + 2.2 * Math.sin(t * q.w + q.f), q.p[1] + 2.2 * Math.cos(t * 0.8 * q.w + q.f), q.p[2] + 2.2 * Math.sin(t * 0.6 * q.w + 2 * q.f)); M4.makeTranslation(V3.x, V3.y, V3.z); g.m.setMatrixAt(i, M4); }); g.m.instanceMatrix.needsUpdate = true; });
+    ASP = asp; const nar = asp < 1.15; chg.style.opacity = st.ch > 0.5 ? 1 : 0;
+    Object.keys(lab).forEach((k) => { lab[k].lane = LANES[k][nar ? 1 : 0]; });
+    if (st.lb !== lastLb) { lastLb = st.lb; S.hideAll(); SETS[st.lb].forEach((k) => S.show(lab[k], true)); }
+  });
+
+  const reset = () => { gsap.killTweensOf(st); gsap.killTweensOf(S); Object.assign(st, INIT); S.yaw = S.yaw % 6.283; S.pitch = 0; S.hideAll(); lastLb = -1; };
+  const TL = (f, build) => { const tl = gsap.timeline(); build(tl); if (f) { tl.progress(1); return null; } return tl; };
+  const run = (to) => (sl, f) => TL(f, to);
+  const wrapYaw = () => { S.yaw = ((S.yaw + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI; };
+  const frameOpen = (B) => ({ gx: 0, gy: 0, vw: B.w * 1.15, vh: Math.max(B.h * 1.5, B.w * 1.15 / 1.3) });
+  const layout = () => {   // the two books stack: each page stays large
+    const g = 10, H = B1.h + B2.h + g, nar = s.querySelector('#o7-x3').clientWidth < s.querySelector('#o7-x3').clientHeight * 1.15;
+    return { x1: 0, y1: H / 2 - B1.h / 2, x2: 0, y2: -(H / 2 - B2.h / 2), vw: Math.max(B1.w, B2.w) * 1.2, vh: H * (nar ? 1.6 : 1.25) };
+  };
+  window.STEPS.o7 = MK.beats(reset, [
+    { cap: 'Nanobody 1MEL sits on hen lysozyme, as in the crystal.',
+      play: run((tl) => tl.set(st, { lb: 1 }, 0.6)) },
+    { cap: 'Opened like a book: the CDR3 finger fits the cleft of lysozyme.',
+      play: run((tl) => tl.call(wrapYaw, null, 0).set(st, { spin: 0, lb: 0 }, 0).to(S, { yaw: 0, pitch: 0, duration: 1.4, ease: 'power2.inOut' }, 0).to(st, { o1: 1, duration: 2.4, ease: 'power1.inOut' }, 0.2)
+        .to(st, Object.assign({ duration: 2.0, ease: 'power2.inOut' }, frameOpen(B1)), 0.2).to(st, { dN: 1, cN: 0, dT: 1, cT: 0, teal: 1, duration: 1.2 }, 1.6).set(st, { lb: 2 }, 2.8)) },
+    { cap: 'Blue is positive, amber is negative. The faces match weakly.',
+      play: run((tl) => tl.set(st, { lb: 0 }, 0).to(st, { ch: 1, teal: 0, duration: 1.6 }, 0).set(st, { lb: 3 }, 1.4)) },
+    { cap: 'Nanobody 7D12 sits on domain III of EGFR in PDB 4KRL.',
+      play: run((tl) => tl.set(st, { lb: 0, spin: 0.12 }, 0).to(st, { v1: 0, duration: 0.8 }, 0).set(st, { o1: 0, ch: 0, teal: 0, dN: 0, cN: 0, dT: 1, cT: 1, gx: 0, gy: 0, vw: fc(B2), vh: fc(B2) }, 0.8).to(st, { v2: 1, duration: 0.9 }, 0.8).set(st, { lb: 4 }, 1.9)) },
+    { cap: 'Here positive meets negative across the gap: the match is strong.',
+      play: run((tl) => tl.call(wrapYaw, null, 0).set(st, { spin: 0, lb: 0 }, 0).to(S, { yaw: 0, pitch: 0, duration: 1.4, ease: 'power2.inOut' }, 0).to(st, { o2: 1, duration: 2.4, ease: 'power1.inOut' }, 0.2)
+        .to(st, Object.assign({ duration: 2.0, ease: 'power2.inOut' }, frameOpen(B2)), 0.2).to(st, { dN: 1, cN: 0, dT: 1, cT: 0, ch: 1, duration: 1.4 }, 1.6).set(st, { lb: 5 }, 3.0)) },
+    { cap: 'Side by side: 1MEL fits by shape, 4KRL fits by charge.',
+      play: run((tl) => { const L = layout(); tl.set(st, { lb: 0, x1: L.x1, y1: L.y1, o1: 1, v1: 0 }, 0).to(st, { v1: 1, duration: 1.2 }, 0.3).to(st, { x2: L.x2, y2: L.y2, gx: 0, gy: 0, vw: L.vw, vh: L.vh, duration: 1.9, ease: 'power2.inOut' }, 0).set(st, { lb: 6 }, 2.0); }) },
+  ]);
+  window.ENTER.o7 = () => {};
+})();
+</script>

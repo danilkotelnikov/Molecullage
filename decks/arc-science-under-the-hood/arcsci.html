@@ -1,0 +1,67 @@
+<section class="slide" data-k="arcsci">
+  <div class="hero">
+    <div>
+      <h2 class="big grad" data-in>Arc Science</h2>
+      <p class="say" data-in>A scientific workbench where any model can take any seat, and every claim keeps its evidence.</p>
+      <div class="list" data-in><div>Research</div><div>Memory</div><div>Molecules</div><div>BioArt</div></div>
+    </div>
+    <svg class="dg" id="as-dg" viewBox="-10 -6 760 600" role="img" aria-label="Arc Science: a question goes to the Planner, science tools make a claim, the Reviewer and Falsifier seats test it; a table shows which model sits in each seat"></svg>
+  </div>
+</section>
+<script>
+(() => {
+  const svg = document.getElementById('as-dg'), d = DG(svg);
+  const A = 0, B = 400, W = 330;
+  d.stage({ x: A, y: 0, w: W, text: 'Workbench' }); d.stage({ x: B, y: 0, w: W, text: 'Seats' });
+  d.group('plan');
+  const q = d.card({ x: A, y: 46, w: W, type: 'task', title: 'Question', lines: ['CDR3 loop and antigen contact'] });
+  const pl = d.op({ x: A, y: 132, w: W, title: 'Planner', sub: 'splits it into tasks', n: 1 });
+  const tk = d.card({ x: A, y: 226, w: W, type: 'task', title: 'Tasks', lines: ['T1 structure', 'T2 MD run'] });
+  d.route([q.b, pl.t], { id: 'as-r1' }); d.route([pl.b, tk.t], { id: 'as-r2' });
+  d.group('tools');
+  const tl = d.op({ x: A, y: 332, w: W, title: 'Science tools', sub: 'structure, docking, MD, omics', n: 2 });
+  const cl = d.card({ x: A, y: 428, w: W, type: 'rule', title: 'Claim', lines: ['The loop touches the antigen', 'Evidence: PDB 1MEL'] });
+  d.route([tk.b, tl.t], { id: 'as-r3' }); d.route([tl.b, cl.t], { id: 'as-r4' });
+  d.group('review');
+  const rv = d.op({ x: B, y: 260, w: W, title: 'Reviewer', sub: 'checks the evidence', n: 3 });
+  d.route([cl.r, [365, cl.cy], [365, rv.cy], rv.l], { id: 'as-r5' });
+  d.group('fals');
+  const fs = d.op({ x: B, y: 356, w: W, title: 'Falsifier', sub: 'tries to break the claim', n: 4 });
+  const vd = d.card({ x: B, y: 452, w: W, type: 'rule', title: 'Verdict', lines: ['Kept, with its evidence'] });
+  d.route([rv.b, fs.t], { id: 'as-r6' }); d.route([fs.b, vd.t], { id: 'as-r7' });
+  d.group('seats');
+  d.badge(B, 50, 5);
+  d.table({ x: B + 24, y: 56, w: W - 24, head: ['Seat', 'Model now'], rows: [['Planner', 'Claude'], ['Reviewer', 'GPT'], ['Falsifier', 'Gemini'], ['Vision', 'GLM'], ['Prose', 'DeepSeek']] });
+  d.end();
+  d.key(A, 552, [['rule', 'Claim or verdict'], ['task', 'Task'], ['op', 'Step']]);
+  DGtoken(d, 'as-ka', 200, 'task'); DGtoken(d, 'as-kb', 200, 'rule');
+})();
+window.STEPS = window.STEPS || {};
+window.STEPS.arcsci = [
+  { cap: 'The Planner seat turns a question into tasks.', on: '[data-st="plan"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['as-ka', 'Loop and antigen', ['as-r1', 'as-r2']]]) },
+  { cap: 'Science tools run the tasks and write a claim with its evidence.', on: '[data-st="tools"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['as-ka', 'T1 structure', ['as-r3']], ['as-kb', 'The loop touches the antigen', ['as-r4']]]) },
+  { cap: 'The Reviewer seat checks the claim against its evidence.', on: '[data-st="review"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['as-kb', 'Claim', ['as-r5']]]) },
+  { cap: 'The Falsifier seat, held by another model, tries to break it.', on: '[data-st="fals"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['as-kb', 'Claim', ['as-r6', 'as-r7']]]) },
+  { cap: 'Any model can take any seat. The table changes, the method stays.', on: '[data-st="seats"]',
+    run: (s, rm) => {
+      if (rm) return null;
+      const cells = [...s.querySelectorAll('[data-st="seats"] .v')], names = ['Claude', 'GPT', 'Gemini', 'GLM', 'DeepSeek', 'Qwen'];
+      let k = 0;
+      return gsap.timeline({ repeat: -1 }).to({}, { duration: 1.4 }).call(() => {
+        k++; cells.forEach((c, i) => gsap.fromTo(c, { opacity: 0, x: 12 }, { opacity: 1, x: 0, duration: .4, delay: i * .05, onStart: () => (c.textContent = names[(i + k) % names.length]) }));
+      });
+    } },
+  { cap: 'Any model in any seat, and every claim keeps its evidence.', on: '*',
+    run: (s) => { const n = ['Claude', 'GPT', 'Gemini', 'GLM', 'DeepSeek']; s.querySelectorAll('[data-st="seats"] .v').forEach((c, i) => { gsap.set(c, { opacity: 1, x: 0 }); c.textContent = n[i]; }); return null; } },
+];
+window.ENTER = window.ENTER || {};
+window.ENTER.arcsci = (s) => {
+  const names = ['Claude', 'GPT', 'Gemini', 'GLM', 'DeepSeek'];
+  s.querySelectorAll('[data-st="seats"] .v').forEach((c, i) => { gsap.set(c, { opacity: 1, x: 0 }); c.textContent = names[i]; });
+  DGenter(s);
+};
+</script>

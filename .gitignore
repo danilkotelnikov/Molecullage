@@ -21,3 +21,12 @@ gallery/*/data/**/*.xlsx
 .env
 .DS_Store
 Thumbs.db
+
+# structure downloads and the baked deck meshes: fetched or built again on each machine
+data/pdb/*.pdb
+data/pdb/*.cif
+decks/*/x3mesh.html
+decks/*/x3data.html
+decks/*/deck*.html
+decks/*/shots*/
+decks/*/_raw_*/

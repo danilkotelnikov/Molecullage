@@ -109,7 +109,8 @@ def parse_cdr(s: str) -> dict:
     return out
 
 
-KEYS = {"name", "pdb", "entry", "binder", "antigen", "light", "drop", "cdr", "light_cdr", "contacts", "seed", "sigma", "t", "assign", "mode", "out"}
+KEYS = {"name", "pdb", "entry", "binder", "antigen", "light", "drop", "cdr", "light_cdr", "contacts", "seed", "sigma", "t", "assign", "mode", "out",
+        "motion", "target", "to", "frames", "framesdir", "size", "map"}   # the last seven: struct/loop.py (deck loops)
 SAFE_VALUE = re.compile(r"^[A-Za-z0-9_,.:=+/\\-]+$")   # no space, quote, semicolon or line break: ChimeraX runs ';' as a command separator
 
 

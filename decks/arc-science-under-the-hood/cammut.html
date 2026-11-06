@@ -1,0 +1,64 @@
+<section class="slide" data-k="cammut">
+  <div class="hero">
+    <div>
+      <h2 class="big grad" data-in>Cammut</h2>
+      <p class="say" data-in>One memory for every agent. A small model picks the notes each agent needs.</p>
+      <div class="stats" data-in>
+        <div><b class="grad" id="cm-n">55,618</b><span>Notes</span></div>
+        <div><b class="grad">85</b><span>Tools</span></div>
+        <div><b class="grad">2</b><span>Servers</span></div>
+      </div>
+    </div>
+    <svg class="dg" id="cm-dg" viewBox="-34 -6 790 560" role="img" aria-label="Cammut: agents call one gateway, the gateway recalls notes from the Hindsight bank, a nightly pass rewrites the state cards, transcripts go to an encrypted archive"></svg>
+  </div>
+</section>
+<script>
+(() => {
+  const svg = document.getElementById('cm-dg'), d = DG(svg);
+  const A = 0, B = 400, W = 330;
+  d.stage({ x: A, y: 0, w: W, text: 'Ask' }); d.stage({ x: B, y: 0, w: W, text: 'Remember' });
+  d.group('gate');
+  const ag = d.op({ x: A, y: 46, w: W, title: 'Agents', sub: 'Claude Code, Codex, Gemini, GLM' });
+  const gw = d.op({ x: A, y: 142, w: W, title: 'Gateway', sub: 'four tools, one token each', n: 1 });
+  d.route([ag.b, gw.t], { id: 'cm-r1' });
+  d.group('recall');
+  const q = d.card({ x: A, y: 238, w: W, type: 'task', title: 'Query', lines: ['nanobody CDR3 length, RU + EN'] });
+  const rc = d.op({ x: A, y: 334, w: W, title: 'Recall', sub: 'four ways, then a small reranker', n: 2 });
+  const t5 = d.card({ x: A, y: 430, w: W, type: 'note', title: 'Top 5 notes', lines: ['Back to the agent'] });
+  const bk = d.card({ x: B, y: 46, w: W, h: 222, type: 'note', title: 'Hindsight bank' });
+  const CP = window.CORPUS || { notes: 54087, world: 31295, experience: 6698, observations: 16094 }, nf = (n) => n.toLocaleString('en-US');
+  document.getElementById('cm-n').textContent = nf(CP.notes);
+  [['Mental models', '3 state cards'], ['Observations', nf(CP.observations) + ' written by Hindsight'], ['Raw facts', nf(CP.world + CP.experience) + ' notes']].forEach(([a, b], i) => {
+    const y = 88 + i * 60;
+    d.el('line', { x1: B + 14, x2: B + W - 14, y1: y - 6, y2: y - 6, stroke: 'rgba(127,178,170,.35)' });
+    d.text(B + 14, y + 16, a, 'dg-ct'); d.text(B + 14, y + 37, b, 'dg-cl');
+  });
+  d.route([gw.b, q.t], { id: 'cm-r2' }); d.route([q.b, rc.t], { id: 'cm-r3' });
+  d.route([rc.r, [365, rc.cy], [365, 157], [B, 157]], { id: 'cm-r4', both: true, label: 'reads', at: [358, 228, 'end'] });
+  d.route([rc.b, t5.t], { id: 'cm-r5' });
+  d.route([t5.l, [-24, t5.cy], [-24, ag.cy], ag.l], { id: 'cm-r7' });
+  d.group('night');
+  const np = d.op({ x: B, y: 334, w: W, title: 'Nightly pass', sub: 'rewrites the state cards', n: 3 });
+  d.route([np.t, [np.cx, 268]], { id: 'cm-r6' });
+  d.group('arc');
+  const ar = d.op({ x: B, y: 430, w: W, title: 'Encrypted archive', sub: 'transcripts, sealed on the PC', n: 4 });
+  d.route([[B + W, 200], [B + W + 22, 200], [B + W + 22, ar.cy], [B + W, ar.cy]], { id: 'cm-r8', label: 'raw copy', at: [B + W + 16, 330, 'end'] });
+  d.end();
+  d.key(A, 540, [['task', 'Task or query'], ['note', 'Memory note'], ['op', 'Step']]);
+  DGtoken(d, 'cm-ka', 170, 'task'); DGtoken(d, 'cm-kb', 150, 'note');
+})();
+window.STEPS = window.STEPS || {};
+window.STEPS.cammut = [
+  { cap: 'Every agent reaches memory through one gateway with four tools.', on: '[data-st="gate"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['cm-ka', 'Question', ['cm-r1']]]) },
+  { cap: 'A recall searches the bank four ways, and a small model ranks the result.', on: '[data-st="recall"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['cm-ka', 'Query', ['cm-r2', 'cm-r3', 'cm-r4']], ['cm-kb', 'Top 5', ['cm-r5', 'cm-r7']]]) },
+  { cap: 'Each night a pass merges notes and rewrites the state cards.', on: '[data-st="night"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['cm-kb', 'State card', ['cm-r6']]]) },
+  { cap: 'Transcripts are encrypted on the PC before they leave it.', on: '[data-st="arc"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['cm-kb', 'Session', ['cm-r8']]]) },
+  { cap: 'One memory for every agent, and it tidies itself every night.', on: '*' },
+];
+window.ENTER = window.ENTER || {};
+window.ENTER.cammut = DGenter;
+</script>

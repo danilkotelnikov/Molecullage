@@ -1,0 +1,353 @@
+<!doctype html>
+<!-- version: 3 | date: 2026-11-05 | Arc Science, under the hood: architecture, real objects in 3D, film-style steps.
+     Keys: arrows, space, page keys, wheel, swipe; on a schematic they first walk its steps. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arc Science, under the hood</title>
+<style>
+:root{--bg:#0b0b0d;--fg:#ececea;--soft:#cfcec9;--mute:#8d8c88;--blue:#7d93c4;--violet:#9c8fc4;--teal:#7fb2aa;--amber:#cfae7e}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);overflow:hidden}
+body{color:var(--fg);font-family:Geist,system-ui,sans-serif;line-height:1.3;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.grad{background:linear-gradient(90deg,var(--teal),var(--blue) 45%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:"Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#a9a8a3;font-size:clamp(14px,1.1vw,18px)}
+
+.mesh{position:fixed;inset:-20vmax;z-index:0;pointer-events:none;filter:blur(110px) saturate(.75);opacity:.32}
+.mesh i{position:absolute;width:46vmax;height:46vmax;border-radius:50%}
+.mesh i:nth-child(1){background:var(--blue);left:10%;top:5%}
+.mesh i:nth-child(2){background:var(--violet);left:55%;top:20%}
+.mesh i:nth-child(3){background:var(--teal);left:25%;top:55%}
+.mesh i:nth-child(4){background:var(--amber);left:65%;top:65%;width:30vmax;height:30vmax;opacity:.7}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* chrome: name, page count, dots */
+.bar{position:fixed;z-index:5;top:clamp(16px,3.4vh,32px);left:6vw;right:6vw;display:flex;justify-content:space-between;gap:16px}
+.dots{position:fixed;z-index:5;bottom:clamp(16px,4vh,36px);left:6vw;display:flex;gap:10px}
+.dots button{width:34px;height:4px;border-radius:2px;background:rgba(236,236,234,.18);transition:background .4s,width .4s}
+.dots button.on{background:var(--teal);width:64px}
+.next{position:fixed;z-index:5;bottom:clamp(12px,3.4vh,30px);right:6vw;font-size:clamp(22px,2vw,30px);color:var(--mute);transition:color .3s}
+.next:hover{color:var(--fg)}
+.play{position:fixed;z-index:5;bottom:clamp(14px,3.6vh,32px);right:calc(6vw + 52px);color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.play.on{color:var(--teal);border-color:var(--teal)}
+.dots{gap:2px}.dots button{width:7px}.dots button.on{width:18px}   /* 40 slides: the row must end before the caption starts (6vw + 420px) */
+#stepcap.stepcap{left:calc(6vw + 420px);right:calc(6vw + 150px)}
+@media (max-width:760px){.play{bottom:auto;top:clamp(16px,3.4vh,32px);right:calc(6vw + 70px);padding:2px 10px}.dots{gap:2px}.dots button{width:5px}.dots button.on{width:12px}#stepcap.stepcap{left:6vw;right:6vw}}
+
+/* slides */
+.slide{position:fixed;inset:0;z-index:2;padding:clamp(64px,12vh,120px) 6vw clamp(64px,12vh,110px);display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,4vh,44px);visibility:hidden;overflow:hidden}
+.slide.on{visibility:visible}
+.q{font-size:clamp(24px,2.6vw,44px);font-weight:300;color:var(--soft);letter-spacing:-.01em}
+.q::before{content:"“"}.q::after{content:"”"}
+.big{font-size:clamp(40px,5.4vw,100px);font-weight:800;letter-spacing:-.05em;line-height:.95;max-width:16ch;text-wrap:balance}
+.say{font-size:clamp(21px,1.9vw,32px);font-weight:300;color:var(--soft);max-width:36ch}
+.say b{font-weight:600;color:var(--fg)}
+
+/* 1 · who */
+.name{font-weight:800;letter-spacing:-.06em;line-height:.86;font-size:clamp(64px,12vw,220px);white-space:nowrap}
+.name.r{padding-left:12vw}
+.path{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4em .9em;font-size:clamp(24px,2.6vw,46px);font-weight:600;letter-spacing:-.03em}
+.path i{font-style:normal;color:var(--teal);font-weight:300;margin-right:.6em}
+.path small{font-family:"Geist Mono",monospace;font-size:max(.5em,14px);font-weight:400;color:var(--mute);margin-left:.4em;letter-spacing:0}
+
+/* two columns: talk on the left, picture on the right */
+.cols{display:grid;grid-template-columns:1.15fr 1fr;gap:6vw;align-items:center}
+.cols>div{display:flex;flex-direction:column;gap:clamp(18px,4vh,44px)}
+.cols .big{font-size:clamp(38px,4.6vw,88px)}
+.cube{position:absolute;right:7vw;bottom:14vh;width:clamp(110px,15vw,240px)}
+
+/* 2 · honest */
+.chain{display:flex;flex-direction:column;align-items:flex-start;gap:.15em;line-height:1;font-size:clamp(30px,4vw,72px);font-weight:800;letter-spacing:-.045em}
+.chain .ar{font-weight:300;color:var(--teal)}
+.levels{display:grid;grid-template-columns:auto auto;justify-content:start;gap:.2em 1.1em;font-size:clamp(22px,2.2vw,38px);font-weight:300;color:var(--mute)}
+.levels span{transition:color .3s}
+.levels span.lit{color:var(--fg)}
+
+/* 3 · built */
+.split{display:grid;grid-template-columns:1.35fr 1fr;gap:5vw;align-items:end}
+.proj{display:grid;gap:clamp(6px,1.4vh,14px)}
+.proj div{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;font-size:clamp(30px,3.6vw,64px);font-weight:800;letter-spacing:-.045em;line-height:1}
+.proj div span{font-size:max(.45em,18px);font-weight:300;letter-spacing:-.01em;color:var(--soft)}
+.count{display:flex;align-items:baseline;gap:.25em;flex-wrap:wrap}
+.count .n{font-size:clamp(110px,15vw,280px);font-weight:800;letter-spacing:-.07em;line-height:.8}
+.count p{font-size:clamp(22px,2vw,34px);font-weight:300;color:var(--soft);max-width:12ch;padding-bottom:.2em}
+.papers{white-space:nowrap;width:max-content;font-size:clamp(22px,2.2vw,38px);font-weight:600;letter-spacing:-.03em;color:rgba(236,236,234,.22)}
+.papers a:hover{color:var(--fg)}
+.papers a+a{margin-left:1.6em}
+.papers a.first{color:var(--soft)}
+
+/* 4 · next */
+.words{font-size:clamp(22px,2vw,34px);font-weight:300;color:var(--soft);max-width:34ch;padding-left:.8em;border-left:3px solid var(--teal)}
+.links{display:flex;flex-wrap:wrap;gap:1.4vh 3vw;font-size:clamp(20px,1.9vw,30px);font-weight:300}
+.links button,.links a{border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:3px;transition:border-color .3s}
+.links button:hover,.links a:hover{border-color:var(--teal)}
+.links span{color:var(--mute)}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,120px);z-index:10;font-size:18px;background:var(--fg);color:var(--bg);padding:10px 20px;border-radius:999px}
+
+/* steps: a schematic explains itself one step at a time */
+.stepcap{position:fixed;z-index:5;left:calc(6vw + 500px);right:calc(6vw + 56px);bottom:clamp(10px,3vh,28px);display:none;align-items:baseline;gap:16px;font-size:clamp(17px,1.35vw,22px);color:var(--fg);line-height:1.3}
+.stepcap.on{display:flex}
+.stepcap b{font:400 clamp(13px,1vw,16px) "Geist Mono",monospace;color:var(--teal);letter-spacing:.06em;white-space:nowrap}
+.pk rect{fill:#0b0b0d;stroke-width:1.6}
+.pk text{font:500 19px Geist,system-ui,sans-serif;fill:var(--fg)}
+.pk text.m{font:400 17px "Geist Mono",monospace;fill:var(--soft)}
+
+@media (max-width:760px){
+  .slide{justify-content:safe center;padding-top:72px;gap:22px}
+  .split,.cols{grid-template-columns:1fr;gap:22px}
+  .chain{flex-direction:row;flex-wrap:wrap;gap:.3em .5em}
+  .chain .ar{transform:rotate(-90deg)}
+  .cube{display:none}
+  .name{font-size:15.5vw}.name.r{padding-left:5vw}
+  .slide svg:not(.cube){max-height:40vh}
+  [data-k="arcsci"] svg{max-height:36vh}
+  .stepcap{left:6vw;right:6vw;bottom:52px;font-size:16px;gap:10px}
+  .slide.steps{padding-bottom:150px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!--dg-->
+<!--mk-->
+<!--rt-->
+<!--x3-->
+<!--x3data-->
+<!--x3mesh-->
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="dg-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#9a9994"/></marker></defs></svg>
+<div class="mesh" id="mesh"><i></i><i></i><i></i><i></i></div>
+<div class="grain"></div>
+<div class="toast" id="toast">Copied</div>
+<div class="bar mono"><span class="who">Arc Science</span><span id="page">1 / 4</span></div>
+<nav class="dots" id="dots"></nav>
+<div class="stepcap" id="stepcap" aria-live="polite"><b></b><span></span></div>
+<button class="play mono" id="play" aria-label="Play">Play</button>
+<button class="next" id="next" aria-label="Next slide">→</button>
+
+<section class="slide" data-k="who">
+  <div><div class="name" id="l1">Under</div><div class="name r grad" id="l2">the hood</div></div>
+  <p class="say" data-in>Arc Harness, Cammut and Arc Science, with the <b>maths that runs them</b>. Press P to play.</p>
+  <svg class="cube" id="cube" viewBox="0 0 100 110" aria-hidden="true">
+    <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#7fb2aa"/><stop offset="1" stop-color="#7d93c4"/></linearGradient>
+      <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#7d93c4"/><stop offset="1" stop-color="#9c8fc4"/></linearGradient>
+      <linearGradient id="g3" x1="0" x2="1"><stop offset="0" stop-color="#9c8fc4"/><stop offset="1" stop-color="#cfae7e"/></linearGradient></defs>
+    <path d="M50 5 93 30 50 55 7 30Z" fill="url(#g1)"/><path d="M7 30 50 55v50L7 80Z" fill="url(#g2)"/><path d="M93 30 50 55v50l43-25Z" fill="url(#g3)"/>
+    <path transform="matrix(.041992 .024414 0 .048828 7 30)" fill="#0b0b0d" fill-opacity=".85" d="M273.3 389.1H391.2Q387.9 378.3 379.2 369.6Q365.1 355.5 345.1 355.5H245.2V252.2H345.1Q375.9 252.2 404.1 264.1Q431.3 275.6 452.2 296.6Q473.1 317.5 484.6 344.7Q496.6 372.9 496.6 403.7V585.5Q496.6 619.9 520.9 644.2Q545.2 668.5 579.6 668.5H838.8V602.3Q838.8 581.9 824.4 567.4Q809.9 553 789.5 553H680.6Q650.1 553 622.1 541.1Q595.1 529.7 574.3 508.9Q553.5 488.1 542.1 461.1Q530.2 433.1 530.2 402.6Q530.2 372 542.1 344Q553.5 317 574.3 296.3Q595.1 275.5 622.1 264.1Q650.1 252.2 680.6 252.2H888.2V355.5H680.6Q661.1 355.5 647.3 369.3Q633.5 383.1 633.5 402.6Q633.5 422.1 647.3 435.9Q661.1 449.7 680.6 449.7H789.5Q820.5 449.7 848.9 461.7Q876.3 473.3 897.4 494.4Q918.5 515.5 930.1 542.9Q942.1 571.3 942.1 602.3V668.5H838.8V771.8H579.6Q541.7 771.8 507.1 757.1Q473.6 743 447.9 717.2Q436.7 706 427.7 693.4C392.9 740.9 336.7 771.8 273.3 771.8C167.6 771.8 81.9 686.1 81.9 580.5C81.9 474.8 167.6 389.1 273.3 389.1ZM273.3 492.4C224.6 492.4 185.2 531.8 185.2 580.5C185.2 629.1 224.6 668.5 273.3 668.5H309.2C355.6 668.5 393.3 630.9 393.3 584.4V492.4Z"/>
+  </svg>
+</section>
+
+
+<!--frag:harness-->
+<!--frag:harness2-->
+<!--frag:m1-->
+<!--frag:m2-->
+<!--frag:cammut-->
+<!--frag:cq-->
+<!--frag:m3-->
+<!--frag:m5-->
+<!--frag:arcsci-->
+<!--frag:ml-->
+<!--frag:o7-->
+<!--frag:n3-->
+<!--frag:rd-->
+
+
+<section class="slide" data-k="next">
+  <div class="cols">
+    <div><div class="big" data-in>Arc Science checks the idea<br><span class="grad">before the&nbsp;lab does.</span></div>
+  <p class="say" data-in>A plan: one agent that checks hypotheses, <b>measured against a plain LLM</b>.</p></div>
+    <div><p class="words" data-in>Ideas and questions are welcome as issues in the repository.</p></div>
+  </div>
+</section>
+
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/3dmol/3Dmol-min.js"></script>
+<script>
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- deck: one slide at a time, entering from the side ---- */
+const slides = $$('.slide'), N = slides.length;
+slides.forEach((s) => s.classList.toggle('steps', !!(window.STEPS || {})[s.dataset.k]));
+$('#dots').innerHTML = slides.map((_, i) => `<button aria-label="Slide ${i + 1}"></button>`).join('');
+const dots = $$('#dots button');
+let cur = -1, busy = false;
+
+function enter(s, atEnd) {
+  if (window.ENTER && ENTER[s.dataset.k]) ENTER[s.dataset.k](s);
+  const st = STEPS[s.dataset.k];
+  showStep(s, atEnd && st ? st.length - 1 : 0, true);
+  if (reduce) return;
+  gsap.fromTo($$('[data-in]', s), { x: 140, opacity: 0 }, { x: 0, opacity: 1, duration: 1, ease: 'expo.out', stagger: .08, delay: .15 });
+  if (s.dataset.k === 'who') {
+    gsap.fromTo('#l1', { xPercent: 30, opacity: 0 }, { xPercent: 0, opacity: 1, duration: 1.2, ease: 'expo.out' });
+    gsap.fromTo('#l2', { xPercent: -30, opacity: 0 }, { xPercent: 0, opacity: 1, duration: 1.2, ease: 'expo.out', delay: .06 });
+  }
+  if ($('#levels', s)) {
+    const lv = $$('#levels span');
+    lv.forEach((x) => x.classList.remove('lit'));
+    lv.forEach((x, i) => gsap.delayedCall(1 + i * .45, () => { lv.forEach((y) => y.classList.remove('lit')); x.classList.add('lit'); }));
+    gsap.delayedCall(1 + lv.length * .45, () => lv.forEach((y) => y.classList.add('lit')));
+  }
+  $$('[data-count]', s).forEach((el) => {
+    const o = { v: 0 };
+    gsap.to(o, { v: +el.dataset.count, duration: 1.2, delay: .3, ease: 'power2.out', onUpdate: () => (el.textContent = Math.round(o.v)) });
+  });
+  if ($('#papers', s)) {
+    gsap.fromTo('#papers', { x: innerWidth * .2 }, { x: -($('#papers').scrollWidth - innerWidth * .6), duration: 26, ease: 'none', repeat: -1, yoyo: true });
+  }
+}
+
+
+/* ---- steps: STEPS[key] = [{cap, on, run}], run(s, rm) returns a tween or timeline ---- */
+window.STEPS = window.STEPS || {};
+window.ride = (g, path, dur = 1.6, delay = 0, rm = false) => {
+  const L = path.getTotalLength(), o = { t: rm ? 1 : 0 };
+  const set = () => { const p = path.getPointAtLength(L * o.t); g.setAttribute('transform', `translate(${p.x},${p.y})`); };
+  set(); gsap.set(g, { opacity: 1 });
+  return rm ? null : gsap.to(o, { t: 1, duration: dur, delay, ease: 'power1.inOut', onUpdate: set });
+};
+let step = 0, stepRun = null;
+function showStep(s, n, instant) {
+  const st = STEPS[s.dataset.k];
+  if (stepRun) { stepRun.kill(); stepRun = null; }
+  if (!st) { $('#stepcap').classList.remove('on'); schedule(s); return; }
+  step = n = Math.max(0, Math.min(st.length - 1, n));
+  const c = st[n], lit = c.on === '*' ? null : new Set($$(c.on, s)), d = instant || reduce ? 0 : .5;
+  $$('.pk', s).forEach((p) => { gsap.killTweensOf(p); gsap.set(p, { opacity: 0 }); });
+  $$('[data-st]', s).forEach((el) => gsap.to(el, { opacity: !lit || lit.has(el) ? 1 : .14, duration: d, overwrite: 'auto' }));
+  const cap = $('#stepcap'); cap.classList.add('on');
+  cap.querySelector('b').textContent = `${n + 1} / ${st.length}`;
+  cap.querySelector('span').textContent = c.cap;
+  if (d) gsap.fromTo(cap.querySelector('span'), { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: .6, ease: 'expo.out' });
+  const dg = $('svg.dg', s);
+  if (dg) {
+    if (!dg._vb) dg._vb = dg.getAttribute('viewBox');
+    let vb = dg._vb;
+    if (innerWidth < 760 && lit) {
+      const bs = [...lit].filter((e) => dg.contains(e)).map((e) => e.getBBox()).filter((b) => b.width);
+      if (bs.length) {
+        const x0 = Math.min(...bs.map((b) => b.x)), y0 = Math.min(...bs.map((b) => b.y)), p = 28;
+        const x1 = Math.max(...bs.map((b) => b.x + b.width)), y1 = Math.max(...bs.map((b) => b.y + b.height));
+        vb = `${x0 - p} ${y0 - p} ${x1 - x0 + 2 * p} ${y1 - y0 + 2 * p}`;
+      }
+    }
+    gsap.to(dg, { attr: { viewBox: vb }, duration: d ? .8 : 0, ease: 'power2.inOut', overwrite: true });
+  }
+  if (c.run) stepRun = c.run(s, reduce) || null;
+  schedule(s);
+}
+/* ---- autoplay: the timer is the state. A pending timer means the deck is playing, and the button reads Pause.
+   Pause freezes the beat and stops every timer; it holds on every slide until Play. A viewer who touches a
+   [data-hold] area (a prompt, a slider) stops autoplay on that slide until the slide changes. ---- */
+let playing = false, hold = false, touched = false, autoT = null;
+const autoOn = (s) => !reduce && !hold && !touched && (playing || s.hasAttribute('data-film'));
+function syncBtn() { const on = !!autoT; $('#play').classList.toggle('on', on); $('#play').textContent = on ? 'Pause' : 'Play'; }
+function dwell(s) {   /* seconds this step stays on screen; null when nothing follows */
+  const st = STEPS[s.dataset.k];
+  if (!st) return 7;
+  if (!playing && step >= st.length - 1) return null;
+  const c = st[step], run = stepRun && stepRun.repeat && stepRun.repeat() !== -1 ? stepRun.totalDuration() : 2;
+  return Math.min(run, 9) + 2.2 + c.cap.split(/\s+/).length * .3;
+}
+function tick() {
+  autoT = null;
+  const s = slides[cur];
+  if (!autoOn(s)) return syncBtn();
+  if (busy) { autoT = gsap.delayedCall(.4, tick); return; }   /* a slide change is running: look again soon */
+  const st = STEPS[s.dataset.k];
+  if (playing && cur === N - 1 && (!st || step >= st.length - 1)) { playing = false; return syncBtn(); }
+  adv(1);
+}
+function schedule(s) {
+  if (autoT) { autoT.kill(); autoT = null; }
+  const w = autoOn(s) ? dwell(s) : null;
+  if (w != null) autoT = gsap.delayedCall(w, tick);
+  syncBtn();
+}
+function toggleAuto() {
+  const s = slides[cur], st = STEPS[s.dataset.k];
+  if (autoT) { hold = true; playing = false; if (stepRun && stepRun.pause) stepRun.pause(); }
+  else {
+    hold = false; touched = false; playing = true;
+    if (stepRun && stepRun.resume) stepRun.resume();
+    if (cur === N - 1 && (!st || step >= st.length - 1)) return go(0);   /* Play at the end starts again */
+  }
+  schedule(s);
+}
+function adv(d) {
+  if (busy || cur < 0) return;
+  const st = STEPS[slides[cur].dataset.k];
+  if (st && step + d >= 0 && step + d < st.length) return showStep(slides[cur], step + d);
+  go(cur + d, false, d < 0);
+}
+
+function go(i, instant, atEnd) {
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur || busy) return;
+  touched = false;
+  const from = slides[cur], to = slides[i], d = i > cur ? 1 : -1;
+  gsap.killTweensOf('#papers');
+  if (stepRun) { stepRun.kill(); stepRun = null; }
+  cur = i;
+  to.classList.add('on');
+  dots.forEach((b, j) => b.classList.toggle('on', j === i));
+  $('#page').textContent = `${i + 1} / ${N}`;
+  if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  if (!from || instant || reduce) {
+    if (from) { from.classList.remove('on'); gsap.set(from, { clearProps: 'transform,opacity' }); }
+    gsap.set(to, { xPercent: 0, opacity: 1 });
+    enter(to, atEnd);
+    return;
+  }
+  busy = true;
+  gsap.timeline({ onComplete: () => { from.classList.remove('on'); busy = false; } })
+    .fromTo(to, { xPercent: 100 * d, opacity: 1 }, { xPercent: 0, duration: .9, ease: 'expo.inOut' }, 0)
+    .to(from, { xPercent: -45 * d, opacity: 0, duration: .9, ease: 'expo.inOut' }, 0)
+    .add(() => enter(to, atEnd), .3);
+  gsap.to('#mesh', { rotate: i * 14, x: (i - (N - 1) / 2) * -60, duration: 1.6, ease: 'power2.inOut' });
+}
+
+const fromHash = () => (parseInt(location.hash.slice(1), 10) || 1) - 1;
+go(fromHash(), true);
+addEventListener('hashchange', () => { busy = false; go(fromHash(), true, true); });
+dots.forEach((b, j) => (b.onclick = () => go(j, false, true)));
+$('#play').onclick = toggleAuto;
+$('#next').onclick = () => (cur + 1 < N || (STEPS[slides[cur].dataset.k] && step + 1 < STEPS[slides[cur].dataset.k].length) ? adv(1) : go(0));
+addEventListener('keydown', (e) => {
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;   /* typing is not navigation */
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); adv(1); }
+  if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); adv(-1); }
+  if (e.key === 'p' || e.key === 'P') toggleAuto();
+  if (e.key === 'Home') go(0);
+  if (e.key === 'End') go(N - 1);
+});
+const touch = (e) => { if (e.target.closest && e.target.closest('[data-hold]') && !touched) { touched = true; schedule(slides[cur]); } };
+addEventListener('pointerdown', touch); addEventListener('focusin', touch);
+let acc = 0, wheelT = 0;
+addEventListener('wheel', (e) => {
+  const now = Date.now();
+  if (now - wheelT > 250) acc = 0;
+  wheelT = now; acc += Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+  if (Math.abs(acc) > 60 && !busy) { adv(Math.sign(acc)); acc = 0; }
+}, { passive: true });
+let tx = 0, ty = 0;
+addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  const m = Math.abs(dx) > Math.abs(dy) ? -dx : -dy;
+  if (Math.abs(m) > 50) adv(Math.sign(m));
+}, { passive: true });
+
+$$('[data-copy]').forEach((b) => (b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); } catch (e) { return; } gsap.timeline().to('#toast', { y: 0, duration: .3, ease: 'back.out(2)' }).to('#toast', { y: 120, duration: .3, delay: 1.1 }); }));
+if (!reduce) {
+  gsap.to('#cube', { y: '-=12', rotate: 8, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  const my = gsap.quickTo('#mesh', 'y', { duration: 2 });
+  addEventListener('pointermove', (e) => my((e.clientY / innerHeight - .5) * 80));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<style>
+/* ml: machine learning basics, generic. Flat glass cards in the look of cq.html. Every id and class starts with ml. */
+.ml{width:100%;display:flex;flex-direction:column;gap:clamp(8px,1.5vh,16px)}
+.ml .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ml .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05;max-width:none}
+.ml .tag,.ml-cv{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px;white-space:nowrap}
+.ml-hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ml-cv{font-size:clamp(10px,.75vw,12px);padding:2px 9px;align-self:flex-start}
+.ml-stage{position:relative;height:clamp(380px,60vh,540px)}
+.ml-p{position:absolute;inset:0;display:none;gap:clamp(8px,1.2vw,16px)}
+.ml-p.on{display:grid}
+.ml .rt-card h3{margin:0}
+.ml-nm{font-size:clamp(18px,1.6vw,26px);font-weight:600;letter-spacing:-.01em;color:var(--fg)}
+.ml-pill{align-self:flex-start;display:inline-block;font:600 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:1px 9px}
+.ml-pill.m{color:var(--teal)}.ml-pill.p{color:var(--violet)}.ml-pill.s{color:var(--blue)}.ml-pill.n{color:var(--soft)}
+/* 1 sources */
+.ml-src{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto 1fr 1fr;align-content:start}
+.ml-br{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;border-bottom:2px solid;padding-bottom:4px;opacity:0}
+.ml-br.m{grid-column:1/3;color:var(--teal);border-color:var(--teal)}
+.ml-br.p{grid-column:3;color:var(--violet);border-color:var(--violet)}
+.ml-sc{justify-content:flex-start;gap:8px}
+.ml-sc .rt-sub{font-size:clamp(14px,1.15vw,18px);color:var(--soft)}
+.ml-sc.lit.m{border-color:var(--teal);background:rgba(127,178,170,.08)}
+.ml-sc.lit.p{border-color:var(--violet);background:rgba(156,143,196,.09)}
+.ml-fm{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.ml-fm code{font:400 clamp(11px,.85vw,13px) "Geist Mono",monospace;border:1px solid rgba(236,236,234,.2);border-radius:6px;padding:1px 7px;color:var(--soft)}
+.ml-fm code em{font-style:normal;color:var(--mute);margin-left:.5em}
+/* 2 cleaning */
+.ml-cl{grid-template-columns:minmax(0,1fr) clamp(230px,24vw,320px);align-items:start;column-gap:clamp(10px,1.4vw,22px)}
+.ml-field{position:relative;container-type:inline-size;aspect-ratio:100/46.4;width:calc(100% - 12px);margin:12px 0 0 12px}
+.ml-t{position:absolute;width:14.4%;height:19.4%;border:1px solid rgba(236,236,234,.22);background:rgba(236,236,234,.045);border-radius:max(4px,1cqw);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7cqw;transition:border-color .4s,background .4s}
+.ml-sq{display:flex;gap:.45cqw}
+.ml-sq i{display:block;width:1.5cqw;height:1.5cqw;border-radius:.3cqw;background:var(--soft);opacity:.75}
+.ml-t.lowres .ml-sq{filter:blur(1.1px)}
+.ml-t.hole .ml-sq i:nth-child(3){background:none;box-shadow:inset 0 0 0 1px var(--soft);opacity:.5}
+.ml-why{font:500 clamp(9px,1.3cqw,12px) "Geist Mono",monospace;font-style:normal;color:var(--mute);height:1.3em;line-height:1.3;opacity:0;letter-spacing:.04em;text-transform:uppercase}
+.ml-t.drop{border-color:var(--mute);border-style:dashed;background:none}
+.ml-t.drop .ml-why{opacity:1}.ml-t.drop .ml-sq i{opacity:.3}
+.ml-t.tr{border-color:var(--teal);background:rgba(127,178,170,.07)}
+.ml-t.te{border-color:var(--blue);background:rgba(125,147,196,.1)}
+.ml-gr{position:absolute;border:1.5px solid rgba(236,236,234,.4);border-radius:1.5cqw;pointer-events:none;opacity:0;height:23.4%}
+.ml-rg{position:absolute;font:500 clamp(11px,1.3cqw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;opacity:0}
+.ml-rg.tr{color:var(--teal)}.ml-rg.te{color:var(--blue)}
+.ml-dv{position:absolute;left:65.5%;top:0;bottom:0;width:0;border-left:1.5px dashed rgba(236,236,234,.35);opacity:0}
+.ml-side{display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);min-width:0}
+.ml-cnt{gap:6px}
+.ml-big{display:flex;gap:clamp(14px,1.6vw,26px);align-items:baseline;flex-wrap:wrap}
+.ml-big div{display:flex;align-items:baseline;gap:8px}
+.ml-big b{font:600 clamp(34px,3.4vw,58px) Geist,sans-serif;letter-spacing:-.02em;color:var(--fg);line-height:1}
+.ml-big span{font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.ml-fl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.ml-fl li{display:grid;grid-template-columns:10px minmax(0,1fr);gap:2px 9px;font-size:clamp(13px,1.05vw,16px);color:var(--mute);line-height:1.3;transition:color .4s}
+.ml-fl li::before{content:"";width:8px;height:8px;border-radius:50%;margin-top:.4em;border:1.5px solid var(--mute);transition:background .4s,border-color .4s}
+.ml-fl li i{grid-column:2;font-style:normal;font-size:clamp(11px,.9vw,14px);color:var(--mute)}
+.ml-fl li.on{color:var(--fg)}.ml-fl li.on::before{background:var(--teal);border-color:var(--teal)}
+.ml-fl li.on i{color:var(--soft)}
+/* 3 table */
+.ml-tb{grid-template-columns:auto auto minmax(0,1fr);align-items:center;column-gap:clamp(10px,1.4vw,20px)}
+.ml-one{display:flex;flex-direction:column;align-items:center;gap:10px}
+.ml-one .ml-t{position:relative;width:clamp(110px,11vw,170px);height:clamp(70px,7.2vw,110px);gap:8px}
+.ml-one .ml-sq i{width:10px;height:10px;border-radius:2px}
+.ml-one .ml-sq{gap:5px}
+.ml-one .ml-t.tr{border-color:var(--teal)}
+.ml-tbr{display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);min-width:0}
+.ml-tab{padding:10px 12px;gap:3px}
+.ml-rw{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr) minmax(0,1.9fr) minmax(0,.55fr);gap:12px;align-items:center;padding:4px 8px;border-radius:8px;min-height:clamp(26px,4vh,36px)}
+.ml-rw.h{font:500 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);min-height:0}
+.ml-rw .r{font:500 clamp(13px,1.1vw,17px) "Geist Mono",monospace;color:var(--fg)}
+.ml-co{display:flex;gap:5px}.ml-co i{flex:1;height:10px;border-radius:5px;background:var(--soft);opacity:.4;transition:background .4s,opacity .4s}
+.ml-co.ctr i{background:var(--teal);opacity:.85}
+.ml-fg{display:flex;gap:6px}.ml-fg i,.ml-mk i{display:block;width:clamp(9px,.8vw,12px);height:clamp(9px,.8vw,12px);border-radius:50%;border:1.5px solid var(--soft);flex:none}
+.ml-fg i.on,.ml-mk i.on{background:var(--soft)}
+.ml-mk i.on{background:var(--teal);border-color:var(--teal)}
+.ml-rw.pad{opacity:0;border-top:1px dashed rgba(236,236,234,.25)}
+.ml-rw.pad .r{color:var(--mute)}
+.ml-rw.pad .ml-co i{background:none;box-shadow:inset 0 0 0 1px rgba(236,236,234,.35)}
+.ml-tbn{opacity:0}
+/* 4 maths */
+.ml-mt{grid-template-rows:auto auto;align-content:start;row-gap:clamp(8px,1.2vw,14px)}
+.ml-m1,.ml-m2{display:grid;gap:clamp(8px,1.2vw,16px);min-width:0}
+.ml-m1{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ml-m2{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ml-sv{width:100%;height:clamp(100px,19vh,170px);display:block;overflow:hidden}
+.ml-nz{fill:var(--mute);opacity:.6}.ml-dt{fill:var(--teal);opacity:.8}
+.ml-sv text{font:400 13px Geist,sans-serif;fill:var(--mute)}
+.ml-sv text.v{fill:var(--blue);font-weight:500}
+.ml-sl{display:flex;align-items:center;gap:12px}
+.ml-sl label{font:500 15px "Geist Mono",monospace;color:var(--fg)}
+.ml-sl input{flex:1;min-width:0;accent-color:var(--teal);height:22px;cursor:pointer}
+.ml-sl output{font:600 clamp(14px,1.2vw,18px) "Geist Mono",monospace;color:var(--fg);min-width:3.2em;text-align:right}
+.ml-sym,.ml-att{width:100%;height:clamp(80px,15vh,130px);display:block;overflow:hidden}
+.ml-mt .rt-eq .t{color:var(--teal)}.ml-mt .rt-eq .b{color:var(--blue)}
+.ml-mt.s9 .ml-m1{display:none}
+.ml-m2 .rt-card{padding:16px 18px;gap:12px}.ml-m2 .rt-sub{font-size:clamp(14px,1.15vw,18px);color:var(--soft)}.ml-m2 .rt-eq{font-size:clamp(15px,1.5vw,24px)}
+/* 5 infrastructure */
+.ml-inf{grid-template-rows:auto auto;align-content:start;row-gap:clamp(8px,1.4vh,16px)}
+.ml-top{display:grid;grid-template-columns:clamp(150px,15vw,210px) minmax(0,1fr);gap:clamp(10px,1.4vw,20px);align-items:start}
+.ml-gcol{display:flex;flex-direction:column;min-width:0}
+.ml-gpus{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1vw,14px)}
+.ml-g{gap:10px;min-height:clamp(170px,30vh,270px)}
+.ml-g .rt-sub{margin:0}
+.ml-q{min-height:clamp(170px,30vh,270px)}
+.ml-g.busy{border-color:var(--teal);background:rgba(127,178,170,.07)}
+.ml-mc{font-size:clamp(14px,1.15vw,18px);color:var(--soft);border:1px solid rgba(236,236,234,.18);border-radius:8px;padding:6px 8px;text-align:center;transition:border-color .4s,color .4s}
+.ml-g.sync .ml-mc{border-color:var(--teal);color:var(--fg)}
+.ml-slot{height:clamp(34px,6vh,52px);margin-top:auto;border:1px dashed rgba(236,236,234,.25);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.ml-slot i,.ml-qd i{display:block;width:60%;height:60%;border-radius:5px;min-height:10px}
+.ml-qd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ml-qd i{width:100%;height:clamp(14px,2.2vh,20px)}
+.ml-qd i:nth-child(1),.ml-slot.c1 i{background:var(--teal)}
+.ml-qd i:nth-child(2),.ml-slot.c2 i{background:var(--blue)}
+.ml-qd i:nth-child(3),.ml-slot.c3 i{background:var(--violet)}
+.ml-qd i:nth-child(4),.ml-slot.c4 i{background:var(--soft)}
+.ml-jobs{display:flex;flex-direction:column;gap:5px}
+.ml-job{font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);border:1px solid rgba(236,236,234,.22);border-radius:8px;padding:3px 10px;transition:border-color .4s,color .4s}
+.ml-job.run{border-color:var(--teal);color:var(--teal)}
+.ml-bus{position:relative;height:clamp(44px,7vh,64px)}
+.ml-bus b{position:absolute;top:0;height:50%;width:2px;margin-left:-1px;background:var(--teal);transform-origin:top;opacity:0}
+.ml-bus u{position:absolute;left:12.5%;right:12.5%;top:50%;height:2px;margin-top:-1px;background:var(--teal);transform-origin:center;opacity:0;text-decoration:none}
+.ml-bus span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--bg);padding:2px 12px;font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);opacity:0}
+.ml-habits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.2vw,16px)}
+.ml-hb{opacity:0}
+.ml-hb .rt-sub{font-size:clamp(13px,1.05vw,17px);color:var(--soft)}
+/* 6 evaluation */
+.ml-ev{grid-template-rows:auto auto auto;align-content:start;row-gap:clamp(8px,1.4vh,16px)}
+.ml-e1{display:grid;grid-template-columns:minmax(0,1.1fr) auto minmax(0,.8fr) auto minmax(0,1.3fr);gap:clamp(8px,1vw,14px);align-items:stretch}
+.ml-arr{align-self:center;font-size:clamp(20px,2vw,30px);color:var(--mute)}
+.ml-mini{display:flex;gap:6px}
+.ml-mini i{display:block;flex:1;height:clamp(16px,2.6vh,24px);border-radius:6px;border:1px solid var(--blue);background:rgba(125,147,196,.1)}
+.ml-cmp{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:clamp(12px,.95vw,15px);color:var(--soft)}
+.ml-e2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.2vw,16px)}
+.ml-e3{display:grid;grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr);gap:clamp(8px,1vw,14px);align-items:stretch}
+.ml-e3 .lab{align-self:center;font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);max-width:9em;line-height:1.3}
+.ml-e1,.ml-e2,.ml-e3{opacity:0}
+.ml-e1 .rt-card{min-height:clamp(90px,15vh,140px)}.ml-e2 .rt-card{min-height:clamp(130px,23vh,200px)}.ml-e3 .rt-card{min-height:clamp(80px,13vh,120px)}
+.ml-e1 .rt-sub,.ml-e2 .rt-sub,.ml-e3 .rt-sub{font-size:clamp(14px,1.15vw,18px);color:var(--soft)}
+.ml-e2 h3,.ml-e3 h3,.ml-e1 h3{font-size:clamp(13px,1.05vw,16px);color:var(--fg)}
+@media (max-width:1100px){.ml-habits,.ml-e2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){
+  .ml .mh{gap:10px}
+  .ml .mh h2.big{font-size:clamp(22px,6.6vw,28px);white-space:normal}
+  .ml-stage{height:auto;min-height:0;aspect-ratio:auto}
+  .ml-stage{height:clamp(330px,50vh,440px)}
+  .ml-p{gap:8px}
+  .ml-src{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:8px}
+  .ml-br{display:none}
+  .ml-sc .rt-sub,.ml-sc .ml-fm{display:none}
+  .ml-sc .ml-nm{font-size:16px}
+  .ml-cl{grid-template-columns:1fr;grid-template-rows:auto auto;row-gap:10px}
+  .ml-fl li i{display:none}.ml-fl li:not(.on){display:none}
+  .ml-fl{gap:0}.ml-cnt .ml-cv{display:none}
+  .ml-tb{grid-template-columns:1fr}
+  .ml-one,.ml-tbn{display:none}
+  .ml-rw{gap:6px;padding:3px 4px;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr) minmax(0,2fr) minmax(0,.5fr)}
+  .ml-fg{gap:3px}
+  .ml-m1,.ml-m2{grid-template-columns:1fr}
+  .ml-mt.s7 #ml-ff,.ml-mt.s8 #ml-fd,.ml-mt.s9 .ml-m1{display:none}
+  .ml-mt:not(.s9) .ml-m2{display:none}
+  .ml-sv{height:clamp(90px,17vh,130px)}
+  .ml-m1 .rt-sub{display:none}
+  .ml-mt .rt-sub,.ml-m2 .rt-sub{font-size:12px}
+  .ml-m2 .rt-card{padding:10px 12px;gap:6px}.ml-m2 .rt-sub{display:none}.ml-sym,.ml-att{height:64px}
+  .ml-m2 .rt-eq{font-size:15px}
+  .ml-top{grid-template-columns:1fr}
+  .ml-q{display:none}
+  .ml-gpus{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .ml-g{min-height:0;gap:6px;padding:8px 10px}.ml-g .rt-sub{display:none}.ml-slot{margin-top:0;height:34px}.ml-mc{font-size:14px;padding:4px 6px}
+  .ml-bus{height:34px}.ml-bus b,.ml-bus u{display:none}.ml-bus span{top:60%}
+  .ml-inf.s12 .ml-top{display:none}
+  .ml-inf:not(.s12) .ml-habits{display:none}
+  .ml-habits{grid-template-columns:1fr 1fr}
+  .ml-hb .rt-sub{font-size:12px;line-height:1.3}
+  .ml-e1{grid-template-columns:1fr 1fr;row-gap:6px}.ml-e1>:nth-child(2),.ml-e1>:nth-child(3),.ml-e1>:nth-child(4){display:none}
+  .ml-e1 .rt-card,.ml-e2 .rt-card,.ml-e3 .rt-card{min-height:0;padding:10px 12px;gap:5px}
+  .ml-e1 .rt-sub{display:none}
+  .ml-ev.s14 .ml-e1,.ml-ev.s14 .ml-e2{display:none}
+  .ml-ev:not(.s14) .ml-e3{display:none}
+  .ml-e2{grid-template-columns:1fr 1fr}.ml-e2 .rt-sub,.ml-e3 .rt-sub{font-size:12px}
+  .ml-e3{grid-template-columns:1fr;row-gap:6px}.ml-e3 .ml-arr{display:none}
+  .ml-one .ml-arr,.ml-tb>.ml-arr{display:none}
+}
+</style>
+<section class="slide" data-k="ml" data-film>
+  <div class="ml">
+    <div class="mh" data-in><h2 class="big grad">Machine learning basics</h2><span class="tag">Published</span></div>
+    <div id="ml-rail" data-in></div>
+    <div class="ml-stage">
+
+      <div class="ml-p ml-src" id="ml-p0">
+        <div class="ml-br m">Measured</div><div class="ml-br p">Predicted</div>
+        <div class="rt-card ml-sc m"><div class="ml-nm">Protein Data Bank</div><span class="ml-pill m">Measured</span><p class="rt-sub">Structures of proteins and their complexes, solved by X-ray, cryo-EM or NMR.</p><div class="ml-fm"><code>mmCIF<em>current standard</em></code><code>PDB<em>older text</em></code></div></div>
+        <div class="rt-card ml-sc m"><div class="ml-nm">SAbDab</div><span class="ml-pill m">Measured</span><p class="rt-sub">Antibody structures taken from the PDB, with a subset for nanobodies.</p></div>
+        <div class="rt-card ml-sc p"><div class="ml-nm">AlphaFold DB</div><span class="ml-pill p">Predicted</span><p class="rt-sub">Structures predicted by a model, for many proteins that nobody has solved.</p><div class="ml-fm"><code>mmCIF</code><code>PDB</code></div></div>
+        <div class="rt-card ml-sc s"><div class="ml-nm">UniProt</div><span class="ml-pill s">Sequences</span><p class="rt-sub">Protein sequences with notes on their function.</p><div class="ml-fm"><code>FASTA</code></div></div>
+        <div class="rt-card ml-sc s"><div class="ml-nm">OAS</div><span class="ml-pill s">Sequences</span><p class="rt-sub">Observed Antibody Space: antibody sequences from repertoire studies. It holds no structures.</p></div>
+        <div class="rt-card ml-sc n"><div class="ml-nm">IMGT</div><span class="ml-pill n">Numbering</span><p class="rt-sub">The numbering scheme and the germline genes of antibodies.</p></div>
+      </div>
+
+      <div class="ml-p ml-cl" id="ml-p1">
+        <div class="ml-field" id="ml-field"><div class="ml-dv" id="ml-dv"></div></div>
+        <div class="ml-side">
+          <div class="rt-card ml-cnt"><h3>Structures</h3>
+            <div class="ml-big"><div><b id="ml-na">24</b><span id="ml-la">in the set</span></div><div id="ml-bb"><b id="ml-nb">0</b><span>test</span></div></div>
+            <span class="ml-cv">Concept values</span></div>
+          <div class="rt-card"><h3>Filters</h3>
+            <ul class="ml-fl">
+              <li data-f="q">Low resolution<i>The measurement is too blurry to place atoms.</i></li>
+              <li data-f="q">Missing residues<i>Gaps in the chain leave no coordinates.</i></li>
+              <li data-f="q">Too long<i>Very long chains need too much memory.</i></li>
+              <li data-f="g">Near copies<i>A clustering tool such as MMseqs2 or CD-HIT groups similar sequences.</i></li>
+              <li data-f="s">Split<i>Whole groups go to train or to test. Or split by date: older entries train, newer entries test.</i></li>
+            </ul></div>
+        </div>
+      </div>
+
+      <div class="ml-p ml-tb" id="ml-p2">
+        <div class="ml-one"><div class="ml-t tr"><span class="ml-sq"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><span class="ml-pill n">One structure</span></div><span class="ml-arr">→</span>
+        <div class="ml-tbr">
+          <div class="rt-card ml-tab" id="ml-tab"></div>
+          <p class="rt-sub ml-tbn" id="ml-tbn">A batch holds many examples, so each needs the same shape. Short chains are padded. The mask marks the padding, and the loss ignores it.</p>
+          <span class="ml-cv">Concept values</span>
+        </div>
+      </div>
+
+      <div class="ml-p ml-mt" id="ml-p3">
+        <div class="ml-m1">
+          <div class="rt-card ml-fam" id="ml-fd"><h3>Diffusion</h3><svg class="ml-sv" id="ml-svd" viewBox="0 0 640 190" role="img" aria-label="Noise points on the left, data points on the right, a path of many small steps between them"></svg>
+            <p class="rt-sub">Add noise in many small steps, then learn to remove it. Ho and colleagues, 2020.</p></div>
+          <div class="rt-card ml-fam" id="ml-ff"><div class="ml-hd"><h3>Flow matching</h3><span class="ml-cv">Concept values</span></div><svg class="ml-sv" id="ml-svf" viewBox="0 0 640 190" role="img" aria-label="A point moves along a straight path from a noise point to a data point"></svg>
+            <div class="rt-eq"><span class="m">point</span> = noise + <span class="t">t</span> · (data − noise)</div>
+            <div class="ml-sl" data-hold><label for="ml-t">t</label><input id="ml-t" type="range" min="0" max="1" step="0.01" value="0" aria-label="Time t from noise to data" data-hold><output id="ml-to" for="ml-t">0.00</output></div>
+            <p class="rt-sub">Learn a velocity along a straight path from noise to data. Lipman and colleagues, 2022.</p></div>
+        </div>
+        <div class="ml-m2">
+          <div class="rt-card" id="ml-cs"><h3>Symmetry</h3><svg class="ml-sym" id="ml-svs" viewBox="0 0 300 80" role="img" aria-label="One shape drawn in three poses"></svg>
+            <p class="rt-sub">Moving or rotating a protein does not change it. The model must treat every pose alike. Build that in, or rotate the training examples at random.</p></div>
+          <div class="rt-card" id="ml-ca"><h3>Attention</h3><svg class="ml-att" id="ml-sva" viewBox="0 0 300 80" role="img" aria-label="One residue linked to all other residues"></svg>
+            <p class="rt-sub">Each residue can look at every other residue, near or far in the chain. Vaswani and colleagues, 2017.</p></div>
+          <div class="rt-card" id="ml-cl2"><h3>Loss</h3><div class="rt-eq"><span class="m">Loss</span> = <span class="t">coordinate error</span> + <span class="b">residue type error</span></div>
+            <p class="rt-sub">Both are averaged over real rows only. The mask hides the padding rows from the loss.</p></div>
+        </div>
+      </div>
+
+      <div class="ml-p ml-inf" id="ml-p4">
+        <div class="ml-top" id="ml-top">
+          <div class="rt-card ml-q"><h3>Queue</h3>
+            <div class="ml-jobs"><span class="ml-job" id="ml-j1">Job</span><span class="ml-job">Job</span><span class="ml-job">Job</span></div>
+            <p class="rt-sub">Jobs wait for a free GPU.</p>
+            <h3>Dataset</h3><div class="ml-qd" id="ml-qd"><i></i><i></i><i></i><i></i></div></div>
+          <div class="ml-gcol">
+            <div class="ml-gpus" id="ml-gpus">
+              <div class="rt-card ml-g"><h3>GPU A</h3><div class="ml-mc">Model copy</div><p class="rt-sub">Its own piece of data</p><div class="ml-slot c1"><i></i></div></div>
+              <div class="rt-card ml-g"><h3>GPU B</h3><div class="ml-mc">Model copy</div><p class="rt-sub">Its own piece of data</p><div class="ml-slot c2"><i></i></div></div>
+              <div class="rt-card ml-g"><h3>GPU C</h3><div class="ml-mc">Model copy</div><p class="rt-sub">Its own piece of data</p><div class="ml-slot c3"><i></i></div></div>
+              <div class="rt-card ml-g"><h3>GPU D</h3><div class="ml-mc">Model copy</div><p class="rt-sub">Its own piece of data</p><div class="ml-slot c4"><i></i></div></div>
+            </div>
+            <div class="ml-bus" id="ml-bus"><b style="left:12.5%"></b><b style="left:37.5%"></b><b style="left:62.5%"></b><b style="left:87.5%"></b><u></u><span>Average</span></div>
+          </div>
+        </div>
+        <div class="ml-habits" id="ml-habits">
+          <div class="rt-card ml-hb"><h3>Mixed precision</h3><p class="rt-sub">Most of the maths uses smaller numbers. Training runs faster and needs less memory.</p></div>
+          <div class="rt-card ml-hb"><h3>Checkpoints</h3><p class="rt-sub">The run saves its state at set points. After a stop, it resumes from the last save.</p></div>
+          <div class="rt-card ml-hb"><h3>Seeds and logs</h3><p class="rt-sub">Random seeds are fixed and every setting is logged, so anyone can repeat the run.</p></div>
+          <div class="rt-card ml-hb"><h3>Container</h3><p class="rt-sub">The software is packaged once. It runs the same on every machine.</p></div>
+        </div>
+      </div>
+
+      <div class="ml-p ml-ev" id="ml-p5">
+        <div class="ml-e1" id="ml-e1">
+          <div class="rt-card"><h3>Held out</h3><div class="ml-mini"><i></i><i></i><i></i><i></i></div><p class="rt-sub">The model never saw these.</p></div>
+          <span class="ml-arr">→</span>
+          <div class="rt-card"><h3>Model</h3><p class="rt-sub">Predicts each structure.</p></div>
+          <span class="ml-arr">→</span>
+          <div class="rt-card"><h3>Compare</h3><div class="ml-cmp"><span class="ml-pill p">Predicted</span> with <span class="ml-pill m">Measured</span></div></div>
+        </div>
+        <div class="ml-e2" id="ml-e2">
+          <div class="rt-card"><h3>RMSD</h3><p class="rt-sub">The typical distance between matching atoms of two structures.</p><span class="ml-pill n">Lower is better</span></div>
+          <div class="rt-card"><h3>TM-score</h3><p class="rt-sub">How similar the folds of two structures are.</p><span class="ml-pill n">Higher is better</span></div>
+          <div class="rt-card"><h3>DockQ</h3><p class="rt-sub">The quality of a docked pair of proteins.</p><span class="ml-pill n">Higher is better</span></div>
+          <div class="rt-card"><h3>Sequence recovery</h3><p class="rt-sub">The share of residues that match the native sequence.</p><span class="ml-pill n">Higher is better</span></div>
+        </div>
+        <div class="ml-e3" id="ml-e3">
+          <div class="lab">Outside the model</div>
+          <div class="rt-card"><h3>Physics</h3><p class="rt-sub">Physics checks that the structure holds up in a simulation or an energy calculation.</p></div>
+          <span class="ml-arr">→</span>
+          <div class="rt-card"><h3>Lab</h3><p class="rt-sub">The lab checks that the protein folds, binds and works in an experiment.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const s = document.currentScript.previousElementSibling;
+  const Q = (q) => s.querySelector(q), QA = (q) => [...s.querySelectorAll(q)];
+  const NS = 'http://www.w3.org/2000/svg';
+  const sv = (tag, a, parent) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); parent.appendChild(e); return e; };
+  const rnd = (seed) => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const gauss = (r) => Math.sqrt(-2 * Math.log(1 - r())) * Math.cos(2 * Math.PI * r());
+  const PN = QA('.ml-p'), rail = Q('#ml-rail');
+
+  /* ---------- beat 2: the field of 24 structure tiles. Counts are Concept values. ---------- */
+  const field = Q('#ml-field');
+  const DROPS = { 3: ['Blurry', 'lowres'], 10: ['Blurry', 'lowres'], 21: ['Blurry', 'lowres'], 6: ['Gaps', 'hole'], 15: ['Gaps', 'hole'], 19: ['Long', ''] };
+  const K = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 20, 22, 23];   /* the 18 tiles that pass the quality filters */
+  const GS = [3, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1];                              /* 12 groups of near copies */
+  const SPL = { 0: [0, 0], 4: [3, 0], 1: [0, 1], 5: [3, 1], 2: [0, 2], 6: [2, 2], 7: [3, 2], 8: [0, 3], 9: [1, 3], 3: [4, 0], 10: [4, 1], 11: [5, 1] };
+  const TEST = new Set([3, 10, 11]);
+  const GID = [], GPOS = [], SPOS = [];     /* per tile: group, position when grouped, position when split */
+  let p = 0; GS.forEach((n, g) => { for (let j = 0; j < n; j++, p++) { const id = K[p]; GID[id] = g; GPOS[id] = [p % 6, Math.floor(p / 6)]; SPOS[id] = [SPL[g][0] + j, SPL[g][1]]; } });
+  const POS = (c, r) => ({ left: (c * 100 / 6) + '%', top: (r * 25) + '%' });
+  const tiles = Array.from({ length: 24 }, (_, i) => {
+    const t = document.createElement('div'); t.className = 'ml-t' + (DROPS[i] && DROPS[i][1] ? ' ' + DROPS[i][1] : '');
+    t.innerHTML = '<span class="ml-sq"><i></i><i></i><i></i><i></i><i></i><i></i></span><em class="ml-why">' + (DROPS[i] ? DROPS[i][0] : '') + '</em>';
+    field.appendChild(t); return t;
+  });
+  const outl = GS.map((n, g) => { const e = document.createElement('div'); e.className = 'ml-gr'; e.style.width = ((n - 1) * 100 / 6 + 14.4 + 1.8) + '%'; field.appendChild(e); return e; });
+  const OL = (c, r) => ({ left: (c * 100 / 6 - .9) + '%', top: (r * 25 - 2) + '%' });
+  const firstOf = (g) => K[GS.slice(0, g).reduce((a, b) => a + b, 0)];
+  const rgTr = document.createElement('div'); rgTr.className = 'ml-rg tr'; rgTr.textContent = 'Train'; Object.assign(rgTr.style, { left: (2 * 100 / 6 + 1) + '%', top: '77%' });
+  const rgTe = document.createElement('div'); rgTe.className = 'ml-rg te'; rgTe.textContent = 'Test'; Object.assign(rgTe.style, { left: (4 * 100 / 6 + 1) + '%', top: '56%' });
+  field.append(rgTr, rgTe);
+  const na = Q('#ml-na'), la = Q('#ml-la'), nb = Q('#ml-nb'), bb = Q('#ml-bb'), lis = QA('.ml-fl li');
+
+  /* ---------- beat 3: the table ---------- */
+  const tab = Q('#ml-tab');
+  const RES = [['Gly', 4], ['Ala', 5], ['Ser', 6], ['Thr', 7], ['Val', 7], ['Cys', 6]];
+  const dots = (n, on, cls) => '<span class="' + cls + '">' + Array.from({ length: n }, (_, i) => '<i' + (i < on ? ' class="on"' : '') + '></i>').join('') + '</span>';
+  tab.innerHTML = '<div class="ml-rw h"><span>Residue</span><span class="ml-hc">Coordinates</span><span>Atom flags</span><span class="ml-hm" style="opacity:0">Mask</span></div>' +
+    RES.map(([n, k]) => '<div class="ml-rw real"><span class="r">' + n + '</span><span class="ml-co"><i></i><i></i><i></i></span>' + dots(8, k, 'ml-fg') + '<span class="ml-mk ml-mc1" style="opacity:0">' + dots(1, 1, 'ml-mk').replace(/<\/?span[^>]*>/g, '') + '</span></div>').join('') +
+    [0, 1, 2].map(() => '<div class="ml-rw pad"><span class="r">Pad</span><span class="ml-co"><i></i><i></i><i></i></span>' + dots(8, 0, 'ml-fg') + '<span class="ml-mk"><i></i></span></div>').join('');
+
+  /* ---------- beat 4: the maths ---------- */
+  const X0 = [105, 108], X1 = [509, 84], DIR = [X1[0] - X0[0], X1[1] - X0[1]], LEN = Math.hypot(DIR[0], DIR[1]), U = [DIR[0] / LEN, DIR[1] / LEN], NRM = [-U[1], U[0]];
+  function cloud(svg, seed) {
+    const r = rnd(seed);
+    for (let i = 0; i < 44; i++) sv('circle', { cx: Math.min(178, Math.max(24, 95 + gauss(r) * 26)).toFixed(1), cy: Math.min(172, Math.max(26, 98 + gauss(r) * 30)).toFixed(1), r: 3.4, class: 'ml-nz' }, svg);
+    const d = rnd(seed + 7);
+    for (let i = 0; i < 38; i++) {
+      const th = (105 + 150 * (i + .5) / 38 + (d() - .5) * 6) * Math.PI / 180, rr = 64 + (d() - .5) * 8;
+      sv('circle', { cx: (572 + rr * Math.cos(th)).toFixed(1), cy: (95 + rr * Math.sin(th)).toFixed(1), r: 3.4, class: 'ml-dt' }, svg);
+    }
+    sv('text', { x: 95, y: 187, 'text-anchor': 'middle' }, svg).textContent = 'Noise';
+    sv('text', { x: 540, y: 187, 'text-anchor': 'middle' }, svg).textContent = 'Data';
+  }
+  const svd = Q('#ml-svd'), svf = Q('#ml-svf');
+  cloud(svd, 11); cloud(svf, 11);
+  /* diffusion: twelve small steps with a wobble that shrinks */
+  const rr = rnd(5), DP = Array.from({ length: 13 }, (_, k) => { const f = k / 12, w = (k === 0 || k === 12) ? 0 : (rr() - .5) * 2 * 40 * Math.pow(1 - f, .8); return [X0[0] + DIR[0] * f + NRM[0] * w, X0[1] + DIR[1] * f + NRM[1] * w]; });
+  const dPath = sv('polyline', { points: DP.map((q) => q.map((v) => v.toFixed(1)).join(',')).join(' '), fill: 'none', stroke: 'var(--violet)', 'stroke-width': 1.4, opacity: 0 }, svd);
+  const dDots = DP.map((q) => sv('circle', { cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: 3.6, fill: 'var(--violet)', opacity: 0 }, svd));
+  sv('circle', { cx: X1[0], cy: X1[1], r: 8, fill: 'none', stroke: 'var(--teal)', 'stroke-width': 1.6 }, svd);
+  const dHead = sv('circle', { cx: X0[0], cy: X0[1], r: 7, fill: 'var(--fg)', stroke: 'var(--violet)', 'stroke-width': 2.4 }, svd);
+  const dObj = { k: 0 };
+  const dSet = (k) => {
+    const i = Math.min(11, Math.floor(k)), f = k - i, a = DP[i], b = DP[i + 1], x = a[0] + (b[0] - a[0]) * f, y = a[1] + (b[1] - a[1]) * f;
+    dHead.setAttribute('cx', x.toFixed(1)); dHead.setAttribute('cy', y.toFixed(1));
+    dDots.forEach((d, j) => d.setAttribute('opacity', j <= k + .01 ? 1 : 0));
+    dPath.setAttribute('points', DP.slice(0, i + 1).concat([[x, y]]).map((q) => q.map((v) => v.toFixed(1)).join(',')).join(' ')); dPath.setAttribute('opacity', k > 0 ? .8 : 0);
+  };
+  /* flow matching: a straight path and a point at t */
+  sv('line', { x1: X0[0], y1: X0[1], x2: X1[0], y2: X1[1], stroke: 'var(--mute)', 'stroke-width': 1.2, 'stroke-dasharray': '4 5' }, svf);
+  const fTr = sv('line', { x1: X0[0], y1: X0[1], x2: X0[0], y2: X0[1], stroke: 'var(--teal)', 'stroke-width': 2.6, 'stroke-linecap': 'round' }, svf);
+  sv('circle', { cx: X1[0], cy: X1[1], r: 8, fill: 'none', stroke: 'var(--teal)', 'stroke-width': 1.6 }, svf);
+  const fV = sv('line', { stroke: 'var(--blue)', 'stroke-width': 2.4, 'stroke-linecap': 'round' }, svf), fVh = sv('polygon', { fill: 'var(--blue)' }, svf);
+  const fVt = sv('text', { class: 'v', 'text-anchor': 'middle' }, svf); fVt.textContent = 'Velocity';
+  const fP = sv('circle', { r: 7, fill: 'var(--fg)', stroke: 'var(--teal)', 'stroke-width': 2.4 }, svf);
+  const slider = Q('#ml-t'), tout = Q('#ml-to'), tObj = { t: 0 };
+  function setT(t) {
+    const x = X0[0] + DIR[0] * t, y = X0[1] + DIR[1] * t, L = 80, qx = x + U[0] * L, qy = y + U[1] * L, h = [qx - U[0] * 10, qy - U[1] * 10];
+    fP.setAttribute('cx', x.toFixed(1)); fP.setAttribute('cy', y.toFixed(1));
+    fTr.setAttribute('x2', x.toFixed(1)); fTr.setAttribute('y2', y.toFixed(1));
+    fV.setAttribute('x1', (x + U[0] * 9).toFixed(1)); fV.setAttribute('y1', (y + U[1] * 9).toFixed(1)); fV.setAttribute('x2', h[0].toFixed(1)); fV.setAttribute('y2', h[1].toFixed(1));
+    fVh.setAttribute('points', [[qx, qy], [h[0] + NRM[0] * 6, h[1] + NRM[1] * 6], [h[0] - NRM[0] * 6, h[1] - NRM[1] * 6]].map((q) => q.map((v) => v.toFixed(1)).join(',')).join(' '));
+    fVt.setAttribute('x', (x + U[0] * 38).toFixed(1)); fVt.setAttribute('y', (y + U[1] * 38 - 12).toFixed(1));
+    slider.value = t; tout.textContent = t.toFixed(2);
+  }
+  const onSlide = () => { gsap.killTweensOf(tObj); tObj.t = +slider.value; setT(tObj.t); };
+  slider.addEventListener('input', onSlide);
+  /* symmetry: one shape in three poses */
+  const svs = Q('#ml-svs'), SYM = [[50, 0], [150, 105], [250, 220]].map(([cx, a], i) => {
+    const g = sv('g', {}, svs);
+    sv('polygon', { points: '-22,-7 -6,-22 20,-14 26,8 8,22 -10,10', fill: 'rgba(125,147,196,.22)', stroke: 'var(--blue)', 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, g);
+    sv('circle', { cx: 20, cy: -14, r: 4, fill: 'var(--teal)' }, g);
+    if (i < 2) { const t = sv('text', { x: cx + 50, y: 46, 'text-anchor': 'middle' }, svs); t.textContent = '='; t.setAttribute('style', 'font-size:22px;fill:var(--soft)'); }
+    return { g, cx, a };
+  });
+  /* attention: one residue looks at all others */
+  const sva = Q('#ml-sva'), ARC = [];
+  for (let i = 0; i < 7; i++) {
+    const x = 25 + i * 42;
+    if (i !== 3) { const x3 = 25 + 3 * 42, h = 18 + Math.abs(i - 3) * 9; ARC.push(sv('path', { d: 'M' + x3 + ',58 Q' + ((x3 + x) / 2) + ',' + (58 - h * 1.6) + ' ' + x + ',58', fill: 'none', stroke: 'var(--teal)', 'stroke-width': 1.6, opacity: .8, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, sva)); }
+    sv('circle', { cx: x, cy: 66, r: 7, fill: i === 3 ? 'var(--teal)' : 'rgba(236,236,234,.12)', stroke: i === 3 ? 'var(--teal)' : 'var(--soft)', 'stroke-width': 1.4 }, sva);
+  }
+
+  /* ---------- the engine: panels, steps, replay ---------- */
+  const mk = (anim) => {
+    const tl = anim ? gsap.timeline() : null;
+    const E = (t) => (typeof t === 'string' ? QA(t) : t);
+    return {
+      tl,
+      T: (t, v, at = 0, o = {}) => { if (!tl) gsap.set(E(t), v); else tl.to(E(t), Object.assign({ duration: .6, ease: 'power2.out' }, o, v), at); },
+      C: (t, cls, on, at = 0) => { const f = () => [].concat(E(t)).forEach((x) => x.classList.toggle(cls, on)); if (!tl) f(); else tl.call(f, null, at); },
+      F: (fn, at = 0) => { if (!tl) fn(); else tl.call(fn, null, at); },
+      N: (el, from, to, at = 0, dur = .4) => { if (!tl) { el.textContent = to; return; } const o = { v: from }; tl.to(o, { v: to, duration: dur, ease: 'power1.out', onUpdate: () => (el.textContent = Math.round(o.v)) }, at); },
+    };
+  };
+  const lit = (m, idx) => lis.forEach((li, i) => m.C(li, 'on', idx.includes(i)));
+  const rise = (m, sel, at = 0, st = .07) => m.T(sel, { opacity: 1, y: 0 }, at, { stagger: st });
+
+  const reset0 = () => { gsap.set(QA('.ml-sc'), { opacity: 0, y: 12 }); gsap.set(QA('.ml-br'), { opacity: 0 }); QA('.ml-sc').forEach((c) => c.classList.remove('lit')); };
+  const f0 = (m) => rise(m, '.ml-sc', 0, .08);
+  const f1 = (m) => {
+    const cs = QA('.ml-sc');
+    m.T(cs.slice(0, 3), { opacity: 1 }); m.T(cs.slice(3), { opacity: .28 });
+    m.C(cs.slice(0, 3), 'lit', true); m.T('.ml-br', { opacity: 1 }, .15, { stagger: .15 });
+  };
+
+  const reset1 = () => {
+    tiles.forEach((t, i) => { t.className = 'ml-t' + (DROPS[i] && DROPS[i][1] ? ' ' + DROPS[i][1] : ''); const c = i % 6, r = Math.floor(i / 6); gsap.set(t, Object.assign({ opacity: 1 }, POS(c, r))); });
+    outl.forEach((o, g) => gsap.set(o, Object.assign({ opacity: 0 }, OL(...GPOS[firstOf(g)]))));
+    gsap.set([rgTr, rgTe, Q('#ml-dv')], { opacity: 0 });
+    na.textContent = 24; la.textContent = 'in the set'; nb.textContent = 4; gsap.set(bb, { display: 'none' }); lis.forEach((li) => li.classList.remove('on'));
+  };
+  const f2 = (m) => {
+    const grp = [[3, 10, 21], [6, 15], [19]], at = [0, .5, 1];
+    grp.forEach((ids, j) => { ids.forEach((id, i) => { m.C(tiles[id], 'drop', true, at[j] + i * .08); m.T(tiles[id], { opacity: .35 }, at[j] + i * .08, { duration: .4 }); }); m.C(lis[j], 'on', true, at[j]); });
+    m.F(() => { la.textContent = 'kept'; }, 0);
+    m.N(na, 24, 21, .3); m.N(na, 21, 19, .8); m.N(na, 19, 18, 1.3);
+    if (!m.tl) na.textContent = 18;
+  };
+  const f3 = (m) => {
+    lit(m, [3]);
+    tiles.forEach((t, i) => { if (DROPS[i]) m.T(t, { opacity: 0 }, 0, { duration: .3 }); else m.T(t, POS(...GPOS[i]), 0, { duration: .9, ease: 'power3.inOut' }); });
+    m.T(outl, { opacity: 1 }, .7, { stagger: .04 });
+    m.F(() => { la.textContent = 'groups'; }, .5); m.N(na, 18, 12, .7, .6);
+  };
+  const f4 = (m) => {
+    lit(m, [4]);
+    tiles.forEach((t, i) => { if (!DROPS[i]) { m.T(t, POS(...SPOS[i]), 0, { duration: 1, ease: 'power3.inOut' }); m.C(t, TEST.has(GID[i]) ? 'te' : 'tr', true, .3); } });
+    outl.forEach((o, g) => m.T(o, OL(...SPOS[firstOf(g)]), 0, { duration: 1, ease: 'power3.inOut' }));
+    m.T([rgTr, rgTe, Q('#ml-dv')], { opacity: 1 }, .8);
+    m.F(() => { la.textContent = 'train'; gsap.set(bb, { display: 'flex' }); }, .4);
+    m.N(na, 12, 14, .5, .5); m.N(nb, 0, 4, .5, .5);
+  };
+
+  const rows = () => QA('.ml-rw.real'), pads = () => QA('.ml-rw.pad');
+  const reset2 = () => {
+    gsap.set(rows(), { opacity: 0, y: 8 }); gsap.set(pads(), { opacity: 0, y: 8 }); gsap.set(QA('.ml-mc1,.ml-hm'), { opacity: 0 }); gsap.set('#ml-tbn', { opacity: 0 });
+    QA('.ml-co').forEach((c) => c.classList.remove('ctr')); Q('.ml-hc').textContent = 'Coordinates';
+  };
+  const f5 = (m) => { rise(m, '.ml-rw.real', 0, .1); };
+  const f6 = (m) => {
+    m.C('.ml-rw.real .ml-co', 'ctr', true, 0); m.F(() => { Q('.ml-hc').textContent = 'Centred coordinates'; }, 0);
+    rise(m, '.ml-rw.pad', .5, .1);
+    m.T('.ml-mc1,.ml-hm', { opacity: 1 }, .9); m.T('#ml-tbn', { opacity: 1 }, 1.1);
+  };
+
+  const mt = Q('#ml-p3'), cls3 = (c) => () => { mt.classList.remove('s7', 's8', 's9'); mt.classList.add(c); };
+  const reset3 = () => {
+    gsap.set(QA('.ml-m1 .rt-card'), { opacity: 0 }); gsap.set(QA('.ml-m2 .rt-card'), { opacity: 0, y: 12 });
+    dObj.k = 0; dSet(0); tObj.t = 0; setT(0);
+    SYM.forEach((o) => gsap.set(o.g, { x: o.cx, y: 40, rotation: 0, svgOrigin: o.cx + ' 40' }));
+    ARC.forEach((a) => a.setAttribute('stroke-dashoffset', 1));
+  };
+  const f7 = (m) => {
+    cls3('s7')();
+    m.T('#ml-fd', { opacity: 1, }, 0); m.T('#ml-ff', { opacity: .35, }, .1);
+    if (m.tl) { dObj.k = 0; m.tl.to(dObj, { k: 12, duration: 1.1, ease: 'power1.inOut', onUpdate: () => dSet(dObj.k) }, .3); } else { dObj.k = 12; dSet(12); }
+  };
+  const f8 = (m) => {
+    cls3('s8')();
+    m.T('#ml-fd', { opacity: .35 }, 0, { duration: .3 }); m.T('#ml-ff', { opacity: 1 }, 0, { duration: .3 });
+    if (m.tl) { tObj.t = 0; m.tl.to(tObj, { t: .62, duration: 1.2, ease: 'power2.inOut', onUpdate: () => setT(tObj.t) }, .2); } else { tObj.t = .62; setT(.62); }
+  };
+  const f9 = (m) => {
+    cls3('s9')();
+    m.T('.ml-m2 .rt-card', { opacity: 1, y: 0 }, 0, { stagger: .12 });
+    SYM.forEach((o, i) => { if (m.tl) m.tl.to(o.g, { rotation: o.a, duration: 1, ease: 'power3.inOut' }, .4); else gsap.set(o.g, { rotation: o.a }); });
+    ARC.forEach((a, i) => { if (m.tl) m.tl.to(a, { attr: { 'stroke-dashoffset': 0 }, duration: .6, ease: 'power2.out' }, .5 + i * .06); else a.setAttribute('stroke-dashoffset', 0); });
+  };
+
+  const inf = Q('#ml-p4'), slots = () => QA('.ml-slot i'), chipsA = () => QA('#ml-qd i'), gcards = () => QA('.ml-g');
+  const cls4 = (c) => () => { inf.classList.remove('s10', 's11', 's12'); inf.classList.add(c); };
+  const reset4 = () => {
+    gsap.set(slots(), { x: 0, y: 0, opacity: 0 }); gsap.set(chipsA(), { opacity: 1 }); gcards().forEach((g) => g.classList.remove('busy', 'sync')); QA('.ml-job').forEach((j) => j.classList.remove('run'));
+    gsap.set('#ml-top', { opacity: 1 }); gsap.set(QA('.ml-bus b'), { opacity: 0, scaleY: 0 }); gsap.set(QA('.ml-bus u'), { opacity: 0, scaleX: 0 }); gsap.set('.ml-bus span', { opacity: 0 }); gsap.set(QA('.ml-hb'), { opacity: 0, y: 12 });
+  };
+  const f10 = (m) => {
+    cls4('s10')();
+    m.C('#ml-j1', 'run', true, .1);
+    const A = chipsA(), B = slots();
+    B.forEach((b, i) => {
+      if (m.tl) {
+        const ra = A[i].getBoundingClientRect(), rb = b.getBoundingClientRect();
+        if (rb.width && ra.width) gsap.set(b, { x: ra.left + ra.width / 2 - (rb.left + rb.width / 2), y: ra.top + ra.height / 2 - (rb.top + rb.height / 2), opacity: 1 });
+        m.tl.to(b, { x: 0, y: 0, opacity: 1, duration: .9, ease: 'power3.inOut' }, .2 + i * .1);
+      } else gsap.set(b, { x: 0, y: 0, opacity: 1 });
+    });
+    m.T(A, { opacity: .15 }, .2, { duration: .4 });
+    m.C(gcards(), 'busy', true, .8);
+  };
+  const f11 = (m) => {
+    cls4('s11')();
+    m.T('.ml-bus b', { opacity: 1, scaleY: 1 }, 0, { stagger: .08, duration: .4 });
+    m.T('.ml-bus u', { opacity: 1, scaleX: 1 }, .35, { duration: .5 }); m.T('.ml-bus span', { opacity: 1 }, .6, { duration: .4 });
+    m.C(gcards(), 'sync', true, .8);
+  };
+  const f12 = (m) => { cls4('s12')(); m.T('#ml-top', { opacity: .3 }, 0, { duration: .3 }); rise(m, '.ml-hb', .2, .12); };
+
+  const ev = Q('#ml-p5'), cls5 = (c) => () => { ev.classList.remove('s13', 's14'); ev.classList.add(c); };
+  const reset5 = () => { gsap.set(['#ml-e1', '#ml-e2', '#ml-e3'], { opacity: 0, y: 12 }); };
+  const f13 = (m) => { cls5('s13')(); m.T('#ml-e1', { opacity: 1, y: 0 }, 0); m.T('#ml-e2', { opacity: 1, y: 0 }, .4); };
+  const f14 = (m) => { cls5('s14')(); m.T(['#ml-e1', '#ml-e2'], { opacity: .25 }, 0, { duration: .3 }); m.T('#ml-e3', { opacity: 1, y: 0 }, .25); };
+
+  const BEATS = [
+    { reset: reset0, steps: [f0, f1] }, { reset: reset1, steps: [f2, f3, f4] }, { reset: reset2, steps: [f5, f6] },
+    { reset: reset3, steps: [f7, f8, f9] }, { reset: reset4, steps: [f10, f11, f12] }, { reset: reset5, steps: [f13, f14] },
+  ];
+  const CAPS = [
+    'Six public sources supply structures, sequences and antibody numbering.',
+    'The PDB and SAbDab hold measured structures. AlphaFold DB holds predicted ones.',
+    'Filters drop low resolution, missing residues and chains that are too long.',
+    'A clustering tool groups near copies by sequence identity.',
+    'Whole groups go to train or to test, so no near copy crosses over.',
+    'Each residue becomes a row: type, atom coordinates and a flag for each atom.',
+    'Centre the coordinates, pad to a fixed length, and mask the padding.',
+    'A generative model turns noise into data. Diffusion does it in many small steps.',
+    'Flow matching walks a straight path. Drag t to move the point.',
+    'Two ideas shape the network. One loss line trains it.',
+    'A queue feeds the GPUs. Each GPU trains on its own piece of data.',
+    'After each step the GPUs average what they learned, so every copy stays equal.',
+    'Four habits keep a run fast, safe and repeatable.',
+    'Held-out structures test the model with four measures.',
+    'A designer also needs checks outside the model: physics first, then the lab.',
+  ];
+  const FIRST = []; BEATS.reduce((a, b) => (FIRST.push(a), a + b.steps.length), 0);
+  const loc = (n) => { let b = BEATS.length - 1; while (FIRST[b] > n) b--; return [b, n - FIRST[b]]; };
+  RT.rail(rail, ['Data', 'Cleaning', 'Table', 'Maths', 'Infrastructure', 'Evaluation'], s);
+  [...rail.children].forEach((b, i) => { b.onclick = () => window.showStep && showStep(s, FIRST[i]); });
+
+  function play(n, rm) {
+    gsap.killTweensOf(QA('.ml-stage *')); gsap.killTweensOf([tObj, dObj]);
+    const [b, k] = loc(n);
+    PN.forEach((el, i) => { el.classList.toggle('on', i === b); gsap.set(el, { opacity: 1 }); });
+    RT.mark(rail, b);
+    BEATS[b].reset();
+    for (let j = 0; j < k; j++) BEATS[b].steps[j](mk(false));
+    const m = mk(!rm);
+    BEATS[b].steps[k](m);
+    if (m.tl) { if (k === 0) m.tl.fromTo(PN[b], { opacity: 0 }, { opacity: 1, duration: .5 }, 0); return m.tl; }
+    return null;
+  }
+  window.STEPS = window.STEPS || {};
+  window.STEPS.ml = CAPS.map((cap, n) => ({ cap, on: '*', run: (sc, rm) => play(n, rm) }));
+  window.ENTER = window.ENTER || {};
+})();
+</script>
