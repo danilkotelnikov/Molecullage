@@ -1,5 +1,5 @@
 The documentation (docs/, README.md, INSTALL.md, the skill text in claude/skill/), the example figures and their data files (examples/, art/) and the built figures are licensed under
-Creative Commons Attribution 4.0 International (CC BY 4.0), copyright (c) 2026 Danil Kotelnikov.
+Creative Commons Attribution 4.0 International (CC BY 4.0), copyright (c) 2026 the Molecullage authors.
 Full text: https://creativecommons.org/licenses/by/4.0/legalcode
 
 Not covered: the coordinate files and records in data/pdb/ are copies of public entries of the

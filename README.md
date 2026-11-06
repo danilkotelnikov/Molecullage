@@ -144,7 +144,7 @@ The code is under the MIT License (`LICENSE`). The documentation and the example
 
 ## Credits
 
-- Palette: I sampled the colours from Fig. 8, and the plot colours from Figs 1, 4 and 7, of my paper NanoDeNovo (Kotelnikov, Tatarinova and Zhdanov, Int. J. Mol. Sci. 2025, 26, 9262, doi 10.3390/ijms26199262, open access). Only the hex values are in this repository.
+- Palette: I sampled the colours from Fig. 8, and the plot colours from Figs 1, 4 and 7, of my paper NanoDeNovo (Int. J. Mol. Sci. 2025, 26, 9262, doi 10.3390/ijms26199262, open access). Only the hex values are in this repository.
 - Structures: PDB entries 1MEL, 1VFB, 4KRL, 7Z0X and 1IGT from the RCSB Protein Data Bank. The files in `data/pdb/` come with the records they were checked against.
 - Icons: Tabler Icons (MIT), installed by npm.
 - Libraries: Playwright (Apache 2.0) drives the browser; the Model Context Protocol SDK (MIT) and zod (MIT) run the MCP server; NumPy, Pillow, SciPy, scikit-image and matplotlib do the measuring, sampling and plotting, and PyMuPDF (AGPL-3.0, installed with pip, not included here) reads PDFs.
