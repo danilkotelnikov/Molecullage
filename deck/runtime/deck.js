@@ -30,7 +30,7 @@
   const stage = $('#stage');
   const slides = $$('.slide', stage).map((el, i) => {
     const data = D.slides[i];
-    const sl = { el, data, i, tracks: [], counts: [], mols: [], vids: [], stops: null, t: 0 };
+    const sl = { el, data, i, tracks: [], counts: [], mols: [], vids: [], stops: null };
     $$('[data-step]', el).forEach((n) => {
       const k = +n.dataset.step;
       const at = k === 0 ? +n.dataset.at || 0 : data.steps[k - 1].at;
@@ -132,7 +132,6 @@
     function renderSlide(sl, t, still = false) {
     let sig = '';
     if (still) t = sl.data.duration;
-    sl.t = t;
     const p4 = (x) => Math.round(x * 2000);
     for (const tr of sl.tracks) { tr.a.currentTime = t; sig += p4(progress(t, tr.at, tr.dur)) + ','; }
     for (const c of sl.counts) { const p = progress(t, c.at, c.dur); c.n.textContent = p >= 1 ? c.text : fmt(c.to * ease('out', p), c.dec); sig += p4(p) + ','; }
@@ -357,7 +356,16 @@
     const spent = D.slides.map(() => 0);
     let run_ = false, t0 = 0, total = 0, state = { cur: { i: 0, k: 0, t: 0 } }, lastTick = Date.now();
     const strip = $('#p-strip');
-    D.slides.forEach((s, i) => { const d = document.createElement('div'); d.innerHTML = `${i + 1}<small>${(s.title || s.id).slice(0, 18)}</small><span></span>`; d.onclick = () => send('goto', i); strip.appendChild(d); });
+    D.slides.forEach((s, i) => {
+      const d = document.createElement('div');
+      d.append(document.createTextNode(String(i + 1)));
+      const sm = document.createElement('small');
+      sm.textContent = (s.title || s.id).slice(0, 18);
+      d.append(sm);
+      d.append(document.createElement('span'));
+      d.onclick = () => send('goto', i);
+      strip.appendChild(d);
+    });
     const send = (cmd, i) => { try { (window.opener || parent).postMessage({ deck: 1, type: 'cmd', cmd, i }, '*'); } catch { /* no opener */ } };
     const toFrame = (f, st) => { try { f.contentWindow.postMessage({ deck: 1, type: 'show', st }, '*'); } catch { /* frame not ready */ } };
     const mm = (ms) => `${pad(ms / 60000)}:${pad((ms / 1000) % 60)}`;
