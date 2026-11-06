@@ -7,12 +7,15 @@ import { spawnSync } from 'node:child_process';
 import { REPO, pythonCmd } from '../build/config.mjs';
 
 export const hasFfmpeg = () => spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' }).status === 0;
+const insideRoot = (abs, root) => abs === root || abs.startsWith(root + path.sep);
 
 /** The PDB file of an entry: the deck folder, then data/pdb of the repository; fetched only when allowed (scripts/fetch_pdb.py). */
 export function findPdb(dir, id, { fetch = false, log = () => {} } = {}) {
   if (/\.(pdb|cif|ent)$/i.test(id)) {
     const local = path.resolve(dir, id);
-    if (!local.startsWith(path.resolve(dir)) && !local.startsWith(REPO)) throw new Error(`structure ${id} lies outside the deck folder`);
+    const deckRoot = path.resolve(dir);
+    const repoRoot = path.resolve(REPO);
+    if (!insideRoot(local, deckRoot) && !insideRoot(local, repoRoot)) throw new Error(`structure ${id} lies outside the deck folder`);
     if (!fs.existsSync(local)) throw new Error(`structure file not found: ${id}`);
     return local;
   }

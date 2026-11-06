@@ -72,8 +72,9 @@
     const sc = m.scene, host = $('.mol-view', m.n);
     if (!host.clientWidth) return;
     const v = $3Dmol.createViewer(host, { backgroundColor: '#FFFFFF', antialias: true });
-    v.addModel(sc.pdbText, 'pdb');
-    const chains = [...new Set(sc.pdbText.split('\n').filter((l) => l.startsWith('ATOM')).map((l) => l[21]))];
+    v.addModel(sc.pdbText, sc.pdbFormat || 'pdb');
+    const chains = [...new Set(v.selectedAtoms({}).map((a) => a.chain).filter((c) => c !== undefined && c !== null).map(String))];
+    if (!chains.length) chains.push('');
     chains.forEach((c, k) => {
       const f = famOf(sc.chains[c], k);
       v.setStyle({ chain: c }, { cartoon: { color: f.fill, thickness: 0.35, arrows: true } });

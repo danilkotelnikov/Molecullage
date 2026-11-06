@@ -3,10 +3,14 @@
 //   npm run deck:test            (add --no-browser to skip the Chromium part)
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { createClock, schedule, stops, pathAt, progress, ease } from './runtime/timeline.mjs';
 import { resolve, parseTarget } from './manifest.mjs';
 import { slideHtml } from './layouts.mjs';
+import { buildDeck } from './build.mjs';
+import { findPdb } from './mol.mjs';
 import { REPO } from '../build/config.mjs';
 
 let n = 0;
@@ -184,9 +188,59 @@ t('target syntax', () => {
   assert.throws(() => parseTarget('A:99-'));
 });
 
+t('build: traversal path in local structure is rejected', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'deck-sec-'));
+  const deckDir = path.join(root, 'deck');
+  const outside = path.join(root, 'deck-secrets');
+  fs.mkdirSync(deckDir, { recursive: true });
+  fs.mkdirSync(outside, { recursive: true });
+  fs.writeFileSync(path.join(outside, 'x.pdb'), 'ATOM\n');
+  try {
+    assert.throws(() => findPdb(deckDir, '../deck-secrets/x.pdb'), /outside the deck folder/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+t('build: default output dir is dist and .cif keeps cif format', () => {
+  const root = path.join(REPO, 'tmp', `deck-cif-${Date.now()}`);
+  fs.mkdirSync(root, { recursive: true });
+  fs.writeFileSync(path.join(root, 'mol.cif'), 'data_x\n#\n');
+  fs.writeFileSync(path.join(root, 'deck.json'), JSON.stringify({
+    title: 'CIF',
+    scenes: { s1: { kind: 'webgl', pdb: 'mol.cif', motion: 'rotate' } },
+    slides: [{ layout: 'molecule', title: 'Mol', scene: 's1' }],
+  }, null, 2));
+  try {
+    const b = buildDeck(root, { log: () => {} });
+    assert.equal(b.outDir, path.join(root, 'dist'));
+    assert.equal(b.scenes.s1.pdbFormat, 'cif');
+    assert.match(b.scenes.s1.pdbText, /data_x/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+t('build: traversal path in slide assets is rejected', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'deck-asset-'));
+  const deckDir = path.join(root, 'deck');
+  const outside = path.join(root, 'deck-secrets');
+  fs.mkdirSync(deckDir, { recursive: true });
+  fs.mkdirSync(outside, { recursive: true });
+  fs.writeFileSync(path.join(outside, 'x.png'), 'not-a-real-png');
+  fs.writeFileSync(path.join(deckDir, 'deck.json'), JSON.stringify({
+    title: 'Asset',
+    slides: [{ layout: 'figure', title: 'A', figure: { type: 'image', src: '../deck-secrets/x.png', alt: 'x' } }],
+  }, null, 2));
+  try {
+    assert.throws(() => buildDeck(deckDir, { log: () => {} }), /outside the deck folder/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
 // ---- the page: the same time draws the same pixels
 if (!process.argv.includes('--no-browser')) {
-  const { buildDeck } = await import('./build.mjs');
   const { withDeck } = await import('./export.mjs');
   const b = buildDeck(path.join(REPO, 'examples', 'deck-layouts'), { out: path.join(REPO, 'tmp', 'deck-test'), log: () => {} });
   const hash = (buf) => crypto.createHash('sha1').update(buf).digest('hex');

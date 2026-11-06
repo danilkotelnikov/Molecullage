@@ -68,7 +68,9 @@ export function prepareScenes(deck, dir, { fetch = false, log = console.log, ren
       if (motion === 'morph') { log(`scene "${sc.id}": a morph needs ChimeraX; the viewer shows a rotation instead`); motion = 'rotate'; }
     } else if (motion === 'morph') { log(`scene "${sc.id}": the WebGL viewer has no morph; it shows a rotation instead. Use kind "chimerax" for a morph.`); motion = 'rotate'; }
     const pdb = findPdb(dir, sc.pdb, { fetch, log });
-    r.pdbText = slimPdb(read(pdb), sc.drop);
+    const isCif = /\.cif$/i.test(pdb);
+    r.pdbText = isCif ? read(pdb) : slimPdb(read(pdb), sc.drop);
+    r.pdbFormat = isCif ? 'cif' : 'pdb';
     r.motion = motion;
     out[sc.id] = r;
   }
@@ -92,6 +94,7 @@ function rootCss(deck, tokens, ladder) {
 const palette = (tokens) => Object.fromEntries(Object.entries(tokens.color.family).map(([k, v]) => [k, { fill: v.fill, edge: v.edge }]));
 const stripExport = (s) => s.replace(/^export /gm, '');
 const safeScript = (s) => s.replace(/<\/(script)/gi, '<\\/$1').replace(/<!--/g, '<\\!--');
+const insideRoot = (abs, root) => abs === root || abs.startsWith(root + path.sep);
 
 /**
  * The HTML of the deck. opts.inline: assets become data URIs (a standalone file) or stay URLs from opts.url(absPath).
@@ -100,10 +103,12 @@ const safeScript = (s) => s.replace(/<\/(script)/gi, '<\\/$1').replace(/<!--/g, 
 export function assemble(d, scenes, opts = {}) {
   const { deck, dir } = d;
   const { tokens, ladder } = settings(dir);
+  const deckRoot = path.resolve(dir);
+  const repoRoot = path.resolve(REPO);
   const cache = new Map();
   const asset = (src) => {
     const abs = path.resolve(dir, src);
-    if (!abs.startsWith(path.resolve(dir)) && !abs.startsWith(REPO)) throw new Error(`asset ${src} lies outside the deck folder`);
+    if (!insideRoot(abs, deckRoot) && !insideRoot(abs, repoRoot)) throw new Error(`asset ${src} lies outside the deck folder`);
     if (!fs.existsSync(abs)) throw new Error(`asset not found: ${src}`);
     if (!opts.inline) return opts.url(abs);
     if (cache.has(abs)) return cache.get(abs);
@@ -115,7 +120,7 @@ export function assemble(d, scenes, opts = {}) {
   };
   const text = (src) => {   // a text file of the deck folder (a drawing that goes into the page)
     const abs = path.resolve(dir, src);
-    if (!abs.startsWith(path.resolve(dir)) && !abs.startsWith(REPO)) throw new Error(`file ${src} lies outside the deck folder`);
+    if (!insideRoot(abs, deckRoot) && !insideRoot(abs, repoRoot)) throw new Error(`file ${src} lies outside the deck folder`);
     if (!fs.existsSync(abs)) throw new Error(`file not found: ${src}`);
     return fs.readFileSync(abs, 'utf8');
   };
@@ -124,7 +129,7 @@ export function assemble(d, scenes, opts = {}) {
   const needGl = Object.values(scenes).some((s) => s.kind === 'webgl');
   const data = {
     title: deck.title, lang: deck.lang, fps: deck.fps, boundary: deck.boundary, palette: palette(tokens),
-    scenes: Object.fromEntries(Object.entries(scenes).map(([id, s]) => [id, { id, kind: s.kind, pdbText: s.pdbText, motion: s.motion, duration: s.duration, chains: s.chains, target: s.target, targetParts: s.targetParts, poster: s.poster, loop: s.loop, title: s.title }])),
+    scenes: Object.fromEntries(Object.entries(scenes).map(([id, s]) => [id, { id, kind: s.kind, pdbText: s.pdbText, pdbFormat: s.pdbFormat, motion: s.motion, duration: s.duration, chains: s.chains, target: s.target, targetParts: s.targetParts, poster: s.poster, loop: s.loop, title: s.title }])),
     slides: deck.slides.map((s) => ({ id: s.id, title: s.title || s.id, duration: s.duration, need: s.need, transition: s.transition, steps: s.steps, end0: s.end0, notes: s.notes })),
   };
   const lib = needGl ? `<script>${safeScript(read(path.join(REPO, 'deck', 'vendor', '3Dmol-min.js')))}</script>\n` : '';
@@ -150,7 +155,7 @@ export function buildDeck(where, { audience, out, live = false, fetch = false, l
   for (const w of d.warnings) log(`warning: ${w}`);
   if (d.errors.length) throw new Error(`${d.file}:\n  ` + d.errors.join('\n  '));
   const scenes = prepareScenes(d.deck, d.dir, { fetch, log, render });
-  const outDir = path.resolve(out || path.join(d.dir, 'out'));
+  const outDir = path.resolve(out || path.join(d.dir, 'dist'));
   fs.mkdirSync(outDir, { recursive: true });
   const suffix = audience ? `-${audience}` : '';
   const file = path.join(outDir, `${d.name}${suffix}.html`);

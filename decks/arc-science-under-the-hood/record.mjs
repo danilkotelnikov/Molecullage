@@ -45,7 +45,10 @@ for (const job of jobs) {
   }
   await p.waitForTimeout(1500);
   await p.evaluate(() => { playing = false; hold = true; });
-  clearInterval(pump); await cdp.send('Page.stopScreencast').catch(() => {}); ff.stdin.end(); await ffDone; await ctx.close();
+  clearInterval(pump); await cdp.send('Page.stopScreencast').catch(() => {}); ff.stdin.end();
+  const ffCode = await ffDone;
+  await ctx.close();
+  if (ffCode !== 0 || !fs.existsSync(mp4) || fs.statSync(mp4).size === 0) throw new Error(`${name}: ffmpeg failed with code ${ffCode}${ffErr ? ` (${ffErr.trim()})` : ''}`);
   console.log(name, 'slides', a + '-' + b, 'ended at', state, 'frames', written, fs.existsSync(mp4) ? Math.round(fs.statSync(mp4).size / 1024) + ' KB' : 'none', ffErr.includes('Error') ? ffErr : '');
   if (process.env.GIF && fs.existsSync(mp4)) {
     spawnSync(FFMPEG, ['-y', '-ss', '3', '-t', '8', '-i', mp4, '-vf', 'fps=12,scale=720:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse', path.join(out, name + '.gif')], { encoding: 'utf8' });

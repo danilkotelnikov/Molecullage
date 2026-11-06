@@ -6,8 +6,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Arc Science, under the hood</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;600;800&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0b0d;--fg:#ececea;--soft:#cfcec9;--mute:#8d8c88;--blue:#7d93c4;--violet:#9c8fc4;--teal:#7fb2aa;--amber:#cfae7e}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -165,8 +163,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/3dmol/3Dmol-min.js"></script>
 <script>
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
