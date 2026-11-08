@@ -1,32 +1,33 @@
-<!-- version: p7 | date: 2026-10-31 | status: draft for the owner's review -->
-# Molecullage Studio, Plan 7: the Arc Science pilot deck — Implementation Plan
+<!-- version: p7.2 | date: 2026-11-08 | status: updated for Arc Harness concept v7 and bd96b6d consolidation -->
+# Molecullage Studio, Plan 7: the Arc Science (Arc Harness) pilot deck — Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans (or superpowers:subagent-driven-development) to run this plan task by task. Steps use checkbox (`- [ ]`) syntax. Read `.\docs\superpowers\plans\2026-10-31-studio-00-index.md` first; its executor rules apply to every step here.
 
-**Goal:** Build the first full pilot: an animated pitch deck for Arc Science, 12 slides, in English and Russian. It has one continuous zoom across two scale frames, a short scene that explains the Omniverso model, two lenses, and all four deliveries. A senior manager at Yandex Cloud can watch it.
+**Goal:** Build the first full pilot: an animated pitch deck for Arc Science (now **Arc Harness**, `concept/roadmap.md` v7 and `concept/arc-harness-agent-design.md` v2), 12 slides, in English and Russian. It has one continuous zoom across two scale frames, a short scene that explains the Omniverso model, two lenses, and all four deliveries. A senior manager at Yandex Cloud can watch it.
 
 **Architecture:** This is a content plan. It writes job data under `studio/jobs/arc-science/` and runs engine commands from Plans 1–6. It adds no engine code. If a step needs an engine feature that does not exist, STOP and ask the owner.
 
-**Spec:** `.\docs\superpowers\specs\2026-10-31-engine-design.md` (sections 1, 5, 15). the owner fixed the pilot order: Arc Science first, Miraeles second, the ML explainer as a showcase.
+**Spec:** `.\docs\superpowers\specs\2026-10-31-engine-design.md` (sections 1, 5, 15) and the Arc Science `concept/` notes (`roadmap.md` v7, `arc-harness-agent-design.md` v2, `arc-native-transition.md`, `tree-hoh.md`, `super-agent-validation.md`). The owner fixed the pilot order: Arc Science first, Miraeles second, the ML explainer as a showcase.
 
 ## Global Constraints
 
 - Executor: Claude Sonnet 5.5 High. Follow the index rules 1–15 (`2026-10-31-studio-00-index.md`, section 3).
 - Job folder: `studio/jobs/arc-science/`. Main file: `studio/jobs/arc-science/job.json`. Write no files outside this folder, except the ledger `studio/ledger/plan7.md` and the outputs that engine commands write to `studio/out/`.
-- Folders outside `studio/` are read only, and are always named by absolute path: `.\stage\`, `.\film\`, `.\motion\`, `.\data\pdb\`, `.\struct\`, `.\qa\`, `.\tokens\`, and `.\decks\arc-science-yc\`. Never use a relative path to them.
-- Evidence ceiling for this product: `architecture`, `published`, `target` (`.\motion\projects\arc-science.json`). Facts about one project also obey that project's own file in the same folder:
+- Folders outside `studio/` are read only, and are always named by absolute path: `.\stage\`, `.\film\`, `.\motion\`, `.\data\pdb\`, `.\struct\`, `.\qa\`, `.\tokens\`, and the Arc Science `concept/` folder (`roadmap.md` v7, `arc-harness-agent-design.md` v2, `arc-native-transition.md`, `tree-hoh.md`, `super-agent-validation.md`). The legacy Python port-8080 desktop app and `decks/arc-science-yc` were retired on 2026-11-04 (`concept/roadmap.md` v7); never reference port 8080 or the retired Python service.
+- Evidence ceiling for this product: `architecture`, `published`, `target` (`concept/roadmap.md` v7 and `motion/projects/*.json`). Facts about one project also obey that project's own file in `.\motion\projects\`:
   - `omniverso.json`: architecture, published;
   - `snoggo.json` and `rnav-g.json`: read them yourself;
   - `arc-chemistry.json`: target, published.
-  No fact may carry `measured` or `simulated` unless its project file allows it.
-- Facts come only from the sources in Task 2. A fact with no source in that list is a GATE question to the owner. Never invent one.
-- Cammut and Molecullage are shown as parts of Arc Science (the owner, 2026-10-28).
+  No fact may carry `measured` or `simulated` unless its project file allows it. Obey policy section 13 rule 10 by stating which parts run today (Phase 0 and Phase 1 Arc Harness app, Cammut gateway, Molecullage `bd96b6d` 231-source library and eight-domain atlas, Phase 3 local branch modules). Also state which parts are designed (Phase 4 Research session UI, seats, trained Omniverso weights).
+- Facts come only from the sources in Task 2 and `studio/library/references.json`. Every 2D icon, 3D model, HDRI, structure and paper must resolve through `studio/library/sources.json` and `studio/library/references.json` (`npm run check:studio`, rule 53). A fact with no source in that list is a GATE question to the owner. Never invent one.
+- Cammut, Molecullage, and **Arc Kit** (`arc-core` MCP, the **Shelf**, and **Workshop toolpacks**) are shown as parts of Arc Harness (`concept/roadmap.md` v7, `concept/arc-harness-agent-design.md` v2).
+- Every diagram or schematic (including Slide 6 Omniverso model and Slide 10 Tree-HoH and Claim graph) must obey the 56-rule anti-overplating grammar (`.\docs\grammar.md` rules 39 to 56). Use boxes for operations only, keep zero nested boxes (`overplate = 0`), use at most 5 pale tint groups and 80 words on a model schematic, and draw neural layers by shape.
 - No slide carries a status mark or a claim badge (house style). The evidence level lives in `facts`, in the speaker notes and in the source line.
 - Languages: English and Russian. Russian follows `<local-path>`. No phrase from `refused.en.txt` or `refused.ru.txt` in the same folder may appear.
 - Lenses: `journal` and `cinematic` (Plan 1 ships both).
 - Roles: use only the 12 roles that both lenses style (Plan 2): `plastic`, `liquid`, `antibody`, `protein`, `nucleic-acid`, `gold`, `strip`, `line`, `diagram`, `tile`, `shape`, `label`. A new role is a STOP: ask the owner.
 - The site opens over http only (the Vercel link, or `npm run preview`), never from `file://`.
-- Every commit follows the commit GATE of Task 0. Nothing is pushed.
+- Every commit follows the commit GATE of Task 0, and commits stay local unless the owner gives a separate push approval.
 - Structures are read from `.\data\pdb\`. Never commit `1A34-assembly1.cif`, `181L*` or `1A34*` from that folder. Any new structure download is a GATE.
 - All commands run from the `studio/` folder.
 
@@ -75,26 +76,26 @@
 **Sources:** read them, and take text only from them.
 - A. `.\motion\films\arc-science-pitch-2.film.json`: the scene steps and claims.
 - B. `.\motion\films\arc-science-pitch-2.notes.md`: the sections "Data and sources" and "Claim boundary".
-- C. `.\decks\arc-science-yc\deck.json`: the notes of slides `02-projects`, `06-tree` and `13-resources`.
-- D. `.\decks\arc-science-yc\TO-CONFIRM.md`: what is still unconfirmed.
+- C. Arc Science `concept/roadmap.md` (v7, 2026-11-08), `concept/arc-harness-agent-design.md` (v2, 2026-11-08), `concept/arc-native-transition.md` (`N0` to `N9`) and `concept/tree-hoh.md` (Tree-HoH likelihood-ratio scoring, Sequential Halving $\eta = 3$, VOI/cost ordering, paired bootstrap patch gate). These supersede the retired `decks/arc-science-yc/` files.
+- D. `studio/library/references.json`, `studio/library/sources.json` (231 sources) and `studio/library/atlas/domains/*.json` (eight domains, consolidated at commit `bd96b6d`).
 - E. `.\motion\films\assets\contacts_1MEL.json`, `.\data\pdb\1MEL.pdb` and its `.record.json`.
-- F. Cammut notes of 2026-10-23 and 2026-10-28 about Cammut and Molecullage inside Arc Science (from the Task 0 recall).
+- F. Cammut notes of 2026-10-23 to 2026-11-08 about Cammut, Molecullage and Arc Kit inside Arc Harness (from the Task 0 recall).
 
 - [ ] **Step 1: Write these facts,** one entry each, with `text.en`, `text.ru`, `level`, `source` and `usedBy`. Copy the wording from the source, and shorten only if needed.
   - Each fact has one level only.
-  - A `file` source `ref` is the repository path under `.\`, with the `#` part naming the scene or slide. Tools resolve it against that folder, never against `studio/`.
+  - A `file` source `ref` is the repository path under `.\` (or `concept/`), with the `#` part naming the scene or section. Tools resolve it against that folder, never against `studio/`.
   - `usedBy` lists the layout block ids and world object ids that show the fact. Block ids follow the convention `s<NN>-<role>`, where `<NN>` is the stop number in two digits and `<role>` is `title` or `label-1` to `label-3` (for example `s03-title`, `s03-label-2`). Write each fact's `usedBy` from the story table of Task 3. Task 4 Step 3 creates exactly these blocks.
 
 | id | Content (from source) | level | source |
 |---|---|---|---|
-| `f-platform` | Arc Science is a computational platform for designing biomolecules (A, as-01) | architecture | `{kind:'file', ref:'motion/films/arc-science-pitch-2.film.json#as-01-title'}` |
-| `f-four` | Four projects stand on one shared base: Omniverso, Snöggo, RNAv-G, Arc Chemistry (A as-02; C 02-projects) | architecture | file, C `#02-projects` |
-| `f-proj-omniverso` | Omniverso designs VHH nanobodies and antibodies for a chosen antigen (C `02-projects` notes) | architecture | file, C `#02-projects` |
-| `f-proj-snoggo` | Snöggo estimates ΔΔG of binding for β-tubulin mutations (C `02-projects` notes) | architecture | file, C `#02-projects` |
-| `f-proj-rnavg` | RNAv-G describes viral capsid assembly and genome placement (C `02-projects` notes) | architecture | file, C `#02-projects` |
-| `f-proj-chem` | Arc Chemistry selects extractants to separate neodymium and praseodymium (C `02-projects` notes) | target | file, C `#02-projects` |
-| `f-workspaces` | Five workspaces: Research, Memory, Molecules, BioArt, Prose (A as-02) | architecture | file, A `#as-02-platform` |
-| `f-cammut` | Cammut keeps memory and connectors; Molecullage is the film and figure engine; both are parts of Arc Science | architecture | `{kind:'file', ref:'cammut note <id from Task 0>'}` |
+| `f-platform` | Arc Science (Arc Harness) is a scientific harness and computational platform for designing biomolecules (A, as-01; C `roadmap.md#direction`) | architecture | `{kind:'file', ref:'motion/films/arc-science-pitch-2.film.json#as-01-title'}` |
+| `f-four` | Four projects stand on one shared base: Omniverso, Snöggo, RNAv-G, Arc Chemistry (A as-02) | architecture | file, A `#as-02-platform` |
+| `f-proj-omniverso` | Omniverso designs VHH nanobodies and antibodies for a chosen antigen (A as-02) | architecture | file, A `#as-02-platform` |
+| `f-proj-snoggo` | Snöggo estimates ΔΔG of binding for β-tubulin mutations (A as-02) | architecture | file, A `#as-02-platform` |
+| `f-proj-rnavg` | RNAv-G describes viral capsid assembly and genome placement (A as-02) | architecture | file, A `#as-02-platform` |
+| `f-proj-chem` | Arc Chemistry selects extractants to separate neodymium and praseodymium (A as-02) | target | file, A `#as-02-platform` |
+| `f-workspaces` | Unified C2 console with five workspaces (Research, Memory, Molecules, BioArt, Prose) and four connectors (Servers, Keys, Apps, Audit) (A as-02; C `roadmap.md#phase-1b`) | architecture | file, A `#as-02-platform` |
+| `f-cammut` | Cammut keeps memory and connectors; Arc Kit shares `arc-core` MCP, the 231-source Shelf and Workshop toolpacks; Molecullage is the film and figure engine (`bd96b6d`) | architecture | `{kind:'file', ref:'studio/library/sources.json#summary'}` |
 | `f-1mel` | PDB 1MEL: camel VH in complex with lysozyme, 2.5 Å | published | `{kind:'doi', ref:'10.1038/nsb0996-803'}`, with `checked` set by Step 1a |
 | `f-contacts` | In PDB 1MEL, 24 lysozyme residues and 18 nanobody residues form 55 residue pairs within 4.5 Å (heavy atoms) | published | doi above, same `checked` date; numbers from E |
 | `f-cdr3` | One half of CDR3 contacts the VH region; the other half protrudes and penetrates deeply into the active site of lysozyme | published | doi above, same `checked` date |
@@ -102,9 +103,9 @@
 | `f-dn` | The denoiser has 153,102,091 parameters, calculated from module shapes (no weights) | architecture | file, A `#om-03-denoiser` |
 | `f-path` | Training uses a straight path from noise to data; the denoiser learns the velocity, data minus noise | architecture | file, A `#om-05-path` |
 | `f-judge` | A judge compares candidates with the target and an off-target panel; a solver picks exactly N designs | architecture | file, A `#om-07-judging` |
-| `f-status` | The code of the two base networks exists; the rest is designed; no model is trained and no design result exists | architecture | file, A `#as-99-end` |
-| `f-tree` | Hypothesis branches are tested at a fixed stage budget; weak ones are set aside; survivors get three times more checks (η = 3) | architecture | file, C `#06-tree` |
-| `f-gpu` | Request: 8,320 GPU-hours on NVIDIA A100 80 GB in Yandex Cloud over 12 months, in two stages (A 2,080 h pilot, B 6,240 h) | target | file, C `#13-resources` |
+| `f-status` | Arc Harness Phase 0–1, Cammut, the Molecullage 231-source library (`bd96b6d`), and the two base network modules exist in code; Phase 4 Research UI and Omniverso weights are designed and not yet trained | architecture | file, A `#as-99-end` |
+| `f-tree` | Tree-HoH tests hypothesis branches by likelihood-ratio support score and value of information per cost, pruning weak branches via Sequential Halving (η = 3) into a claim graph (C `tree-hoh.md`, `roadmap.md#phase-3`) | architecture | file, A `#as-06-tree` |
+| `f-gpu` | Request: 8,320 GPU-hours on NVIDIA A100 80 GB in Yandex Cloud over 12 months, in two stages (A 2,080 h pilot, B 6,240 h) | target | file, A `#as-99-end` |
 
   For `text.ru`, use the Russian wording of the same source where one exists (A and C have Russian text). Otherwise translate with the term list.
 - [ ] **Step 1a: Check the DOI against Crossref.** The three `doi` facts (`f-1mel`, `f-contacts`, `f-cdr3`) share one DOI. Fetch `https://api.crossref.org/works/10.1038/nsb0996-803` with WebFetch (curl is denied). The title must name the camel VH-lysozyme complex. If the DOI does not resolve or the title does not match, drop the three facts and ask the owner. If it matches, set `checked` to today's date on all three facts. Record the fetch and the title in `plan7.md`. An unchecked DOI is an error (Plan 6 `checkFacts`).
@@ -165,7 +166,8 @@
   Take the CDR3 residue range from the PDB record or the film assets, and write it in the script's first comment with its source. If the range is not stated in a source, STOP and ask.
   For the contact lines, the pairs come from `.\motion\films\assets\contacts_1MEL.json` (field `pairs`: chain A residue, chain L residue). Make the `distance` lines with this one-liner and paste its output into the script:
   `node -e 'for(const [a,l] of require("./motion/films/assets/contacts_1MEL.json").pairs)console.log("distance /A:"+a+"@CA /L:"+l+"@CA")'`
-  Expected: 55 lines (the pair count of fact `f-contacts`). If the count differs, STOP and ask. Each line joins the Cα atoms of the two residues. This is a drawing choice, and the notes of stop 4 say so. After the script runs, the ChimeraX log must show 55 distances and no "no atoms" or "not found" error. Any such error means a residue number does not exist in `1MEL.pdb`: STOP and ask.
+
+  Expected: 55 lines (the pair count of fact `f-contacts`), each joining the Cα atoms of the two residues as a documented drawing choice in the notes of stop 4. If the count differs, STOP and ask. After the script runs, the ChimeraX log must show 55 distances and no "no atoms" or "not found" error; any such error means a residue number is missing in `1MEL.pdb`, so STOP and ask.
   Then, in the script:
   1. run `distance style radius 0.1 dashes 0`, so the lines are thin solid cylinders;
   2. delete the distance labels;
@@ -237,7 +239,7 @@
 The rebuild always goes through a scratch job, never into the pilot job directly (Plan 4, Plan 5). The scratch job here is `arc-science-fig`.
 
 - [ ] **Step 1: GATE: the figure file.** Source B names the manuscript figure `fig_arch_h` and its caption `captions/fig_arch.md`, which are not in the Molecullage repository. Ask the owner for the path of the PNG, and for leave to use it in the deck. It is his own figure, so no outside licence applies, but ask.
-- [ ] **Step 2: Write `reading.json`.** Look at the picture. Write `studio/jobs/arc-science-fig/reading.json` by the Plan 4 schema (`studio/tools/rebuild/reading.ts`, Plan 4 Task 4), following the rules of that task. Run `checkReading` on it. Expected: `ok: true`.
+- [ ] **Step 2: Write `reading.json`.** Look at the picture. Write `studio/jobs/arc-science-fig/reading.json` by the Plan 4 schema (`studio/tools/rebuild/reading.ts`, Plan 4 Task 4), following the rules of that task and the 56-rule anti-overplating grammar (`.\docs\grammar.md` rules 39 to 56). Keep boxes for operations only, zero nested boxes (`overplate = 0`), at most 5 pale tint groups, at most 80 words, and neural layers drawn by shape. Run `checkReading` on it. Expected: `ok: true`.
 - [ ] **Step 3: Rebuild into the scratch job.** Run `npm run rebuild -- <png path> --job arc-science-fig`. Expected: `studio/jobs/arc-science-fig/job.json` with named vector objects, and a `rebuild-report.json`.
 - [ ] **Step 4: Score.** Run `npm run score -- arc-science-fig --against <png path>`. Expected: a score at or above the pass level that Plan 4's hand-over recorded. If it is below, fix the listed regions in `reading.json`, rebuild and score again, at most twice. Then STOP and ask.
 - [ ] **Step 5: Propose the objects for slide 6.** Run `npm run rebuild -- <png path> --job arc-science-fig --into arc-science --stop 6`. Expected: `studio/jobs/arc-science/proposed.json` with `add` edits for the scratch job's objects and vectors, placed at stop 6, and a printed diff.
@@ -252,7 +254,7 @@ The rebuild always goes through a scratch job, never into the pilot job directly
 - [ ] **Step 1: Cut the stills.** For each stop s at time T (from `paths`), and each lens and language, run:
   `ffmpeg -y -ss <T+hold-0.1> -i out/arc-science-<lens>-<lang>.mp4 -frames:v 1 jobs/arc-science/review/stills/<s>-<lens>-<lang>.png`
 - [ ] **Step 2: Overclaim read.** A fresh Sonnet agent reads `story`, `facts` and the English stills. It lists every sentence or picture that claims more than its fact's level allows. Rewrite each one, then redo Task 7 Step 1 and Step 1 of this task.
-- [ ] **Step 3: Blind read.** For each stop, a fresh agent sees only the journal-en and journal-ru stills of that stop. It answers the three questions of `.\qa\blind_read.md`. Fix every item of questions 2 and 3. Re-export, then repeat until a round finds nothing.
+- [ ] **Step 3: Blind read and anti-overplating check.** Verify that `npm run check:studio` passes and that Slide 6 and Slide 10 schematics have zero nested boxes (`overplate = 0` under `.\docs\grammar.md` rules 39 to 56). Then, for each stop, a fresh agent sees only the journal-en and journal-ru stills of that stop. It answers the three questions of `.\qa\blind_read.md`. Fix every item of questions 2 and 3. Re-export, then repeat until a round finds nothing.
 - [ ] **Step 4: Notes files.** Write `review/<stop>.notes.md` for each stop, with:
   - the message in one sentence;
   - facts and sources;
