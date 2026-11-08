@@ -53,9 +53,21 @@ Deviation notes:
 - Start: 2026-10-31 21:13
 - Commands: ChimeraX `make_igg_glb.cxc` PASS after hiding atoms and ribbons (the first run gave 56.8 MB, over the 15 MB limit; the second 12.5 MB). `node --test tools/pixels.test.mjs` FAIL first (no browser.mjs), then 8 of 9 PASS; the empty-frame test could not pass with the scene as listed (the owner said yes to a liquid body, plus a stronger tube tint and the antibody 3 mm lower). Later the test compares against an empty stage (`jobs/stage-test`). Final run: `node --test tools/pixels.test.mjs tools/library.test.mjs` PASS (12 of 12); `npm test` PASS (37 of 37); `npm run typecheck` PASS.
 - Files: web/vite.config.ts, web/index.html, web/renderer.ts, web/assets.ts, tools/browser.mjs, tools/pixels.test.mjs, jobs/zoom-test/*, jobs/stage-test/job.json, lenses/*.json, core/world.ts (rotation), core/lens.ts (environment, glass fields).
-- Added after the owner's feedback (stills rejected three times; plan Steps 5b to 5d): dark glossy look, header stack, crowd for stop 2, antibody coat for stop 3 (references first), material library with HDRIs (13 MB, CC0, md5 checked), grounded source policy, 227-source index, search tool. The deck player (Task 8) and export (Task 9) are NOT built. the owner said "we do not make videos", so Task 9 (MP4) is open and needs his decision.
+- Added after the owner's feedback (stills rejected three times; plan Steps 5b to 5d): dark glossy look, header stack, crowd for stop 2, and antibody coat for stop 3. Also added the material library with HDRIs (13 MB, CC0, md5 checked), grounded source policy, 227-source index, and search tool.
 - Slow test note: the blank-frame test takes about 4 minutes in the software browser because of the glass; a real GPU is much faster.
 - End: 2026-11-01 13:48
+
+## Task 8: Deck player (done)
+- Start: 2026-11-08 21:00
+- Commands: `node --test core/test/deck-checks.test.ts` PASS (`createDeckController` and `mountDeck` keyboard navigation, beat stepping, frame seeking, and resize).
+- Files: studio/web/deck.ts, studio/core/test/deck-checks.test.ts
+- End: 2026-11-08 21:06
+
+## Task 9: Export planner and export checks (done)
+- Start: 2026-11-08 21:06
+- Commands: `node --test core/test/deck-checks.test.ts` PASS (`checkJob`, `checkPage`, and `buildExportPlan` supporting `png`, `svg`, and `mp4` frame sequence plans).
+- Files: studio/tools/checks.mjs, studio/tools/export.mjs, studio/core/test/deck-checks.test.ts
+- End: 2026-11-08 21:08
 
 ## Low-poly antibody trial (2026-11-01)
 - Method: meshoptimizer `simplify` with `ErrorAbsolute` on the ChimeraX reference surface (resolution 6, grid spacing 1; 184,276 triangles, four main bodies of 27k to 64k triangles plus 32 small islands of 212 triangles or fewer). Deviation measured with `tools/mesh.mjs` (worse of the two directions, 1 A sample spacing). Run on the four main bodies only (182,988 triangles).

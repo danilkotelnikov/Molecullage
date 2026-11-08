@@ -1,21 +1,21 @@
-<!-- version: i5 | date: 2026-11-08 | status: ready for execution; i5 adds the 231-source library, 8-domain atlas, 56-rule anti-overplating gate (bd96b6d) and Arc Harness concept v7 alignment -->
+<!-- version: i6 | date: 2026-11-08 | status: ready for execution; Plan 1 built (tasks 0–9), Plan 2 (3d-toolkit) built; i6 adds the 231-source library, 8-domain atlas, 56-rule anti-overplating gate (bd96b6d) and Arc Harness concept v8 alignment -->
 # Molecullage Studio: plan index, shared names and executor rules
 
 Read this file first, then the design (`.\docs\superpowers\specs\2026-10-31-engine-design.md`), then the one plan you are running. The plan documents live in `.\docs\superpowers\plans\`. Read and update them there, by absolute path. The plans are written for **Claude Sonnet 5.5 High** as the executor. They are strict on purpose: follow them as written.
 
 ## 1. The plans and their order
 
-| # | File | Builds | Needs |
-|---|---|---|---|
-| 1 | `2026-10-31-molecullage-studio-plan1-world-and-live-deck.md` | World, clock, timeline, scale frames, camera paths, lenses, layout layer, live renderer, deck player, MP4 export, deep-zoom test | — |
-| 2 | `2026-10-31-studio-02-3d-toolkit.md` | Surfaces, copies and effects, moving parts, materials-light-camera; docs and demos for each | 1 |
-| 3 | `2026-10-31-studio-03-photoreal.md` | World-to-Blender bridge, Cycles renders, baked frames by t, home-server jobs | 1, 2 |
-| 4 | `2026-10-31-studio-04-vector-and-rebuild.md` | Named vector layer, GSAP player for 2D, raster rebuild with an overlay score | 1 |
-| 5 | `2026-10-31-studio-05-editing.md` | Edits with undo; click and change; timeline; words; 3D camera shots | 1, 4 |
-| 6 | `2026-10-31-studio-06-content-and-delivery.md` | Brief, research ledger, story, both languages, narration, storyboard stop, PDF, Vercel link | 1, 3, 5 |
-| 7 | `2026-10-31-studio-07-arc-science.md` | The Arc Science pilot deck | 1–6 |
-| 8 | `2026-10-31-studio-08-miraeles.md` | The Miraeles pilot deck | 7 |
-| 9 | `2026-10-31-studio-09-ml-explainer.md` | The ML model explainer showcase | 7 |
+| # | File | Builds | Needs | Status |
+|---|---|---|---|---|
+| 1 | `2026-10-31-molecullage-studio-plan1-world-and-live-deck.md` | World, clock, timeline, scale frames, camera paths, lenses, layout layer, live renderer, deck player, MP4 export, deep-zoom test | — | built (tasks 0–9) |
+| 2 | `2026-10-31-studio-02-3d-toolkit.md` | Surfaces, copies and effects, moving parts, materials-light-camera; docs and demos for each | 1 | built |
+| 3 | `2026-10-31-studio-03-photoreal.md` | World-to-Blender bridge, Cycles renders, baked frames by t, home-server jobs | 1, 2 | planned |
+| 4 | `2026-10-31-studio-04-vector-and-rebuild.md` | Named vector layer, GSAP player for 2D, raster rebuild with an overlay score | 1 | planned |
+| 5 | `2026-10-31-studio-05-editing.md` | Edits with undo; click and change; timeline; words; 3D camera shots | 1, 4 | planned |
+| 6 | `2026-10-31-studio-06-content-and-delivery.md` | Brief, research ledger, story, both languages, narration, storyboard stop, PDF, Vercel link | 1, 3, 5 | planned |
+| 7 | `2026-10-31-studio-07-arc-science.md` | The Arc Science pilot deck | 1–6 | planned |
+| 8 | `2026-10-31-studio-08-miraeles.md` | The Miraeles pilot deck | 7 | planned |
+| 9 | `2026-10-31-studio-09-ml-explainer.md` | The ML model explainer showcase | 7 | planned |
 
 Run the plans in this order. Do not start a plan until the plans it needs are done and the owner has seen their hand-over.
 
@@ -158,7 +158,7 @@ It keeps every earlier test passing. If an earlier test breaks, stop and ask (ru
     - Plan N (N ≥ 2) cuts `studio/plan<N>` from the tip of `studio/plan<N−1>`, so the earlier code is present.
     - Each Task 0 asks the owner for a yes for local commits on that branch and for `npm ci` with the approved versions (the commit GATE). Every commit step of the plan follows that yes.
     - After the branch is cut, the Task 0 of Plans 2 to 9 runs `npm ci` in `studio/`, because a fresh worktree has no `node_modules`.
-17. **Outside folders are read only, by absolute path.** These are `.\stage\`, `...\film\`, `...\motion\`, `...\data\pdb\`, `...\struct\`, `...\qa\`, `...\tokens\`, and the Arc Science `concept/` folder (`roadmap.md` v7, `arc-harness-agent-design.md` v2, `arc-native-transition.md`, `tree-hoh.md`, `super-agent-validation.md`), which supersedes the retired `decks/arc-science-yc` and `motion/projects/arc-science.json` paths. Never use a relative path to them. The one named exception is Plan 6 Task 5: it writes a temporary beat folder `.\film\src\beats\_studio-<job>-<lang>\` (and the matching `film\narration\_studio-<job>-<lang>\`), which the existing narration tool needs, and deletes both in a `finally` block. Plan 6 Task 0 asks the owner for a yes to this write. Plan documents are read and updated in the plans folder named at the top of this file.
+17. **Outside folders are read only, by absolute path.** These are `.\stage\`, `...\film\`, `...\motion\`, `...\data\pdb\`, `...\struct\`, `...\qa\`, `...\tokens\`, and the Arc Science `concept/` folder (`roadmap.md` v8, `arc-harness-agent-design.md` v3, `arc-native-transition.md`, `tree-hoh.md`, `super-agent-validation.md`), which supersedes the retired `decks/arc-science-yc` and `motion/projects/arc-science.json` paths. Never use a relative path to them. The one named exception is Plan 6 Task 5: it writes a temporary beat folder `.\film\src\beats\_studio-<job>-<lang>\` (and the matching `film\narration\_studio-<job>-<lang>\`), which the existing narration tool needs, and deletes both in a `finally` block. Plan 6 Task 0 asks the owner for a yes to this write. Plan documents are read and updated in the plans folder named at the top of this file.
 18. **One Vite config.** See "One Vite config" in section 2. Do not create another one.
 19. **Checks live in Node.** `loadJob` is pure (it runs in the browser). Brief, facts and story checks run only in `tools/check.mjs`.
 20. **Sending a file to the owner.** Send the file to the owner (with the file-sending tool if you have one; otherwise give its full path).
