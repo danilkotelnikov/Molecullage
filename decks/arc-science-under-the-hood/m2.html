@@ -1,0 +1,285 @@
+<style>
+/* m2: a better patch. Flat glass cards in the look of cq.html. Every id and class starts with m2. */
+.m2{width:100%;display:flex;flex-direction:column;gap:clamp(12px,2.2vh,24px)}
+.m2 .mh{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.m2 .mh h2{font-size:clamp(30px,3vw,52px);margin:0 8px 0 0;line-height:1.05}
+.m2 .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.m2-stage{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(12px,1.6vw,26px);align-items:center}
+.m2[data-ph="4"] .m2-stage,.m2[data-ph="5"] .m2-stage{grid-template-columns:minmax(0,1fr)}
+.m2[data-ph="4"] .m2-L,.m2[data-ph="5"] .m2-L{display:none}
+.m2-R{display:grid;min-width:0}
+.m2-pn{grid-area:1/1;display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,1.6vh,16px);min-width:0;visibility:hidden}
+.m2-pn:not(.on){opacity:0!important}
+.m2-pn.on{visibility:inherit}
+.m2-card{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:clamp(14px,2vh,22px) clamp(16px,1.4vw,22px);display:flex;flex-direction:column;gap:clamp(9px,1.4vh,14px);min-width:0}
+.m2-card h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.m2-say{font-size:clamp(15px,1.4vw,22px);color:var(--fg);line-height:1.4;margin:0}
+.m2-sub{font-size:clamp(12px,1.1vw,17px);color:var(--soft);line-height:1.4;margin:0}
+/* the mosaic */
+.m2-st{position:relative;width:min(100%,calc((100vh - 380px) * 1.25));aspect-ratio:25/20;margin:0 auto}
+.m2-t{position:absolute;left:0;top:0;width:4%;height:5%}
+.m2-t::before{content:"";position:absolute;inset:15%;border-radius:24%}
+.m2-t.pp::before{background:rgba(236,236,234,.5)}
+.m2-t.ff::before{background:rgba(141,140,136,.5)}
+.m2-t.old::before{background:var(--blue)}
+.m2-t.new::before{background:var(--violet)}
+.m2-pl{position:absolute;top:87%;transform:translateX(-50%);text-align:center;font:500 clamp(10px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .5s}
+.m2-pl.old{left:30%;color:var(--blue)}.m2-pl.new{left:74%;color:var(--violet)}
+.m2[data-ph="2"] .m2-pl,.m2[data-ph="3"] .m2-pl{opacity:1}
+/* the legend */
+.m2-lgs{display:flex;flex-direction:column;gap:6px}
+.m2-lg{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;font-size:clamp(14px,1.2vw,19px);color:var(--fg);transition:opacity .5s}
+.m2-lg b{font:600 clamp(15px,1.35vw,22px) "Geist Mono",monospace;opacity:0;transition:opacity .5s}
+.m2-sw{width:clamp(14px,1.3vw,20px);height:clamp(14px,1.3vw,20px);border-radius:24%}
+.m2-sw.pp{background:rgba(236,236,234,.5)}.m2-sw.ff{background:rgba(141,140,136,.5)}.m2-sw.old{background:var(--blue)}.m2-sw.new{background:var(--violet)}
+.m2[data-ph="1"] .m2-lg.ag b,.m2[data-ph="2"] .m2-lg b,.m2[data-ph="3"] .m2-lg b{opacity:1}
+.m2[data-ph="1"] .m2-lg.ag,.m2[data-ph="2"] .m2-lg.ag,.m2[data-ph="3"] .m2-lg.ag{opacity:.3}
+/* step 4: the score */
+.m2-eq{font:500 clamp(14px,1.35vw,22px) "Geist Mono",monospace;color:var(--fg);line-height:1.5}
+.m2-eq .b{color:var(--blue)}.m2-eq .v{color:var(--violet)}
+.m2-bc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(8px,1vw,14px)}
+.m2-ch{background:rgba(0,0,0,.26);border:1px solid rgba(236,236,234,.14);border-radius:10px;padding:9px 12px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.m2-ch.b{border-color:rgba(125,147,196,.55)}.m2-ch.c{border-color:rgba(156,143,196,.55)}
+.m2-ch em{font:500 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:var(--mute)}
+.m2-ch strong{font:600 clamp(22px,2.4vw,38px) "Geist Mono",monospace;line-height:1.1}
+.m2-ch.b strong{color:var(--blue)}.m2-ch.c strong{color:var(--violet)}
+#m2-sl{width:100%;accent-color:var(--violet);margin:2px 0 0;cursor:pointer}
+.m2-wk{font:500 clamp(14px,1.35vw,22px) "Geist Mono",monospace;color:var(--soft)}
+.m2-wk b{color:var(--teal);font-weight:600}
+.m2-wk.no b{color:var(--amber)}
+.m2-nl{position:relative;height:clamp(84px,11vh,98px);margin:4px 8px 0}
+.m2-tr{position:absolute;left:0;right:0;top:34px;height:4px;border-radius:2px;background:rgba(236,236,234,.22)}
+.m2-zone{position:absolute;top:-6px;bottom:-6px;background:rgba(127,178,170,.2);border-radius:0 6px 6px 0}
+.m2-bar{position:absolute;top:14px;width:3px;height:44px;margin-left:-1px;background:var(--amber);border-radius:2px}
+.m2-bl{position:absolute;top:-4px;transform:translateX(-50%);font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;color:var(--amber);white-space:nowrap}
+.m2-tk0{position:absolute;top:27px;width:2px;height:18px;margin-left:-1px;background:var(--mute)}
+.m2-zl{position:absolute;top:50px;transform:translateX(-50%);font:400 clamp(10px,.8vw,12px) "Geist Mono",monospace;color:var(--mute)}
+.m2-mk{position:absolute;top:26px;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:var(--amber);border:2px solid var(--bg);transition:background .3s}
+.m2-nl.ok .m2-mk{background:var(--teal)}
+.m2-nl .e{position:absolute;top:76px;font:400 clamp(10px,.8vw,12px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.m2-vr{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.m2-pill{font:600 clamp(12px,1vw,15px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:4px 16px;border:1px solid var(--amber);color:var(--amber);background:rgba(207,174,126,.1);white-space:nowrap}
+.m2-pill.ok{border-color:var(--teal);color:var(--teal);background:rgba(127,178,170,.12)}
+.m2-rs{border:1px solid rgba(236,236,234,.28);background:none;color:var(--soft);border-radius:999px;padding:5px 16px;font:500 clamp(12px,.95vw,15px) "Geist",sans-serif;cursor:pointer;margin-left:auto}
+.m2-rs:hover{border-color:var(--teal);color:var(--fg)}
+/* step 5: coins */
+.m2-coins{width:100%;height:auto;max-height:34vh}
+.m2-coins text{font:500 14px "Geist Mono",monospace;fill:var(--soft)}
+.m2-coins .n{fill:var(--amber);font-weight:600;font-size:16px}
+.m2-coins .m{fill:var(--mute);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+/* step 6: the door */
+.m2-door{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr);gap:clamp(10px,1.6vw,26px);align-items:center}
+.m2-ck{display:flex;align-items:center;gap:12px;font-size:clamp(15px,1.4vw,22px);color:var(--fg)}
+.m2-ck i{flex:none;width:clamp(20px,1.8vw,28px);height:clamp(20px,1.8vw,28px);border-radius:50%;background:var(--teal);display:grid;place-items:center;color:var(--bg);font:700 clamp(12px,1vw,16px) "Geist",sans-serif;font-style:normal}
+.m2-ar{font:300 clamp(24px,2.6vw,42px) "Geist Mono",monospace;color:var(--teal)}
+.m2-lk{display:flex;gap:clamp(14px,2vw,28px);align-items:center}
+.m2-lk svg{flex:none;width:clamp(64px,8vw,120px);height:auto;overflow:visible}
+.m2-fd{border:1px dashed rgba(236,236,234,.4);border-radius:10px;padding:12px 14px;font:400 clamp(13px,1.1vw,17px) "Geist Mono",monospace;color:var(--mute);margin-top:4px}
+.m2[data-ph="4"] .m2-R,.m2[data-ph="5"] .m2-R{max-width:1040px}
+@media (max-width:1100px){.m2-door{grid-template-columns:1fr}.m2-ar{display:none}}
+@media (max-width:760px){
+  .m2{gap:8px}
+  .m2 .tag{font-size:11px;padding:3px 9px}
+  .m2-stage,.m2[data-ph="4"] .m2-stage,.m2[data-ph="5"] .m2-stage{grid-template-columns:1fr;gap:8px}
+  .m2-pn:not(.on){display:none}
+  .m2[data-ph="3"] .m2-L{display:none}
+  .m2-card{padding:10px 12px;gap:7px}
+  .m2-say{font-size:14px}
+  .m2-sub{font-size:12.5px}
+  .m2-st{width:100%}
+  .m2-lgs{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px}
+  .m2-lg{grid-template-columns:auto minmax(0,1fr) auto;gap:7px;font-size:12.5px}
+  .m2-lg b{font-size:14px}
+  .m2-lg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .m2-eq,.m2-wk{font-size:14px}
+  .m2-bc{grid-template-columns:1fr 1.5fr;gap:6px}
+  .m2-ch{padding:6px 9px}.m2-ch strong{font-size:22px}
+  .m2-nl{height:96px}
+  .m2-card .m2-sub.hide{display:none}
+  .m2-coins{max-height:30vh}
+  .m2-coins text{font-size:19px}.m2-coins .n{font-size:21px}.m2-coins .m{font-size:15px}
+  .m2-coins text.m2-cx.m{display:none}
+  .m2-door{gap:8px}
+  .m2-ck{font-size:14px}
+  .m2-fd{font-size:12px;padding:8px 10px}
+}
+</style>
+<section class="slide" data-k="m2" data-film>
+  <div class="m2" data-ph="0">
+    <div class="mh" data-in><h2 class="big grad">Better patch</h2><span class="tag">Concept values</span></div>
+    <div class="m2-stage">
+      <div class="m2-L m2-card" data-st="tasks">
+        <h3>Tasks the patch was not tuned on</h3>
+        <div class="m2-st" id="m2-st"><span class="m2-pl old">Only old passes</span><span class="m2-pl new">Only new passes</span></div>
+      </div>
+      <div class="m2-R">
+        <div class="m2-pn on" data-p="legend" data-st="tasks">
+          <div class="m2-card m2-x"><h3>Old rules and new rules</h3>
+            <p class="m2-say" id="m2-say"></p>
+            <div class="m2-lgs">
+              <div class="m2-lg ag"><i class="m2-sw pp"></i><span>Both pass</span><b>190</b></div>
+              <div class="m2-lg"><i class="m2-sw old"></i><span>Only old passes</span><b>61</b></div>
+              <div class="m2-lg"><i class="m2-sw new"></i><span>Only new passes</span><b>97</b></div>
+              <div class="m2-lg ag"><i class="m2-sw ff"></i><span>Both fail</span><b>152</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="m2-pn" data-p="z" data-st="z" data-hold>
+          <div class="m2-card m2-x"><h3>Score</h3>
+            <p class="m2-say">Count the tasks only the new rules pass, c, and the tasks only the old rules pass, b. The score z says whether c beats b by more than luck explains.</p>
+            <div class="m2-eq">z = (<span class="v">c</span> &minus; <span class="b">b</span>) / &radic;(<span class="b">b</span> + <span class="v">c</span>)</div>
+            <div class="m2-bc">
+              <div class="m2-ch b"><em>b, only old passes</em><strong>61</strong></div>
+              <div class="m2-ch c"><em>c, only new passes</em><strong id="m2-cv">97</strong><input type="range" id="m2-sl" min="41" max="121" step="1" value="97" aria-label="Tasks only the new rules pass, c" data-hold></div>
+            </div>
+            <div class="m2-wk" id="m2-wk"></div>
+            <div class="m2-nl" id="m2-nl"><div class="m2-tr"><i class="m2-zone" id="m2-zn"></i></div><i class="m2-bar" id="m2-br"></i><span class="m2-bl" id="m2-bl">Bar 1.645</span><i class="m2-tk0" id="m2-t0"></i><i class="m2-mk" id="m2-mk"></i><span class="m2-zl" id="m2-z0">0</span><span class="e" style="left:0">Not better</span><span class="e" style="right:0">Better</span></div>
+            <div class="m2-vr"><span class="m2-pill" id="m2-pill">Better</span><button type="button" class="m2-rs" id="m2-rs" data-hold>Reset</button></div><p class="m2-sub" id="m2-vs"></p>
+          </div>
+        </div>
+        <div class="m2-pn" data-p="coins" data-st="coins">
+          <div class="m2-card m2-x"><h3>Error budget</h3>
+            <p class="m2-say">The error budget alpha is the chance that we accept a patch that is not better. All patches share 0.05 of it. A later patch may spend less, so it faces a stricter test.</p>
+            <svg class="m2-coins" id="m2-cn" viewBox="0 0 720 190" role="img" aria-label="A dashed ring for the budget of 0.05 and three coins of shrinking area for patches 1, 2 and 3"></svg>
+            <div class="m2-eq">&alpha;<sub>k</sub> = 0.05 &times; 6 / (&pi;&sup2; &times; k&sup2;)</div>
+          </div>
+        </div>
+        <div class="m2-pn" data-p="door" data-st="door">
+          <div class="m2-door">
+            <div class="m2-card m2-x"><h3>Result</h3>
+              <div class="m2-ck"><i>&#10003;</i><span>z is above the bar</span></div>
+              <div class="m2-ck"><i>&#10003;</i><span>The patch stays inside its share of the budget</span></div>
+            </div>
+            <div class="m2-ar m2-x">&rarr;</div>
+            <div class="m2-card m2-x"><h3>Approval</h3>
+              <div class="m2-lk">
+                <svg viewBox="0 0 80 100" aria-hidden="true"><rect x="10" y="45" width="60" height="48" rx="9" fill="rgba(236,236,234,.1)" stroke="#8d8c88" stroke-width="2.5"/><g class="m2-sh"><path d="M24 45V30a16 16 0 0 1 32 0V45" fill="none" stroke="#7fb2aa" stroke-width="5" stroke-linecap="round"/></g><circle cx="40" cy="67" r="5" fill="#8d8c88"/></svg>
+                <p class="m2-say">A person types the approval. It can be used once.</p>
+              </div>
+              <div class="m2-fd">Typed by a person</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const S = document.currentScript.previousElementSibling;
+  const $ = (q) => S.querySelector(q), $$ = (q) => [...S.querySelectorAll(q)];
+  const root = $('.m2');
+  /* Concept values: toy outcomes of 500 tasks. a both pass, b only old passes, c only new passes, d both fail. */
+  const A = 190, B = 61, C = 97, D = 152, BAR = 1.645;   /* 1.645 = standard normal quantile at 0.95, one-sided 5 % */
+  const COLS = 25;
+  let seed = 7; const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
+  const cats = [...Array(A).fill('pp'), ...Array(B).fill('old'), ...Array(C).fill('new'), ...Array(D).fill('ff')];
+  for (let i = cats.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [cats[i], cats[j]] = [cats[j], cats[i]]; }
+  const stage = $('#m2-st'); let ko = 0, kn = 0;
+  const tiles = cats.map((c, i) => {
+    const e = document.createElement('i'); e.className = 'm2-t ' + c; stage.insertBefore(e, stage.firstChild);
+    const sx = i % COLS, sy = Math.floor(i / COLS);
+    let px = sx, py = sy;
+    if (c === 'old') { const k = ko++; px = 3 + (k % 9); py = 16 - Math.floor(k / 9); }
+    if (c === 'new') { const k = kn++; px = 14 + (k % 9); py = 16 - Math.floor(k / 9); }
+    e._s = [sx, sy]; e._p = [px, py]; e._ag = c === 'pp' || c === 'ff';
+    return e;
+  });
+  let ready = false;   /* gsap loads after the fragments: the first step places the tiles */
+  const init = () => { if (!ready) { ready = true; tiles.forEach((e) => gsap.set(e, { xPercent: e._s[0] * 100, yPercent: e._s[1] * 100 })); } };
+  const agree = tiles.filter((e) => e._ag), differ = tiles.filter((e) => !e._ag);
+  function tilesTo(n, rm, tl) {   /* the tiles in the state of step n: 0 scattered, 1 agreeing tiles gone, 2 and later gathered */
+    const pile = n >= 2, gone = n >= 1;
+    const pos = (e) => (pile ? e._p : e._s);
+    if (rm) { gsap.set(agree, { opacity: gone ? 0 : 1 }); gsap.set(differ, { xPercent: (i, e) => pos(e)[0] * 100, yPercent: (i, e) => pos(e)[1] * 100, opacity: 1 }); return; }
+    tl.to(agree, { opacity: gone ? 0 : 1, duration: .7, stagger: { each: .0015, from: 'random' }, ease: 'power2.out' }, 0);
+    tl.to(differ, { xPercent: (i, e) => pos(e)[0] * 100, yPercent: (i, e) => pos(e)[1] * 100, opacity: 1, duration: pile ? 1 : .8, stagger: { each: .004, from: 'random' }, ease: 'power3.inOut' }, pile ? .15 : 0);
+  }
+  /* the score */
+  const sl = $('#m2-sl'), nl = $('#m2-nl'), fmt = (v) => (v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
+  const px = (z) => Math.max(0, Math.min(100, (z + 2) / 7 * 100)) + '%';
+  $('#m2-br').style.left = px(BAR); $('#m2-bl').style.left = px(BAR); $('#m2-z0').style.left = px(0); $('#m2-t0').style.left = px(0);
+  $('#m2-zn').style.left = px(BAR); $('#m2-zn').style.right = '0';
+  let zt = null;
+  function score() {
+    const c = +sl.value, d = c - B, r = Math.sqrt(B + c), z = d / r, ok = z > BAR;
+    $('#m2-cv').textContent = c;
+    $('#m2-wk').innerHTML = `z = ${d < 0 ? '−' : ''}${Math.abs(d)} / ${r.toFixed(2)} = <b>${fmt(z)}</b>`;
+    $('#m2-wk').classList.toggle('no', !ok);
+    $('#m2-mk').style.left = px(z); nl.classList.toggle('ok', ok);
+    const pill = $('#m2-pill'); pill.textContent = ok ? 'Better' : 'Not better'; pill.classList.toggle('ok', ok);
+    $('#m2-vs').textContent = ok ? 'z is above the bar. The new rules win more often than luck explains.' : 'z is below the bar. Luck can explain the difference.';
+    S.dataset.z = z.toFixed(4); S.dataset.c = c;
+  }
+  const setC = (c) => { if (zt) { zt.kill(); zt = null; } sl.value = c; score(); };
+  sl.addEventListener('input', () => { if (zt) { zt.kill(); zt = null; } score(); });
+  $('#m2-rs').onclick = () => setC(C);
+  $('#m2-rs').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });   /* the deck steps on Enter and Space; a focused button keeps them */
+  score();
+  /* coins: the area of a coin is its share of the budget alpha = 0.05; the ring has the area of the whole budget */
+  const AL = .05, shares = [1, 2, 3].map((k) => AL * 6 / (Math.PI * Math.PI * k * k)), RR = 62, cn = $('#m2-cn'), NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, at, par) => { const e = document.createElementNS(NS, tag); Object.entries(at).forEach(([k, v]) => e.setAttribute(k, v)); (par || cn).appendChild(e); return e; };
+  const ring = mk('g', { class: 'm2-cx' });
+  mk('circle', { cx: 90, cy: 80, r: RR, fill: 'none', stroke: '#cfae7e', 'stroke-width': 2, 'stroke-dasharray': '7 6' }, ring);
+  const rl = mk('text', { x: 90, y: 178, 'text-anchor': 'middle', class: 'n' }, ring); rl.textContent = 'Budget 0.05';
+  const coinR = [], X = [];
+  let x = 262;
+  shares.forEach((v, i) => {
+    const r = RR * Math.sqrt(v / AL); if (i) x += coinR[i - 1] + r + 62; coinR.push(r); X.push(x);
+    const g = mk('g', { class: 'm2-cx' });
+    mk('circle', { cx: x, cy: 80, r, fill: 'rgba(207,174,126,.22)', stroke: '#cfae7e', 'stroke-width': 2, class: 'm2-co', 'data-r': r }, g);
+    const m = mk('text', { x, y: 158, 'text-anchor': 'middle', class: 'm' }, g); m.textContent = 'Patch ' + (i + 1);
+    const n = mk('text', { x, y: 178, 'text-anchor': 'middle', class: 'n' }, g); n.textContent = v.toFixed(4);
+  });
+  const dots = mk('text', { x: X[2] + coinR[2] + 46, y: 86, class: 'm m2-cx' }); dots.textContent = 'and so on';
+  /* the lock */
+  const sh = $('.m2-sh'); const lock = (open) => gsap.set(sh, { rotation: open ? -38 : 0, y: open ? -9 : 0, svgOrigin: '56 45' });
+  /* the steps. A step draws its state from scratch, then plays what is new. */
+  const PANEL = ['legend', 'legend', 'legend', 'z', 'coins', 'door'];
+  const SAY = [
+    'Each tile is one of 500 tasks. The agent runs it with the old rules and again with the new rules, which carry the patch.',
+    'On most tasks both versions pass or both fail. Nothing is learned from them, so they fade.',
+    '158 tasks remain. On these the versions disagree. Only these decide.',
+  ];
+  const say = $('#m2-say');
+  let last = null;
+  const run = (n) => (s, rm) => {
+    init();
+    gsap.killTweensOf($$('.m2-x,.m2-cx,.m2-co,#m2-say'));
+    root.dataset.ph = n;
+    const p = PANEL[n], fresh = last !== p && !rm; last = p;
+    $$('.m2-pn').forEach((e) => e.classList.toggle('on', e.dataset.p === p));
+    gsap.set($$('.m2-x'), { clearProps: 'opacity,transform' });
+    gsap.set($$('.m2-cx'), { opacity: 1 });
+    $$('.m2-co').forEach((c) => c.setAttribute('r', c.dataset.r));
+    lock(false); setC(C);
+    say.textContent = SAY[Math.min(n, 2)];
+    const tl = gsap.timeline();
+    tilesTo(Math.min(n, 2), rm, tl);
+    if (fresh) tl.fromTo($$(`[data-p="${p}"] .m2-x`), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .55, stagger: .1, ease: 'power2.out' }, 0);
+    else if (n < 3 && !rm) tl.fromTo(say, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, .1);
+    if (n === 3 && !rm) { sl.value = B; score(); const o = { c: B }; zt = gsap.to(o, { c: C, duration: 1.5, delay: fresh ? .7 : .2, ease: 'power2.inOut', onUpdate: () => { sl.value = Math.round(o.c); score(); }, onComplete: () => { zt = null; setC(C); } }); tl.add(zt, 0); }
+    if (n === 4 && !rm) {
+      tl.fromTo(ring, { opacity: 0 }, { opacity: 1, duration: .5 }, fresh ? .5 : 0);
+      $$('.m2-co').forEach((c, i) => tl.fromTo(c, { attr: { r: 0 } }, { attr: { r: +c.dataset.r }, duration: .7, ease: 'back.out(1.6)' }, (fresh ? .9 : .3) + i * .4));
+      $$('.m2-cx').forEach((g, i) => { if (i) tl.fromTo(g, { opacity: 0 }, { opacity: 1, duration: .5 }, (fresh ? .9 : .3) + (i - 1) * .4); });
+    }
+    if (n === 5 && !rm) tl.to(sh, { rotation: -38, y: -9, svgOrigin: '56 45', duration: .8, ease: 'power3.inOut' }, fresh ? 1.2 : .4);
+    if (n === 5 && rm) lock(true);
+    return tl;
+  };
+  window.STEPS = window.STEPS || {};
+  const cap = [
+    'A patch is replayed on tasks it was not tuned on.',
+    'Where both versions agree, nothing is learned. Those tiles fade.',
+    'Only the tasks where the versions disagree decide.',
+    'The patch passes when z is above the bar. Move c to try.',
+    'Patches share one error budget, so each later patch faces a stricter test.',
+    'Passing only opens the door to one typed approval by a person.',
+  ];
+  const on = ['[data-st="tasks"]', '[data-st="tasks"]', '[data-st="tasks"]', '[data-st="tasks"],[data-st="z"]', '[data-st="coins"]', '[data-st="door"]'];
+  window.STEPS.m2 = cap.map((c, n) => ({ cap: c, on: on[n], run: run(n) }));
+  window.ENTER = window.ENTER || {};
+  window.ENTER.m2 = () => { last = null; };
+})();
+</script>

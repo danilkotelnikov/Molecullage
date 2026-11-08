@@ -22,12 +22,13 @@ The [gallery](gallery/) holds twelve figures from published open-access papers, 
 | `palette/` | Sample colours from a figure you are allowed to use, check them for colour-blind readers, and write a token file. |
 | `plots/` | Make matplotlib plots that sit in the page at exact millimetre positions, in the same colours. |
 | `struct/` | Render a PDB entry in ChimeraX in a flat style, crop the layers to one box, and list typed contacts. |
-| `qa/` | Measure a built figure (ink, empty space, type size, words, fonts, width) and give the two readers their instructions. |
+| `qa/` | Measure a built figure (ink, empty space, type size, words, fonts, width) or a deck, and give the two readers their instructions. |
+| `deck/` | Write a talk as one `deck.json` and get slides, a live preview with a presenter window, a standalone HTML file, a PDF, PNG files, an MP4 or GIF and speaker notes. |
 | `templates/` | Copy one of eight figure pages and edit it. |
 | `film/` | Make a short narrated film of a method or a structure: scenes in code, subtitles, a voice-over, an MP4 (see [film/README.md](film/README.md)). |
 | `claude/` | Install the Claude Code skill, the MCP server and the two optional hooks. |
-| `examples/` | See each template built, most of them on public PDB entries, each with a `how-made.md`. |
-| `docs/` | Read the drawing rules, the palette notes, the ChimeraX notes, the kit reference, a glossary and field notes. |
+| `examples/` | See each template built, most of them on public PDB entries, each with a `how-made.md`; the demo deck is in `examples/deck-demo/`. |
+| `docs/` | Read the drawing rules, the palette notes, the ChimeraX notes, the kit reference, the deck manual, a glossary and field notes. |
 | `gallery/` | Look at twelve published figures redrawn with Molecullage, each with a script that fetches its data and a note on how it was made. |
 
 The other folders hold what these use: `art/` the cropped renders of the examples, `data/pdb/` the coordinate files with their RCSB records, `tokens/` the palette as a token file, and `scripts/` the install, check and example scripts.
@@ -49,7 +50,7 @@ pip install -r requirements.txt      # Windows: py -3 -m pip install -r requirem
 npm run check
 ```
 
-I tested everything on Windows 11 with Node 24 and Python 3.11. The Linux and macOS commands are given but not tested. `npm run check` takes about half a minute. It builds a page, measures it, starts the MCP server, runs both hooks, and runs the project tools on a scratch copy of the sample project. It prints one line per step, starting with `pass` or `FAIL`.
+I tested everything on Windows 11 with Node 24 and Python 3.11. The Linux and macOS commands are given but not tested. `npm run check` takes about half a minute. It builds a page, measures it, starts the MCP server, runs both hooks, and runs the project tools on a scratch copy of the sample project, then the deck tests and the deck tools on a starter deck. It prints one line per step, starting with `pass` or `FAIL`.
 
 Then build one figure and measure it:
 
@@ -62,7 +63,7 @@ The build writes `out/pipeline.pdf`, `out/pipeline.png` and `out/pipeline.html`,
 
 ## Use it with Claude Code
 
-The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL.md`) gives Claude the drawing rules and the order of work. The MCP server (`claude/mcp/server.mjs`) gives Claude the fifteen tools below; they run the build, the QA script, the palette scripts and ChimeraX on your machine, and only `render_structure` with `fetch=true` goes to the network. The auto-trigger hook adds one line to any prompt that mentions a figure, plot, diagram or render, so that Claude loads the skill. To install them, open [INSTALL.md](INSTALL.md) and paste its first block into Claude Code. Claude installs the skill and the server, and prints the hook entries for you to paste into your settings. After a restart, ask for a figure in plain words, for example: "Make a contact map of a nanobody and its antigen from PDB 1MEL."
+The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL.md`) gives Claude the drawing rules and the order of work. The MCP server (`claude/mcp/server.mjs`) gives Claude the twenty-one tools below; they run the build, the QA script, the palette scripts, the deck exporter and ChimeraX on your machine, and only `render_structure` with `fetch=true` goes to the network. The auto-trigger hook adds one line to any prompt that mentions a figure, plot, diagram or render, so that Claude loads the skill. To install them, open [INSTALL.md](INSTALL.md) and paste its first block into Claude Code. Claude installs the skill and the server, and prints the hook entries for you to paste into your settings. After a restart, ask for a figure in plain words, for example: "Make a contact map of a nanobody and its antigen from PDB 1MEL."
 
 | Tool | What it does |
 |---|---|
@@ -81,6 +82,24 @@ The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL
 | `new_film_beat` | Scaffolds one scene of a narrated film in `film/`. |
 | `narrate_film` | Speaks the narration, writes the subtitles and the soundtrack, and reports sentences that overlap. |
 | `render_film` | Renders a scene to an MP4 with sound, a stills sheet and a page audit. |
+| `new_deck` | Writes a starter `deck.json` for a talk. |
+| `build_deck` | Checks the deck, renders its ChimeraX loops and writes one standalone HTML file. |
+| `preview_deck` | Starts the live preview with hot reload and a presenter window. |
+| `export_deck` | Makes the PDF, the PNG files, the MP4, the GIF or the speaker notes. |
+| `deck_contact_sheet` | Puts every slide on one PNG for the blind read. |
+| `audit_deck` | Measures a deck: palette, text size, overflow, overlap, contrast, words. |
+
+## Make a talk
+
+The deck module builds slides from one `deck.json`: ten layouts, speaker notes, build steps, slide transitions and 3D scenes (a ChimeraX loop or an interactive viewer that works offline). Every animation is a function of a virtual clock, so the exporter draws the same frame every time.
+
+```
+node deck/cli.mjs new talks/my-talk --title "Название доклада"
+npm run deck:preview -- talks/my-talk          # live page with hot reload; P opens the presenter window
+npm run deck:export -- talks/my-talk --format all
+```
+
+`--format` takes `html` (one file, opens offline), `pdf` (one 1920 x 1080 px page per slide), `png`, `mp4`, `gif`, `notes` (text and a PDF with a thumbnail beside each note) or `all`. The MP4 needs ffmpeg. `node deck/cli.mjs audit <deck>` runs the checks on the real page, and `npm run deck:test` runs the manifest checker and the clock test. `examples/deck-demo/` is a five-slide deck in Russian with its builds. The manual is `docs/deck.md`.
 
 ## Redesign every figure of a project
 
@@ -114,6 +133,8 @@ Copy `molecullage.example.json` to `molecullage.json` in your figure project. Th
 | `strictness` | `molecullage.json` | `normal`, `strict` or `loose`: the limits of the QA checks (see below). |
 | `palette` | `molecullage.json` | The token file. Default `tokens/tokens.base.json`. |
 | `typeLadder` | `molecullage.json` | Type sizes in pt: panel letter 9, title 7.5, label 7, smallest text 6.5, maths 8.4. |
+| `deckLadder` | `molecullage.json` | Type sizes of slides in px at 1920 x 1080: 25, 28, 36, 44, 64, 110, 220. |
+| `deckWords` | `molecullage.json` | Word limits of slides: 70 on a slide, 12 in a title, 16 in a list item, 14 in the boundary line. |
 | `words` | `molecullage.json` | Word limits: 130 in a schematic, 90 in a plate, 6 per box, 3 per arrow, 14 in the footnote. |
 | `widthMm` | `molecullage.json` | Allowed figure widths in mm: 178 and 89. |
 | `claimBoundary` | `molecullage.json` | The footnote that `f.boundary()` writes: what is real data and what is illustration. |

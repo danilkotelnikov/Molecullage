@@ -1,0 +1,293 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+<style>
+/* x3: 3D stages in the deck style. A stage is a transparent WebGL canvas with studio light,
+   a soft floor shadow, labels with leader lines, and drag to turn the object. */
+.x3s{width:100%;display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:2.6vw;align-items:center}
+.x3s .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:2vh}
+.x3s .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+.x3s .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.x3s .lede{font-size:clamp(16px,1.25vw,21px);color:var(--soft);line-height:1.45;margin:0 0 2vh}
+.x3s .lede b{color:var(--fg);font-weight:600}
+.x3s .facts{display:flex;flex-direction:column;gap:1.2vh;margin:0;padding:0;list-style:none}
+.x3s .facts li{font-size:clamp(14px,1.05vw,18px);color:var(--soft);line-height:1.4;padding-left:16px;position:relative}
+.x3s .facts li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--c,var(--teal))}
+.x3s .facts li b{color:var(--fg);font-weight:600}
+.x3s .eqmini{margin-top:2vh;font-size:clamp(16px,1.3vw,22px);color:var(--fg)}
+.x3s .eqmini .cap{display:block;font-size:clamp(13px,.95vw,16px);color:var(--mute);margin-top:4px}
+.x3{position:relative;width:100%;height:74vh;touch-action:pan-y;cursor:grab}
+.x3:active{cursor:grabbing}
+.x3 canvas{display:block;width:100%;height:100%;-webkit-mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent),linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent),linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);mask-composite:intersect}
+.x3 svg.lead{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.x3 .lb{position:absolute;transform:translate(-50%,-50%);font:500 14px "Geist Mono",monospace;letter-spacing:.04em;color:var(--fg);background:rgba(11,11,13,.78);border:1px solid rgba(236,236,234,.22);border-radius:6px;padding:3px 9px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .35s}
+.x3 .lb.on{opacity:1}
+.x3 .lb.glow{box-shadow:0 0 14px 1px var(--gc,rgba(127,178,170,.5)),inset 0 0 0 1px var(--gc,rgba(127,178,170,.5))}
+.x3 .lb i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:7px;vertical-align:0}
+.x3 .hud{position:absolute;left:0;bottom:0;font:500 14px "Geist Mono",monospace;color:var(--mute);letter-spacing:.06em}
+.x3 .gl-off{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:15px}
+@media (max-width:760px){
+  .x3s{grid-template-columns:1fr;gap:8px}
+  .x3s .mh h2{font-size:clamp(22px,6.4vw,28px)}
+  .x3s .lede{font-size:14px;margin-bottom:6px}
+  .x3s .facts{display:none}
+  .x3s .eqmini{display:none}
+  .x3{height:46vh}
+  .x3 .lb{font-size:11px;padding:2px 6px}
+}
+</style>
+<script>
+/* X3.stage(host, o): one WebGL scene that renders only while its slide is on screen.
+   o: {fov, cam:[x,y,z], tgt:[x,y,z], floor:y|null, spin:rad/s, drag:true}
+   Returns S with: scene, camera, root, three, fly(cam,tgt,dur), label(text,colour,getPos,dx,dy), show(labels,on), onFrame(fn). */
+window.STEPS = window.STEPS || {}; window.ENTER = window.ENTER || {};
+window.X3 = (() => {
+  const T = window.THREE;
+  const live = [];
+  const hex = (c) => new T.Color(c);
+  /* look: stage defaults, tuned once here. ss = least render scale (2 draws a 1x screen at 2x and lets the browser average it down, which smooths edges and thin ribbons),
+     rim = default fresnel lift of X3.matte (0 gives the old surface; matte({rim:0}) turns it off for one material), drift = idle camera sway in radians (0 off), smooth = camera follow rate per second (0 off). */
+  const look = { ss: 2, rim: 0.14, drift: 0.035, smooth: 7, shadow: 'vsm' };
+  Object.assign(look, window.X3_LOOK || {});   // a page may set window.X3_LOOK before this script to try other settings
+  const reduce = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  function stage(host, o = {}) {
+    if (!T) { host.innerHTML = '<div class="gl-off">3D view needs WebGL and network for three.js.</div>'; return null; }
+    let renderer;
+    try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); } catch (e) { host.innerHTML = '<div class="gl-off">3D view needs WebGL.</div>'; return null; }
+    renderer.setPixelRatio(Math.min(2, Math.max(window.devicePixelRatio || 1, o.ss || look.ss)));
+    renderer.outputEncoding = T.sRGBEncoding;
+    renderer.toneMapping = T.NoToneMapping;
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = look.shadow === 'vsm' ? T.VSMShadowMap : T.PCFSoftShadowMap;
+    renderer.localClippingEnabled = true;
+    host.appendChild(renderer.domElement);
+    const lead = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); lead.setAttribute('class', 'lead'); host.appendChild(lead);
+    const scene = new T.Scene();
+    if (T.RoomEnvironment) { const pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromScene(new T.RoomEnvironment(), 0.04).texture; }
+    scene.add(new T.HemisphereLight(0xffffff, 0x8a8a92, scene.environment ? 0.5 : 0.9));
+    const key = new T.DirectionalLight(0xffffff, scene.environment ? (o.keyI || 0.74) : 1.2);
+    key.position.set(...(o.key || [120, 220, 160])); key.castShadow = true;
+    if (look.shadow === 'vsm') { key.shadow.mapSize.set(1024, 1024); key.shadow.radius = 5; key.shadow.blurSamples = 12; key.shadow.bias = -0.0006; } else { key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 6; key.shadow.bias = -0.0004; }
+    key.shadow.normalBias = 0.5;
+    const sc = o.shadowBox || 160; Object.assign(key.shadow.camera, { left: -sc, right: sc, top: sc, bottom: -sc, near: 1, far: 1200 });
+    scene.add(key);
+    const rim = new T.DirectionalLight(0xd8e4ff, 0.32); rim.position.set(-160, 90, -200); scene.add(rim);   // cool rim: separates the object from the page
+    const camera = new T.PerspectiveCamera(o.fov || 30, 1, 0.5, 6000);
+    const cam = new T.Vector3(...(o.cam || [0, 40, 260])), tgt = new T.Vector3(...(o.tgt || [0, 0, 0]));
+    const root = new T.Group(); scene.add(root);
+    if (o.floor != null) {
+      const fl = new T.Mesh(new T.PlaneGeometry(4000, 4000), new T.ShadowMaterial({ opacity: 0.42 }));
+      fl.rotation.x = -Math.PI / 2; fl.position.y = o.floor; fl.receiveShadow = true; scene.add(fl);
+    }
+    const labels = [], frames = [], v0 = new T.Vector3();
+    const S = { three: T, scene, camera, root, renderer, key, cam, tgt, labels, spin: o.spin || 0, yaw: 0, pitch: 0, host };
+    S.onFrame = (fn) => frames.push(fn);
+    S.fly = (c, g, dur = 2.2) => {   // slow in, slow out
+      const p = { u: 0 }, c0 = cam.clone(), g0 = tgt.clone(), c1 = new T.Vector3(...c), g1 = new T.Vector3(...(g || [tgt.x, tgt.y, tgt.z]));
+      if (!dur) { cam.copy(c1); tgt.copy(g1); return null; }
+      return gsap.to(p, { u: 1, duration: dur, ease: 'power3.inOut', onUpdate: () => { cam.lerpVectors(c0, c1, p.u); tgt.lerpVectors(g0, g1, p.u); } });
+    };
+    S.label = (text, colour, at, dx = 90, dy = -40) => {
+      const d = document.createElement('div'); d.className = 'lb';
+      d.innerHTML = (colour ? '<i style="background:' + colour + '"></i>' : '') + text; host.appendChild(d);
+      const l = document.createElementNS('http://www.w3.org/2000/svg', 'path'); l.setAttribute('fill', 'none'); l.setAttribute('stroke', 'rgba(236,236,234,.45)'); l.setAttribute('stroke-width', '1'); lead.appendChild(l);
+      const L = { d, l, at, dx, dy, on: false }; labels.push(L); return L;
+    };
+    S.show = (list, on) => (Array.isArray(list) ? list : [list]).forEach((L) => { L.on = on; L.d.classList.toggle('on', on); });
+    S.untangle = (list, lanes) => {   // returns the lanes reordered so that the leader lines are shortest and do not cross
+      const P = list.map((L) => { const p = L.at(); if (!p) return [0.5, 0.5]; v0.copy(p).project(camera); return [v0.x * 0.5 + 0.5, -v0.y * 0.5 + 0.5]; });
+      let best = lanes, bd = 1e9; const go = (done, rest) => { if (!rest.length) { const d = done.reduce((a, l, i) => a + Math.hypot(l[0] - P[i][0], l[1] - P[i][1]), 0); if (d < bd) { bd = d; best = done; } return; } rest.forEach((l, i) => go([...done, l], rest.filter((_, j) => j !== i))); };
+      go([], lanes); return best;
+    };
+    S.hideAll = () => labels.forEach((L) => { L.on = false; L.d.classList.remove('on'); });
+    S.glow = (L, colour) => { L.d.classList.toggle('glow', !!colour); if (colour) L.d.style.setProperty('--gc', colour); };   // soft halo round the label of the accent; colour null clears it
+    /* S.ground(y, {r, opacity, shadow}): optional ground for an object that stands on something. A soft contact pool under the object plus a shadow catcher.
+       Off unless called. y is the height of the surface, r the radius of the pool. Returns the group so a slide can hide it. */
+    S.ground = (y, g = {}) => {
+      const r = g.r || 70, c = document.createElement('canvas'); c.width = c.height = 128;
+      const x = c.getContext('2d'), gr = x.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(0,0,0,.55)'); gr.addColorStop(0.45, 'rgba(0,0,0,.26)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = gr; x.fillRect(0, 0, 128, 128);
+      const pool = new T.Mesh(new T.PlaneGeometry(2 * r, 2 * r), new T.MeshBasicMaterial({ map: new T.CanvasTexture(c), transparent: true, opacity: g.opacity == null ? 1 : g.opacity, depthWrite: false, fog: false }));
+      const fl = new T.Mesh(new T.PlaneGeometry(4000, 4000), new T.ShadowMaterial({ opacity: g.shadow == null ? 0.3 : g.shadow })); fl.receiveShadow = true;
+      const grp = new T.Group(); [pool, fl].forEach((m) => { m.rotation.x = -Math.PI / 2; grp.add(m); }); pool.position.y = 0.05; grp.position.y = y; scene.add(grp); return grp;
+    };
+    // drag to turn
+    let drag = null;
+    if (o.drag !== false) {
+      host.addEventListener('pointerdown', (e) => { drag = [e.clientX, e.clientY, S.yaw, S.pitch]; host.setPointerCapture(e.pointerId); });
+      host.addEventListener('pointermove', (e) => { if (!drag) return; S.yaw = drag[2] + (e.clientX - drag[0]) * 0.008; S.pitch = Math.max(-0.8, Math.min(0.8, drag[3] + (e.clientY - drag[1]) * 0.006)); });
+      host.addEventListener('pointerup', () => { drag = null; });
+    }
+    let w = 0, h = 0;
+    const size = () => { const r = host.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return; if (r.width === w && r.height === h) return; w = r.width; h = r.height; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); };
+    const v = new T.Vector3();
+    let last = performance.now(), first = true, dgain = 1;
+    const cs = cam.clone(), ts = tgt.clone(), UP = new T.Vector3(0, 1, 0);   // cs, ts: the smoothed camera the viewer sees
+    S.drift = o.drift == null ? look.drift : o.drift; S.smooth = o.smooth == null ? look.smooth : o.smooth;
+    S.tick = (now) => {
+      const gap = now - last, dt = Math.min(0.05, gap / 1000); last = now;
+      size(); if (!w) return;
+      if (!drag) S.yaw += S.spin * dt;
+      root.rotation.y = S.yaw; root.rotation.x = S.pitch;
+      frames.forEach((f) => f(dt, now / 1000));
+      if (first || gap > 400 || !S.smooth) { cs.copy(cam); ts.copy(tgt); first = false; }   // a stage that was hidden or just built starts where it is told
+      else { const k = 1 - Math.exp(-dt * S.smooth); cs.lerp(cam, k); ts.lerp(tgt, k); }
+      dgain += ((drag || reduce() ? 0 : 1) - dgain) * (1 - Math.exp(-dt * 2.5));   // the sway fades out while the viewer drags
+      camera.position.copy(cs);
+      if (S.drift && dgain > 0.001) camera.position.sub(ts).applyAxisAngle(UP, S.drift * dgain * Math.sin(now / 2200)).add(ts);
+      camera.lookAt(ts);
+      renderer.render(scene, camera);
+      labels.forEach((L) => {
+        if (!L.on) { L.l.setAttribute('d', ''); return; }
+        const p = L.at(); if (!p) return; v.copy(p).project(camera);
+        const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h, hw = L.d.offsetWidth / 2 + 6, tx = L.lane ? Math.max(hw, Math.min(w - hw, L.lane[0] * w)) : Math.max(hw, Math.min(w - hw, x + L.dx)), ty = L.lane ? L.lane[1] * h : Math.max(14, Math.min(h - 14, y + L.dy));   // L.lane = [fx, fy] pins a label beside the model
+        L.d.style.left = tx + 'px'; L.d.style.top = ty + 'px';
+        L.l.setAttribute('d', 'M' + x.toFixed(1) + ',' + y.toFixed(1) + 'L' + tx.toFixed(1) + ',' + ty.toFixed(1));
+      });
+    };
+    S.render = () => S.tick(performance.now());
+    live.push(S);
+    return S;
+  }
+  // one loop for all stages; a stage renders only while its slide is on
+  const loop = (now) => {
+    live.forEach((S) => { const sl = S.host.closest('.slide'); if (!sl || sl.classList.contains('on')) S.tick(now); });
+    requestAnimationFrame(loop);
+  };
+  if (T) requestAnimationFrame(loop);
+
+  const mat = (c, o = {}) => new T.MeshPhysicalMaterial(Object.assign({ color: hex(c), roughness: 0.42, metalness: 0.0, clearcoat: 0.35, clearcoatRoughness: 0.4, envMapIntensity: 0.5 }, o));
+  const V = (a, i, s = 0.1) => new T.Vector3(a[3 * i] * s, a[3 * i + 1] * s, a[3 * i + 2] * s);
+  /* tube(ints, {colour, r, s}): smooth ribbon-like tube through CA points (0.1 A integers) */
+  function tube(a, o = {}) {
+    const n = a.length / 3, P = []; for (let i = 0; i < n; i++) P.push(V(a, i, o.s || 0.1));
+    const g = new T.TubeGeometry(new T.CatmullRomCurve3(P, false, 'centripetal'), Math.max(8, n * (o.seg || 4)), o.r || 0.9, o.radial || 8, false);
+    const m = new T.Mesh(g, o.mat || mat(o.colour || '#7fb2aa', o)); m.castShadow = true; m.receiveShadow = true; return m;
+  }
+  /* balls(ints, {colour, r, stride, colours}): instanced spheres; stride 4 carries an element index (C N O S) */
+  function balls(a, o = {}) {
+    const st = o.stride || 3, n = a.length / st, g = new T.SphereGeometry(1, o.detail || 18, Math.round((o.detail || 18) * 0.7));
+    const m = new T.InstancedMesh(g, o.mat || mat(o.colour || '#ececea', o), n); const M = new T.Matrix4(), s = o.s || 0.1, r = o.r || 1.6;
+    const EL = o.colours || ['#c9c8c2', '#7d93c4', '#c97b6e', '#cfae7e'];
+    for (let i = 0; i < n; i++) {
+      M.makeScale(r, r, r).setPosition(a[st * i] * s, a[st * i + 1] * s, a[st * i + 2] * s); m.setMatrixAt(i, M);
+      if (st === 4 || o.each) m.setColorAt(i, hex(st === 4 ? EL[a[st * i + 3]] : o.each(i)));
+    }
+    m.castShadow = true; m.receiveShadow = true; return m;
+  }
+  /* centre(ints): mean point, as a Vector3 in angstroms */
+  const centre = (a, s = 0.1) => { const n = a.length / 3, c = new T.Vector3(); for (let i = 0; i < n; i++) c.add(V(a, i, s)); return c.multiplyScalar(1 / n); };
+  const sub = (a, idx) => { const o = []; idx.forEach((i) => o.push(a[3 * i], a[3 * i + 1], a[3 * i + 2])); return o; };
+  /* soft(c): clear tinted plastic for tubes and shells */
+  const glass = (c, o = {}) => new T.MeshPhysicalMaterial(Object.assign({ color: hex(c), roughness: 0.08, metalness: 0, transmission: 0, transparent: true, opacity: 0.28, clearcoat: 1, clearcoatRoughness: 0.05, depthWrite: false, side: T.DoubleSide, envMapIntensity: 0.6 }, o));
+  /* mesh(rec, {mat}): a baked molecule (bake.py): smooth surface or ribbon from all atoms. rec holds base64 arrays.
+     paint(m, fn): fn(residue index, charge potential in kT/e) returns a linear Color; the baked ambient light multiplies it. */
+  const un = (s, C) => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new C(u.buffer); };
+  /* matte(o): the material of every baked molecule: dry, soft highlight, so the palette colour stays true */
+  /* rimify(m, k): a soft fresnel lift at grazing angles (the colour of the surface times k), so a curved surface reads as one solid. k 0 leaves the material unchanged. */
+  function rimify(m, k) {
+    if (!k) return m;
+    m.userData.rim = k;
+    m.onBeforeCompile = (sh) => {
+      sh.uniforms.rimK = { value: m.userData.rim };
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float rimK;')
+        .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{ float rf = 1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0); totalEmissiveRadiance += diffuseColor.rgb * rimK * rf * rf * rf; }');
+    };
+    return m;
+  }
+  /* matte(o): o.rim (default look.rim, 0.14) adds the fresnel lift. Every other option is a MeshStandardMaterial option. */
+  const matte = (o = {}) => { const { rim, ...r } = o; return rimify(new T.MeshStandardMaterial(Object.assign({ roughness: 0.62, metalness: 0, envMapIntensity: 0.16 }, r)), rim == null ? look.rim : rim); };
+  /* satin(o): a small clear coat over a soft body, for objects that carry no baked light (tubes, paths, props). Same palette colour as matte on the lit side. o.rim default 0.12. */
+  const satin = (o = {}) => { const { rim, ...r } = o; return rimify(new T.MeshPhysicalMaterial(Object.assign({ roughness: 0.5, metalness: 0, clearcoat: 0.3, clearcoatRoughness: 0.35, envMapIntensity: 0.16 }, r)), rim == null ? 0.12 : rim); };
+  /* halo(mesh, {colour, grow, power, k, vc}): a soft glow round a Mesh (not an InstancedMesh), for the accent of a beat. No post pass: a shell
+     grown along the normals, drawn from behind with additive light that fades toward its outer edge. grow in the units of the mesh (A for molecules).
+     Returns the halo mesh; tween h.material.uniforms.k.value from 0 to 1. vc: take the colour from the vertex colours (paths). Clipping planes of the mesh are copied. */
+  function halo(m, o = {}) {
+    const mt = new T.ShaderMaterial({
+      uniforms: { c: { value: hex(o.colour || '#7fb2aa').convertSRGBToLinear() }, k: { value: o.k == null ? 1 : o.k }, grow: { value: o.grow || 1.6 }, pw: { value: o.power || 1.6 }, sc: { value: 1 } },
+      vertexColors: !!o.vc, clipping: true, transparent: true, depthWrite: false, fog: false, side: T.BackSide,
+      blending: T.CustomBlending, blendEquation: T.AddEquation, blendSrc: T.SrcAlphaFactor, blendDst: T.OneFactor, blendSrcAlpha: T.OneFactor, blendDstAlpha: T.OneFactor,
+      vertexShader: 'uniform float grow, sc; varying vec3 vN; varying vec3 vV; varying vec3 vCol;\n#include <clipping_planes_pars_vertex>\nvoid main(){ vec4 mvPosition = modelViewMatrix * vec4(position + normal * grow * sc, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mvPosition.xyz);\n#ifdef USE_COLOR\n vCol = color;\n#else\n vCol = vec3(1.0);\n#endif\n gl_Position = projectionMatrix * mvPosition;\n#include <clipping_planes_vertex>\n}',
+      fragmentShader: 'uniform vec3 c; uniform float k, pw; varying vec3 vN; varying vec3 vV; varying vec3 vCol;\n#include <clipping_planes_pars_fragment>\nvoid main(){\n#include <clipping_planes_fragment>\n float a = pow(clamp(dot(-vN, vV), 0.0, 1.0), pw) * k; gl_FragColor = vec4(c * vCol, a);\n#include <encodings_fragment>\n}',
+    });
+    mt.clippingPlanes = m.material.clippingPlanes || null;
+    const h = new T.Mesh(m.geometry, mt); h.frustumCulled = false; h.renderOrder = 2; m.add(h); return h;
+  }
+  /* path(points, {colour0, colour1, width, glow, taper, S, px}): a thick, tapered, gradient path with a soft glow. points: Vector3 or [x,y,z], in the units of the scene.
+     width: diameter at the start; taper [start, end] scales the width along the path (default [1, 0.4]). glow 0..1 (default 0.6, 0 off). S (the stage) keeps the thinnest
+     end at least px screen pixels wide (default 6), so the path stays visible when the camera pulls back; px 0 turns that off. Returns a Group; g.tube is the lit mesh,
+     g.glowMesh the halo, g.setGlow(k) sets the glow. Add it to S.root or any group. */
+  function path(pts, o = {}) {
+    const P = pts.map((p) => (p.isVector3 ? p : new T.Vector3(p[0], p[1], p[2]))), w = o.width || 3, tp = o.taper || [1, 0.4], rad = o.radial || 10, seg = o.seg || Math.max(32, P.length * 10);
+    const curve = new T.CatmullRomCurve3(P, false, 'centripetal'), g = new T.TubeGeometry(curve, seg, 0.5, rad, false), pos = g.attributes.position, n = pos.count, ring = rad + 1;
+    const ctr = new Float32Array(n * 3), off = new Float32Array(n * 3), col = new Float32Array(n * 3), c0 = hex(o.colour0 || '#7fb2aa').convertSRGBToLinear(), c1 = hex(o.colour1 || o.colour0 || '#cfae7e').convertSRGBToLinear(), tmp = new T.Color(), C = new T.Vector3();
+    for (let i = 0; i <= seg; i++) {
+      const t = i / seg, r = 0.5 * w * (tp[0] + (tp[1] - tp[0]) * t); curve.getPointAt(t, C); tmp.copy(c0).lerp(c1, t);
+      for (let j = 0; j < ring; j++) { const q = (i * ring + j) * 3; ctr[q] = C.x; ctr[q + 1] = C.y; ctr[q + 2] = C.z; off[q] = (pos.array[q] - C.x) * 2 * r; off[q + 1] = (pos.array[q + 1] - C.y) * 2 * r; off[q + 2] = (pos.array[q + 2] - C.z) * 2 * r; col[q] = tmp.r; col[q + 1] = tmp.g; col[q + 2] = tmp.b; }
+    }
+    g.setAttribute('color', new T.BufferAttribute(col, 3));
+    const caps = [[P[0], c0, tp[0]], [P[P.length - 1], c1, tp[1]]].map(([at, c, f]) => { const m = new T.Mesh(new T.SphereGeometry(0.5 * w * f, 16, 12), matte({ color: c, roughness: 0.5, rim: 0.12 })); m.position.copy(at); m.frustumCulled = false; return m; });   // round ends
+    const fit = (k) => { for (let q = 0; q < n * 3; q++) pos.array[q] = ctr[q] + off[q] * k; pos.needsUpdate = true; caps.forEach((m) => m.scale.setScalar(k)); };
+    fit(1);
+    const tube = new T.Mesh(g, o.mat || matte({ vertexColors: true, roughness: 0.5, rim: 0.12 })); tube.frustumCulled = false; tube.castShadow = !!o.shadow;
+    const grp = new T.Group(); grp.add(tube, ...caps); grp.tube = tube;
+    const gl = o.glow == null ? 0.6 : o.glow, hl = halo(tube, { vc: true, grow: w * 0.9, power: 1.4, k: gl }), ch = caps.map((m, i) => { const h = halo(m, { grow: w * 0.9, power: 1.4, k: gl * 0.4 }); h.material.uniforms.c.value.copy(i ? c1 : c0); return h; });   // the caps glow too, so the glow has no flat end
+    grp.glowMesh = hl; grp.setGlow = (k) => { hl.material.uniforms.k.value = k; ch.forEach((h) => { h.material.uniforms.k.value = k * 0.4; }); };
+    const px = o.px == null ? 6 : o.px, S = o.S, mid = P[Math.floor(P.length / 2)], wc = new T.Vector3(); let kk = 1;
+    if (S && px) S.onFrame(() => {
+      grp.localToWorld(wc.copy(mid)); const d = S.cam.distanceTo(wc), wpp = 2 * d * Math.tan(S.camera.fov * Math.PI / 360) / Math.max(200, S.host.clientHeight);
+      const k = Math.max(1, px * wpp / (w * Math.min(tp[0], tp[1])));
+      if (Math.abs(k - kk) > 0.02) { kk = k; fit(k); hl.material.uniforms.sc.value = k; }
+    });
+    return grp;
+  }
+  /* water(S, {n, inner, outer, seed}): real-size water molecules around the object, oxygen 1.5 A, drawn far below true density */
+  function water(S, o = {}) {
+    const n = o.n || 150, inner = o.inner || 40, outer = o.outer || 110, front = o.front == null ? 10 : o.front, parts = [[0, 0, 0, 1.5, '#7d93c4'], [0.76, 0.59, 0, 1.0, '#ececea'], [-0.76, 0.59, 0, 1.0, '#ececea']];
+    const pos = [], nor = [], col = [], idx = []; let base = 0;
+    parts.forEach(([x, y, z, r, c]) => {
+      const g = new T.SphereGeometry(r, 12, 9), C = new T.Color(c).convertSRGBToLinear(), p = g.attributes.position, q = g.attributes.normal;
+      for (let i = 0; i < p.count; i++) { pos.push(p.getX(i) * 1 + x * 1.3, p.getY(i) + y * 1.3, p.getZ(i) + z); nor.push(q.getX(i), q.getY(i), q.getZ(i)); col.push(C.r, C.g, C.b); }
+      g.index.array.forEach((v) => idx.push(v + base)); base += p.count;
+    });
+    const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new T.Float32BufferAttribute(nor, 3)); g.setAttribute('color', new T.Float32BufferAttribute(col, 3)); g.setIndex(idx);
+    const mat = matte({ vertexColors: true, transparent: true, opacity: o.opacity || 0.3 }), m = new T.InstancedMesh(g, mat, n), M = new T.Matrix4(), Q = new T.Quaternion(), E = new T.Euler(), P = new T.Vector3(), U = new T.Vector3(1, 1, 1);
+    let a = o.seed || 7; const R = () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    const W = []; while (W.length < n) { const u = 2 * R() - 1, th = 6.283 * R(), r = inner + (outer - inner) * Math.cbrt(R()), s = Math.sqrt(1 - u * u); if (r * s * Math.sin(th) > front) continue; W.push({ p: [r * s * Math.cos(th), r * u, r * s * Math.sin(th)], e: [R() * 6, R() * 6, R() * 6], w: 0.25 + R() * 0.5, f: R() * 6 }); }
+    m.frustumCulled = false; (o.parent || S.root).add(m);
+    S.onFrame((dt, t) => { W.forEach((w, i) => { P.set(w.p[0] + 2.2 * Math.sin(t * 0.3 * w.w + w.f), w.p[1] + 2.2 * Math.cos(t * 0.27 * w.w + w.f), w.p[2] + 2.2 * Math.sin(t * 0.23 * w.w + 2 * w.f)); E.set(w.e[0] + t * w.w, w.e[1] + t * 0.7 * w.w, w.e[2]); Q.setFromEuler(E); M.compose(P, Q, U); m.setMatrixAt(i, M); }); m.instanceMatrix.needsUpdate = true; });
+    return m;
+  }
+  /* depth(S, near, far): distant parts fade into the page, so the eye reads depth */
+  const depth = (S, near, far) => { S.scene.fog = new T.Fog(0x0e0e11, near, far); };
+  const atoms = (at) => { const p = un(at.P, Int16Array), r = un(at.R, Uint16Array), a = []; for (let i = 0; i < r.length; i++) a.push({ x: p[3 * i] * at.s, y: p[3 * i + 1] * at.s, z: p[3 * i + 2] * at.s, e: at.E[i], r: r[i] }); return a; };
+  function sticks(list, o = {}) {
+    const CE = Object.assign({ C: '#cfcec9', N: '#7d93c4', O: '#9c8fc4', S: '#cfae7e', P: '#cfae7e' }, o.colours), g = new T.Group(), M = new T.Matrix4(), Q = new T.Quaternion(), S1 = new T.Vector3(), U = new T.Vector3(0, 1, 0), A = new T.Vector3(), B = new T.Vector3(), C1 = new T.Color();
+    const ms = o.mat ? o.mat() : matte(), mb = o.mat ? o.mat() : matte(), ball = new T.InstancedMesh(new T.SphereGeometry(o.r || 0.42, 20, 14), ms, list.length);
+    list.forEach((a, i) => { M.makeTranslation(a.x, a.y, a.z); ball.setMatrixAt(i, M); ball.setColorAt(i, C1.set(o.colour || CE[a.e] || CE.C).convertSRGBToLinear()); });
+    const pairs = []; for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) { const a = list[i], b = list[j], d = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z); if (d < 1.95) pairs.push([a, b, d]); }
+    const bond = new T.InstancedMesh(new T.CylinderGeometry(o.b || 0.17, o.b || 0.17, 1, 12), mb, Math.max(1, pairs.length));
+    pairs.forEach(([a, b, d], i) => { A.set(a.x, a.y, a.z); B.set(b.x, b.y, b.z); Q.setFromUnitVectors(U, B.clone().sub(A).normalize()); S1.set(1, d, 1); M.compose(A.add(B).multiplyScalar(0.5), Q, S1); bond.setMatrixAt(i, M); bond.setColorAt(i, C1.set(o.colour || '#cfcec9').convertSRGBToLinear()); });
+    bond.count = pairs.length; g.add(ball, bond); g.traverse((m) => { m.castShadow = true; m.frustumCulled = false; }); return g;
+  }
+  function mesh(rec, o = {}) {
+    const g = new T.BufferGeometry(), p = un(rec.P, Int16Array), f = new Float32Array(p.length);
+    for (let i = 0; i < p.length; i++) f[i] = p[i] * rec.s;
+    g.setAttribute('position', new T.BufferAttribute(f, 3));
+    g.setAttribute('normal', new T.BufferAttribute(un(rec.N, Int8Array), 3, true));
+    g.setAttribute('color', new T.BufferAttribute(new Float32Array(p.length), 3));
+    g.setIndex(new T.BufferAttribute(un(rec.I, rec.i32 ? Uint32Array : Uint16Array), 1));
+    g.userData = { ao: un(rec.A, Uint8Array), shut: un(rec.C, Uint8Array), q: un(rec.Q, Int8Array), res: un(rec.R, Uint16Array) };
+    const m = new T.Mesh(g, o.mat || matte());
+    m.material.vertexColors = true; m.castShadow = true; m.receiveShadow = true;
+    if (o.colour) paint(m, () => o.colour);
+    return m;
+  }
+  function paint(m, fn, shut = 1) {   // shut 1: the complex is closed, the partner darkens the contact; shut 0: the chain stands alone
+    const u = m.geometry.userData, c = m.geometry.attributes.color, a = c.array, n = a.length / 3;
+    for (let i = 0; i < n; i++) {
+      const r = u.res[i], col = fn(r, u.q[i] / 20), l = (0.2 + 0.8 * Math.pow(u.ao[i] / 255, 1.2)) * (1 - shut * (1 - u.shut[i] / 255));
+      a[3 * i] = col.r * l; a[3 * i + 1] = col.g * l; a[3 * i + 2] = col.b * l;
+    }
+    c.needsUpdate = true;
+  }
+  return { stage, mat, glass, tube, balls, centre, sub, V, hex, mesh, paint, matte, satin, halo, path, water, depth, atoms, sticks, look };
+})();
+</script>

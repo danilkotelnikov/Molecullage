@@ -1,0 +1,223 @@
+<style>
+/* n3: Snöggo. A route slide: one picture (the cycle), three cards (Step, Maths, Under the hood) and the rail. Kit: rt.html, x3.html. */
+section[data-k="n3"]{justify-content:flex-start}
+section[data-k="n3"] .n3{flex:1;min-height:0;width:100%;display:flex;flex-direction:column;gap:clamp(8px,1.3vh,14px)}
+section[data-k="n3"] .mh{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
+section[data-k="n3"] .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+section[data-k="n3"] .tag{font:400 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+section[data-k="n3"] .tag.n3-st{text-transform:none;letter-spacing:.01em;font-family:"Geist",sans-serif;font-size:clamp(12px,.95vw,15px);color:var(--soft);border-color:rgba(236,236,234,.4);background:rgba(236,236,234,.06)}
+#n3-x3 .hud{top:0;bottom:auto}
+.n3-lede{margin:0;max-width:1220px;font-size:clamp(15px,1.2vw,20px);line-height:1.4;color:var(--soft)}
+.n3-lede b{color:var(--fg);font-weight:600}
+section[data-k="n3"] .rt{flex:1;min-height:0;grid-template-rows:minmax(0,1fr);align-items:stretch}
+section[data-k="n3"] .rt-main{min-height:0}
+section[data-k="n3"] .rt-side{min-height:0;justify-content:flex-start}
+section[data-k="n3"] .rt-tk{text-transform:none;letter-spacing:.02em}
+section[data-k="n3"] .x3{flex:1 1 0;height:auto;min-height:150px}
+section[data-k="n3"] .x3 canvas{position:absolute;inset:0;width:100%;height:100%}
+section[data-k="n3"] .rt-sub .a{color:var(--amber)}
+section[data-k="n3"] .rt-sub .b{color:var(--blue)}
+section[data-k="n3"] .rt-sub b{color:var(--fg);font-weight:600}
+section[data-k="n3"] .rt-card[data-card="maths"]:not(.on) > :not(h3),
+section[data-k="n3"] .rt-card[data-card="hood"]:not(.on) > :not(h3){display:none}
+section[data-k="n3"] .rt-eq .ln{display:block}
+.n3-gates{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.n3-gates li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;align-items:baseline;padding-bottom:5px;border-bottom:1px solid rgba(236,236,234,.08)}
+.n3-gates li:last-child{border-bottom:0;padding-bottom:0}
+.n3-gates b{font:600 clamp(12px,.95vw,15px) "Geist",sans-serif;color:var(--fg)}
+.n3-gates em{font:500 clamp(11px,.9vw,14px) "Geist Mono",monospace;font-style:normal;color:var(--teal);white-space:nowrap}
+.n3-gates span{grid-column:1 / -1;font-size:clamp(12px,.92vw,14px);color:var(--soft);line-height:1.3}
+@media (max-width:760px){
+  section[data-k="n3"] .n3{gap:6px}
+  section[data-k="n3"] .mh h2{font-size:24px}
+  section[data-k="n3"] .tag{font-size:9px;padding:2px 8px;letter-spacing:.05em}
+  section[data-k="n3"] .tag.n3-st{font-size:11px;letter-spacing:0}
+  .n3-st .n3-l,.n3-lede .n3-more{display:none}
+  .n3-lede{font-size:13px;line-height:1.35}
+  section[data-k="n3"] .rt{grid-template-rows:minmax(0,1fr) auto}
+  section[data-k="n3"] .rt-card{padding:8px 11px}
+  section[data-k="n3"] .rt-sub{display:none}
+  section[data-k="n3"] .rt-card[data-card="maths"] .rt-sub{display:block;font-size:12px}
+  section[data-k="n3"] .rt-tk{padding:5px 0;text-align:center;text-overflow:clip}
+  section[data-k="n3"] .x3{min-height:120px}
+  #n3-x3 .hud{display:none}
+  .n3-gates{gap:4px}.n3-gates span{display:none}
+}
+</style>
+<section class="slide" data-k="n3" data-film>
+  <div class="n3">
+    <div class="mh" data-in><h2 class="big grad">Snöggo</h2><span class="tag">Published</span><span class="tag">Computed</span><span class="tag n3-st">Status: development handoff. Release acceptance is false.<span class="n3-l"> The package has produced no result.</span></span></div>
+    <p class="n3-lede" data-in><b>Snöggo</b> computes how a change in a molecule changes its binding. We take a real structure, change one thing step by step in the computer, and measure the energy along the way. We do it in the protein with the molecule bound and in plain water.<span class="n3-more"> The difference tells us whether the change helps. A team uses this before it pays for a synthesis.</span></p>
+    <div class="rt">
+      <div class="rt-main"><div class="x3" id="n3-x3"></div></div>
+      <div class="rt-side">
+        <div class="rt-card" data-card="step"><h3>Step</h3><p class="rt-say" data-say></p><p class="rt-sub" data-sub></p></div>
+        <div class="rt-card" data-card="maths"><h3>Maths</h3><div class="rt-eq" data-eq></div><p class="rt-sub" data-msub></p></div>
+        <div class="rt-card" data-card="hood"><h3>Under the hood</h3>
+          <ul class="n3-gates" id="n3-gates">
+            <li><b>Cycle closure</b><em>up to 1 kcal/mol</em><span>The two paths around the cycle must agree. A gap means a leg is wrong.</span></li>
+            <li><b>Drift between halves</b><em>up to 1 kcal/mol</em><span>The first half of a run and the second half must agree. A gap means it has not settled.</span></li>
+            <li><b>Replica spread</b><em>up to 1 kcal/mol</em><span>Repeated runs must agree. A gap means luck decided the result.</span></li>
+            <li><b>Overlap</b><em>at least 0.03</em><span>The forward and reverse changes must overlap. Without overlap they cannot be combined.</span></li>
+            <li><b>Work samples</b><em>at least 20</em><span>We count only independent samples. Fewer give a noisy estimate.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="n3-rail"></div>
+  </div>
+</section>
+<script>
+(() => {
+  window.STEPS = window.STEPS || {}; window.ENTER = window.ENTER || {};
+  const s = document.currentScript.previousElementSibling;
+  const Q = (q, r) => (r || s).querySelector(q), QA = (q, r) => [...(r || s).querySelectorAll(q)];
+  const host = Q('#n3-x3');
+
+  /* ---------- the words of each beat: Step card, Maths card, lit card ---------- */
+  const RT_KCAL = 0.0019872041 * 298.15 * Math.LN10;   // R T ln 10 in kcal/mol at 298.15 K: 1.9872e-3 * 298.15 * 2.302585 = 1.3643
+  const EQ = '<span class="ln">ΔΔG = <span class="a">ΔG(bound, mutated)</span> − <span class="b">ΔG(free, mutated)</span></span>';
+  const MSUB = '<span class="a">Bound</span> is the top arrow, the change in the pocket. <span class="b">Free</span> is the bottom arrow, the change in water. Mutated means with the methyl group. Below zero means tighter binding.';
+  const TXT = [
+    { lit: 'step', say: 'This is a real structure: T4 lysozyme L99A holds a benzene ring in a small pocket.', sub: 'The structure is entry 181L of the Protein Data Bank. The surface is cut open to show the pocket.' },
+    { lit: 'step', say: 'In the computer, a methyl group grows on the ring, one small step at a time.', sub: 'A methyl group is one carbon with its hydrogens. Each step costs some free energy, the energy that decides which state wins.' },
+    { lit: 'step', say: 'We make the same change in a box of plain water, far from the protein.', sub: 'This is the second path. It costs free energy too, and it is cheap to compute.' },
+    { lit: 'step', say: 'The dashed arrows are binding, and binding is the real question.', sub: 'Simulating a molecule that enters and leaves the pocket takes too long. We skip it.' },
+    { lit: 'maths', say: 'The four states form a cycle: two cheap paths that give the answer to the hard one.', sub: 'Free energy depends only on the start and the end of a path. So the pocket arrow minus the water arrow equals the change in binding.' },
+    { lit: 'hood', say: 'Five checks test each result against fixed limits.', sub: 'Each check names what it guards against.' },
+    { lit: 'maths', say: 'To read a ΔΔG we need a scale. The scale is a tenfold change in binding.', sub: '', eq: '<span class="ln">RT ln 10 = <b id="n3-rt">' + RT_KCAL.toFixed(3) + '</b> kcal/mol</span>', msub: 'R is the gas constant and T is 298 K. A ΔΔG of <b>−' + RT_KCAL.toFixed(3) + '</b> kcal/mol means ten times tighter binding.' },
+  ];
+  const CAPS = [
+    'Benzene sits in the pocket of T4 lysozyme L99A, PDB 181L.',
+    'A methyl group grows on the ring in the pocket.',
+    'We make the same change in plain water, away from the protein.',
+    'The dashed arrows are binding. Simulating them directly takes too long.',
+    'A cycle is two cheap paths that give the answer to the hard one.',
+    'Five checks test each result against fixed limits.',
+    '1.364 kcal/mol is a tenfold change in binding at 298 K.',
+  ];
+  const cards = QA('.rt-card'), rail = Q('#n3-rail');
+  RT.rail(rail, ['Pocket', 'Methyl', 'Water', 'Binding', 'Cycle', 'Checks', 'Scale'], s);
+  const put = (sel, card, v) => { const e = Q(sel, card); e.hidden = !v; if (v) e.innerHTML = v; };
+  function applyText(i) {
+    const x = TXT[i];
+    put('[data-say]', cards[0], x.say); put('[data-sub]', cards[0], x.sub);
+    put('[data-eq]', cards[1], x.eq || EQ); put('[data-msub]', cards[1], x.msub || MSUB);
+    RT.lit(s, [x.lit]); RT.mark(rail, i);
+  }
+  const tweenText = (i) => {   // the lit card and the Step card fade in; the gates come one by one
+    const kids = cards.filter((c) => c.classList.contains('on') || c === cards[0]).flatMap((c) => [...c.children].filter((q) => !q.hidden && q.tagName !== 'H3' && q.tagName !== 'UL'));
+    const tl = gsap.timeline();
+    tl.fromTo(kids, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out', clearProps: 'transform' }, 0);
+    if (i === 5) tl.fromTo(QA('#n3-gates li'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.32, ease: 'power2.out', clearProps: 'transform' }, 0.5);
+    if (i === 6) { const r = Q('#n3-rt'); if (r) tl.add(RT.count(r, +RT_KCAL.toFixed(3), { dec: 3, dur: 1.1 }), 0.4); }
+    return tl;
+  };
+
+  if (!(window.X3 && window.X3M && window.X3D)) {   // no 3D kit: the cards and the captions still work
+    window.STEPS.n3 = CAPS.map((cap, i) => ({ cap, on: '*', run: (s_, rm) => { applyText(i); return rm ? null : tweenText(i); } }));
+    return;
+  }
+  const S = X3.stage(host, { cam: [0, 0, 160], tgt: [0, 0, 0], floor: null, spin: 0, drag: false });
+  if (!S) { window.STEPS.n3 = CAPS.map((cap, i) => ({ cap, on: '*', run: (s_, rm) => { applyText(i); return rm ? null : tweenText(i); } })); return; }
+  const T = S.three, MM = window.X3M.l99a, V3 = (x, y, z) => new T.Vector3(x, y, z);
+  const lin = (c) => new T.Color(c).convertSRGBToLinear(), C = { teal: '#7fb2aa', blue: '#7d93c4', violet: '#9c8fc4', amber: '#cfae7e', fg: '#ececea', mute: '#8d8c88' };
+  const hud = document.createElement('div'); hud.className = 'hud'; hud.style.maxWidth = '100%'; hud.style.lineHeight = '1.3'; hud.textContent = 'Pocket and benzene from PDB 181L'; host.appendChild(hud);
+  X3.depth(S, 320, 800);
+
+  /* The ligand and its pocket from 181L, as atoms (angstroms); the real surface of T4 lysozyme L99A is cut open around the pocket */
+  const lig = [], pa = X3.atoms(MM.A.at); for (let i = 0; i < MM.lig.length; i += 3) lig.push({ x: MM.lig[i], y: MM.lig[i + 1], z: MM.lig[i + 2], e: 'C' });
+  const lc = lig.reduce((c, a) => c.add(V3(a.x, a.y, a.z)), V3(0, 0, 0)).multiplyScalar(1 / 6);
+  // the ring atom whose outward direction has the most room becomes the methyl site
+  let bestRoom = -1, bu = null, bp = null;
+  lig.forEach((a) => { const p = V3(a.x, a.y, a.z), u = p.clone().sub(lc).normalize(), m = p.clone().addScaledVector(u, 1.51), room = Math.min(...pa.map((q) => V3(q.x, q.y, q.z).distanceTo(m))); if (room > bestRoom) { bestRoom = room; bu = u; bp = p; } });
+  const X = 26, Y = 24, amber = lin(C.amber), VIO = '#' + new T.Color(C.violet).multiplyScalar(0.84).getHexString();   // the small methyl renders lighter than the palette violet, so its stick colour is trimmed
+  const box = (cx, cy) => [...Array.from({ length: 16 }, (_, i) => { const a = i * 0.3927, nx = Math.cos(a), ny = Math.sin(a); return new T.Plane(V3(-nx, -ny, 0), 15 + nx * cx + ny * cy); }), new T.Plane(V3(0, 0, -1), 0), new T.Plane(V3(0, 0, 1), 30)];   // keep a 28 A block around the benzene, z from -30 to 0
+  const pocketSet = new Set(window.X3D.l99a.siteNums.map((n) => MM.A.nums.indexOf(n)).filter((i) => i >= 0)), pks = pa.filter((a) => pocketSet.has(a.r) && a.z - lc.z < 0.5);
+  const protA = X3.mesh(MM.A.surface); X3.paint(protA, () => amber, 0);
+  const dimL = (g, v) => g.traverse((m) => { if (m.material) { const u = m.material.userData; u.base = u.base || m.material.color.clone(); m.material.color.copy(u.base).multiplyScalar(v); } });   // brightness of a part, from its own palette colour
+  const corner = (cx, cy, pocket, tol) => {
+    const g = new T.Group(), inner = new T.Group(), o = { g, inner, benz: null, meth: null };
+    g.position.set(cx, cy, 0); inner.position.copy(lc).negate(); g.add(inner);
+    if (pocket) { const m = new T.Mesh(protA.geometry, X3.matte({ vertexColors: true, side: T.DoubleSide, clippingPlanes: box(cx, cy), clipShadows: true })); m.material.color.setScalar(0.55); m.castShadow = false; inner.add(m); }
+    else X3.water(S, { n: 110, inner: 5, outer: 13, parent: g, front: 0, opacity: 0.28 });
+    if (pocket) inner.add(X3.sticks(pks, { colour: C.amber, mat: () => X3.matte({ color: new T.Color(0.55, 0.55, 0.55), clippingPlanes: box(cx, cy) }) }));   // atoms of the pocket residues behind the cut
+    o.benz = X3.sticks(lig, { colour: C.teal, r: 0.8, b: 0.34 }); inner.add(o.benz);
+    if (tol) { const mm = new T.Group(); mm.position.copy(bp); mm.add(X3.sticks([{ x: 0, y: 0, z: 0, e: 'C' }, { x: bu.x * 1.51, y: bu.y * 1.51, z: bu.z * 1.51, e: 'C' }], { colour: VIO, r: 1.05, b: 0.34 })); inner.add(mm); o.meth = mm; o.tip = bp.clone().addScaledVector(bu, 1.51); }
+    S.root.add(g); return o;
+  };
+  const TL = corner(-X, Y, true, false), TR = corner(X, Y, true, true), BL = corner(-X, -Y, false, false), BR = corner(X, -Y, false, true);
+
+  /* flat arrows in the picture plane: from a to b, optional dashes */
+  const arrow = (a, b, colour, dashed, k = 1) => {   // k trims the flat arrow so that its lit side renders at the palette colour
+    const g = new T.Group(), m = X3.matte({ color: lin(colour).multiplyScalar(k) }), len = b.clone().sub(a).length(), dir = b.clone().sub(a).normalize(), head = 2.8;
+    g.position.copy(a); g.quaternion.setFromUnitVectors(V3(0, 1, 0), dir);
+    const up = (y0, y1) => { const r = new T.Mesh(new T.CylinderGeometry(0.4, 0.4, y1 - y0, 10), m); r.position.y = (y0 + y1) / 2; g.add(r); };
+    if (dashed) for (let y = 0; y < len - head - 0.3; y += 2.4) up(y, Math.min(y + 1.4, len - head)); else up(0, len - head);
+    const c = new T.Mesh(new T.ConeGeometry(1.3, head, 16), m); c.position.y = len - head / 2; g.add(c);
+    S.root.add(g); return g;
+  };
+  // the pocket leg is amber (the protein), the water leg is blue (water); the two terms of the equation carry the same colours
+  const aTop = arrow(V3(-9, Y, 0), V3(9, Y, 0), C.amber, false, 0.86), aBot = arrow(V3(-9, -Y, 0), V3(9, -Y, 0), C.blue, false, 0.82);
+  const aL = arrow(V3(-X, -Y + 18, 0), V3(-X, Y - 18, 0), C.mute, true), aR = arrow(V3(X, -Y + 18, 0), V3(X, Y - 18, 0), C.mute, true);
+
+  /* what appears at which beat */
+  const items = [
+    { o: TL.g, from: 0 }, { o: TR.g, from: 1 }, { o: TR.meth, from: 1, delay: 0.9 }, { o: aTop, from: 1, delay: 0.5 },
+    { o: BL.g, from: 2 }, { o: BR.g, from: 2 }, { o: BR.meth, from: 2, delay: 0.9 }, { o: aBot, from: 2, delay: 0.5 },
+    { o: aL, from: 3 }, { o: aR, from: 3, delay: 0.2 },
+  ];
+  const setItem = (it, on) => { gsap.killTweensOf(it.o.scale); it.o.visible = on; it.o.scale.setScalar(on ? 1 : 0.001); };
+  // one accent per beat: the new part has the full palette colour, everything else is dimmed
+  const look = (n) => {
+    dimL(TL.benz, n === 0 ? 1 : 0.55); dimL(TR.benz, 0.55); dimL(TR.meth, n === 1 ? 1 : 0.55); dimL(BL.benz, n === 2 ? 1 : 0.55); dimL(BR.benz, 0.55); dimL(BR.meth, n === 2 ? 1 : 0.55);
+    [aTop, aBot].forEach((a) => dimL(a, n >= 4 ? 1 : 0.55));
+    [aL, aR].forEach((a) => dimL(a, n === 3 || n === 6 ? 1 : 0.55));
+  };
+
+  /* labels sit in fixed lanes at the sides, so they never meet */
+  const W = (o, off) => () => o.localToWorld((off || V3(0, 0, 0)).clone());
+  const Lb = (text, col, at, lane) => { const L = S.label(text, col, at, 0, 0); L.lane = lane; return L; };
+  const lb = {
+    ben: Lb('Benzene', C.teal, W(TL.g), [0.13, 0.2]), pocket: Lb('Pocket wall', C.amber, W(TL.g, V3(-6, 6, -9)), [0.13, 0.82]),
+    me: Lb('Added methyl', C.violet, () => TR.inner.localToWorld(TR.tip.clone()), [0.87, 0.2]), water: Lb('Water', C.blue, W(BL.g, V3(5, 5, -5)), [0.13, 0.9]),
+    legT: Lb('Pocket leg', C.amber, () => V3(0, Y, 0), [0.5, 0.06]), legB: Lb('Water leg', C.blue, () => V3(0, -Y, 0), [0.5, 0.96]),
+    bind: Lb('Binding', C.mute, () => V3(-X, 0, 0), [0.13, 0.5]),
+  };
+  const byBeat = [[lb.ben, lb.pocket], [lb.me, lb.legT], [lb.water, lb.legB, lb.legT], [lb.bind, lb.legT, lb.legB], [lb.legT, lb.legB, lb.ben, lb.me], [lb.legT, lb.legB, lb.ben, lb.me], [lb.legT, lb.legB, lb.ben, lb.me]];
+  S.onFrame(() => { const w = host.clientWidth || 1; Object.values(lb).forEach((L) => { if (!L.base) L.base = L.lane.slice(); const hw = L.d.offsetWidth / 2 / w + 0.015; L.lane = [Math.min(1 - hw, Math.max(hw, L.base[0])), L.base[1]]; }); });   // a lane never pushes its label past the stage edge
+
+  const pose = (n) => {
+    const a = host.clientWidth / Math.max(1, host.clientHeight), k = a < 1.3 ? 1.3 : 1;   // a narrow stage (phone) pulls the camera back, so the labels stand beside the models
+    return n === 0 ? { cam: [-X, Y, 70 * k], tgt: [-X, Y, 0] } : n === 1 ? { cam: [0, Y, 122 * k], tgt: [0, Y, 0] } : { cam: [0, 0, 152 * k], tgt: [0, 0, 0] };
+  };
+  const reset = () => {
+    S.hideAll(); items.forEach((it) => setItem(it, false)); look(0);
+    gsap.killTweensOf(QA('.rt-side *'));
+    gsap.set(QA('.rt-card > *, #n3-gates li'), { clearProps: 'opacity,transform' });
+    const p = pose(0); S.fly(p.cam, p.tgt, 0);
+  };
+  const pulse = (list, at, tl) => list.forEach((a, j) => tl.fromTo(a.scale, { x: 1, y: 1, z: 1 }, { x: 1.3, y: 1.3, z: 1.3, duration: 0.35, yoyo: true, repeat: 1, ease: 'power1.inOut' }, at + j * 0.6));
+  const play = (n, fast) => {
+    const tl = gsap.timeline(); look(n); applyText(n);
+    items.filter((it) => it.from === n).forEach((it) => {
+      if (fast) return setItem(it, true);
+      gsap.killTweensOf(it.o.scale); it.o.visible = true; it.o.scale.setScalar(0.001);
+      tl.to(it.o.scale, { x: 1, y: 1, z: 1, duration: 0.8, ease: 'back.out(1.4)' }, 0.2 + (it.delay || 0));
+    });
+    items.filter((it) => it.from < n).forEach((it) => setItem(it, true));
+    S.hideAll(); const p = pose(n);
+    if (fast) { S.fly(p.cam, p.tgt, 0); S.show(byBeat[n], true); return null; }
+    const f = S.fly(p.cam, p.tgt, n < 3 ? 1.6 : 0); if (f) tl.add(f, 0); tl.call(() => S.show(byBeat[n], true), null, 1.4);
+    tl.add(tweenText(n), 0);
+    if (n === 4) pulse([aTop, aBot], 0.6, tl);   // the two terms of the equation light with their arrows
+    if (n === 5) pulse([aTop, aBot], 0.6, tl);
+    return tl;
+  };
+  // every beat holds for at least 5 s, so the auto-advance gives the viewer time to read and look
+  const hold = (fn) => (s_, f) => { const r = fn(s_, f); if (f) return r; const tl = gsap.timeline(); if (r) tl.add(r, 0); return tl.set({}, {}, 5); };
+  const beats = (rs, list) => MK.beats(rs, list.map((b) => (b.play ? Object.assign({}, b, { play: hold(b.play) }) : b)));
+  window.STEPS.n3 = beats(reset, CAPS.map((cap, i) => ({ cap, play: (s_, f) => play(i, f) })));
+  window.ENTER.n3 = () => {};
+})();
+</script>

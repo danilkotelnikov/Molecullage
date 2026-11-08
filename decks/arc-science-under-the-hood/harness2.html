@@ -1,0 +1,75 @@
+<section class="slide" data-k="harness2">
+  <div class="dgs">
+    <div class="dg-h" data-in><h2 class="big">Inside <span class="grad">Arc Harness</span></h2><p>Rules go in, evidence comes out, lessons return.</p></div>
+    <svg class="dg" id="h2-dg" viewBox="-10 -6 1300 580" role="img" aria-label="Arc Harness: policy sync and digest, hooks of one turn, scripted gates and blind review, signed approval, ledger and lesson extractor"></svg>
+  </div>
+</section>
+<script>
+(() => {
+  const svg = document.getElementById('h2-dg'), d = DG(svg);
+  const X1 = 0, X2 = 320, X3 = 640, X4 = 960, W = 250, W4 = 290;
+  d.stage({ x: X1, y: 0, w: W, text: 'Rules' }); d.stage({ x: X2, y: 0, w: W, text: 'Every turn' });
+  d.stage({ x: X3, y: 0, w: W, text: 'Gates' }); d.stage({ x: X4, y: 0, w: W4, text: 'Accept and learn' });
+  d.group('sync');
+  const pol = d.card({ x: X1, y: 50, w: W, type: 'rule', title: 'Policy, version 2', lines: ['R001 no self-check'] });
+  const syn = d.op({ x: X1, y: 136, w: W, title: 'Sync', sub: 'one script, four agents', n: 1 });
+  const ags = d.op({ x: X1, y: 232, w: W, title: 'Four agents', sub: 'Claude, Gemini, Codex, GLM' });
+  d.route([pol.b, syn.t], { id: 'h2-r1' }); d.route([syn.b, ags.t], { id: 'h2-r2' });
+  d.group('hook');
+  const dg = d.card({ x: X1, y: 328, w: W, type: 'note', title: 'Digest', lines: ['Pinned rules', 'Active lessons'] });
+  const pr = d.card({ x: X2, y: 50, w: W, type: 'task', title: 'Prompt', lines: ['D-EXAMPLE-01, T1'] });
+  const ph = d.op({ x: X2, y: 136, w: W, title: 'Prompt hook', sub: 'tag, task list, lessons', n: 2 });
+  d.route([pr.b, ph.t], { id: 'h2-r3' });
+  d.route([dg.r, [285, dg.cy], [285, ph.cy], ph.l], { id: 'h2-r4' });
+  d.route([ags.b, dg.t], { id: 'h2-r17', label: 'reads at start', at: [dg.cx + 10, 318, 'start'] });
+  d.group('build');
+  const bd = d.op({ x: X2, y: 232, w: W, title: 'Build', sub: 'test first, then freeze', n: 3 });
+  d.route([ph.b, bd.t], { id: 'h2-r5' });
+  d.group('stop');
+  const sh = d.op({ x: X2, y: 328, w: W, title: 'Stop hook', sub: 'no reply without outcomes', n: 4 });
+  const fz = d.card({ x: X2, y: 424, w: W, type: 'task', title: 'Frozen slice', lines: ['S001 at abc1234'] });
+  d.route([bd.b, sh.t], { id: 'h2-r6' }); d.route([sh.b, fz.t], { id: 'h2-r7' });
+  d.group('gates');
+  const gt = d.op({ x: X3, y: fz.cy - 33, w: W, title: 'Gates', sub: 'rerun every command', n: 5 });
+  const ev = d.card({ x: X3, y: 318, w: W, type: 'task', title: 'Evidence', lines: ['Exit codes, digest', 'No regression'] });
+  d.route([fz.r, gt.l], { id: 'h2-r8', label: 'frozen' }); d.route([gt.t, ev.b], { id: 'h2-r9' });
+  d.group('qa');
+  const qa = d.op({ x: X3, y: 222, w: W, title: 'Blind review', sub: 'one per lens, plus Astra', n: 6 });
+  const fd = d.card({ x: X3, y: 120, w: W, type: 'rule', title: 'Findings', lines: ['0 blocking'] });
+  d.route([ev.t, qa.b], { id: 'h2-r10' }); d.route([qa.t, fd.b], { id: 'h2-r11' });
+  d.group('accept');
+  const ap = d.op({ x: X4, y: 50, w: W4, title: 'My approval', sub: 'typed, used once', n: 7 });
+  const lg = d.card({ x: X4, y: 146, w: W4, type: 'rule', title: 'Ledger', lines: ['S001 accepted', 'Append-only'] });
+  d.route([fd.r, [925, fd.cy], [925, ap.cy], ap.l], { id: 'h2-r12' }); d.route([ap.b, lg.t], { id: 'h2-r13' });
+  d.group('learn');
+  const ex = d.op({ x: X4, y: 252, w: W4, title: 'Lesson extractor', sub: 'Failures seen twice become lessons', n: 8 });
+  const ls = d.card({ x: X4, y: 348, w: W4, type: 'note', title: 'Lesson', lines: ['Seen in two sessions'] });
+  d.route([lg.b, ex.t], { id: 'h2-r14' }); d.route([ex.b, ls.t], { id: 'h2-r15' });
+  d.route([ls.l, [925, ls.cy], [925, 540], [dg.cx, 540], dg.b], { id: 'h2-r16', label: 'Approved lessons return', at: [(925 + dg.cx) / 2, 530, 'middle'] });
+  d.end();
+  d.key(X4 + 14, 458, [['rule', 'Rule or verdict'], ['task', 'Task or proof'], ['note', 'Memory note'], ['op', 'Step']], true);
+  DGtoken(d, 'h2-ka', 190, 'task'); DGtoken(d, 'h2-kb', 170, 'note'); DGtoken(d, 'h2-kc', 170, 'rule');
+})();
+window.STEPS = window.STEPS || {};
+window.STEPS.harness2 = [
+  { cap: 'One script syncs one policy file to all four agents.', on: '[data-st="sync"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-kc', 'Policy', ['h2-r1', 'h2-r2']]]) },
+  { cap: 'Each prompt gets a tag, a task list and the matching lessons.', on: '[data-st="hook"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-ka', 'D-EXAMPLE-01', ['h2-r3']], ['h2-kb', 'Lessons', ['h2-r4']]]) },
+  { cap: 'The agent writes the test first, then builds.', on: '[data-st="build"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-ka', 'Plan', ['h2-r5']]]) },
+  { cap: 'The stop hook blocks a reply while any task lacks an outcome.', on: '[data-st="stop"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-ka', 'T1 done', ['h2-r6', 'h2-r7']]]) },
+  { cap: 'A script reruns every command and stores the result with a digest.', on: '[data-st="gates"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-ka', 'S001', ['h2-r8', 'h2-r9']]]) },
+  { cap: 'Blind reviewers, one per lens, and GPT-6 Astra check the slice.', on: '[data-st="qa"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-ka', 'Evidence', ['h2-r10', 'h2-r11']]]) },
+  { cap: 'Only my typed, one-use approval can mark a slice accepted.', on: '[data-st="accept"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-kc', '0 blocking', ['h2-r12', 'h2-r13']]]) },
+  { cap: 'Failures seen in two sessions become lessons once I approve them.', on: '[data-st="learn"]',
+    run: (s, rm) => rm ? null : DGruns(s, [['h2-kb', 'Lesson', ['h2-r14', 'h2-r15', 'h2-r16']]]) },
+  { cap: 'Rules go in, evidence comes out, and lessons return to the next turn.', on: '*' },
+];
+window.ENTER = window.ENTER || {};
+window.ENTER.harness2 = DGenter;
+</script>

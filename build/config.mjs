@@ -11,6 +11,9 @@ export const DEFAULTS = {
   typeLadder: { letter: 9, title: 7.5, label: 7, floor: 6.5, math: 8.4 },
   words: { schematic: 130, plate: 90, box: 6, arrow: 3, footnote: 14 },
   widthMm: [178, 89],
+  // slides: the figure ladder scaled to a 1920 px slide (a 178 mm figure filling the slide is 10.8 px/mm, so 6.5 pt is 25 px), plus the display rungs a slide needs
+  deckLadder: { floor: 25, label: 28, body: 36, sub: 44, title: 64, display: 110, number: 220 },
+  deckWords: { slide: 70, title: 12, bullet: 16, footnote: 14 },
   review: 'blind+overclaim',
   claimBoundary: 'Real data and deposited structures; sets and spans are illustrative.',
   art: 'art',

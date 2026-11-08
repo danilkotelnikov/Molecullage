@@ -11,3 +11,7 @@ Give an independent reviewer the PNG and nothing else: no notes, no caption, no 
 How to use the answer: fix every item of questions 2 and 3, rebuild, run the read again with a fresh reviewer or the same one, and write the final two-sentence answer to question 1 in the notes file as the ten-second sentence. If it differs from the message you intended, the figure is not finished.
 
 The reviewer is "an independent reviewer": any capable reader that has not seen the notes.
+
+## For a slide deck
+
+Make the contact sheet (`node deck/cli.mjs export <deck> --format sheet`, or the `deck_contact_sheet` tool) and give the reviewer that one PNG and nothing else. Change the first line to: "You see the slides of a talk, in order, in their finished state. You have no other text." Add to question 3: a slide with more than one message, a build that would hide the point until the last step, text that is hard to read from the back of a room, and a 3D scene whose caption does not say what to look at. Then look at single slides (`--format png`) for what the sheet is too small to show.

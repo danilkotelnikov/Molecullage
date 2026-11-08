@@ -1,0 +1,337 @@
+<style>
+/* m3: four searches, one merged list. Flat glass cards in the look of cq.html. Every id and class starts with m3. */
+.m3{width:100%;display:flex;flex-direction:column;gap:clamp(10px,1.7vh,18px);--rh:clamp(25px,3.4vh,31px)}
+.m3 .mh{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.m3 .mh h2{font-size:clamp(30px,3vw,52px);margin:0;line-height:1.05}
+.m3 .tag{font:400 clamp(12px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid rgba(236,236,234,.22);border-radius:999px;padding:4px 12px}
+.m3-card{background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:11px 14px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.m3-card h3,.m3-col h3{font:500 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0}
+.m3-top{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(10px,1.2vw,18px)}
+.m3-top.wide{grid-template-columns:1fr}.m3-top.wide .m3-bank{display:none}
+.m3-q,.m3-bank{flex-direction:row;align-items:baseline;gap:14px}
+.m3-qt{font-size:clamp(18px,1.7vw,28px);font-weight:300;color:var(--fg);letter-spacing:-.01em}
+.m3-hl{border-bottom:2px solid transparent;transition:border-color .4s,color .4s}
+.m3-hl.on{border-bottom-color:var(--teal);color:var(--teal)}
+.m3-bt{font-size:clamp(14px,1.15vw,19px);color:var(--soft)}
+.m3-bt b{font:600 clamp(20px,1.8vw,30px) "Geist Mono",monospace;color:var(--fg);margin-right:.25em}
+.m3-work{display:grid}
+.m3-lists,.m3-ov{grid-area:1/1}
+.m3-lists{display:flex;flex-direction:column;gap:clamp(10px,1.7vh,18px)}
+.m3-ov{align-self:start}#m3-ovm{align-self:center}
+/* the four searchers, with the threads that join the same note */
+.m3-board{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(34px,4.2vw,62px);row-gap:10px}
+.m3-col{position:relative;background:rgba(236,236,234,.04);border:1px solid rgba(236,236,234,.12);border-radius:14px;padding:11px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.m3-col h3{color:var(--c)}
+.m3-c-w{--c:var(--teal)}.m3-c-m{--c:var(--blue)}.m3-c-g{--c:var(--violet)}.m3-c-t{--c:var(--amber)}
+.m3-how{font-size:clamp(12px,.98vw,15px);color:var(--soft);line-height:1.3;min-height:2.6em}
+.m3-rows{display:flex;flex-direction:column}
+.m3-r{display:flex;gap:8px;align-items:center;height:var(--rh);padding:0 8px;border-radius:8px;border:1px solid transparent;font-size:clamp(13px,1.05vw,16px);color:var(--fg);white-space:nowrap;overflow:hidden;transition:background .4s,border-color .4s}
+.m3-r i{font:400 11px "Geist Mono",monospace;font-style:normal;color:var(--mute);min-width:1.1em;visibility:hidden}
+.m3-r.sel i{visibility:inherit;color:var(--c);font-weight:600;font-size:14px}
+.m3-r span{overflow:hidden;text-overflow:ellipsis}
+.m3-r.gap{color:var(--mute)}
+.m3-r.lit{background:rgba(236,236,234,.09)}
+.m3-r.sel{background:rgba(236,236,234,.16);border-color:rgba(236,236,234,.6)}
+.m3-none{font-size:clamp(12px,.95vw,14px);color:var(--mute);padding:6px 8px;line-height:1.35}
+.m3-th{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.m3-th path{fill:none;stroke:var(--fg);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}
+/* points and merged list */
+.m3-low{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(10px,1.2vw,18px);align-items:stretch}
+.m3-pts{display:grid}
+.m3-pts>h3{grid-area:1/1;align-self:start}
+.m3-pp{grid-area:1/1;padding-top:22px;display:flex;flex-direction:column;gap:8px}
+.m3-say{font-size:clamp(13px,1.1vw,17px);color:var(--soft);line-height:1.4;margin:0}
+.m3-say b{color:var(--fg);font-weight:600}
+.m3-nt{font-size:clamp(13px,1.05vw,16px);color:var(--soft);line-height:1.35;border-left:3px solid var(--fg);padding:3px 0 3px 10px;background:rgba(236,236,234,.05);border-radius:0 8px 8px 0}
+.m3-nt b{color:var(--fg);font-weight:600;display:block}
+.m3-eq{font:500 clamp(12px,1.1vw,18px) "Geist Mono",monospace;color:var(--fg);line-height:1.6;overflow-wrap:anywhere}
+.m3-eq .w{color:var(--teal)}.m3-eq .m{color:var(--blue)}.m3-eq .g{color:var(--violet)}.m3-eq .t{color:var(--amber)}
+.m3-eq b{font-weight:700}
+.m3-hint{font:400 clamp(11px,.85vw,13px) "Geist Mono",monospace;letter-spacing:.04em;color:var(--mute);margin:0}
+.m3-mrg>h3{margin-bottom:0}
+.m3-mrows{display:flex;flex-direction:column;gap:3px}
+.m3-m{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:4px 8px;border-radius:8px;border:1px solid transparent;font-size:clamp(13px,1.1vw,17px);color:var(--soft)}
+.m3-m span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m3-m b{font:600 clamp(12px,1vw,16px) "Geist Mono",monospace;color:var(--fg)}
+.m3-m.top{border-color:var(--teal);background:rgba(127,178,170,.1);color:var(--fg)}
+.m3-lt{display:flex;gap:3px;font-style:normal}
+.m3-lt u{text-decoration:none;font:500 10px "Geist Mono",monospace;width:1.7em;text-align:center;border-radius:4px;padding:1px 0;color:var(--bg);background:var(--c)}
+.m3-lt u.off{background:none;color:var(--mute);opacity:.35;border:1px solid rgba(236,236,234,.2)}
+.m3-lt .w{--c:var(--teal)}.m3-lt .m{--c:var(--blue)}.m3-lt .g{--c:var(--violet)}.m3-lt .t{--c:var(--amber)}
+/* step 6: why four searches */
+.m3-why{display:flex;flex-direction:column;gap:clamp(12px,2vh,20px);padding-top:clamp(4px,1.5vh,14px)}
+.m3-big{font-size:clamp(18px,1.7vw,28px);font-weight:300;color:var(--fg);line-height:1.3;margin:0}
+.m3-big mark{background:none;color:var(--teal);border-bottom:2px solid var(--teal)}
+.m3-wr{display:grid;grid-template-columns:7em minmax(0,1fr) auto;gap:clamp(10px,1.4vw,22px);align-items:center;flex-direction:row;padding:clamp(12px,2vh,20px) 16px}
+.m3-wr .m3-say{font-size:clamp(15px,1.3vw,21px);color:var(--fg)}
+.m3-wr h3{font-size:clamp(12px,1vw,15px)}
+.m3-wr.w h3{color:var(--teal)}.m3-wr.m h3{color:var(--blue)}
+.m3-pill{font:600 clamp(11px,.9vw,14px) "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 12px;border:1px solid;white-space:nowrap}
+.m3-pill.miss{color:var(--mute);border-color:rgba(236,236,234,.3)}
+.m3-pill.hit{color:var(--teal);border-color:var(--teal);background:rgba(127,178,170,.12)}
+.m3-wr.w .m3-say{text-decoration:none}
+/* step 7: measured */
+.m3-ms{display:flex;flex-direction:column;gap:clamp(12px,2vh,22px)}
+.m3-mc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.2vw,18px)}
+.m3-mc .m3-card{gap:8px;padding:16px 16px}
+.m3-mv{font:600 clamp(34px,4.2vw,68px) "Geist Mono",monospace;color:var(--fg);letter-spacing:-.02em;line-height:1}
+.m3-mc .m3-card.hi{border-color:var(--teal);background:rgba(127,178,170,.08)}
+.m3-mc .m3-card.hi .m3-mv{color:var(--teal)}
+@media (max-width:1100px){.m3-mc{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+  .m3{gap:10px;--rh:24px}
+  .m3-top{grid-template-columns:1fr;gap:8px}
+  .m3-q,.m3-bank{flex-direction:column;gap:4px}
+  .m3-qt{font-size:20px}
+  .m3-board{grid-template-columns:1fr 1fr;column-gap:8px;row-gap:8px}
+  .m3-how{display:none}
+  .m3-col{padding:9px 8px}
+  .m3-r{font-size:12.5px;padding:0 4px;gap:5px}
+  .m3-none{font-size:11.5px;padding:3px 4px}
+  .m3-th{display:none}
+  .m3-low{grid-template-columns:1fr;gap:8px}
+  .m3-say{font-size:14px}
+  .m3-nt{font-size:13px}
+  .m3-eq{font-size:13px}
+  .m3-m{font-size:14px;gap:6px;padding:3px 4px}
+  .m3-wr{grid-template-columns:1fr;gap:6px;align-items:start;padding:12px}
+  .m3-wr .m3-say{font-size:15px}
+  .m3-pill{justify-self:start}
+  .m3-big{font-size:19px}
+  .m3-mc{grid-template-columns:1fr 1fr;gap:8px}
+  .m3-mc .m3-card{padding:12px}
+  .m3-mc .m3-sub{display:none}
+  .m3-mv{font-size:36px}
+  [data-ph="2"] .m3-bank,[data-ph="3"] .m3-bank,[data-ph="4"] .m3-bank,[data-ph="5"] .m3-bank,[data-ph="6"] .m3-bank{display:none}
+  [data-ph="0"] .m3-low,[data-ph="1"] .m3-low,[data-ph="2"] .m3-low{display:none}
+  [data-ph="3"] .m3-top,[data-ph="4"] .m3-top,[data-ph="6"] .m3-top{display:none}
+  [data-ph="3"] .m3-mrg,[data-ph="3"] #m3-p5,[data-ph="4"] #m3-p4{display:none}
+  .m3-pp{padding-top:20px}
+  #m3-p4 .m3-say{display:none}
+  [data-ph="4"] .m3-board{display:none}
+  [data-ph="5"] .m3-lists,[data-ph="6"] .m3-lists{display:none}
+  [data-ph="0"] .m3-ov,[data-ph="1"] .m3-ov,[data-ph="2"] .m3-ov,[data-ph="3"] .m3-ov,[data-ph="4"] .m3-ov{display:none}
+  [data-ph="5"] #m3-ovm,[data-ph="6"] #m3-ovw{display:none}
+}
+</style>
+<section class="slide" data-k="m3" data-film>
+  <div class="m3">
+    <div class="mh" data-in><h2 class="big grad">Search and merge</h2><span class="tag" id="m3-tag">Concept values</span></div>
+    <div class="m3-top" data-st="top">
+      <div class="m3-card m3-q"><h3>Question</h3><div class="m3-qt">Why did the <span class="m3-hl" id="m3-qw">connection</span> fail</div></div>
+      <div class="m3-card m3-bank" id="m3-bank"><h3>The bank</h3><div class="m3-bt"><b id="m3-n"></b>notes from every agent</div></div>
+    </div>
+    <div class="m3-work">
+      <div class="m3-lists" id="m3-lists">
+        <div class="m3-board" id="m3-board"><svg class="m3-th" id="m3-th" aria-hidden="true"></svg></div>
+        <div class="m3-low">
+          <div class="m3-card m3-pts" data-st="pts"><h3>Points</h3>
+            <div class="m3-pp" id="m3-p4">
+              <p class="m3-say">Each list that holds a note gives it 1 over (60 plus the note's place in that list). A list without the note gives nothing.</p>
+              <div class="m3-nt" id="m3-nt"></div>
+              <div class="m3-eq" id="m3-eq"></div>
+              <p class="m3-hint">Click another note in a list to see its points.</p>
+            </div>
+            <div class="m3-pp" id="m3-p5">
+              <p class="m3-say"><b>Gateway fix</b> is first in two lists. Words does not hold it, so it ends third.</p>
+              <p class="m3-say"><b>Linux restart</b> sits in all four lists, so it ends first.</p>
+            </div>
+          </div>
+          <div class="m3-card m3-mrg" data-st="mrg"><h3>Merged list</h3>
+            <p class="m3-say" id="m3-msub">Sorted by points. This merge is called reciprocal rank fusion.</p>
+            <div class="m3-mrows" id="m3-mrows"></div>
+          </div>
+        </div>
+      </div>
+      <div class="m3-ov" id="m3-ovw">
+        <div class="m3-why" data-st="why">
+          <div class="m3-card"><h3>A note in the bank</h3><p class="m3-big">Starting the local gateway fixed <mark>ECONNREFUSED</mark>.</p><p class="m3-say">The question says connection. This note never does.</p></div>
+          <div class="m3-card m3-wr w"><h3>Words</h3><p class="m3-say">Looks for the word connection in each note.</p><span class="m3-pill miss">Missed</span></div>
+          <div class="m3-card m3-wr m"><h3>Meaning</h3><p class="m3-say">Looks for the same idea. A refused connection is a failed connection.</p><span class="m3-pill hit">Found, first place</span></div>
+          <p class="m3-say">Each search misses something. Four searches together miss less.</p>
+        </div>
+      </div>
+      <div class="m3-ov" id="m3-ovm">
+        <div class="m3-ms" data-st="ms">
+          <p class="m3-big">How often the evidence is among the first five notes. Test set: LoCoMo.</p>
+          <div class="m3-mc">
+            <div class="m3-card"><h3>Words alone</h3><div class="m3-mv" data-v="0.49"></div></div>
+            <div class="m3-card"><h3>Meaning alone</h3><div class="m3-mv" data-v="0.50"></div></div>
+            <div class="m3-card"><h3>Merged</h3><div class="m3-mv" data-v="0.55"></div><p class="m3-say m3-sub">The lists merged by points.</p></div>
+            <div class="m3-card hi"><h3>Merged and reranked</h3><div class="m3-mv" data-v="0.66"></div><p class="m3-say m3-sub">A reranker, a small model, rereads the shortlist and reorders it. First 400 questions.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(() => {
+  const s = document.currentScript.previousElementSibling;
+  const $ = (q) => s.querySelector(q), $$ = (q) => [...s.querySelectorAll(q)];
+  const K = 60;
+  /* Concept values. The wording and the ranks come from the worked question of cq.html ("Why did the connection fail").
+     null marks a place held by a note that is not named here. */
+  const NOTE = {
+    linux: ['Linux restart', 'Restarting Linux did not fix the refused connection.'],
+    arg: ['Review failure', 'The review call failed: the service refused the request.'],
+    gw: ['Gateway fix', 'Starting the local gateway fixed ECONNREFUSED.'],
+    port: ['Local port', 'The gateway runs on a fixed local port.'],
+    tun: ['Memory link', 'A link connects the laptop to the memory server.'],
+  };
+  const COLS = [
+    ['w', 'Words', 'Finds the same words.', ['arg', 'linux']],
+    ['m', 'Meaning', 'Finds the same idea in other words.', ['gw', 'tun', 'linux', 'port', null, 'arg']],
+    ['g', 'Links', 'Follows connected facts.', ['linux', 'gw', 'arg', 'port', null]],
+    ['t', 'Time', 'Prefers recent notes.', ['gw', 'linux', 'port', 'arg', null, 'tun']],
+  ];
+  const places = (id) => COLS.map(([c, , , rows]) => ({ c, p: rows.indexOf(id) + 1 })).filter((x) => x.p);
+  const pts = (id) => { const parts = places(id); return { s: parts.reduce((a, x) => a + 1 / (K + x.p), 0), parts }; };
+  const order = Object.keys(NOTE).sort((a, b) => pts(b).s - pts(a).s);   /* reciprocal rank fusion, k = 60, as in cq.html */
+  const nf = (n) => Number(n).toLocaleString('en-US');
+  const el = (tag, cls, html) => { const e = document.createElement(tag); e.className = cls || ''; if (html != null) e.innerHTML = html; return e; };
+  let sel = 'linux';
+
+  /* ---- build the board ---- */
+  const board = $('#m3-board'), svg = $('#m3-th');
+  COLS.forEach(([c, name, how, rows]) => {
+    const col = el('div', 'm3-col m3-c-' + c, `<h3>${name}</h3><div class="m3-how">${how}</div><div class="m3-rows"></div>`);
+    col.dataset.st = 'c-' + c;
+    const R = col.querySelector('.m3-rows');
+    rows.forEach((id, i) => {
+      const r = el('div', 'm3-r' + (id ? '' : ' gap'), `<i>${i + 1}</i><span>${id ? NOTE[id][0] : 'Other note'}</span>`);
+      r.dataset.c = c; if (id) r.dataset.id = id; R.appendChild(r);
+    });
+    if (c === 'w') R.appendChild(el('div', 'm3-none', 'No other note shares a word.'));
+    board.insertBefore(col, svg);
+  });
+  const cols = $$('.m3-col'), chips = $$('.m3-r'), named = chips.filter((r) => r.dataset.id);
+  /* a viewer clicks a note to see its threads and its points; this stops autoplay on the slide */
+  board.setAttribute('data-hold', '');
+  const pick = (id) => { sel = id; if (window.showStep) showStep(s, 3); };
+  named.forEach((r) => {
+    r.setAttribute('role', 'button'); r.tabIndex = 0; r.style.cursor = 'pointer'; r.title = 'Show the points of this note';
+    r.addEventListener('click', () => pick(r.dataset.id));
+    r.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.stopPropagation(); pick(r.dataset.id); } });
+  });
+
+  /* ---- merged list ---- */
+  const mrows = $('#m3-mrows');
+  order.slice(0, 4).forEach((id, i) => {
+    const p = pts(id), held = new Set(p.parts.map((x) => x.c));
+    const r = el('div', 'm3-m' + (i === 0 ? ' top' : ''), `<span>${NOTE[id][0]}</span><em class="m3-lt">${COLS.map(([c, name]) => `<u class="${c}${held.has(c) ? '' : ' off'}">${name[0]}</u>`).join('')}</em><b>${p.s.toFixed(4)}</b>`);
+    r.dataset.id = id; mrows.appendChild(r);
+  });
+
+  /* ---- points of the picked note ---- */
+  const eqBox = $('#m3-eq');
+  function fillPts() {
+    const p = pts(sel);
+    $('#m3-nt').innerHTML = `<b>${NOTE[sel][0]}</b>${NOTE[sel][1]}`;
+    eqBox.innerHTML = p.parts.map((x) => `<span class="m3-t ${x.c}" data-c="${x.c}">1/(60+${x.p})</span>`).join(' + ') + ` = <b class="m3-sum">${p.s.toFixed(4)}</b>`;
+  }
+
+  /* ---- threads: one curve between the places of the same note in neighbouring lists ---- */
+  function threads() {
+    const bw = board.offsetWidth, bh = board.offsetHeight;
+    svg.setAttribute('viewBox', `0 0 ${bw} ${bh}`); svg.textContent = '';
+    if (window.gsap) setTimeout(styleThreads, 0);   /* a rebuild after the first step keeps the look of the step */
+    const at = (chip) => { let x = 0, y = 0, e = chip; while (e && e !== board) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return { l: x, r: x + chip.offsetWidth, y: y + chip.offsetHeight / 2 }; };
+    Object.keys(NOTE).forEach((id) => {
+      const mine = named.filter((r) => r.dataset.id === id);
+      for (let i = 0; i + 1 < mine.length; i++) {
+        const a = mine[i], b = mine[i + 1];
+        if (COLS.findIndex((x) => x[0] === b.dataset.c) - COLS.findIndex((x) => x[0] === a.dataset.c) !== 1) continue;   /* skip a hop over a list */
+        const p = at(a), q = at(b), d = (q.l - p.r) / 2;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M${p.r} ${p.y} C${p.r + d} ${p.y} ${q.l - d} ${q.y} ${q.l} ${q.y}`);
+        path.setAttribute('pathLength', 1); path.dataset.id = id; path.dataset.n = mine.length;
+        svg.appendChild(path);
+      }
+    });
+  }
+
+  let curN = 0;
+  function styleThreads() {
+    $$('#m3-th path').forEach((p) => {
+      const mine = p.dataset.id === sel, w = +p.dataset.n, n = curN;
+      gsap.set(p, { strokeDashoffset: 0, strokeWidth: n === 3 && mine ? 3 : w >= 4 ? 2.4 : 1.8,
+        opacity: n === 2 ? (w >= 3 ? .7 : .3) : n === 3 ? (mine ? 1 : .1) : 0 });
+    });
+  }
+  /* ---- the final look of step n, drawn from scratch ---- */
+  const wrapW = $('#m3-ovw'), wrapM = $('#m3-ovm'), lists = $('#m3-lists');
+  function setState(n) {
+    s.dataset.ph = n;
+    $('#m3-tag').textContent = n === 6 ? 'Measured' : 'Concept values';
+    $('#m3-qw').classList.toggle('on', n === 5);
+    gsap.set($('#m3-bank'), { opacity: n < 2 ? 1 : 0 });
+    $('.m3-top').classList.toggle('wide', n >= 2);
+    $('#m3-n').textContent = window.CORPUS ? nf(window.CORPUS.notes) : 'All';
+    fillPts();
+    gsap.set($$('.m3-r'), { opacity: n === 0 ? 0 : 1, clearProps: 'backgroundColor' });
+    gsap.set($$('.m3-r'), { opacity: n === 0 ? 0 : 1 });
+    chips.forEach((r) => {
+      const id = r.dataset.id, many = id && places(id).length >= 3;
+      r.classList.toggle('lit', n === 2 && !!many);
+      r.classList.toggle('sel', n === 3 && id === sel);
+      if (n === 2 && !many) gsap.set(r, { opacity: r.dataset.id ? .3 : .22 });
+      if (n === 3 && id !== sel) gsap.set(r, { opacity: r.dataset.id ? .3 : .15 });
+    });
+    $$('.m3-none').forEach((e) => gsap.set(e, { opacity: n === 0 ? 0 : n === 1 || n === 2 ? 1 : n === 3 ? .3 : 1 }));
+    curN = n; threads();
+    gsap.set($$('.m3-t,.m3-sum'), { opacity: 1 });
+    gsap.set($('#m3-p4'), { autoAlpha: n === 3 ? 1 : 0 });
+    gsap.set($('#m3-p5'), { autoAlpha: n === 4 ? 1 : 0 });
+    gsap.set($('#m3-mrows'), { autoAlpha: n >= 4 ? 1 : 0 });
+    gsap.set($$('.m3-m'), { opacity: 1, y: 0 });
+    gsap.set(lists, { autoAlpha: n < 5 ? 1 : 0 });
+    gsap.set(wrapW, { autoAlpha: n === 5 ? 1 : 0 });
+    gsap.set(wrapM, { autoAlpha: n === 6 ? 1 : 0 });
+    $$('.m3-mv').forEach((e) => (e.textContent = e.dataset.v));
+  }
+
+  /* ---- the entry of step n ---- */
+  const E = 'power2.out';
+  const A = [
+    () => { const tl = gsap.timeline(); tl.from($$('.m3-top .m3-card'), { opacity: 0, y: 14, duration: .5, stagger: .12, ease: E });
+      if (window.CORPUS && window.RT) tl.add(RT.count($('#m3-n'), window.CORPUS.notes, { dur: 1.2 }), .2); return tl; },
+    () => gsap.timeline().from($$('.m3-r,.m3-none'), { opacity: 0, y: -8, duration: .4, stagger: .045, ease: E }),
+    () => { const tl = gsap.timeline(), th = $$('#m3-th path');
+      tl.fromTo(th, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: .9, stagger: .12, ease: 'power2.inOut' });
+      tl.from(named.filter((r) => places(r.dataset.id).length >= 3), { opacity: .5, duration: .5, stagger: .03 }, .1); return tl; },
+    () => { const tl = gsap.timeline(), p = places(sel), ts = $$('.m3-t');
+      tl.from($('#m3-nt'), { opacity: 0, y: 8, duration: .4, ease: E });
+      p.forEach((x, i) => {
+        const chip = chips.find((r) => r.dataset.id === sel && r.dataset.c === x.c);
+        tl.from(ts[i], { opacity: 0, y: 8, duration: .4, ease: E }, .5 + i * .6);
+        if (chip) tl.fromTo(chip, { backgroundColor: 'rgba(236,236,234,.45)' }, { backgroundColor: 'rgba(236,236,234,.16)', duration: .5 }, .5 + i * .6);
+      });
+      tl.from($('.m3-sum'), { opacity: 0, scale: .9, transformOrigin: '0 50%', duration: .5, ease: E }, .5 + p.length * .6); return tl; },
+    () => gsap.timeline().from($$('.m3-m'), { opacity: 0, y: 14, duration: .5, stagger: .2, ease: E })
+      .from($$('#m3-p5 .m3-say'), { opacity: 0, y: 8, duration: .5, stagger: .3, ease: E }, .3),
+    () => gsap.timeline().from($$('.m3-why > *'), { opacity: 0, y: 14, duration: .5, stagger: .4, ease: E })
+      .from($$('.m3-pill'), { scale: .85, duration: .4, ease: 'back.out(2)', transformOrigin: '0 50%' }, 1.4),
+    () => { const tl = gsap.timeline(); tl.from($$('.m3-ms > .m3-big,.m3-mc .m3-card'), { opacity: 0, y: 14, duration: .5, stagger: .15, ease: E });
+      $$('.m3-mv').forEach((e, i) => { if (window.RT) tl.add(RT.count(e, +e.dataset.v, { dec: 2, dur: 1 }), .4 + i * .15); }); return tl; },
+  ];
+  const kill = () => gsap.killTweensOf($$('.m3 *:not([data-st])'));
+  const step = (n, { cap }, on) => ({ cap, on, run: (sc, rm) => { kill(); setState(n); return rm ? null : A[n](); } });
+  const T = '[data-st="top"]', C = '[data-st^="c-"]';
+  window.STEPS = window.STEPS || {};
+  window.STEPS.m3 = [
+    step(0, { cap: 'A question reaches Cammut, the memory every agent shares. Four searchers take it.' }, `${T},${C}`),
+    step(1, { cap: 'Each searcher reads the same bank and hands back its own shortlist.' }, `${T},${C}`),
+    step(2, { cap: 'Threads join the same note across lists. Notes in several lists light up.' }, `${T},${C}`),
+    step(3, { cap: 'Each list gives points: 1 over 60 plus the place. The points add up.' }, `${T},${C},[data-st="pts"]`),
+    step(4, { cap: 'Sorted by points, the notes that several searches like float to the top.' }, `${T},[data-st="pts"],[data-st="mrg"]`),
+    step(5, { cap: 'One search can miss a note. Words never finds the fix. Meaning does.' }, `${T},[data-st="why"]`),
+    step(6, { cap: 'On 1,982 questions merging beats each search; the reranked 0.66 uses the first 400.' }, '[data-st="ms"]'),
+  ];
+  window.ENTER = window.ENTER || {};
+  window.ENTER.m3 = () => { sel = 'linux'; };
+  fillPts(); threads();   /* gsap loads after the fragments: the first setState runs with the first step */
+  addEventListener('resize', () => { threads(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => threads());
+})();
+</script>
