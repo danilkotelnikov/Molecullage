@@ -1,0 +1,4553 @@
+{
+  "about": "Index of sources for the Studio. Built by tools/build-sources.mjs. Do not edit by hand; edit sources.extra.json.",
+  "built": "2026-11-08",
+  "from": [
+    "R1_motion_libraries.md",
+    "R2_science_assets.md",
+    "R4_3d_molecular.md",
+    "R5_2d_vector.md",
+    "R6_ui_themes_motion.md",
+    "sources.extra.json"
+  ],
+  "sources": [
+    {
+      "id": "gsap-3-15-core-plugins",
+      "name": "GSAP 3.15 core + plugins",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "Standard \"no charge\" licence (Webflow), not OSI",
+      "licenceClass": "check",
+      "url": "https://gsap.com/standard-license/",
+      "formats": [],
+      "use": "Film and deck: DrawSVG line reveals, MotionPath, SplitText captions, MorphSVG",
+      "verdict": "Adopt. Best seekable timeline; watch licence clause",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 74
+      }
+    },
+    {
+      "id": "motion-framer-motion-14-8",
+      "name": "Motion (framer-motion) 14.8",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/motiondivision/motion",
+      "formats": [],
+      "use": "Film UI built in React 19; use `useTransform` of one time value",
+      "verdict": "Adapt. Use only as a value mapper fed by t; no springs",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 75
+      }
+    },
+    {
+      "id": "motion-one",
+      "name": "Motion One",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT (merged into Motion)",
+      "licenceClass": "code-permissive",
+      "url": "https://spell.sh/blog/best-react-animation-libraries",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Merged into Motion",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 76
+      }
+    },
+    {
+      "id": "react-spring",
+      "name": "React Spring",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/pmndrs/react-spring",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Spring physics; conflicts with no-bounce",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 77
+      }
+    },
+    {
+      "id": "autoanimate",
+      "name": "AutoAnimate",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/formkit/auto-animate",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Event-driven",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 78
+      }
+    },
+    {
+      "id": "react-transition-group",
+      "name": "React Transition Group",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "BSD-3-Clause",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/reactjs/react-transition-group",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Not an animator",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 79
+      }
+    },
+    {
+      "id": "react-move",
+      "name": "React Move",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT; last push Jan 2023",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/sghall/react-move",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Stale; D3 interpolate is enough",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 80
+      }
+    },
+    {
+      "id": "tailwind-animate-css-keyframes",
+      "name": "Tailwind animate / CSS keyframes",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT (Tailwind, unverified)",
+      "licenceClass": "code-permissive",
+      "url": "https://spell.sh/blog/best-react-animation-libraries",
+      "formats": [],
+      "use": "Poster/deck static states only",
+      "verdict": "Reject for film. Prefer JS t-mapping",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 81
+      }
+    },
+    {
+      "id": "css-linear-springs",
+      "name": "CSS `linear()` springs",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "Web standard",
+      "licenceClass": "check",
+      "url": "https://spell.sh/blog/best-react-animation-libraries",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Spring look breaks no-bounce",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 82
+      }
+    },
+    {
+      "id": "lenis",
+      "name": "Lenis",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/darkroomengineering/lenis",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Scroll, not time",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 83
+      }
+    },
+    {
+      "id": "locomotive-scroll",
+      "name": "Locomotive Scroll",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/locomotivemtl/locomotive-scroll",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Scroll, not time",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 84
+      }
+    },
+    {
+      "id": "three-js",
+      "name": "three.js",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/mrdoob/three.js",
+      "formats": [],
+      "use": "Film: 3D cells, organelles, devices",
+      "verdict": "Adopt. Drive with t, never with Clock",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 85
+      }
+    },
+    {
+      "id": "react-three-fiber",
+      "name": "React Three Fiber",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/pmndrs/react-three-fiber",
+      "formats": [],
+      "use": "Film 3D shots in React",
+      "verdict": "Adopt",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 86
+      }
+    },
+    {
+      "id": "drei",
+      "name": "drei",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/pmndrs/drei",
+      "formats": [],
+      "use": "Text, environment, camera helpers",
+      "verdict": "Adapt. Audit each helper for internal clocks",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 87
+      }
+    },
+    {
+      "id": "lottie-web",
+      "name": "lottie-web",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT; last push Sep 2025",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/airbnb/lottie-web",
+      "formats": [],
+      "use": "Film and deck: designer clips (Jitter, After Effects)",
+      "verdict": "Adopt",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 88
+      }
+    },
+    {
+      "id": "lottie-react",
+      "name": "lottie-react",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/Gamote/lottie-react",
+      "formats": [],
+      "use": "React wrapper",
+      "verdict": "Adapt. Call lottie-web directly for control",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 89
+      }
+    },
+    {
+      "id": "dotlottie-web",
+      "name": "dotLottie web",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/LottieFiles/dotlottie-web",
+      "formats": [],
+      "use": "`.lottie` files",
+      "verdict": "Adapt. Second choice to lottie-web SVG",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 90
+      }
+    },
+    {
+      "id": "rive-web-runtime",
+      "name": "Rive web runtime",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT (runtime). Editor is a paid product (unverified)",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/rive-app/rive-wasm",
+      "formats": [],
+      "use": "Interactive deck only",
+      "verdict": "Adapt. Seek = reset + advance(t)",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 91
+      }
+    },
+    {
+      "id": "anime-js-v4",
+      "name": "anime.js v4",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/juliangarnier/anime",
+      "formats": [],
+      "use": "Light MIT alternative to GSAP",
+      "verdict": "Adopt as fallback if GSAP licence ever bites",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 92
+      }
+    },
+    {
+      "id": "theatre-js",
+      "name": "Theatre.js",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "Apache-2.0; last push Aug 2024",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/theatre-js/theatre",
+      "formats": [],
+      "use": "Hand-keyframed camera paths with the studio UI",
+      "verdict": "Adapt. Good model; maintenance risk",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 93
+      }
+    },
+    {
+      "id": "remotion",
+      "name": "Remotion",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "Custom \"Remotion License\": free for individuals, for-profits with up to 3 employees, non-profits; others need a Company License",
+      "licenceClass": "check",
+      "url": "https://github.com/remotion-dev/remotion/blob/main/LICENSE.md",
+      "formats": [],
+      "use": "Reference design only",
+      "verdict": "Reject as dependency. Licence; Molecullage already has the same idea",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 94
+      }
+    },
+    {
+      "id": "motion-canvas",
+      "name": "Motion Canvas",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT; active (Jul 2026)",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/motion-canvas/motion-canvas",
+      "formats": [],
+      "use": "Math/diagram explainers",
+      "verdict": "Reject as dependency; read for ideas",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 95
+      }
+    },
+    {
+      "id": "revideo",
+      "name": "Revideo",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT; repo moved to midrender/revideo",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/midrender/revideo",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Competing engine",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 96
+      }
+    },
+    {
+      "id": "manim-ce-3b1b-manim",
+      "name": "Manim CE / 3b1b manim",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT / MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/ManimCommunity/manim",
+      "formats": [],
+      "use": "Offline equation clips imported as video",
+      "verdict": "Reject in the browser; optional offline asset",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 97
+      }
+    },
+    {
+      "id": "vivus",
+      "name": "Vivus",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT; last push Jul 2022",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/maxwellito/vivus",
+      "formats": [],
+      "use": "Line-draw reveal",
+      "verdict": "Reject. GSAP DrawSVG or own dashoffset covers it",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 98
+      }
+    },
+    {
+      "id": "paper-js",
+      "name": "Paper.js",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/paperjs/paper.js",
+      "formats": [],
+      "use": "Vector geometry ops (boolean paths)",
+      "verdict": "Adapt only for geometry, not timing",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 99
+      }
+    },
+    {
+      "id": "two-js",
+      "name": "two.js",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/jonobr1/two.js",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Overlap with plain SVG",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 100
+      }
+    },
+    {
+      "id": "pixijs-v8",
+      "name": "PixiJS v8",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/pixijs/pixijs",
+      "formats": [],
+      "use": "Many-particle 2D layers",
+      "verdict": "Adapt if particles are needed",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 101
+      }
+    },
+    {
+      "id": "mol",
+      "name": "Mol*",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/molstar/molstar",
+      "formats": [],
+      "use": "Molecular turntables",
+      "verdict": "Unverified. Prefer ChimeraX frames for now",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 102
+      }
+    },
+    {
+      "id": "animate-ui",
+      "name": "Animate UI",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "MIT + Commons Clause",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/imskyleen/animate-ui",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Interactive UI kit",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 103
+      }
+    },
+    {
+      "id": "spell-ui",
+      "name": "Spell UI",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "Unknown (repo not found)",
+      "licenceClass": "check",
+      "url": "https://spell.sh/blog/best-react-animation-libraries",
+      "formats": [],
+      "use": "none",
+      "verdict": "Reject. Marketing kit, licence unknown",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 104
+      }
+    },
+    {
+      "id": "jitter",
+      "name": "Jitter",
+      "kind": "motion-libraries",
+      "section": "2. Library table",
+      "licenceText": "Closed SaaS; free tier; Max plan for more exports",
+      "licenceClass": "check",
+      "url": "https://jitter.video/templates/all/",
+      "formats": [],
+      "use": "Designer clip source",
+      "verdict": "Adapt as asset source only",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 105
+      }
+    },
+    {
+      "id": "gsap",
+      "name": "GSAP",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 141
+      }
+    },
+    {
+      "id": "motion",
+      "name": "Motion",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 142
+      }
+    },
+    {
+      "id": "motion-values",
+      "name": "Motion values",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 143
+      }
+    },
+    {
+      "id": "lottie-web-2",
+      "name": "lottie-web",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 144
+      }
+    },
+    {
+      "id": "dotlottie",
+      "name": "dotLottie",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 145
+      }
+    },
+    {
+      "id": "rive",
+      "name": "Rive",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 146
+      }
+    },
+    {
+      "id": "theatre-js-2",
+      "name": "Theatre.js",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 147
+      }
+    },
+    {
+      "id": "anime-js-v4-2",
+      "name": "anime.js v4",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 148
+      }
+    },
+    {
+      "id": "r3f",
+      "name": "R3F",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 149
+      }
+    },
+    {
+      "id": "three-js-2",
+      "name": "three.js",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 150
+      }
+    },
+    {
+      "id": "pixijs",
+      "name": "PixiJS",
+      "kind": "motion-libraries",
+      "section": "Mapping per library",
+      "licenceText": "",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R1_motion_libraries.md",
+        "line": 151
+      }
+    },
+    {
+      "id": "bioicons",
+      "name": "Bioicons",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "Per icon: CC0, CC-BY (3.0/4.0), MIT, CC BY-SA, BSD. README: \"Please always cite the individual icons and their respective license.\" Some Servier icons are mirrored as CC-BY 3.0.",
+      "licenceClass": "per-item",
+      "url": "https://bioicons.com/",
+      "formats": [
+        "SVG"
+      ],
+      "use": "Lab objects, cells, organisms in schematic panels",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "`git clone` of the repo; licence lives per icon folder",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 22
+      }
+    },
+    {
+      "id": "servier-medical-art-smart",
+      "name": "Servier Medical Art (SMART)",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC BY 4.0. Site: \"Every image is free to use under the Creative Commons Attribution 4.0 license\". Credit line given on site.",
+      "licenceClass": "attribution",
+      "url": "https://smart.servier.com/",
+      "formats": [
+        "SVG",
+        "PNG",
+        "PPTX kits"
+      ],
+      "use": "Organs, tissues, cell types, medical scenes",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "Per image or slide-kit download; no public API found",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 23
+      }
+    },
+    {
+      "id": "niaid-nih-bioart-source",
+      "name": "NIAID NIH BioArt Source",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "Mostly Public Domain; some entries CC-BY. Check each entry.",
+      "licenceClass": "per-item",
+      "url": "https://bioart.niaid.nih.gov/",
+      "formats": [
+        "SVG",
+        "PNG",
+        "AI",
+        "EPS"
+      ],
+      "use": "Viruses, immune cells, pathogens, lab kit",
+      "verdict": "",
+      "tier": "good–C4D (many are pro illustrations)",
+      "evidence": "S (site JS-rendered, licence text not seen)",
+      "access": "Per entry download; no API found",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 24
+      }
+    },
+    {
+      "id": "scidraw",
+      "name": "SciDraw",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC-BY, each drawing with a DOI (site meta: \"CC-BY licensed with DOI\"). CC0 option per search.",
+      "licenceClass": "open-free",
+      "url": "https://scidraw.io/",
+      "formats": [
+        "SVG",
+        "PNG"
+      ],
+      "use": "Neuroscience: rodents, brains, rigs, behaviour set-ups",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (CC-BY+DOI) / S (CC0)",
+      "access": "Per drawing; no API found",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 25
+      }
+    },
+    {
+      "id": "reactome-icon-library",
+      "name": "Reactome Icon Library",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC BY 4.0 (\"distributed under the terms of the Creative Commons Attribution 4.0 International License\").",
+      "licenceClass": "attribution",
+      "url": "https://reactome.org/icon-lib",
+      "formats": [
+        "SVG",
+        "PNG",
+        "EMF",
+        "EHLD diagrams"
+      ],
+      "use": "Pathway glyphs: receptors, organelles, membranes, compounds",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "GitHub repo (SVG exported from Figma)",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 26
+      }
+    },
+    {
+      "id": "phylopic",
+      "name": "PhyloPic",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "Per image: CC0, PDM, CC BY, CC BY-SA, CC BY-NC. API returns licence per image.",
+      "licenceClass": "per-item",
+      "url": "https://www.phylopic.org/",
+      "formats": [
+        "SVG",
+        "PNG silhouettes"
+      ],
+      "use": "Organism silhouettes on trees, sample-origin keys",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "S",
+      "access": "REST API (was 503 during my probe)",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 27
+      }
+    },
+    {
+      "id": "health-icons",
+      "name": "Health Icons",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC0 (\"available in the public domain (CC0)\").",
+      "licenceClass": "open-free",
+      "url": "https://healthicons.org/",
+      "formats": [
+        "SVG (outline",
+        "filled",
+        "24",
+        "48 px)"
+      ],
+      "use": "Clinical pictograms, small inline symbols",
+      "verdict": "",
+      "tier": "good (flat UI style)",
+      "evidence": "V",
+      "access": "\"Download all\" + GitHub",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 28
+      }
+    },
+    {
+      "id": "dbcls-togotv-pictures",
+      "name": "DBCLS TogoTV pictures",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC BY 4.0, credit \"© DBCLS TogoTV / CC-BY-4.0\".",
+      "licenceClass": "attribution",
+      "url": "https://togotv.dbcls.jp/en/pics.html",
+      "formats": [
+        "PNG",
+        "SVG?",
+        "PPTX?"
+      ],
+      "use": "Lab and omics workflow pictograms",
+      "verdict": "",
+      "tier": "good (cute style; check fit)",
+      "evidence": "S",
+      "access": "Per picture; bulk unknown",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 29
+      }
+    },
+    {
+      "id": "openclipart",
+      "name": "Openclipart",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC0 1.0 (\"All Clipart are Released into the Public Domain … Creative Commons Zero 1.0\").",
+      "licenceClass": "open-free",
+      "url": "https://openclipart.org/share",
+      "formats": [
+        "SVG"
+      ],
+      "use": "Rare generic objects only",
+      "verdict": "",
+      "tier": "draft",
+      "evidence": "V",
+      "access": "Site download; no API checked",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 30
+      }
+    },
+    {
+      "id": "openmoji",
+      "name": "OpenMoji",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "CC BY-SA 4.0 (share-alike: derived figure may need the same licence).",
+      "licenceClass": "share-alike",
+      "url": "https://www.openmoji.org/",
+      "formats": [
+        "SVG",
+        "PNG"
+      ],
+      "use": "Avoid in papers; ok for internal slides",
+      "verdict": "",
+      "tier": "draft",
+      "evidence": "V",
+      "access": "GitHub/npm",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 31
+      }
+    },
+    {
+      "id": "noun-project",
+      "name": "Noun Project",
+      "kind": "vector-icons",
+      "section": "A. Vector and icon libraries",
+      "licenceText": "Per-icon terms in its Terms of Use §3; free use needs attribution, paid plan removes it. Redistribution of icons is forbidden.",
+      "licenceClass": "attribution",
+      "url": "https://thenounproject.com/legal/",
+      "formats": [
+        "SVG",
+        "PNG"
+      ],
+      "use": "Do not prefetch. Use only by hand with recorded credit",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (terms page) / U (exact free-tier wording)",
+      "access": "API needs key and paid tier",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 32
+      }
+    },
+    {
+      "id": "ambientcg",
+      "name": "ambientCG",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "CC0 1.0 Universal, also for preview renders.",
+      "licenceClass": "open-free",
+      "url": "https://ambientcg.com/license",
+      "formats": [
+        "PBR materials",
+        "HDRI",
+        "some models"
+      ],
+      "use": "Glass, metal, plastic, agar, bench materials",
+      "verdict": "",
+      "tier": "C4D-grade",
+      "evidence": "V (licence) / U (API)",
+      "access": "Short URLs `ambientcg.com/a/<id>`; API",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 46
+      }
+    },
+    {
+      "id": "kenney",
+      "name": "Kenney",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "CC0 (\"all game assets … public domain licensed (CC0)\").",
+      "licenceClass": "open-free",
+      "url": "https://kenney.nl/support",
+      "formats": [
+        "glTF",
+        "FBX",
+        "OBJ"
+      ],
+      "use": "Stylised compute/servers, simple icons in 3D",
+      "verdict": "",
+      "tier": "draft–good (low-poly game style)",
+      "evidence": "V",
+      "access": "Asset-pack zips",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 47
+      }
+    },
+    {
+      "id": "blenderkit-blendkit",
+      "name": "BlenderKit (Blendkit)",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "Two licences: Royalty Free (no resale as asset) and CC0. \"Everything you download is available for commercial use.\"",
+      "licenceClass": "open-free",
+      "url": "https://www.blenderkit.com/docs/licenses/",
+      "formats": [
+        ".blend via add-on"
+      ],
+      "use": "Lab devices, glassware, furniture inside Blender",
+      "verdict": "",
+      "tier": "good–C4D-grade",
+      "evidence": "V (licences) / U (free-tier limits)",
+      "access": "Blender add-on; account; free vs paid tiers",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 48
+      }
+    },
+    {
+      "id": "smithsonian-3d-voyager",
+      "name": "Smithsonian 3D (Voyager)",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "CC0 for Open Access items.",
+      "licenceClass": "open-free",
+      "url": "https://3d.si.edu/",
+      "formats": [
+        "GLB (draco)",
+        "OBJ",
+        "USDZ",
+        "STL"
+      ],
+      "use": "Specimens, fossils, skulls, historic instruments",
+      "verdict": "",
+      "tier": "good–C4D-grade (scans)",
+      "evidence": "S (site 403 to script)",
+      "access": "Per item; HF mirror `suvadityamuk/smithsonian-open-access-3d`",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 51
+      }
+    },
+    {
+      "id": "allen-cell-explorer-allen-institute",
+      "name": "Allen Cell Explorer / Allen Institute",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "Terms of use: \"must be for research or other noncommercial purposes unless otherwise set forth\". Academic publication allowed with citation.",
+      "licenceClass": "non-commercial",
+      "url": "https://www.allencell.org/terms-of-use.html",
+      "formats": [
+        "OME-TIFF",
+        "meshes",
+        "Simularium files"
+      ],
+      "use": "Real 3D hiPSC cell geometry for papers only",
+      "verdict": "",
+      "tier": "C4D-grade data",
+      "evidence": "V",
+      "access": "Downloads, Simularium viewer",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 52
+      }
+    },
+    {
+      "id": "cellpack-mesoscope",
+      "name": "cellPACK (mesoscope)",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "MIT (repo). Recipes/models may carry their own CC licences.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/mesoscope/cellpack",
+      "formats": [
+        "Python",
+        "recipes JSON",
+        "packed outputs"
+      ],
+      "use": "Packed virions, cytoplasm crowding",
+      "verdict": "",
+      "tier": "C4D-grade with good render",
+      "evidence": "V (MIT) / S (pip, model licences)",
+      "access": "`pip install cellpack`; GitHub",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 53
+      }
+    },
+    {
+      "id": "mesoscope-io-cellview-cellpaint-2-0",
+      "name": "Mesoscope.io / cellVIEW / CellPAINT 2.0",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "Licence not seen. CellPAINT-2.0 is released and can import new molecules.",
+      "licenceClass": "check",
+      "url": "https://ccsb.scripps.edu/cellpaint/",
+      "formats": [
+        "Unity app",
+        "PNG export"
+      ],
+      "use": "2D mesoscale paintings; idea panels",
+      "verdict": "",
+      "tier": "good (Goodsell style)",
+      "evidence": "V (exists) / U (licence; mesoscope.io SSL error; cellVIEW page 404)",
+      "access": "App download",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 54
+      }
+    },
+    {
+      "id": "bodyparts3d-dbcls",
+      "name": "BodyParts3D (DBCLS)",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "\"License CC BY\" on the archive page. Version not shown; older notes say CC BY-SA 2.1 JP.",
+      "licenceClass": "share-alike",
+      "url": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/desc.html",
+      "formats": [
+        "OBJ"
+      ],
+      "use": "Human organs and bones in panels",
+      "verdict": "",
+      "tier": "good (anatomy meshes)",
+      "evidence": "V (\"CC BY\") / U (version)",
+      "access": "Archive download",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 55
+      }
+    },
+    {
+      "id": "z-anatomy",
+      "name": "Z-Anatomy",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "CC BY-SA 4.0 (\"This work is licensed under a Creative Commons Attribution-ShareAlike 4.0\"). Models in .blend and FBX.",
+      "licenceClass": "share-alike",
+      "url": "https://github.com/LluisV/Z-Anatomy",
+      "formats": [
+        ".blend",
+        "FBX"
+      ],
+      "use": "Organ cut-aways; mark share-alike",
+      "verdict": "",
+      "tier": "C4D-grade (full atlas in Blender)",
+      "evidence": "V",
+      "access": "Download links in README",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 56
+      }
+    },
+    {
+      "id": "objaverse",
+      "name": "Objaverse",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "Dataset: ODC-BY. Each object keeps its own Sketchfab licence (mixed).",
+      "licenceClass": "per-item",
+      "url": "https://huggingface.co/datasets/allenai/objaverse",
+      "formats": [
+        "GLB"
+      ],
+      "use": "Filter to CC0/CC-BY only; use as search pool",
+      "verdict": "",
+      "tier": "draft–good",
+      "evidence": "V (ODC-BY) / U (per-object mix detail)",
+      "access": "HF dataset, per-object GLB URLs",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 57
+      }
+    },
+    {
+      "id": "open3dmodel",
+      "name": "Open3DModel",
+      "kind": "3d-models-materials-hdri",
+      "section": "B. 3D model, material and HDRI libraries",
+      "licenceText": "Not found.",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [
+        "—"
+      ],
+      "use": "Drop",
+      "verdict": "",
+      "tier": "—",
+      "evidence": "U",
+      "access": "—",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 60
+      }
+    },
+    {
+      "id": "pdb-ihm-integrative",
+      "name": "PDB-IHM (integrative)",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "wwPDB-managed archive; licence not seen on page (likely wwPDB CC0).",
+      "licenceClass": "open-free",
+      "url": "https://pdb-ihm.org/",
+      "formats": [
+        "IHM mmCIF"
+      ],
+      "use": "Multi-scale assemblies",
+      "verdict": "",
+      "tier": "data",
+      "evidence": "V (exists) / U (licence)",
+      "access": "Search + download",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 73
+      }
+    },
+    {
+      "id": "alphafold-db",
+      "name": "AlphaFold DB",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "\"Data is available for academic and commercial use, under a CC-BY-4.0 licence.\"",
+      "licenceClass": "attribution",
+      "url": "https://alphafold.ebi.ac.uk/",
+      "formats": [
+        "mmCIF",
+        "PDB",
+        "PAE JSON"
+      ],
+      "use": "Predicted single chains, pLDDT colouring",
+      "verdict": "",
+      "tier": "data",
+      "evidence": "V",
+      "access": "API + FTP + GCS bulk",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 74
+      }
+    },
+    {
+      "id": "esm-metagenomic-atlas",
+      "name": "ESM Metagenomic Atlas",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "CC BY 4.0 (per search). Bulk via `scripts/atlas/README.md`. DOI 10.1126/science.ade2574.",
+      "licenceClass": "attribution",
+      "url": "https://esmatlas.com/",
+      "formats": [
+        "PDB",
+        "Foldseek DB",
+        "embeddings"
+      ],
+      "use": "Dark-proteome examples",
+      "verdict": "",
+      "tier": "data",
+      "evidence": "S (licence) / V (API links in README)",
+      "access": "API + tarballs (TB scale)",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 75
+      }
+    },
+    {
+      "id": "emdb",
+      "name": "EMDB",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "CC0 1.0 (wwPDB policy).",
+      "licenceClass": "open-free",
+      "url": "https://www.ebi.ac.uk/emdb/documentation/policies",
+      "formats": [
+        "MRC",
+        "CCP4 maps"
+      ],
+      "use": "Density surfaces in ChimeraX/Blender",
+      "verdict": "",
+      "tier": "data",
+      "evidence": "S",
+      "access": "FTP + API",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 76
+      }
+    },
+    {
+      "id": "pubchem-3d-conformers",
+      "name": "PubChem 3D conformers",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "US gov data; downloads page exists. Licence wording not captured.",
+      "licenceClass": "check",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/docs/downloads",
+      "formats": [
+        "SDF (3D)",
+        "JSON"
+      ],
+      "use": "Ligands, small molecules",
+      "verdict": "",
+      "tier": "data",
+      "evidence": "V (page) / U (licence)",
+      "access": "PUG-REST + FTP",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 77
+      }
+    },
+    {
+      "id": "molecular-nodes-brady-johnston",
+      "name": "Molecular Nodes (Brady Johnston)",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "GPL-3.0. Install in Blender 5.2: Edit › Preferences › Get Extensions.",
+      "licenceClass": "copyleft",
+      "url": "https://github.com/BradyAJohnston/MolecularNodes",
+      "formats": [
+        "Blender add-on",
+        "reads PDB",
+        "mmCIF",
+        "MD",
+        "EM"
+      ],
+      "use": "Cinematic molecular renders and films",
+      "verdict": "",
+      "tier": "C4D-grade",
+      "evidence": "V",
+      "access": "Blender extension + PyPI",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 78
+      }
+    },
+    {
+      "id": "mol-molstar",
+      "name": "Mol* (molstar)",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "MIT. Has `packages/plugin/headless` for \"Node capture\".",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/molstar/molstar",
+      "formats": [
+        "Web viewer",
+        "PNG capture"
+      ],
+      "use": "Fast headless previews, web figures",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (MIT, headless pkg) / S (`mvs-render` usage)",
+      "access": "npm `molstar`; `mvs-render` CLI",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 79
+      }
+    },
+    {
+      "id": "molviewspec-mvs",
+      "name": "MolViewSpec (MVS)",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "MIT. \"A generic mechanism for describing views used in molecular visualizations.\"",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/molstar/mol-view-spec",
+      "formats": [
+        "`.mvsj`",
+        "`.mvsx`"
+      ],
+      "use": "Store each molecular view as a reproducible JSON scene",
+      "verdict": "",
+      "tier": "—",
+      "evidence": "V",
+      "access": "Python + TS builders",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 80
+      }
+    },
+    {
+      "id": "ucsf-chimerax",
+      "name": "UCSF ChimeraX",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "Non-commercial at no cost; \"COMMERCIAL USE OF UCSF CHIMERAX IS COVERED BY A SEPARATE WRITTEN LICENSE AGREEMENT.\"",
+      "licenceClass": "non-commercial",
+      "url": "https://www.cgl.ucsf.edu/chimerax/docs/licensing.html",
+      "formats": [
+        "PNG",
+        "GLB",
+        "STL export"
+      ],
+      "use": "Current flat renders; check licence for pitch work",
+      "verdict": "",
+      "tier": "C4D-grade (flat journal style)",
+      "evidence": "V",
+      "access": "Scriptable (Python, nogui)",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 81
+      }
+    },
+    {
+      "id": "pymol-open-source",
+      "name": "PyMOL open-source",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "Permissive notice: use, copy, modify, distribute for any purpose, keep copyright notice.",
+      "licenceClass": "check",
+      "url": "https://github.com/schrodinger/pymol-open-source",
+      "formats": [
+        "PNG",
+        "session"
+      ],
+      "use": "Fallback renderer",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "Python",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 82
+      }
+    },
+    {
+      "id": "vmd",
+      "name": "VMD",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "Non-commercial; \"Commercial use … REQUIRES A COMMERCIAL LICENSE.\"",
+      "licenceClass": "non-commercial",
+      "url": "https://www.ks.uiuc.edu/Research/vmd/current/LICENSE.html",
+      "formats": [
+        "Tachyon",
+        "OptiX renders"
+      ],
+      "use": "MD trajectories; academic only",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "Tcl/Python",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 83
+      }
+    },
+    {
+      "id": "ovito-basic",
+      "name": "OVITO Basic",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "\"free of charge under an open source license\" incl. Python package. Exact licence name not captured.",
+      "licenceClass": "check",
+      "url": "https://www.ovito.org/about/ovito-licenses/",
+      "formats": [
+        "PNG",
+        "video"
+      ],
+      "use": "Materials/particle simulations",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (open source) / U (licence name)",
+      "access": "Python module",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 84
+      }
+    },
+    {
+      "id": "illustrate-goodsell",
+      "name": "Illustrate (Goodsell)",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "Licence not captured. Cite Goodsell, Autin, Olson (2019) Structure 27:1716–1720.",
+      "licenceClass": "check",
+      "url": "https://ccsb.scripps.edu/illustrate/",
+      "formats": [
+        "PNG",
+        "PNM"
+      ],
+      "use": "Non-photoreal molecule panels",
+      "verdict": "",
+      "tier": "C4D-grade (Goodsell style)",
+      "evidence": "V (cite) / U (licence)",
+      "access": "Fortran CLI, web server",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 85
+      }
+    },
+    {
+      "id": "scientific-colour-maps-crameri",
+      "name": "Scientific colour maps (Crameri)",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "Zenodo record v8.0.1 (2023-10-05). Licence text not captured; widely cited as MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://zenodo.org/records/8409685",
+      "formats": [
+        "CPT",
+        "Python",
+        "JSON",
+        "etc."
+      ],
+      "use": "All continuous colour scales",
+      "verdict": "",
+      "tier": "—",
+      "evidence": "V (record) / U (licence)",
+      "access": "Zenodo zip",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 86
+      }
+    },
+    {
+      "id": "matplotlib",
+      "name": "matplotlib",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "PSF-based, BSD-compatible.",
+      "licenceClass": "code-permissive",
+      "url": "https://matplotlib.org/stable/project/license.html",
+      "formats": [
+        "SVG",
+        "PDF"
+      ],
+      "use": "Data panels",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "pip",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 87
+      }
+    },
+    {
+      "id": "plotly-js",
+      "name": "plotly.js",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/plotly/plotly.js",
+      "formats": [
+        "SVG",
+        "PNG"
+      ],
+      "use": "Interactive previews",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "npm",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 88
+      }
+    },
+    {
+      "id": "vega-lite",
+      "name": "Vega-Lite",
+      "kind": "molecular-computational",
+      "section": "C. Molecular and computational sources and engines",
+      "licenceText": "BSD-3-Clause (UW IDL).",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/vega/vega-lite",
+      "formats": [
+        "SVG"
+      ],
+      "use": "Declarative data panels in HTML pages",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "npm",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 89
+      }
+    },
+    {
+      "id": "elk-js",
+      "name": "ELK.js",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "Eclipse Public License 2.0 (secondary GPL-3.0+).",
+      "licenceClass": "copyleft",
+      "url": "https://github.com/kieler/elkjs",
+      "formats": [],
+      "use": "Pipeline and pathway layouts with orthogonal edges",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (licence)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 97
+      }
+    },
+    {
+      "id": "dagre",
+      "name": "Dagre",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/dagrejs/dagre",
+      "formats": [],
+      "use": "Simple DAGs",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (licence)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 98
+      }
+    },
+    {
+      "id": "graphviz-wasm-hpcc-js-wasm",
+      "name": "Graphviz WASM (@hpcc-js/wasm)",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "Wrapper Apache 2.0. Graphviz core itself EPL (U; fetch 404).",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/hpcc-systems/hpcc-js-wasm",
+      "formats": [],
+      "use": "Trees, ontologies",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (wrapper)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 99
+      }
+    },
+    {
+      "id": "d3-force",
+      "name": "d3-force",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "ISC.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/d3/d3-force",
+      "formats": [],
+      "use": "Networks (PPI), then freeze positions",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (licence)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 100
+      }
+    },
+    {
+      "id": "penrose-cmu",
+      "name": "Penrose (CMU)",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/penrose/penrose",
+      "formats": [],
+      "use": "Math/set diagrams from notation",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (licence)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 101
+      }
+    },
+    {
+      "id": "tikzjax",
+      "name": "TikZJax",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "Licence not captured. Compiles TeX to WebAssembly and turns TikZ into SVG.",
+      "licenceClass": "check",
+      "url": "https://github.com/kisonecat/tikzjax",
+      "formats": [],
+      "use": "Commutative diagrams, equations as SVG",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (function) / U (licence)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 102
+      }
+    },
+    {
+      "id": "mermaid",
+      "name": "Mermaid",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/mermaid-js/mermaid",
+      "formats": [],
+      "use": "Reject for final figures (LLM-ish boxes); ok for internal sketches",
+      "verdict": "",
+      "tier": "draft",
+      "evidence": "V (licence)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 103
+      }
+    },
+    {
+      "id": "vtracer",
+      "name": "vtracer",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "Licence not captured (U; LICENSE-MIT path 404). README: colour pipeline, \"skips Potrace's expensive optimal-polygon search in favor of a fast, linear\" method.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/visioncortex/vtracer",
+      "formats": [],
+      "use": "Colour raster → SVG",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (README)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 104
+      }
+    },
+    {
+      "id": "potrace",
+      "name": "Potrace",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "GPL; non-GPL \"Potrace Professional\" sold separately.",
+      "licenceClass": "copyleft",
+      "url": "https://potrace.sourceforge.net/",
+      "formats": [],
+      "use": "Clean line art → SVG (call as CLI to keep GPL apart)",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 105
+      }
+    },
+    {
+      "id": "svgo",
+      "name": "SVGO",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/svg/svgo",
+      "formats": [],
+      "use": "Optimise every ingested SVG",
+      "verdict": "",
+      "tier": "—",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 106
+      }
+    },
+    {
+      "id": "paper-js-2",
+      "name": "Paper.js",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "MIT.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/paperjs/paper.js",
+      "formats": [],
+      "use": "Union/subtract shapes, clean outlines",
+      "verdict": "",
+      "tier": "—",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 107
+      }
+    },
+    {
+      "id": "sam-2-meta",
+      "name": "SAM 2 (Meta)",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "Code and checkpoints Apache 2.0 (demo fonts under OFL).",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/facebookresearch/sam2",
+      "formats": [],
+      "use": "Cut objects from photos before tracing",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 108
+      }
+    },
+    {
+      "id": "rembg",
+      "name": "rembg",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "MIT (code). Model weights have own licences (U).",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/danielgatis/rembg",
+      "formats": [],
+      "use": "Fast background removal",
+      "verdict": "",
+      "tier": "good",
+      "evidence": "V (code)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 109
+      }
+    },
+    {
+      "id": "opencv",
+      "name": "OpenCV",
+      "kind": "graph-schematic-vector-engines",
+      "section": "D. Graph, schematic layout and vectorisation engines",
+      "licenceText": "Apache 2.0.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/opencv/opencv",
+      "formats": [],
+      "use": "Mask → contour → simplify → SVG path",
+      "verdict": "",
+      "tier": "—",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 110
+      }
+    },
+    {
+      "id": "trellis-microsoft",
+      "name": "TRELLIS (Microsoft)",
+      "kind": "generative-3d",
+      "section": "E. Generative 3D (draft only; evidence level \"draft / architecture\", never \"measured\")",
+      "licenceText": "MIT (code); HF weights tag `mit`.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/microsoft/TRELLIS",
+      "formats": [
+        "Mesh (GLB)",
+        "3D Gaussians",
+        "radiance fields"
+      ],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 120
+      }
+    },
+    {
+      "id": "trellis-2",
+      "name": "TRELLIS.2",
+      "kind": "generative-3d",
+      "section": "E. Generative 3D (draft only; evidence level \"draft / architecture\", never \"measured\")",
+      "licenceText": "MIT; \"certain dependencies operate under separate license terms\" (nvdiffrast named). 4B params; ~60 s at 1536³ on H100.",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/microsoft/TRELLIS.2",
+      "formats": [
+        "GLB"
+      ],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 121
+      }
+    },
+    {
+      "id": "hunyuan3d-2-tencent",
+      "name": "Hunyuan3D-2 (Tencent)",
+      "kind": "generative-3d",
+      "section": "E. Generative 3D (draft only; evidence level \"draft / architecture\", never \"measured\")",
+      "licenceText": "Tencent Hunyuan 3D 2.0 Community License. \"DOES NOT APPLY IN THE EUROPEAN UNION, UNITED KINGDOM AND SOUTH KOREA\". MAU cap (S).",
+      "licenceClass": "check",
+      "url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2",
+      "formats": [
+        "GLB with texture"
+      ],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "V (territory) / S (MAU)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 122
+      }
+    },
+    {
+      "id": "triposr-stability-tripo",
+      "name": "TripoSR (Stability + Tripo)",
+      "kind": "generative-3d",
+      "section": "E. Generative 3D (draft only; evidence level \"draft / architecture\", never \"measured\")",
+      "licenceText": "MIT, \"includes the source code, pretrained models\".",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/VAST-AI-Research/TripoSR",
+      "formats": [
+        "OBJ",
+        "GLB"
+      ],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "V",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 123
+      }
+    },
+    {
+      "id": "stable-fast-3d",
+      "name": "Stable Fast 3D",
+      "kind": "generative-3d",
+      "section": "E. Generative 3D (draft only; evidence level \"draft / architecture\", never \"measured\")",
+      "licenceText": "Stability AI Community License (HF tag `stabilityai-ai-community`, gated). Free under USD 1 M annual revenue (S).",
+      "licenceClass": "check",
+      "url": "https://huggingface.co/stabilityai/stable-fast-3d",
+      "formats": [
+        "GLB with UV texture"
+      ],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "V (licence name) / S (cap)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 124
+      }
+    },
+    {
+      "id": "instantmesh-tencentarc",
+      "name": "InstantMesh (TencentARC)",
+      "kind": "generative-3d",
+      "section": "E. Generative 3D (draft only; evidence level \"draft / architecture\", never \"measured\")",
+      "licenceText": "Apache 2.0 (code). Base model weights may differ (U).",
+      "licenceClass": "code-permissive",
+      "url": "https://github.com/TencentARC/InstantMesh",
+      "formats": [
+        "OBJ",
+        "GLB"
+      ],
+      "use": "",
+      "verdict": "",
+      "tier": "",
+      "evidence": "V (code)",
+      "access": "",
+      "origin": {
+        "file": "R2_science_assets.md",
+        "line": 125
+      }
+    },
+    {
+      "id": "three-js-3",
+      "name": "three.js",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Main WebGL engine for 3D scenes, GLB loading, camera moves. Fits next to the existing engines.",
+      "verdict": "adopt. MIT, active (release today), no render loop is forced on you.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 27
+      }
+    },
+    {
+      "id": "react-three-fiber-r3f",
+      "name": "React Three Fiber (R3F)",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "React renderer for three.js.",
+      "verdict": "hold. Raw three.js gives `seek(t)` with fewer layers. Revisit if a React block needs many 3D parts.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 28
+      }
+    },
+    {
+      "id": "drei-r3f-helpers",
+      "name": "drei (R3F helpers)",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Loaders, controls, helpers for R3F.",
+      "verdict": "hold, with R3F.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 29
+      }
+    },
+    {
+      "id": "babylon-js",
+      "name": "Babylon.js",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Full 3D engine with its own tools.",
+      "verdict": "hold. Large, and overlaps three.js. No gap it fills for us.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 30
+      }
+    },
+    {
+      "id": "playcanvas-engine",
+      "name": "PlayCanvas engine",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Web 3D engine, linked to a cloud editor.",
+      "verdict": "hold. Overlaps three.js; large package.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 31
+      }
+    },
+    {
+      "id": "model-viewer-google",
+      "name": "model-viewer (Google)",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "`<model-viewer>` web component for GLB display and AR.",
+      "verdict": "hold. Good for an interactive HTML page. For frames, use three.js directly.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 32
+      }
+    },
+    {
+      "id": "gltf-2-0-glb",
+      "name": "glTF 2.0 / GLB",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "Spec text: CC-BY-4.0 (SPDX tag in repo README source) V. Sample code in the repo: not checked.",
+      "licenceClass": "attribution",
+      "url": "",
+      "formats": [],
+      "use": "Master format for meshes, materials, animation. One file, loads in three.js, Blender, Babylon, PlayCanvas.",
+      "verdict": "adopt. Already the planned master format in R2 [62].",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 33
+      }
+    },
+    {
+      "id": "khr-extensions",
+      "name": "KHR extensions",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "Khronos ratified",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Ratified list includes `KHR_draco_mesh_compression`, `KHR_mesh_quantization`, `KHR_texture_basisu`, `KHR_texture_transform`, `KHR_lights_punctual`, `KHR_animation_pointer`, `KHR_materials_*` (clearcoat, transmission, volume, sheen, ior, iridescence, anisotropy, dispersion, emissive_strength, specular, unlit, variants), `KHR_gaussian_splatting`, `KHR_interactivity`. `EXT_meshopt_compression` is listed as ratified. `KHR_materials_pbrSpecularGlossiness` is archived.",
+      "verdict": "adopt (use ratified ones only). Avoid archived extensions.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 34
+      }
+    },
+    {
+      "id": "draco",
+      "name": "Draco",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Mesh compression library, used by `KHR_draco_mesh_compression`.",
+      "verdict": "hold. Meshopt is simpler and also lossless-friendly (U). Use Draco only for a very large static mesh.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 35
+      }
+    },
+    {
+      "id": "meshoptimizer",
+      "name": "meshoptimizer",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Mesh and animation compression (`EXT_meshopt_compression`) and simplification.",
+      "verdict": "trial. Test on one GLB for size and load time.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 36
+      }
+    },
+    {
+      "id": "gltf-transform",
+      "name": "glTF-Transform",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Node library and CLI to optimise, compress, dedupe, resize textures in GLB.",
+      "verdict": "adopt for the ingest step (R2 [62] \"Normalise\").",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 37
+      }
+    },
+    {
+      "id": "usd-openusd",
+      "name": "USD / OpenUSD",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "\"Tomorrow Open Source Technology License 1.0\", an Apache-2.0 variant with a changed trademark section V. No SPDX id found. GitHub reports NOASSERTION V.",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Scene interchange (Pixar). Only as an export for other tools.",
+      "verdict": "hold. Interchange only. GLB covers our web needs.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 38
+      }
+    },
+    {
+      "id": "three-gpu-pathtracer",
+      "name": "three-gpu-pathtracer",
+      "kind": "3d-molecular-tools",
+      "section": "2a. 3D engines and formats",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Path-traced render in three.js, converges by sample count.",
+      "verdict": "hold. Interesting for stills. Pre-1.0.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 39
+      }
+    },
+    {
+      "id": "blender-cycles-eevee",
+      "name": "Blender (Cycles, EEVEE)",
+      "kind": "3d-molecular-tools",
+      "section": "2b. Offline renderer",
+      "licenceText": "Source: GPL-2.0-or-later. Cycles: Apache-2.0. Binaries: GPL-3.0-or-later V. Your renders and `.blend` files are yours V.",
+      "licenceClass": "copyleft",
+      "url": "",
+      "formats": [],
+      "use": "Offline cinematic renders from a `.blend` or a Python script. Molecular Nodes (GPL-3.0, per R2 [62]) runs inside it.",
+      "verdict": "adopt for offline hero frames and thumbnails (Cycles on CPU or CUDA). EEVEE headless: hold until tested on the WSL/Linux box.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 45
+      }
+    },
+    {
+      "id": "mol-molstar-2",
+      "name": "Mol* (molstar)",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Web molecule viewer, already in `stage` (5.13). Has a Node headless context and the `mvs-render` CLI.",
+      "verdict": "adopt (already used). Keep the `__structReady` wait.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 51
+      }
+    },
+    {
+      "id": "molviewspec-mvs-2",
+      "name": "MolViewSpec (MVS)",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "MIT V (repo and PyPI)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "JSON description of a molecular view (`.mvsj`) or zip (`.mvsx`). One view file per figure; Mol* loads it.",
+      "verdict": "adopt. Matches the R2 plan to store one `view.mvsj` per structure.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 52
+      }
+    },
+    {
+      "id": "3dmol-js",
+      "name": "3Dmol.js",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "BSD-3-Clause (LICENSE text and npm) V. GitHub API shows NOASSERTION because the file mixes notices.",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Light WebGL viewer, already vendored in `motion/vendor`.",
+      "verdict": "adopt (already used) for flat, silhouette styles.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 53
+      }
+    },
+    {
+      "id": "ngl-viewer",
+      "name": "NGL Viewer",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "WebGL molecule viewer.",
+      "verdict": "hold. Mol* and 3Dmol.js already cover it.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 54
+      }
+    },
+    {
+      "id": "ucsf-chimerax-2",
+      "name": "UCSF ChimeraX",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "Free for academic, government, nonprofit and personal use; commercial use needs a separate licence V ([33] from R2, [37]). No SPDX id.",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Current flat journal renders (`struct/render.py`). Scriptable.",
+      "verdict": "adopt for research figures with a licence gate. hold for pitch or product material until the owner decides (R2 open question).",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 55
+      }
+    },
+    {
+      "id": "pymol-open-source-2",
+      "name": "PyMOL open-source",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "Permissive text: use, modify, distribute, keep notices; trademark rules for derived software V. Closest SPDX: HPND (my reading; GitHub says NOASSERTION).",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Fallback renderer, Python scripts.",
+      "verdict": "trial as a fallback only.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 56
+      }
+    },
+    {
+      "id": "vmd-2",
+      "name": "VMD",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "Non-commercial and internal business use only, per R2 [62] V and the University of Illinois licensing page S.",
+      "licenceClass": "non-commercial",
+      "url": "",
+      "formats": [],
+      "use": "MD trajectory viewer.",
+      "verdict": "reject for product work. Academic figures only.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 57
+      }
+    },
+    {
+      "id": "gaussian-splatting-viewers",
+      "name": "Gaussian splatting viewers",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "MIT for all five V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Show captured scenes as splats. No current figure needs them.",
+      "verdict": "hold. If one is needed, Spark (active, MIT). Reject GaussianSplats3D (no release since 2025-01) and antimatter15/splat (demo, no releases).",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 58
+      }
+    },
+    {
+      "id": "vtk-js",
+      "name": "vtk.js",
+      "kind": "3d-molecular-tools",
+      "section": "2c. Molecular viewers",
+      "licenceText": "BSD-3-Clause V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Volume and scientific rendering in the browser.",
+      "verdict": "hold. Only for volume data (cryo-EM maps, MRI) if Mol* volumes fall short.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 59
+      }
+    },
+    {
+      "id": "ambientcg-2",
+      "name": "ambientCG",
+      "kind": "3d-molecular-tools",
+      "section": "2d. Asset sources",
+      "licenceText": "CC0 1.0; credit optional V",
+      "licenceClass": "open-free",
+      "url": "",
+      "formats": [],
+      "use": "PBR materials, HDRIs, models.",
+      "verdict": "adopt",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 66
+      }
+    },
+    {
+      "id": "smithsonian-3d",
+      "name": "Smithsonian 3D",
+      "kind": "3d-molecular-tools",
+      "section": "2d. Asset sources",
+      "licenceText": "CC0 where marked \"CC0\" S. One object page says non-commercial only S.",
+      "licenceClass": "non-commercial",
+      "url": "",
+      "formats": [],
+      "use": "Specimens, instruments.",
+      "verdict": "trial, CC0 items only. Check each item.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 69
+      }
+    },
+    {
+      "id": "biodigital",
+      "name": "BioDigital",
+      "kind": "3d-molecular-tools",
+      "section": "2d. Asset sources",
+      "licenceText": "Closed. \"Copying or storing of any Content for other than personal, non-commercial use is expressly prohibited\" V. Commercial use needs a Business plan and extra licence V/S.",
+      "licenceClass": "non-commercial",
+      "url": "",
+      "formats": [],
+      "use": "Interactive 3D anatomy.",
+      "verdict": "reject",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R4_3d_molecular.md",
+        "line": 70
+      }
+    },
+    {
+      "id": "plain-svg-svgo",
+      "name": "Plain SVG + SVGO",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "The page kit already writes SVG. SVGO shrinks and cleans every ingested or generated SVG.",
+      "verdict": "adopt - already the base; one optimiser pass for all SVG.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 22
+      }
+    },
+    {
+      "id": "d3-shape",
+      "name": "d3-shape",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "ISC V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Path strings for lines, areas, arcs, curves. No DOM needed.",
+      "verdict": "adopt - smallest way to draw data paths.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 23
+      }
+    },
+    {
+      "id": "d3-scale",
+      "name": "d3-scale",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "ISC V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Linear, log, time and colour scales for axes and ticks.",
+      "verdict": "adopt - film already uses it.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 24
+      }
+    },
+    {
+      "id": "d3-force-2",
+      "name": "d3-force",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "ISC V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Network layouts (PPI graphs). Run to rest, then freeze positions.",
+      "verdict": "adopt - freeze positions into the figure JSON.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 25
+      }
+    },
+    {
+      "id": "observable-plot",
+      "name": "Observable Plot",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "ISC V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Short grammar for statistical charts as SVG.",
+      "verdict": "trial - good for quick data panels; last release is 20 months old.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 26
+      }
+    },
+    {
+      "id": "vega-lite-vega",
+      "name": "Vega-Lite (+ Vega)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "BSD-3-Clause V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Declarative chart spec, compiled to Vega, rendered to an SVG string in Node.",
+      "verdict": "adopt - spec in JSON fits the manifest and the claim gate.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 27
+      }
+    },
+    {
+      "id": "echarts-svg-renderer",
+      "name": "ECharts (SVG renderer)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Rich chart set. Server-side rendering gives an SVG string.",
+      "verdict": "trial - useful for chart types Vega-Lite lacks; check the look against the palette.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 28
+      }
+    },
+    {
+      "id": "plotly-js-static-export",
+      "name": "Plotly.js (static export)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Interactive charts. `Plotly.toImage` can return SVG.",
+      "verdict": "hold - use only for interactive previews.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 29
+      }
+    },
+    {
+      "id": "matplotlib-python-side",
+      "name": "matplotlib (Python side)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "PSF-based matplotlib licence; PyPI `license` field is free text, SPDX expression null V",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Data panels from the Python stack, saved as SVG.",
+      "verdict": "adopt - for Python-made panels; set hashsalt and fonttype in every script.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 30
+      }
+    },
+    {
+      "id": "konva",
+      "name": "Konva",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Canvas scene graph.",
+      "verdict": "reject - not vector.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 31
+      }
+    },
+    {
+      "id": "fabric-js",
+      "name": "Fabric.js",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Canvas editor with object model. SVG import and export exist.",
+      "verdict": "hold - no need beyond the page kit.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 32
+      }
+    },
+    {
+      "id": "paper-js-3",
+      "name": "Paper.js",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Boolean path operations, path clean-up, SVG import and export.",
+      "verdict": "trial - union/subtract and outline clean-up for ingested art (R2 chain).",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 33
+      }
+    },
+    {
+      "id": "two-js-2",
+      "name": "Two.js",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Scene graph with SVG, Canvas and WebGL renderers.",
+      "verdict": "hold - duplicates the kit.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 34
+      }
+    },
+    {
+      "id": "pixijs-2",
+      "name": "PixiJS",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "2D engine on WebGL/WebGPU.",
+      "verdict": "reject for figures - raster.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 35
+      }
+    },
+    {
+      "id": "tldraw",
+      "name": "tldraw",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "Custom tldraw licence (\"SEE LICENSE IN LICENSE.md\") V. Not an OSI licence.",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Whiteboard SDK.",
+      "verdict": "reject - licence key and watermark.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 36
+      }
+    },
+    {
+      "id": "excalidraw",
+      "name": "Excalidraw",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Hand-drawn whiteboard; `exportToSvg` returns an SVG.",
+      "verdict": "hold - fine for internal sketches only.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 37
+      }
+    },
+    {
+      "id": "elk-js-elkjs",
+      "name": "ELK.js (elkjs)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "EPL-2.0 OR GPL-3.0-or-later V",
+      "licenceClass": "copyleft",
+      "url": "",
+      "formats": [],
+      "use": "Layered layout with ports and orthogonal edge routing. Gives node x/y and edge bend points.",
+      "verdict": "adopt - pipeline and pathway diagrams. Choose the EPL-2.0 arm.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 38
+      }
+    },
+    {
+      "id": "dagre-dagrejs-dagre",
+      "name": "dagre (@dagrejs/dagre)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Simple layered layout for small DAGs.",
+      "verdict": "hold - ELK covers it.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 39
+      }
+    },
+    {
+      "id": "graphviz-in-wasm-hpcc-js-wasm-graphviz",
+      "name": "Graphviz in WASM (@hpcc-js/wasm-graphviz)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "Wrapper Apache-2.0 V. Graphviz core EPL-2.0 V.",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "`dot` layout to SVG for trees and ontologies.",
+      "verdict": "trial - trees and ontology graphs.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 40
+      }
+    },
+    {
+      "id": "cytoscape-js",
+      "name": "Cytoscape.js",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Graph model and interactive viewer.",
+      "verdict": "hold - GPL extension and canvas output.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 41
+      }
+    },
+    {
+      "id": "mermaid-2",
+      "name": "Mermaid",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Text-to-diagram.",
+      "verdict": "hold - internal sketches only (as R2). Set `deterministicIds` and a seed if used.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 42
+      }
+    },
+    {
+      "id": "katex",
+      "name": "KaTeX",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Fast formulas as HTML + CSS + fonts.",
+      "verdict": "adopt - already used; do not expect an SVG string.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 43
+      }
+    },
+    {
+      "id": "mathjax",
+      "name": "MathJax",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Formulas as pure SVG paths (`tex2svgPromise`).",
+      "verdict": "adopt - where a formula must live inside an SVG.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 44
+      }
+    },
+    {
+      "id": "rdkit-js-rdkit-rdkit",
+      "name": "RDKit.js (@rdkit/rdkit)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "BSD-3-Clause V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "SMILES or molfile to a 2D structure SVG.",
+      "verdict": "adopt - chemistry panels.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 45
+      }
+    },
+    {
+      "id": "smilesdrawer",
+      "name": "SmilesDrawer",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT (npm) V; README gives none",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Browser SMILES drawer, SVG or canvas.",
+      "verdict": "trial - lighter than RDKit.js; check bond style.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 46
+      }
+    },
+    {
+      "id": "ketcher",
+      "name": "Ketcher",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Structure editor.",
+      "verdict": "hold - use to author a molfile, then draw with RDKit.js.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 47
+      }
+    },
+    {
+      "id": "opentype-js",
+      "name": "opentype.js",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Reads font files; turns text into outline paths.",
+      "verdict": "adopt - text to outlines for print SVG (R2 rule).",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 48
+      }
+    },
+    {
+      "id": "inter",
+      "name": "Inter",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "OFL-1.1 V (\"Copyright (c) 2016 The Inter Project Authors\")",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Sans-serif UI and figure text.",
+      "verdict": "adopt - default figure font.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 49
+      }
+    },
+    {
+      "id": "ibm-plex",
+      "name": "IBM Plex",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "OFL-1.1 V (\"with Reserved Font Name Plex\")",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Sans, Serif and Mono family.",
+      "verdict": "adopt - Plex Mono for code and sequences.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 50
+      }
+    },
+    {
+      "id": "source-sans-3",
+      "name": "Source Sans 3",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "OFL-1.1 V (\"Reserved Font Name Source\")",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Sans-serif body text.",
+      "verdict": "adopt - second text face if a figure needs one.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 51
+      }
+    },
+    {
+      "id": "resvg-extra",
+      "name": "resvg (extra)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT (LICENSE-MIT seen) V; dual licence not checked",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Renders SVG to PNG and PDF-ready bitmaps without Chrome.",
+      "verdict": "trial - cross-check Chrome output of a figure.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 52
+      }
+    },
+    {
+      "id": "d2-extra",
+      "name": "D2 (extra)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MPL-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Diagram language with ELK and dagre layouts. Go binary.",
+      "verdict": "hold - ELK.js gives the same layout without a binary.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 53
+      }
+    },
+    {
+      "id": "svg-js-extra",
+      "name": "svg.js (extra)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Small SVG builder.",
+      "verdict": "hold - the kit already builds SVG.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 54
+      }
+    },
+    {
+      "id": "rough-js-extra",
+      "name": "rough.js (extra)",
+      "kind": "2d-frameworks-fonts",
+      "section": "2a. Frameworks",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Hand-drawn style shapes.",
+      "verdict": "reject - hand-drawn look suits no science figure.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 55
+      }
+    },
+    {
+      "id": "bioicons-2",
+      "name": "Bioicons",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "Per-asset, mixed. README prefers CC0 and MIT; CC BY also occurs. Rule: keep the author and licence of each icon, not \"Bioicons\". V",
+      "licenceClass": "per-item",
+      "url": "",
+      "formats": [],
+      "use": "Lab objects, cells, organisms as SVG. Repackages third-party art.",
+      "verdict": "trial - ingest per icon, quarantine anything without a clear licence.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 65
+      }
+    },
+    {
+      "id": "health-icons-2",
+      "name": "Health Icons",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "CC0-1.0 for icons and npm packages. Website code MIT. V",
+      "licenceClass": "open-free",
+      "url": "",
+      "formats": [],
+      "use": "Clinical pictograms, outline and filled.",
+      "verdict": "adopt - no credit needed.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 66
+      }
+    },
+    {
+      "id": "reactome-icon-library-2",
+      "name": "Reactome icon library",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "CC-BY-4.0 V",
+      "licenceClass": "attribution",
+      "url": "",
+      "formats": [],
+      "use": "Pathway glyphs: receptors, organelles, compounds.",
+      "verdict": "adopt - pathway figures.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 67
+      }
+    },
+    {
+      "id": "servier-medical-art-smart-2",
+      "name": "Servier Medical Art (SMART)",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "CC-BY-4.0 V",
+      "licenceClass": "attribution",
+      "url": "",
+      "formats": [],
+      "use": "Organs, tissues, cells.",
+      "verdict": "adopt - exact credit line below.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 68
+      }
+    },
+    {
+      "id": "scidraw-2",
+      "name": "SciDraw",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "CC-BY-4.0 per Zenodo records of single drawings (S). The site page gave no terms text.",
+      "licenceClass": "attribution",
+      "url": "",
+      "formats": [],
+      "use": "Neuroscience drawings with a DOI each.",
+      "verdict": "trial - read each drawing's page and DOI before use.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 69
+      }
+    },
+    {
+      "id": "niaid-nih-bioart",
+      "name": "NIAID NIH BioArt",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "Per-asset, mixed. The terms page names no licence; \"check the license on each entry\". Free for educational, research, informational and commercial use. V",
+      "licenceClass": "per-item",
+      "url": "",
+      "formats": [],
+      "use": "Viruses, immune cells, pathogens.",
+      "verdict": "trial - record the entry licence at ingest.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 70
+      }
+    },
+    {
+      "id": "phylopic-2",
+      "name": "PhyloPic",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "Per-image: CC0-1.0, PDM, CC-BY-3.0, CC-BY-4.0, CC-BY-SA-3.0, CC-BY-NC-3.0, CC-BY-NC-SA-3.0. V",
+      "licenceClass": "non-commercial",
+      "url": "",
+      "formats": [],
+      "use": "Organism silhouettes.",
+      "verdict": "trial - allow CC0, PDM, CC-BY only; quarantine SA and NC.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 71
+      }
+    },
+    {
+      "id": "openmoji-2",
+      "name": "OpenMoji",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "CC-BY-SA-4.0 V",
+      "licenceClass": "share-alike",
+      "url": "",
+      "formats": [],
+      "use": "Colour emoji set.",
+      "verdict": "reject for figures - share-alike and emoji style.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 72
+      }
+    },
+    {
+      "id": "lucide",
+      "name": "Lucide",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "ISC; the Feather-derived icons are MIT. V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "General UI icons.",
+      "verdict": "hold - Tabler is already installed.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 73
+      }
+    },
+    {
+      "id": "tabler-icons",
+      "name": "Tabler Icons",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "MIT V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "General UI icons; already a root dependency.",
+      "verdict": "adopt - already in use.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 74
+      }
+    },
+    {
+      "id": "material-symbols",
+      "name": "Material Symbols",
+      "kind": "icon-illustration-sources",
+      "section": "2b. Icon and illustration sources",
+      "licenceText": "Apache-2.0 V",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Google UI icons.",
+      "verdict": "hold - duplicates Tabler.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R5_2d_vector.md",
+        "line": 75
+      }
+    },
+    {
+      "id": "w3c-design-tokens-format-module-dtcg",
+      "name": "W3C Design Tokens Format Module (DTCG)",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "W3C Community Final Specification Agreement (V). Not on the W3C Standards Track (S)",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Neutral JSON file format for tokens. Base for the Molecullage theme object.",
+      "verdict": "Adopt. Stable, vendor-neutral, supported by Style Dictionary, Tokens Studio, Figma, Penpot (V). Note: no `pt` or `mm` unit, so print sizes go in `$extensions`.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 20
+      }
+    },
+    {
+      "id": "style-dictionary",
+      "name": "Style Dictionary",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Apache-2.0 (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Reads tokens, writes CSS variables, JSON, JS.",
+      "verdict": "Trial. Test the colour-object and dimension-object parts on our file. If it fails, a 30-line converter beats waiting.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 21
+      }
+    },
+    {
+      "id": "tokens-studio-figma-plugin-2-13-2-sd-transforms-",
+      "name": "Tokens Studio (Figma plugin 2.13.2; sd-transforms 2.0.3)",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT both (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Edit tokens in Figma, sync to Git.",
+      "verdict": "Hold. Useful only if a designer wants Figma. No Figma in the current flow.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 22
+      }
+    },
+    {
+      "id": "open-props",
+      "name": "Open Props",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "CSS custom-property set: sizes, easings, animations, 19 Open Color hue sets, 16-step oklch palette.",
+      "verdict": "Trial. Use as a reference for easings and durations and as a test of DTCG export. Do not take its palette.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 23
+      }
+    },
+    {
+      "id": "tailwind-css-v4-theme",
+      "name": "Tailwind CSS v4 (`@theme`)",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Utility CSS. `@theme` turns tokens into CSS variables and utilities (`--color-*`, `--text-*`, `--ease-*`, `--spacing`).",
+      "verdict": "Trial for the editor only. Figures and films stay plain CSS. Map tokens with `@theme inline`.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 24
+      }
+    },
+    {
+      "id": "shadcn-ui-cli-registry",
+      "name": "shadcn/ui (CLI + registry)",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Copy-in React components styled with CSS variables; own registry to share items.",
+      "verdict": "Trial for the editor. Good model for naming. Needs React and Tailwind.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 25
+      }
+    },
+    {
+      "id": "radix-primitives",
+      "name": "Radix Primitives",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Unstyled accessible React widgets.",
+      "verdict": "Hold. Base UI covers the same ground and is newer. Keep as fallback.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 26
+      }
+    },
+    {
+      "id": "radix-colors",
+      "name": "Radix Colors",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "12-step colour scales. Steps 1-2 background, 3-5 component fill, 6-8 borders, 9-10 solid, 11-12 text (V).",
+      "verdict": "Trial for editor neutrals. Not for figure colours.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 27
+      }
+    },
+    {
+      "id": "base-ui",
+      "name": "Base UI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Unstyled React widgets from the Radix, Floating UI and MUI people (V).",
+      "verdict": "Trial for the editor. Active, v1.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 28
+      }
+    },
+    {
+      "id": "ark-ui",
+      "name": "Ark UI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Headless widgets for React, Solid, Vue, Svelte on Zag.js state machines (V).",
+      "verdict": "Hold. Multi-framework is not a need today.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 29
+      }
+    },
+    {
+      "id": "park-ui",
+      "name": "Park UI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Styled kit on Ark UI + Panda CSS (V).",
+      "verdict": "Reject. No release for 11 months; adds a second CSS system.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 30
+      }
+    },
+    {
+      "id": "daisyui",
+      "name": "daisyUI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Tailwind plugin. 35 built-in themes as CSS variables in oklch (V).",
+      "verdict": "Hold. Its themes are look presets. Molecullage colours have meaning (antigen, binder), so presets do not fit.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 31
+      }
+    },
+    {
+      "id": "material-design-3-tokens-material-color-utilitie",
+      "name": "Material Design 3 tokens + material-color-utilities",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Apache-2.0 (V). M3 token page text could not be read (page body empty) — U",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "M3 token system; library makes a theme from one source colour (HCT).",
+      "verdict": "Hold. Dynamic colour changes hue per source, which breaks fixed semantic families. Maybe one use: pick an accent for the editor chrome.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 32
+      }
+    },
+    {
+      "id": "fluent-2-tokens",
+      "name": "Fluent 2 tokens",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "npm package MIT (V). Repo licence field NOASSERTION (V: mixed). Licence of design assets: not found",
+      "licenceClass": "per-item",
+      "url": "",
+      "formats": [],
+      "use": "Two layers: global tokens (raw) and alias tokens (meaning) (V). Supports light, dark, high contrast (V).",
+      "verdict": "Hold. Copy the two-layer idea. No dependency.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 33
+      }
+    },
+    {
+      "id": "ibm-carbon-tokens",
+      "name": "IBM Carbon tokens",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Apache-2.0 (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Themes White, Gray 10, Gray 90, Gray 100. Tokens by role (`$layer-01`, `$border-subtle-01`), component tokens (V).",
+      "verdict": "Hold. Good naming reference for layers. No dependency.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 34
+      }
+    },
+    {
+      "id": "open-color",
+      "name": "Open Color",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "13-step hue sets.",
+      "verdict": "Reject. Stale. Not designed for colour-blind safety.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 35
+      }
+    },
+    {
+      "id": "colorbrewer",
+      "name": "ColorBrewer",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Apache-2.0 (V, GitHub API); copyright Brewer, Harrower, Penn State (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Sequential, diverging, qualitative schemes for maps and charts.",
+      "verdict": "Adopt for data ramps in plots. Keep the credit line.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 36
+      }
+    },
+    {
+      "id": "viridis-cividis",
+      "name": "viridis / cividis",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "viridis page: CC0 (V). Cividis paper: CC0 dedication (V)",
+      "licenceClass": "open-free",
+      "url": "",
+      "formats": [],
+      "use": "Perceptually even colour maps. Cividis is made for colour-vision deficiency.",
+      "verdict": "Adopt for continuous data.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 37
+      }
+    },
+    {
+      "id": "okabe-ito-palette",
+      "name": "Okabe-Ito palette",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Page has no licence. It asks users to credit Masataka Okabe and Kei Ito (V)",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "8 colours safe for common colour-vision deficiency.",
+      "verdict": "Adopt for categorical data series. Credit the authors. Check the hex list against a printed source before shipping.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 38
+      }
+    },
+    {
+      "id": "paul-tol-schemes",
+      "name": "Paul Tol schemes",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "No licence or terms on the page (V). `tol_colors.py` licence: not found",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Qualitative (bright, high-contrast, vibrant, muted, medium-contrast, dark, pale, light), diverging (sunset, nightfall, BuRd, PRGn), sequential (YlOrBr, iridescent, incandescent, smooth/discrete rainbow, banded) (V).",
+      "verdict": "Trial. Use as reference. Ask Paul Tol or cite before bundling the full set.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 39
+      }
+    },
+    {
+      "id": "css-color-mix-oklch-light-dark-prefers-color-sch",
+      "name": "CSS `color-mix()`, `oklch()`, `light-dark()`, `prefers-color-scheme`",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Web standards",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Make tints and dark variants in the browser from one token.",
+      "verdict": "Adopt for decks and editor. For print figures, keep sRGB hex in the token and test the PDF.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 40
+      }
+    },
+    {
+      "id": "animate-ui-2",
+      "name": "Animate UI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "\"MIT + Commons Clause\" (R1, V). GitHub API shows NOASSERTION (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Animated Radix/Base UI/React Aria wrappers on Motion.",
+      "verdict": "Reject (R1).",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 41
+      }
+    },
+    {
+      "id": "magic-ui",
+      "name": "Magic UI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V). Pro tier $199 one time (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Copy-in animated React components via shadcn CLI.",
+      "verdict": "Reject. Landing-page effects; no seek.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 42
+      }
+    },
+    {
+      "id": "aceternity-ui",
+      "name": "Aceternity UI",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "Item licence by Aceternity Labs: unlimited end products, no resale or redistribution as a template (V). Statement that free parts are MIT: S only (third-party directory)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Animated React blocks for landing pages.",
+      "verdict": "Reject. Custom licence, and free tier terms are not confirmed.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 43
+      }
+    },
+    {
+      "id": "motion-primitives",
+      "name": "Motion Primitives",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Motion + Tailwind component snippets.",
+      "verdict": "Reject. Beta; hover/spring motion.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 44
+      }
+    },
+    {
+      "id": "react-bits",
+      "name": "React Bits",
+      "kind": "ui-themes-motion",
+      "section": "2. Table A — themes, tokens and UI kits",
+      "licenceText": "MIT + Commons Clause v1.0 (V). Key limit: may not sell, sublicense or redistribute the tools or sounds themselves (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Large set of animated components and effects.",
+      "verdict": "Reject. Commons Clause blocks redistribution inside a free engine. Effects run on their own clock.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 45
+      }
+    },
+    {
+      "id": "motion-motion-dev-ex-framer-motion",
+      "name": "Motion (motion.dev, ex Framer Motion)",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT (V, deps.dev and GitHub API). Motion+ is a paid add-on: one-time 399 USD per developer, teams yearly per seat. It adds components (Gallery, Carousel, Ticker, Cursor, AnimateNumber, AnimateText, Typewriter, ScrambleText, AnimateView, Curtains, splitText), examples, an AI kit and \"Motion Studio\". Its APIs and examples are MIT-licensed. Builder's Licence needed if a product resells Motion+ capability (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "`animate()` for DOM/SVG/values; React hooks.",
+      "verdict": "Trial as a t-to-value mapper. Do not buy Motion+.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 53
+      }
+    },
+    {
+      "id": "gsap-2",
+      "name": "GSAP",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "\"Standard 'no charge' licence\" (Webflow). deps.dev calls it \"non-standard\" (V). Owner Webflow. Permitted: use \"on any website, web application, or digital interface\". Prohibited: use \"in tools that allow users to build visual animations without code\" when such a tool rivals Webflow's animation builder (V, section I \"Definitions\", gsap.com/standard-license)",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Timelines, DrawSVG, MotionPath, SplitText, MorphSVG. Already in `stage/`.",
+      "verdict": "Adopt for the code-driven engine. Hold inside the planned graphical editor until Webflow confirms the clause does not apply. Keep it behind the adapter so anime.js can replace it.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 54
+      }
+    },
+    {
+      "id": "anime-js-v4-3",
+      "name": "anime.js v4",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Timeline, stagger, SVG, `seek()`.",
+      "verdict": "Trial as the MIT fallback to GSAP.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 55
+      }
+    },
+    {
+      "id": "lottie-web-3",
+      "name": "lottie-web",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Plays Lottie JSON (After Effects, Jitter export).",
+      "verdict": "Adopt (SVG renderer) for imported designer clips. Slow release pace; watch it.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 56
+      }
+    },
+    {
+      "id": "dotlottie-web-thorvg",
+      "name": "dotLottie web + ThorVG",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT both (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "WASM player for `.lottie` files. ThorVG is the C++ vector engine under it.",
+      "verdict": "Trial as a second choice to lottie-web. Run the hash-repeat test.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 57
+      }
+    },
+    {
+      "id": "rive-2",
+      "name": "Rive",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Runtime: MIT (V, GitHub API). Editor: closed SaaS. Plans per seat per month: Free 0, Cadet 9, Voyager 32, Enterprise 120 (V). Page says free-plan exports play a Rive splash screen (V). Commercial terms: not found",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Runtime plays `.riv`; editor makes them.",
+      "verdict": "Hold. Interactive decks only. Needs editor licence for clean exports.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 58
+      }
+    },
+    {
+      "id": "theatre-js-3",
+      "name": "Theatre.js",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Apache-2.0 (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Keyframe editor and runtime.",
+      "verdict": "Hold. Good model, but no release for 17 months.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 59
+      }
+    },
+    {
+      "id": "remotion-2",
+      "name": "Remotion",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Remotion License, deps.dev \"non-standard\" (V). Free: individuals, for-profit organisations with up to 3 employees, non-profits, evaluators. Company License above that. Pricing page: Automators 0.01 USD per render, min 100 USD per month; Creators 25 USD per seat per month; Enterprise from 500 USD per month (V). License text says it will change slightly in Remotion 5.0 (V)",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "React video renderer with frame-based clock.",
+      "verdict": "Reject as a dependency. Licence limits a free engine. Molecullage has the same idea.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 60
+      }
+    },
+    {
+      "id": "motion-canvas-2",
+      "name": "Motion Canvas",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Generator-based canvas animation editor.",
+      "verdict": "Reject as a dependency; read for ideas (editor with preview).",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 61
+      }
+    },
+    {
+      "id": "revideo-2",
+      "name": "Revideo",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Fork of Motion Canvas for headless rendering.",
+      "verdict": "Reject. Competing engine.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 62
+      }
+    },
+    {
+      "id": "web-animations-api-waapi",
+      "name": "Web Animations API (WAAPI)",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Web standard",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Browser-native animation objects. `element.animate()`; `document.getAnimations()`.",
+      "verdict": "Adopt. No dependency, works with CSS animations and transitions via `getAnimations()`.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 63
+      }
+    },
+    {
+      "id": "css-scroll-driven-animations",
+      "name": "CSS scroll-driven animations",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Web standard",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Link an animation to scroll or view progress (`animation-timeline: scroll()` / `view()`).",
+      "verdict": "Hold. Not needed; WAAPI gives the same result by time.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 64
+      }
+    },
+    {
+      "id": "view-transitions-api",
+      "name": "View Transitions API",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Web standard",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Animated change between two DOM states (slide change).",
+      "verdict": "Hold. Fine for live deck slide switches. Film uses its own cross-fades.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 65
+      }
+    },
+    {
+      "id": "smil-svg-animate",
+      "name": "SMIL (SVG `<animate>`)",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "Web standard",
+      "licenceClass": "check",
+      "url": "",
+      "formats": [],
+      "use": "Animation inside an SVG file. Works in stand-alone SVG output.",
+      "verdict": "Trial for SVG figures that must carry their own motion.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 66
+      }
+    },
+    {
+      "id": "manim-community",
+      "name": "Manim Community",
+      "kind": "ui-themes-motion",
+      "section": "3. Table B — animation frameworks",
+      "licenceText": "MIT (V)",
+      "licenceClass": "code-permissive",
+      "url": "",
+      "formats": [],
+      "use": "Python maths animation, offline video.",
+      "verdict": "Hold. Optional offline asset for equation clips.",
+      "tier": "",
+      "evidence": "",
+      "access": "",
+      "origin": {
+        "file": "R6_ui_themes_motion.md",
+        "line": 67
+      }
+    },
+    {
+      "id": "polyhaven",
+      "name": "Poly Haven",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "CC0 (all assets)",
+      "licenceClass": "open-free",
+      "url": "https://polyhaven.com/",
+      "access": "open-api",
+      "api": "https://api.polyhaven.com/assets?t=hdris|textures|models",
+      "formats": [
+        "HDR",
+        "EXR",
+        "glTF",
+        "blend",
+        "PBR maps"
+      ],
+      "use": "Studio lighting images, surface textures and models",
+      "evidence": "V",
+      "connector": "polyhaven",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "sketchfab",
+      "name": "Sketchfab",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Per model: CC0, CC-BY, CC-BY-SA, CC-BY-NC and others. Read the label of each model.",
+      "licenceClass": "per-item",
+      "url": "https://sketchfab.com/",
+      "access": "open-search, login to download",
+      "api": "https://api.sketchfab.com/v3/search?type=models&q=<query>&downloadable=true",
+      "formats": [
+        "glTF",
+        "GLB",
+        "USDZ"
+      ],
+      "use": "Ready 3D models; the search is open, the download needs an account",
+      "evidence": "V",
+      "connector": "sketchfab",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "rcsb-pdb",
+      "name": "RCSB Protein Data Bank",
+      "kind": "molecular-computational",
+      "licenceText": "CC0 1.0 (data)",
+      "licenceClass": "open-free",
+      "url": "https://www.rcsb.org/",
+      "access": "open-api",
+      "api": "https://search.rcsb.org/rcsbsearch/v2/query",
+      "formats": [
+        "PDB",
+        "mmCIF",
+        "BinaryCIF"
+      ],
+      "use": "Experimental structures of proteins, nucleic acids and complexes",
+      "evidence": "V",
+      "connector": "rcsb",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "pubmed",
+      "name": "PubMed",
+      "kind": "papers",
+      "licenceText": "Records are free; the licence of each article differs.",
+      "licenceClass": "per-item",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
+      "access": "open-api",
+      "api": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+      "formats": [
+        "metadata",
+        "abstract"
+      ],
+      "use": "Find papers and their DOIs. A record gives the abstract only, never the full text.",
+      "evidence": "V",
+      "connector": "pubmed",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "pmc",
+      "name": "PubMed Central",
+      "kind": "papers",
+      "licenceText": "Open full texts; the licence of each article differs.",
+      "licenceClass": "per-item",
+      "url": "https://pmc.ncbi.nlm.nih.gov/",
+      "access": "open",
+      "formats": [
+        "full text"
+      ],
+      "use": "Full texts of open articles, the way to ground a claim",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "hal",
+      "name": "HAL open archive",
+      "kind": "papers",
+      "licenceText": "Per document",
+      "licenceClass": "per-item",
+      "url": "https://hal.science/",
+      "access": "open",
+      "formats": [
+        "PDF"
+      ],
+      "use": "Open copies of French research papers. Check that the file body matches the cover page: one deposit held a different paper.",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "3d-contentcentral",
+      "name": "3D ContentCentral (Dassault Systemes)",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Terms not read",
+      "licenceClass": "check",
+      "url": "https://www.3dcontentcentral.com/",
+      "access": "login to download",
+      "formats": [
+        "STEP",
+        "IGES",
+        "STL",
+        "SLDPRT"
+      ],
+      "use": "CAD models of lab parts, for example a generic 0.2 mL tube with cap",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "grabcad",
+      "name": "GrabCAD Community Library",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Per model; terms not read",
+      "licenceClass": "check",
+      "url": "https://grabcad.com/library",
+      "access": "login to download",
+      "formats": [
+        "SOLIDWORKS",
+        "STEP",
+        "STL"
+      ],
+      "use": "Free CAD models, including PCR tubes",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "printables",
+      "name": "Printables",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Per model: Creative Commons licences",
+      "licenceClass": "per-item",
+      "url": "https://www.printables.com/",
+      "access": "open download",
+      "formats": [
+        "STL"
+      ],
+      "use": "Printable models; mostly accessories such as racks, rarely accurate parts",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "thingiverse",
+      "name": "Thingiverse",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Per model: Creative Commons licences",
+      "licenceClass": "per-item",
+      "url": "https://www.thingiverse.com/",
+      "access": "open download",
+      "formats": [
+        "STL"
+      ],
+      "use": "Printable models; mostly accessories",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "nih-3d",
+      "name": "NIH 3D",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Per entry; many are public domain",
+      "licenceClass": "per-item",
+      "url": "https://3d.nih.gov/",
+      "access": "open download",
+      "formats": [
+        "STL",
+        "glTF"
+      ],
+      "use": "Biomedical models, including lab equipment",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "wikimedia-commons",
+      "name": "Wikimedia Commons (3D files)",
+      "kind": "3d-models-materials-hdri",
+      "licenceText": "Per file",
+      "licenceClass": "per-item",
+      "url": "https://commons.wikimedia.org/",
+      "access": "open-api",
+      "api": "https://commons.wikimedia.org/w/api.php?action=query&list=search&srnamespace=6&srsearch=<query>%20filetype:3d",
+      "formats": [
+        "STL"
+      ],
+      "use": "Free 3D files with a clear licence; few in biology",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "maker-datasheets",
+      "name": "Maker data sheets (SPL, Axygen/Corning, Eppendorf, Thermo Fisher, Bio-Rad)",
+      "kind": "datasheets",
+      "licenceText": "Maker documents; facts only",
+      "licenceClass": "check",
+      "url": "https://www.spllifesciences.com/",
+      "access": "open",
+      "formats": [
+        "PDF"
+      ],
+      "use": "Dimensions, materials and volumes of lab consumables, to check a 3D model against",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "rdkit-moldraw2d",
+      "name": "RDKit MolDraw2D (ACS-1996)",
+      "kind": "molecular-computational",
+      "licenceText": "BSD-3-Clause",
+      "licenceClass": "code-permissive",
+      "url": "https://www.rdkit.org/docs/source/rdkit.Chem.Draw.rdMolDraw2D.html",
+      "access": "open",
+      "formats": [
+        "SVG",
+        "PNG"
+      ],
+      "use": "2D chemical structures in ACS-1996 style from checked SMILES; rdDetermineBonds rebuilds connectivity from 3D coordinates",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "samson-connect",
+      "name": "SAMSON (OneAngstrom)",
+      "kind": "3d-molecular-tools",
+      "licenceText": "Proprietary (free plan and academic/commercial plans)",
+      "licenceClass": "check",
+      "url": "https://www.samson-connect.net/",
+      "access": "open",
+      "formats": [
+        "SAMSON",
+        "PDB",
+        "MOL2",
+        "XYZ",
+        "PNG"
+      ],
+      "use": "3D molecular complexes, sticks and balls-and-sticks with soft studio lighting and clear camera",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "molecular-nodes",
+      "name": "Molecular Nodes (Blender 5.2+)",
+      "kind": "3d-molecular-tools",
+      "licenceText": "GPL-3.0-or-later",
+      "licenceClass": "copyleft",
+      "url": "https://bradyajohnston.github.io/MolecularNodes/",
+      "access": "open",
+      "formats": [
+        "blend",
+        "PDB",
+        "mmCIF",
+        "BCIF"
+      ],
+      "use": "Import PDB, mmCIF and trajectories into Blender Geometry Nodes for Cycles and EEVEE studio rendering",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    },
+    {
+      "id": "openbabel",
+      "name": "Open Babel",
+      "kind": "molecular-computational",
+      "licenceText": "GPL-2.0-only",
+      "licenceClass": "copyleft",
+      "url": "https://openbabel.org/",
+      "access": "open",
+      "formats": [
+        "SMILES",
+        "SDF",
+        "MOL2",
+        "PDB",
+        "XYZ",
+        "SVG"
+      ],
+      "use": "Convert chemical file formats, generate 3D coordinates and perceive bonds for typed contacts",
+      "evidence": "V",
+      "origin": {
+        "file": "sources.extra.json"
+      }
+    }
+  ]
+}

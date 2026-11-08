@@ -1,0 +1,4767 @@
+{
+  "domain": "gen-vector",
+  "title": "Vector and diagram generation, raster-to-vector reconstruction, and the supporting vision models (open and closed)",
+  "checked": "2026-11-02",
+  "enumeration": {
+    "frames": [
+      {
+        "name": "Wikipedia: Comparison of raster-to-vector conversion software",
+        "url": "https://en.wikipedia.org/wiki/Comparison_of_raster-to-vector_conversion_software"
+      },
+      {
+        "name": "Hugging Face model search 'svg' sorted by likes",
+        "url": "https://huggingface.co/api/models?search=svg&sort=likes&direction=-1&limit=40"
+      },
+      {
+        "name": "Hugging Face model search 'svg' sorted by newest",
+        "url": "https://huggingface.co/api/models?search=svg&sort=createdAt&direction=-1&limit=40"
+      },
+      {
+        "name": "GitHub repository search: 'SVG generation' pushed since 2026-01",
+        "url": "https://api.github.com/search/repositories?q=%22SVG+generation%22+language:python+pushed:%3E2026-01-01&sort=stars&order=desc&per_page=30"
+      },
+      {
+        "name": "GitHub repository search: image-to-svg, text-to-svg, svg-generation created since 2025-06",
+        "url": "https://api.github.com/search/repositories?q=image-to-svg+OR+text-to-svg+OR+svg-generation+created:%3E2025-06-01&sort=stars&order=desc&per_page=30"
+      },
+      {
+        "name": "PyTorch-SVGRender method list (older SVG optimisation methods)",
+        "url": "https://github.com/ximinng/PyTorch-SVGRender"
+      },
+      {
+        "name": "Rapidata static SVG generation benchmark (pairwise human votes)",
+        "url": "https://huggingface.co/datasets/Rapidata/svg-benchmark"
+      },
+      {
+        "name": "SVGenius benchmark paper (SVG understanding, editing, generation)",
+        "url": "https://arxiv.org/abs/2506.03139"
+      },
+      {
+        "name": "Hugging Face newest models by Qwen",
+        "url": "https://huggingface.co/api/models?author=Qwen&sort=createdAt&direction=-1&limit=40"
+      },
+      {
+        "name": "Hugging Face newest models by google (Gemma 4)",
+        "url": "https://huggingface.co/api/models?author=google&search=gemma-4&sort=createdAt&direction=-1&limit=20"
+      },
+      {
+        "name": "Hugging Face newest models by zai-org",
+        "url": "https://huggingface.co/api/models?author=zai-org&sort=createdAt&direction=-1&limit=25"
+      },
+      {
+        "name": "Hugging Face newest MiniCPM-V models by openbmb",
+        "url": "https://huggingface.co/api/models?author=openbmb&search=MiniCPM-V&sort=createdAt&direction=-1&limit=15"
+      },
+      {
+        "name": "Hugging Face models by OpenGVLab",
+        "url": "https://huggingface.co/api/models?author=OpenGVLab&sort=createdAt&direction=-1&limit=15"
+      },
+      {
+        "name": "Hugging Face models by depth-anything",
+        "url": "https://huggingface.co/api/models?author=depth-anything&sort=createdAt&direction=-1&limit=12"
+      }
+    ],
+    "searched": [
+      "OmniSVG StarVector text-to-SVG model weights license 2026",
+      "SVG generation LLM 2026 open weights new model image-to-SVG benchmark",
+      "OmniLottie Lottie animation generation model github huggingface",
+      "SVGen vector graphics generation LLM Qwen2.5-Coder SVG-1M github weights",
+      "InternSVG unified SVG understanding editing generation model release github",
+      "dots.mocr rednote-hilab github CPU inference guide image-to-SVG",
+      "best open-weight vision-language models small 2026 Qwen3-VL Qwen3.5 InternVL GLM-4.6V MiniCPM-V Molmo 2",
+      "PaddleOCR-VL-1.6 release 0.9B document parsing chart to table layout model",
+      "InternVL4 OR InternVL3.6 OR Intern-S2 new release 2026",
+      "Molmo 2 Ai2 open vision-language model release 4B 8B Apache",
+      "image to draw.io OR mermaid OR flowchart diagram VLM open weights model diagram-to-code 2026",
+      "chart-to-code open model ChartCoder ChartMimic Chart2Code 2026",
+      "Rapidata static SVG generation benchmark leaderboard open-weight models ranking",
+      "AutoFigure-Edit editable scientific figure SVG from text paper github SAM3 OCR",
+      "Quiver AI Arrow SVG vector generation model launch pricing API",
+      "Adobe Illustrator Generative Shape Fill Firefly Vector model 2026",
+      "Canva Magic Studio AI features Magic Layers editable",
+      "RLRF rendering-aware reinforcement learning SVG StarVector weights",
+      "NeuralSVG implicit representation text-to-vector github code license",
+      "OpenCOLE open-source COLE graphic design generation weights license",
+      "PosterLlama OR PosterCraft graphic design generation LLM layout open weights",
+      "CreatiPoster editable multi-layer graphic design generation weights",
+      "llama.cpp CPU inference MoE A3B tokens per second Xeon no GPU",
+      "SVG animation generation LLM open model text to animated SVG 2026",
+      "GLM-5.3-Flash Rapidata SVG benchmark"
+    ],
+    "excluded": [
+      {
+        "name": "KlingTeam SVG-T2I",
+        "reason": "The letters SVG there mean a latent-diffusion method for raster text-to-image; it makes no vector graphics."
+      },
+      {
+        "name": "VAnim (ICML 2026, text-to-SVG animation on Qwen3-VL-8B-Thinking)",
+        "reason": "Project page lists code and dataset as coming soon (per a search result); no weights to use."
+      },
+      {
+        "name": "GeoSVG-RL (2605.25447)",
+        "reason": "Paper only; the abstract page links no repository or weights. Its failure analysis of LLM-written SVG diagrams is used in the verdict."
+      },
+      {
+        "name": "RefineSVG (2607.27699)",
+        "reason": "Abstract links github.com/liuxiaobo66/RefineSVG but weights are not confirmed and the repo was not opened."
+      },
+      {
+        "name": "RLRF (NeurIPS 2025, StarVector follow-up)",
+        "reason": "No released checkpoints found in the search results."
+      },
+      {
+        "name": "UniSVG (2508.07766)",
+        "reason": "Search snippet claims a dataset, benchmark and weights; none of its pages was opened."
+      },
+      {
+        "name": "Reason-SVG",
+        "reason": "Named in scope but not checked: the shared web-search budget ran out. Follow up in a later pass."
+      },
+      {
+        "name": "SVG-VAE, AutomaTikZ, LayoutGPT, COLE (original), PosterLlama",
+        "reason": "Not opened in this pass. AutomaTikZ is the base of DeTikZify v1. OpenCOLE is the open reimplementation of COLE. PosterLlama weights not confirmed."
+      },
+      {
+        "name": "CreatiPoster (ByteDance)",
+        "reason": "Editable multi-layer poster generator; one source says the promised code and weights were not released and another lists code as available. Unresolved."
+      },
+      {
+        "name": "Canva Magic Layers and Magic Studio",
+        "reason": "Canva pages returned 403, so only search excerpts exist. Excerpts say Magic Layers splits flat images into editable layers but does not accept vector files."
+      },
+      {
+        "name": "GLM-5.3-Flash (zai-org)",
+        "reason": "MIT, vision capable, 321B total and 18B active parameters per its card. Too large to plan around. A claim that it ranks high on the Rapidata SVG benchmark came from a social post and was not verified."
+      },
+      {
+        "name": "Kimi K3, DeepSeek V4, MiniMax M3, Mistral models listed in the Rapidata SVG data",
+        "reason": "Only the names were seen; sizes, licences and ranks were not checked."
+      },
+      {
+        "name": "Inkscape Trace Bitmap, Adobe Illustrator Image Trace, CorelDRAW tracing",
+        "reason": "General vector editors; belong to the design-2d domain."
+      },
+      {
+        "name": "ImageTracer, SVGcode, Primitive, Easy Trace, Scan2CAD, WinTopo, Super Vectorizer, KVEC, VectorEZ, PhotoLine, Graphic Tracer, Xara",
+        "reason": "Listed on the Wikipedia raster-to-vector page; not read in this pass."
+      },
+      {
+        "name": "Community SVG LoRAs and small fine-tunes on Hugging Face (svg-code-generator, qwen svg loras, pelican-svg-grpo, DiscoverLLM-svg-drawing, iconshop-svg-generator)",
+        "reason": "Unvetted single-author fine-tunes without papers; the long tail is not worth listing one by one."
+      },
+      {
+        "name": "ffuy87y/quiver-pro-svg-1b and the LayerFault/* media-svg repos",
+        "reason": "The first reuses a service name and no card was read; the LayerFault repos are security test sets, not models."
+      },
+      {
+        "name": "Text-to-image models that draw a flat vector style (Qwen-Image 2.1, GLM-Image)",
+        "reason": "They output bitmaps; they belong to the raster generation domains."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "starvector",
+      "name": "StarVector (1B and 8B)",
+      "vendor": "StarVector authors (joanrod)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (code and HF metadata)"
+      },
+      "url": "https://github.com/joanrod/star-vector",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [
+        {
+          "name": "Image encoder plus adapter plus code language model",
+          "does": "Turns image patches into visual tokens that a code LLM continues as SVG text.",
+          "source": "https://github.com/joanrod/star-vector"
+        }
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-svg-code",
+          "does": "Reads a raster image and writes SVG source as text. Suited to icons, logos, technical diagrams and charts. The repo says it does not handle natural images or complex illustrations.",
+          "inputs": "raster image",
+          "outputs": "SVG source text",
+          "source": "https://github.com/joanrod/star-vector",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-code",
+          "does": "Writes a new SVG from a text instruction alone, using the same model.",
+          "inputs": "text instruction",
+          "outputs": "SVG source text",
+          "source": "https://github.com/joanrod/star-vector",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "svg-benchmark-suite",
+          "does": "Ships ten evaluation sets (SVG-Stack, Fonts, Emoji, Icons, Diagrams, FIGR and simplified variants) for scoring SVG generators with image-similarity metrics.",
+          "inputs": "model output plus reference",
+          "outputs": "similarity scores",
+          "source": "https://github.com/joanrod/star-vector",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "PNG",
+          "role": "import",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (transformers, custom code)",
+        "vLLM fork"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "image-to-SVG and text-to-SVG code generation",
+        "params": "8B (7.51B BF16 weights, HF API) and 1B (1.43B)",
+        "released": "2025-03",
+        "weights_licence": "Apache-2.0 on both HF checkpoints; base-model and training-data licences not stated on the card",
+        "commercial_use": "conditional",
+        "commercial_notes": "The card says nothing about commercial use and does not name the base language model or the SVG-Stack source licences. Audit both before shipping.",
+        "outputs": [
+          "SVG source text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "No CPU route documented; sample code moves the model to CUDA and the vLLM fork targets GPUs. Weights alone are about 15 GB (8B) and 2.9 GB (1B) at 16-bit, by arithmetic from the parameter counts, not a measured VRAM figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/joanrod/star-vector",
+          "https://huggingface.co/starvector/starvector-8b-im2svg",
+          "https://huggingface.co/api/models/starvector/starvector-8b-im2svg",
+          "https://huggingface.co/api/models/starvector/starvector-1b-im2svg",
+          "https://arxiv.org/abs/2312.11556"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/joanrod/star-vector",
+          "https://huggingface.co/starvector/starvector-8b-im2svg"
+        ],
+        "restrictions": "Apache-2.0 code.",
+        "notes": "CVPR 2025. Follow-up RLRF (NeurIPS 2025) is described on the repo but no checkpoints were confirmed."
+      },
+      "verified": "2026-11-02, GitHub README and HF card page read; HF API metadata read"
+    },
+    {
+      "id": "omnisvg",
+      "name": "OmniSVG (1.1 8B, 1.1 4B, 3B legacy)",
+      "vendor": "OmniSVG authors (Fudan and StepFun group)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 on code and HF tags; dataset CC BY-NC-SA 4.0"
+      },
+      "url": "https://github.com/OmniSVG/OmniSVG",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [
+        {
+          "name": "SVG tokeniser on a vision-language model",
+          "does": "Encodes SVG commands and coordinates as special tokens that a Qwen2.5-VL model predicts.",
+          "source": "https://huggingface.co/api/models/OmniSVG/OmniSVG1.1_8B"
+        }
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-code",
+          "does": "Writes SVG from a text prompt, from simple icons to detailed illustrations. Can draw several candidates per prompt with adjustable sampling settings.",
+          "inputs": "text prompts file",
+          "outputs": "SVG files, optional PNG previews",
+          "source": "https://github.com/OmniSVG/OmniSVG",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "image-to-svg-code",
+          "does": "Converts images in a folder to SVG with the same model family.",
+          "inputs": "image folder",
+          "outputs": "SVG files",
+          "source": "https://github.com/OmniSVG/OmniSVG",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "svg-generation-benchmark",
+          "does": "Publishes MMSVGBench plus evaluation code, and the MMSVG icon and illustration datasets (expanded in Dec 2025 to 904K and 255K samples).",
+          "inputs": "model output",
+          "outputs": "benchmark scores",
+          "source": "https://github.com/OmniSVG/OmniSVG",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "PNG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python CLI (inference.py)",
+        "Gradio app"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-to-SVG and image-to-SVG generation",
+        "params": "1.1_8B (base Qwen2.5-VL-7B-Instruct), 1.1_4B and legacy 3B (base Qwen2.5-VL-3B-Instruct)",
+        "released": "2025-07 (3B), 2025-12 (1.1 versions)",
+        "weights_licence": "Apache-2.0 tag on all three HF repos. The 3B and 4B bases carry the qwen-research licence (research or evaluation only). Training data MMSVG is CC BY-NC-SA 4.0.",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP. 3B and 4B: base licence needs a separate Alibaba Cloud licence for commercial use, whatever the fine-tune tag says. 8B: Apache base, but trained on non-commercial MMSVG data; the card does not settle the effect on the weights.",
+        "outputs": [
+          "SVG files",
+          "PNG previews"
+        ],
+        "hardware": {
+          "min_vram_gb": 17,
+          "vram_source": "repo table: 17G for 4B and 3B, 26G for 8B",
+          "cpu_ok": "unknown",
+          "cpu_notes": "No CPU route documented; timings in the repo table are GPU timings (for example 4B: 82.7 s for 4096 tokens). Tested on CUDA 12.1."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/OmniSVG/OmniSVG",
+          "https://huggingface.co/api/models/OmniSVG/OmniSVG1.1_8B",
+          "https://huggingface.co/api/models/OmniSVG/OmniSVG1.1_4B",
+          "https://huggingface.co/api/models/OmniSVG/OmniSVG",
+          "https://huggingface.co/api/models/Qwen/Qwen2.5-VL-3B-Instruct",
+          "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/blob/main/LICENSE",
+          "https://arxiv.org/abs/2504.06263"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/OmniSVG/OmniSVG",
+          "https://arxiv.org/abs/2504.06263"
+        ],
+        "restrictions": "Apache-2.0 code.",
+        "notes": "Training code released 2025-12-31. NeurIPS 2025. 8B card names Qwen2.5-VL-7B-Instruct as base."
+      },
+      "verified": "2026-11-02, GitHub README read; HF API for four repos read; Qwen licence file read"
+    },
+    {
+      "id": "internsvg",
+      "name": "InternSVG-8B",
+      "vendor": "InternSVG authors (hmwang2002 / OpenGVLab group)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 code; weights licence per HF card (not opened)"
+      },
+      "url": "https://github.com/hmwang2002/InternSVG",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "svg-understand-edit-generate",
+          "does": "One multimodal model for reading SVG, editing it by instruction, and generating it from text or images. The edit tasks include colour, crop, flip, rotate and scale.",
+          "inputs": "SVG code, image or text instruction",
+          "outputs": "SVG source text or an answer",
+          "source": "https://github.com/hmwang2002/InternSVG",
+          "basis": "model-card"
+        },
+        {
+          "area": "animation-procedural",
+          "feature": "svg-animation-benchmark",
+          "does": "The SAgoge data (61K SVGs, 122K samples) and the SArena benchmark include text-to-animation and video-to-animation SVG tasks. The README does not say the released 8B model is trained for them.",
+          "inputs": "text or video",
+          "outputs": "animated SVG",
+          "source": "https://github.com/hmwang2002/InternSVG",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "LMDeploy server",
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "unified SVG understanding, editing and generation",
+        "params": "8B (base InternVL3-8B, 7.94B BF16 per HF API)",
+        "released": "2026-01",
+        "weights_licence": "Apache-2.0 per a search excerpt of the HF card (card page returned 401 to me); GitHub README states no weights licence. Base InternVL3-8B card cites the Qwen licence file.",
+        "commercial_use": "conditional",
+        "commercial_notes": "Weights licence not confirmed from a page I opened; SAgoge dataset licence not stated.",
+        "outputs": [
+          "SVG source text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no hardware figures; deployment example runs one LMDeploy worker per GPU (session length 16384)."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/hmwang2002/InternSVG",
+          "https://huggingface.co/api/models/OpenGVLab/InternVL3-8B",
+          "https://arxiv.org/abs/2510.11341"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/hmwang2002/InternSVG"
+        ],
+        "restrictions": "Apache-2.0 code.",
+        "notes": "ICLR 2026. Weights and SAgoge released 2026-01-28."
+      },
+      "verified": "2026-11-02, GitHub README read; HF card not opened (401)"
+    },
+    {
+      "id": "svgen",
+      "name": "SVGen (four fine-tunes)",
+      "vendor": "SVGen authors (gitcat-404)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "no licence stated on the repo page"
+      },
+      "url": "https://github.com/gitcat-404/SVGen",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-code",
+          "does": "Writes SVG from a text prompt. Four released fine-tunes: Qwen2.5-3B, Llama-3.2-3B, StarCoder2-3B and Qwen2.5-Coder-7B (the strongest). Training used curriculum learning, step-by-step reasoning data and reinforcement learning.",
+          "inputs": "text prompts in a CSV file",
+          "outputs": "SVG files",
+          "source": "https://github.com/gitcat-404/SVGen",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (inference.py, app.py)",
+        "LLaMA-Factory"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-to-SVG code generation",
+        "params": "3B (x3 bases) and 7B (Qwen2.5-Coder)",
+        "released": "2025-08",
+        "weights_licence": "Not stated. HF API lists no licence tag for the 3B models. Qwen2.5-3B-Instruct carries the qwen-research licence. The scraped IconFont data is described as non-commercial academic use only.",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP. Qwen2.5-3B variant inherits a research-only base licence; training data is flagged non-commercial; no weights licence is stated. Treat as research-only until the authors clarify.",
+        "outputs": [
+          "SVG source text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Inference memory not stated; training used 8 A800 GPUs."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/gitcat-404/SVGen",
+          "https://huggingface.co/api/models?search=svg&sort=likes&direction=-1&limit=40",
+          "https://huggingface.co/api/models/Qwen/Qwen2.5-3B-Instruct",
+          "https://arxiv.org/abs/2508.09168"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/gitcat-404/SVGen"
+        ],
+        "restrictions": "No licence file named on the page; code is viewable but reuse rights are not granted.",
+        "notes": "ACM MM 2025. Successor IntroSVG reuses the group name."
+      },
+      "verified": "2026-11-02, GitHub README read; HF listing API read"
+    },
+    {
+      "id": "introsvg",
+      "name": "IntroSVG (Qwen2.5-VL-7B)",
+      "vendor": "gitcat404 group",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (HF card)"
+      },
+      "url": "https://github.com/gitcat-404/IntroSVG",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-code",
+          "does": "Writes SVG from text with one model that also looks at its own rendered output.",
+          "inputs": "text prompt",
+          "outputs": "SVG source text",
+          "source": "https://huggingface.co/gitcat404/IntroSVG-Qwen2.5-VL-7B",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "render-critique-revise",
+          "does": "Runs a loop: draw the SVG, render it to a bitmap, let the same model judge the picture, then rewrite the code. Needs Cairo for rendering.",
+          "inputs": "SVG plus its render",
+          "outputs": "revised SVG",
+          "source": "https://huggingface.co/gitcat404/IntroSVG-Qwen2.5-VL-7B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "LLaMA-Factory",
+        "LMDeploy"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-to-SVG with a generate-critique-correct loop",
+        "params": "7B per card (HF metadata lists 8B BF16)",
+        "released": "2026-03",
+        "weights_licence": "Apache-2.0 on the HF card; base Qwen2.5-VL-7B-Instruct",
+        "commercial_use": "conditional",
+        "commercial_notes": "Training data terms not stated; the group also published the SVGen data with an IconFont non-commercial note.",
+        "outputs": [
+          "SVG source text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "The LMDeploy example uses four GPUs (tensor parallel 4); training used 8 A800 GPUs. No small-GPU or CPU route stated."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/gitcat404/IntroSVG-Qwen2.5-VL-7B",
+          "https://github.com/gitcat-404/IntroSVG",
+          "https://arxiv.org/abs/2603.09312"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/gitcat404/IntroSVG-Qwen2.5-VL-7B",
+          "https://github.com/gitcat-404/IntroSVG"
+        ],
+        "restrictions": null,
+        "notes": "Apache-2.0 per README and card. README says CVPR 2026; releases weights plus the IntroSVG-train and SVG-1M-Json datasets. Its SVGen badge names Qwen2.5-Coder, so the README is inconsistent on the base model."
+      },
+      "verified": "2026-11-02, HF card page and GitHub README read"
+    },
+    {
+      "id": "svgthinker",
+      "name": "SVGThinker-7B",
+      "vendor": "SVGThinker authors (Caffin)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (HF card)"
+      },
+      "url": "https://huggingface.co/Caffin/SVGThinker-7B",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-code",
+          "does": "Writes icon-style SVG from an English description, often preceding the code with reasoning text. The card advises extracting the svg block and sanitising it before use in a web page.",
+          "inputs": "English description",
+          "outputs": "SVG markup",
+          "source": "https://huggingface.co/Caffin/SVGThinker-7B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (transformers)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "reasoning-driven text-to-SVG",
+        "params": "8B listed (fine-tune of DeepSeek-R1-Distill-Qwen-7B)",
+        "released": "2025-09",
+        "weights_licence": "MIT on the card",
+        "commercial_use": "conditional",
+        "commercial_notes": "Base model and training-data licences not checked.",
+        "outputs": [
+          "SVG markup"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card lists no GPU or memory needs. A community GGUF build exists (mradermacher/SVGThinker-7B-GGUF), which implies a llama.cpp route; speed not stated."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/Caffin/SVGThinker-7B",
+          "https://arxiv.org/abs/2509.24299"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/Caffin/SVGThinker-7B",
+          "https://arxiv.org/abs/2509.24299"
+        ],
+        "restrictions": null,
+        "notes": "Weights and paper public; training code not checked."
+      },
+      "verified": "2026-11-02, HF card page read"
+    },
+    {
+      "id": "hivg",
+      "name": "HiVG-3B-Base",
+      "vendor": "HiVG authors (ximinng)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (GitHub README)"
+      },
+      "url": "https://github.com/ximinng/HiVG",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "hierarchical-svg-tokens",
+          "does": "Codes SVG at three levels (raw, atomic, segment tokens) to shorten sequences by about 2.8 times. The 3B base model does text-to-SVG and image-to-SVG; the instruct and RL versions were still listed as coming soon.",
+          "inputs": "text or image",
+          "outputs": "SVG source text",
+          "source": "https://github.com/ximinng/HiVG",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python",
+        "vLLM backend"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-to-SVG and image-to-SVG with a compact tokeniser",
+        "params": "3B (base model not named in README)",
+        "released": "2026-04",
+        "weights_licence": "MIT per README",
+        "commercial_use": "unknown",
+        "commercial_notes": "Weights licence and base-model licence not confirmed.",
+        "outputs": [
+          "SVG source text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no hardware figures."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/ximinng/HiVG"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ximinng/HiVG"
+        ],
+        "restrictions": "MIT per README.",
+        "notes": "arXiv 2604.05072. Quality claims are the authors' own."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "omnilottie",
+      "name": "OmniLottie",
+      "vendor": "OmniLottie authors (Fudan, StepFun, HKU MMLab, UQ)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (HF card); dataset CC BY-NC-SA 4.0"
+      },
+      "url": "https://huggingface.co/OmniLottie/OmniLottie",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [
+        {
+          "name": "Lottie tokeniser",
+          "does": "Turns a Lottie file into shape, animation and parameter commands so the model avoids writing raw JSON.",
+          "source": "https://huggingface.co/OmniLottie/OmniLottie"
+        }
+      ],
+      "capabilities": [
+        {
+          "area": "motion-graphics",
+          "feature": "text-to-lottie",
+          "does": "Generates a Lottie vector animation from a text prompt.",
+          "inputs": "text prompt (single or batch)",
+          "outputs": "Lottie JSON",
+          "source": "https://huggingface.co/OmniLottie/OmniLottie",
+          "basis": "model-card"
+        },
+        {
+          "area": "motion-graphics",
+          "feature": "image-to-lottie",
+          "does": "Generates a Lottie animation from an image, with optional text guidance.",
+          "inputs": "image plus optional text",
+          "outputs": "Lottie JSON",
+          "source": "https://huggingface.co/OmniLottie/OmniLottie",
+          "basis": "model-card"
+        },
+        {
+          "area": "motion-graphics",
+          "feature": "video-to-lottie",
+          "does": "Generates a Lottie animation that imitates an input video clip.",
+          "inputs": "video file",
+          "outputs": "Lottie JSON",
+          "source": "https://huggingface.co/OmniLottie/OmniLottie",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "Lottie JSON",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python CLI",
+        "Gradio",
+        "community ComfyUI node"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "Lottie animation generation from text, image or video",
+        "params": "4B (3.84B BF16)",
+        "released": "2026-03",
+        "weights_licence": "Apache-2.0 per card; card shows a Qwen2.5-VL-3B-Instruct tokenizer path (backbone inferred, not stated); MMLottie-2M data is CC BY-NC-SA 4.0",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP (inferred). If the backbone is Qwen2.5-VL-3B-Instruct, the research-only base licence applies, and the training data is non-commercial.",
+        "outputs": [
+          "Lottie JSON"
+        ],
+        "hardware": {
+          "min_vram_gb": 15.2,
+          "vram_source": "HF card: 15.2 GB for the 4B model",
+          "cpu_ok": "unknown",
+          "cpu_notes": "No CPU route documented; card timings are GPU timings (8.3 s per 256 tokens, 133 s per 4096)."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://huggingface.co/OmniLottie/OmniLottie",
+          "https://huggingface.co/api/models/OmniLottie/OmniLottie",
+          "https://arxiv.org/abs/2603.02138"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/OmniLottie/OmniLottie"
+        ],
+        "restrictions": "Apache-2.0 per card.",
+        "notes": "CVPR 2026. The card names github.com/OpenVGLab/OmniLottie as the code repo; I did not open it, so it is not cited."
+      },
+      "verified": "2026-11-02, HF card page and HF API read"
+    },
+    {
+      "id": "neuralsvg",
+      "name": "NeuralSVG",
+      "vendor": "NeuralSVG authors (Polaczek, Alaluf, Richardson, Vinker, Cohen-Or)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (README)"
+      },
+      "url": "https://github.com/SagiPolaczek/NeuralSVG",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-layered",
+          "does": "Optimises a small network per prompt, guided by a diffusion model, so the output is a stack of ordered shapes that stay meaningful when trailing shapes are dropped.",
+          "inputs": "text prompt",
+          "outputs": "ordered-shape SVG",
+          "source": "https://github.com/SagiPolaczek/NeuralSVG",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "svg-background-colour-control",
+          "does": "One optimised result can adapt its palette to a chosen background colour at inference time.",
+          "inputs": "prompt plus background colour",
+          "outputs": "recoloured SVG",
+          "source": "https://github.com/SagiPolaczek/NeuralSVG",
+          "basis": "model-card"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "text-to-sketch-svg",
+          "does": "A separate config yields minimal line drawings instead of filled art.",
+          "inputs": "text prompt",
+          "outputs": "line-art SVG",
+          "source": "https://github.com/SagiPolaczek/NeuralSVG",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (conda, diffvg)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "score-distillation text-to-vector with layered output",
+        "params": "small MLP per prompt plus Stable Diffusion 2.1 LoRAs",
+        "released": "2025-04 (code)",
+        "weights_licence": "MIT code; LoRA weights licence and SD 2.1 terms not stated in README",
+        "commercial_use": "conditional",
+        "commercial_notes": "Diffusion-model terms not checked. README says the inference script is still to come.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no memory figure; needs the diffvg library, which the README says may be hard to install."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/SagiPolaczek/NeuralSVG",
+          "https://arxiv.org/abs/2501.03992"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/SagiPolaczek/NeuralSVG"
+        ],
+        "restrictions": "MIT per README.",
+        "notes": "arXiv 2501.03992. Per-prompt optimisation, not a feed-forward model."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "llm4svg",
+      "name": "LLM4SVG (code and datasets)",
+      "vendor": "LLM4SVG authors (ximinng)",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (code)"
+      },
+      "url": "https://github.com/ximinng/LLM4SVG",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "svg-token-finetune-recipe",
+          "does": "Training and inference recipes that teach an LLM SVG-specific tokens, with examples for Qwen2.5-VL, DeepSeek-R1-Distill, Gemma 3, Falcon, Llama 3.2, GPT2-XL and Phi-2. No finished weights were linked.",
+          "inputs": "SVG corpus",
+          "outputs": "fine-tuned model",
+          "source": "https://github.com/ximinng/LLM4SVG",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "native",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "LLaMA-Factory",
+        "vLLM"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "recipes and data for SVG-capable LLMs",
+        "params": "n/a (no weights released)",
+        "released": "2025-04 (code and data)",
+        "weights_licence": "n/a (weights pending per README)",
+        "commercial_use": "unknown",
+        "commercial_notes": "Dataset licences not stated.",
+        "outputs": [
+          "fine-tuned checkpoints (user-trained)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Training needs multi-GPU; no inference figures."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/ximinng/LLM4SVG",
+          "https://arxiv.org/abs/2412.11102"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ximinng/LLM4SVG"
+        ],
+        "restrictions": "MIT code.",
+        "notes": "CVPR 2025. Weights marked pending."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "pytorch-svgrender",
+      "name": "PyTorch-SVGRender (method collection)",
+      "vendor": "ximinng",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "MPL-2.0"
+      },
+      "url": "https://github.com/ximinng/PyTorch-SVGRender",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [
+        {
+          "name": "DiffVG rasteriser backend",
+          "does": "Draws the current vector shapes into a bitmap so image losses can move the shape parameters.",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender"
+        }
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-score-distillation",
+          "does": "Runs VectorFusion and SVGDreamer: a diffusion model scores renders of the vector shapes and the shapes are adjusted to match the prompt. Styles include iconography, pixel art, sketch, low-poly, painting and ink-and-wash.",
+          "inputs": "text prompt, style name",
+          "outputs": "SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-clip-guided",
+          "does": "Runs CLIPDraw and StyleCLIPDraw: strokes are moved until a CLIP model rates the render close to the prompt, optionally with a style reference image.",
+          "inputs": "text prompt, optional style image",
+          "outputs": "SVG strokes",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "model-card"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "image-to-svg-differentiable",
+          "does": "Runs DiffVG and LIVE image vectorisation. The README says LIVE is meant for PNG emoji-style images.",
+          "inputs": "raster image",
+          "outputs": "SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "model-card"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "image-to-sketch-strokes",
+          "does": "Runs CLIPasso and CLIPascene: turns a photo or scene into a few strokes. Needs a U2Net download.",
+          "inputs": "image",
+          "outputs": "stroke SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "text-to-sketch-svg",
+          "does": "Runs DiffSketcher, which makes a sketch from text with adjustable stroke width and opacity.",
+          "inputs": "text prompt",
+          "outputs": "sketch SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "model-card"
+        },
+        {
+          "area": "typography",
+          "feature": "text-driven-letter-styling",
+          "does": "Runs Word-As-Image and CLIPFont: restyle the outline of letters or a font from a text prompt.",
+          "inputs": "word or SVG font, prompt",
+          "outputs": "styled glyph SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "PNG",
+          "role": "import",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python CLI (svg_render.py with Hydra options)",
+        "Docker"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "reference implementations of optimisation-based text-to-SVG and image-to-SVG",
+        "params": "no weights of its own (uses Stable Diffusion, CLIP, U2Net)",
+        "released": "2023-12 (repo created)",
+        "weights_licence": "MPL-2.0 code; upstream diffusion and CLIP weights have their own terms (not checked)",
+        "commercial_use": "conditional",
+        "commercial_notes": "MPL-2.0 is file-level copyleft. Each method brings its own upstream licence; not audited.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no memory figure. It notes xFormers needs CUDA, which points to an NVIDIA GPU."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/ximinng/PyTorch-SVGRender",
+          "https://api.github.com/repos/ximinng/PyTorch-SVGRender"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ximinng/PyTorch-SVGRender"
+        ],
+        "restrictions": "MPL-2.0.",
+        "notes": "Best single place to try the older text-to-SVG optimisation methods side by side."
+      },
+      "verified": "2026-11-02, GitHub README and API read"
+    },
+    {
+      "id": "svgdreamer",
+      "name": "SVGDreamer",
+      "vendor": "ximinng (CVPR 2024)",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/ximinng/SVGDreamer",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-styled",
+          "does": "Text-guided SVG generation by diffusion guidance, with named styles: iconography, painting, pixel art, low-poly, sketch and ink. Takes a prompt, an optional negative prompt, path count and particle count.",
+          "inputs": "text prompt, style, path count",
+          "outputs": "SVG files, optional video of the run",
+          "source": "https://github.com/ximinng/SVGDreamer",
+          "basis": "model-card"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "foreground-background-split",
+          "does": "The skip_sive flag enables the SIVE stage. The SIVE example in the README previews an attn-map, then bg and fg versions (bg_final.svg, fg_final.svg), then the final result.svg. The README does not describe the stage.",
+          "inputs": "text prompt",
+          "outputs": "background SVG, foreground SVG, combined SVG",
+          "source": "https://github.com/ximinng/SVGDreamer",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (Hydra options)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-to-SVG by diffusion guidance",
+        "params": "no weights of its own; uses Stable Diffusion 2.1 Base",
+        "released": "2024-01 (repo created); a later SVGDreamer++ is mentioned",
+        "weights_licence": "MIT code; Stable Diffusion 2.1 terms not checked",
+        "commercial_use": "conditional",
+        "commercial_notes": "Upstream diffusion model terms not checked.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no GPU memory figure; it says fp16 mixed precision can cut memory a lot and recommends xformers (a CUDA library)."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/ximinng/SVGDreamer",
+          "https://github.com/ximinng/PyTorch-SVGRender"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ximinng/SVGDreamer"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Last push 2025-05."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "diffvg",
+      "name": "DiffVG",
+      "vendor": "Tzu-Mao Li and co-authors (BachiLi)",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/BachiLi/diffvg",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "differentiable-vector-rasterisation",
+          "does": "Vector-graphics rasterisation is made differentiable by pixel prefiltering, in an analytical and a multisampling variant; the multisampling one gives unbiased per-pixel gradients with respect to curve parameters. Examples fit Bezier curves to target images.",
+          "inputs": "shape parameters",
+          "outputs": "bitmap and gradients",
+          "source": "https://people.csail.mit.edu/tzumao/diffvg/",
+          "basis": "paper"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "image-vectorisation-refine",
+          "does": "In the README section Image vectorization, refine_svg.py is run on an SVG and a target image, with --use_lpips_loss and --num_iter available. The sample command uses flower.svg and flower.jpg; the README does not explain the procedure.",
+          "inputs": "SVG plus target image",
+          "outputs": "refined SVG",
+          "source": "https://github.com/BachiLi/diffvg",
+          "basis": "source"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "vector-generative-model-apps",
+          "does": "Includes sample apps for a vector VAE and a vector GAN, plus painterly rendering and seam carving.",
+          "inputs": "training images",
+          "outputs": "trained vector generator",
+          "source": "https://github.com/BachiLi/diffvg",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "import",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (pydiffvg)",
+        "TensorFlow folder present"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "differentiable rasteriser used by most optimisation-based SVG tools",
+        "params": "no weights",
+        "released": "2020-09 (repo created), SIGGRAPH Asia 2020",
+        "weights_licence": "Apache-2.0 code",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive licence; no weights.",
+        "outputs": [
+          "bitmap",
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README does not say whether CPU rendering is supported. Build needs git submodules and a C++ toolchain; other repos warn it can be hard to install."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/BachiLi/diffvg",
+          "https://api.github.com/repos/BachiLi/diffvg"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/BachiLi/diffvg"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "Last push 2025-05; 62 open issues at read time."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "live-layerwise",
+      "name": "LIVE (layer-wise image vectorisation)",
+      "vendor": "Picsart AI Research (CVPR 2022)",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://api.github.com/repos/Picsart-AI-Research/LIVE-Layerwise-Image-Vectorization",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "layerwise-image-vectorisation",
+          "does": "Builds an SVG from a bitmap one path layer at a time with a differentiable renderer, so the result is a stack of paths rather than one traced outline. Reported as best for emoji-style PNGs.",
+          "inputs": "raster image",
+          "outputs": "layered SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "image-to-SVG by optimisation",
+        "params": "no weights",
+        "released": "2022-03 (repo created)",
+        "weights_licence": "Apache-2.0 code",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive code licence.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Per-image optimisation; no timings or memory found."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/Picsart-AI-Research/LIVE-Layerwise-Image-Vectorization",
+          "https://github.com/ximinng/PyTorch-SVGRender"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/Picsart-AI-Research/LIVE-Layerwise-Image-Vectorization"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "Last push 2024-02."
+      },
+      "verified": "2026-11-02, GitHub API read; use note from PyTorch-SVGRender README"
+    },
+    {
+      "id": "clipasso",
+      "name": "CLIPasso",
+      "vendor": "Yael Vinker and co-authors (SIGGRAPH 2022)",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "unknown",
+        "name": "NOASSERTION on GitHub"
+      },
+      "url": "https://github.com/yael-vinker/CLIPasso",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "image-to-sketch-strokes",
+          "does": "Abstracts a photo into a handful of Bezier strokes at a chosen level of detail, guided by a CLIP model. Run through the PyTorch-SVGRender wrapper.",
+          "inputs": "image",
+          "outputs": "stroke SVG",
+          "source": "https://github.com/ximinng/PyTorch-SVGRender",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "object sketching with few strokes",
+        "params": "no weights of its own (CLIP, U2Net)",
+        "released": "2022-02 (repo created)",
+        "weights_licence": "licence not asserted on GitHub",
+        "commercial_use": "unknown",
+        "commercial_notes": "No clear licence.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not documented in the pages read."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/yael-vinker/CLIPasso",
+          "https://github.com/ximinng/PyTorch-SVGRender"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://api.github.com/repos/yael-vinker/CLIPasso"
+        ],
+        "restrictions": "Licence not asserted.",
+        "notes": "Code is public; reuse rights unclear."
+      },
+      "verified": "2026-11-02, GitHub API read; method note from PyTorch-SVGRender README"
+    },
+    {
+      "id": "chat2svg",
+      "name": "Chat2SVG",
+      "vendor": "Ronghuan Wu and co-authors (kingnobro, CVPR 2025)",
+      "kind": "application",
+      "status": "unknown",
+      "licence": {
+        "type": "unknown",
+        "name": "no licence shown"
+      },
+      "url": "https://github.com/kingnobro/Chat2SVG",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "llm-template-svg",
+          "does": "Stage 1: a language model (Claude via API) writes several template SVGs from the prompt, and the best is picked with a scorer or by hand.",
+          "inputs": "text prompt, API key",
+          "outputs": "template SVGs",
+          "source": "https://github.com/kingnobro/Chat2SVG",
+          "basis": "source"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "diffusion-guided-detail-shapes",
+          "does": "Stage 2: Stable Diffusion XL with ControlNet draws a richer target, and Segment Anything finds missing regions that become new shapes.",
+          "inputs": "template SVG",
+          "outputs": "SVG with added shapes",
+          "source": "https://github.com/kingnobro/Chat2SVG",
+          "basis": "source"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "svg-point-optimisation",
+          "does": "Stage 3: a pretrained SVG VAE and a path-overlap loss tune the points; the README says this stage uses under 4 GB of GPU memory.",
+          "inputs": "SVG plus target image",
+          "outputs": "refined SVG",
+          "source": "https://github.com/kingnobro/Chat2SVG",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (conda, diffvg, picosvg)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "LLM plus image diffusion text-to-SVG pipeline",
+        "params": "no weights of its own (SDXL, ControlNet, SAM, SVG VAE)",
+        "released": "2025-04 (code)",
+        "weights_licence": "no licence shown; third-party models carry their own",
+        "commercial_use": "unknown",
+        "commercial_notes": "No licence file seen; needs a paid Claude API key.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": "README: stage 3 under 4 GB; stage 2 (SDXL) not stated",
+          "cpu_ok": "unknown",
+          "cpu_notes": "Needs a CUDA GPU and an Anthropic API key per README. Whole-tool VRAM not stated."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/kingnobro/Chat2SVG",
+          "https://api.github.com/repos/kingnobro/Chat2SVG"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://github.com/kingnobro/Chat2SVG"
+        ],
+        "restrictions": "No licence shown.",
+        "notes": "CVPR 2025. Prompts and intermediate files are readable and editable."
+      },
+      "verified": "2026-11-02, GitHub README and API read"
+    },
+    {
+      "id": "deepsvg",
+      "name": "DeepSVG",
+      "vendor": "Alexandre Carlier and co-authors",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://api.github.com/repos/alexandre01/deepsvg",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "hierarchical-svg-latent-model",
+          "does": "A hierarchical generative network for vector graphics and animation, plus a PyTorch library for loading and handling SVG data.",
+          "inputs": "SVG dataset",
+          "outputs": "generated or interpolated SVG",
+          "source": "https://api.github.com/repos/alexandre01/deepsvg",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "native",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "SVG latent model and data library",
+        "params": "not checked",
+        "released": "2020-07 (repo created)",
+        "weights_licence": "MIT code; weights not checked",
+        "commercial_use": "unknown",
+        "commercial_notes": "Weights not examined.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not checked."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/alexandre01/deepsvg"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/alexandre01/deepsvg"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Older method; kept for the SVG data tools. Only the GitHub API page was read."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "iconshop",
+      "name": "IconShop",
+      "vendor": "kingnobro (SIGGRAPH Asia 2023)",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "unknown",
+        "name": "no licence shown"
+      },
+      "url": "https://api.github.com/repos/kingnobro/IconShop",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-guided-icon-synthesis",
+          "does": "Text-guided vector icon synthesis with an autoregressive transformer.",
+          "inputs": "text prompt",
+          "outputs": "icon SVG",
+          "source": "https://api.github.com/repos/kingnobro/IconShop",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-to-icon",
+        "params": "not checked",
+        "released": "2024-04 (repo created)",
+        "weights_licence": "no licence shown",
+        "commercial_use": "unknown",
+        "commercial_notes": "No licence.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not checked."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/kingnobro/IconShop"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://api.github.com/repos/kingnobro/IconShop"
+        ],
+        "restrictions": "No licence shown.",
+        "notes": "Only the GitHub API page was read. A community port on HF carries CC BY-NC-SA 4.0."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "aniclipart",
+      "name": "AniClipart",
+      "vendor": "kingnobro (IJCV 2024)",
+      "kind": "library",
+      "status": "unknown",
+      "licence": {
+        "type": "unknown",
+        "name": "no licence shown"
+      },
+      "url": "https://github.com/kingnobro/AniClipart",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "animation-procedural",
+          "feature": "svg-clipart-keypoint-animation",
+          "does": "Animates a clipart SVG by moving skeleton keypoints, using a video diffusion model as the motion prior. Can optionally tune Bezier control points with a small network. Handles single-layer and multi-layer files.",
+          "inputs": "SVG clipart, keypoints",
+          "outputs": "animation frames",
+          "source": "https://github.com/kingnobro/AniClipart",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "import",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text-driven clipart animation",
+        "params": "no weights of its own (video diffusion prior, UniPose)",
+        "released": "2024-04 (repo created)",
+        "weights_licence": "no licence shown",
+        "commercial_use": "unknown",
+        "commercial_notes": "No licence.",
+        "outputs": [
+          "frame sequence"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README states no hardware."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/kingnobro/AniClipart"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://github.com/kingnobro/AniClipart"
+        ],
+        "restrictions": "No licence shown.",
+        "notes": "Output format not stated in README."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "animated-drawings",
+      "name": "Animated Drawings (Meta)",
+      "vendor": "Meta FAIR",
+      "kind": "library",
+      "status": "discontinued",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (code, weights, drawings dataset)"
+      },
+      "url": "https://github.com/facebookresearch/AnimatedDrawings",
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "animation-character",
+          "feature": "drawing-to-skeleton-animation",
+          "does": "Finds and cuts out a hand-drawn human figure, estimates its pose, rigs a skeleton, and plays BVH motion on it. Works on bitmaps; no vector output.",
+          "inputs": "drawing PNG, BVH motion, YAML config",
+          "outputs": "MP4 or transparent GIF",
+          "source": "https://github.com/facebookresearch/AnimatedDrawings",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "BVH",
+          "role": "import",
+          "open": "open"
+        },
+        {
+          "name": "GIF",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python",
+        "YAML configs"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "animate a drawn figure",
+        "params": "not stated (OpenMMLab detector and pose models)",
+        "released": "2022-11 (repo created)",
+        "weights_licence": "MIT; dataset ChildlikeSHAPES CC BY 4.0",
+        "commercial_use": "yes",
+        "commercial_notes": "MIT for code, weights and drawings dataset per README.",
+        "outputs": [
+          "MP4",
+          "GIF"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Auto-annotation needs a TorchServe container (16 GB memory suggested); hardware not otherwise stated."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/facebookresearch/AnimatedDrawings"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/facebookresearch/AnimatedDrawings"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Repo archived on 2025-09-03 (read-only)."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "dots-mocr-svg",
+      "name": "dots.mocr-svg (3B)",
+      "vendor": "dots studio / rednote-hilab",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (HF card)"
+      },
+      "url": "https://huggingface.co/dots-studio/dots.mocr-svg",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-svg-structured-graphics",
+          "does": "Reads a picture of a chart, UI layout, scientific figure or chemical diagram and writes SVG code for it. The authors say picture parsing through SVG is not yet reliable and the 3B size limits some cases.",
+          "inputs": "image",
+          "outputs": "SVG source text",
+          "source": "https://huggingface.co/dots-studio/dots.mocr-svg",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "vLLM server",
+        "Transformers",
+        "Python demo script"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "image-to-SVG for structured graphics",
+        "params": "3B (BF16)",
+        "released": "2026-03",
+        "weights_licence": "MIT on the HF card; the code repo also holds a separate dots.mocr licence agreement file that I did not read",
+        "commercial_use": "conditional",
+        "commercial_notes": "Read the separate agreement file before shipping.",
+        "outputs": [
+          "SVG source text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card links a CPU inference guide (an issue comment on the dots.ocr repo, content not read). Community GGUF builds exist (lodrick-the-lafted/dots.mocr-svg-gguf); llama.cpp support not confirmed. No speed figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/dots-studio/dots.mocr-svg",
+          "https://github.com/rednote-hilab/dots.mocr",
+          "https://arxiv.org/abs/2603.13032",
+          "https://huggingface.co/api/models?search=svg&sort=likes&direction=-1&limit=40"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/rednote-hilab/dots.mocr",
+          "https://huggingface.co/dots-studio/dots.mocr-svg"
+        ],
+        "restrictions": "Repo shows MIT; separate agreement file unread.",
+        "notes": "Paper claims higher image-to-SVG quality than Gemini 3 Pro on its own benchmark; not independently checked."
+      },
+      "verified": "2026-11-02, HF card page, GitHub README and arXiv abstract read"
+    },
+    {
+      "id": "dots-mocr",
+      "name": "dots.mocr (3B document and graphics parser)",
+      "vendor": "rednote-hilab",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (repo sidebar)"
+      },
+      "url": "https://github.com/rednote-hilab/dots.mocr",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "document-layout-parse",
+          "does": "Parses a page into layout blocks with text, plus layout-only and text-only modes.",
+          "inputs": "page image",
+          "outputs": "structured text and boxes",
+          "source": "https://github.com/rednote-hilab/dots.mocr",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "scene-text-spotting",
+          "does": "Finds and reads text in photos and scenes.",
+          "inputs": "image",
+          "outputs": "text with positions",
+          "source": "https://github.com/rednote-hilab/dots.mocr",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "web-page-parse",
+          "does": "A prompt mode for parsing rendered web pages.",
+          "inputs": "page screenshot",
+          "outputs": "structured content",
+          "source": "https://github.com/rednote-hilab/dots.mocr",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "JSON",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "vLLM demos"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "multimodal OCR: documents, scenes, web pages and graphics",
+        "params": "3B",
+        "released": "2026-03",
+        "weights_licence": "MIT per repo sidebar; separate agreement file unread",
+        "commercial_use": "conditional",
+        "commercial_notes": "Read the agreement file.",
+        "outputs": [
+          "JSON",
+          "Markdown",
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README: vLLM recommended, Python 3.12, flash-attn optional; no VRAM figure; CPU route only referenced."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/rednote-hilab/dots.mocr",
+          "https://arxiv.org/abs/2603.13032"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/rednote-hilab/dots.mocr"
+        ],
+        "restrictions": "MIT per sidebar.",
+        "notes": "Paper reports 83.9 on olmOCR-Bench (authors' figure)."
+      },
+      "verified": "2026-11-02, GitHub README and arXiv abstract read"
+    },
+    {
+      "id": "detikzify",
+      "name": "DeTikZify (v2 and v2.5)",
+      "vendor": "Jonas Belouadi and co-authors (potamides)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (code); weights licence not stated"
+      },
+      "url": "https://github.com/potamides/DeTikZify",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [
+        {
+          "name": "Monte Carlo tree search refiner",
+          "does": "Samples TikZ programs for a set time and keeps ones that compile and look closest to the input.",
+          "source": "https://github.com/potamides/DeTikZify"
+        }
+      ],
+      "capabilities": [
+        {
+          "area": "diagramming",
+          "feature": "figure-to-tikz",
+          "does": "Turns a figure image or sketch into a TikZ program that compiles to a vector drawing. Version 2.5 adds reinforcement learning from self-feedback.",
+          "inputs": "figure or sketch image",
+          "outputs": "TikZ .tex source",
+          "source": "https://github.com/potamides/DeTikZify",
+          "basis": "model-card"
+        },
+        {
+          "area": "diagramming",
+          "feature": "tikz-mcts-refinement",
+          "does": "An MCTS-based inference mode that iteratively improves TikZ output without extra training. In the Python example, pipeline.simulate takes a timeout in seconds (600, commented as 10 minutes) and yields several scored TikZ programs.",
+          "inputs": "image plus timeout",
+          "outputs": "scored TikZ programs",
+          "source": "https://github.com/potamides/DeTikZify",
+          "basis": "model-card"
+        },
+        {
+          "area": "diagramming",
+          "feature": "text-to-tikz-adapter",
+          "does": "TikZero adapters let the v2 model draw from a text caption alone; TikZero+ (10B) is trained end to end.",
+          "inputs": "text caption",
+          "outputs": "TikZ source",
+          "source": "https://github.com/potamides/DeTikZify",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "TikZ (.tex)",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "PDF",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (pipeline.sample, pipeline.simulate)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "figure and sketch to TikZ",
+        "params": "8B (v2, v2.5); 1B models mentioned; TikZero+ 10B (size taken from its model ID)",
+        "released": "2024-12 (v2), 2025-06 (v2.5)",
+        "weights_licence": "not stated on the README; datasets released without a large part of arXiv-derived drawings",
+        "commercial_use": "unknown",
+        "commercial_notes": "Weights licence not stated; check the HF cards.",
+        "outputs": [
+          "TikZ source",
+          "PDF"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "No VRAM or CPU notes. Needs full TeX Live 2023, Ghostscript and Poppler. The README says the free Colab tier handles only the 1B models."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/potamides/DeTikZify",
+          "https://api.github.com/repos/potamides/DeTikZify"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/potamides/DeTikZify"
+        ],
+        "restrictions": "Apache-2.0 code.",
+        "notes": "Repo pushed 2026-09. v1 was built on AutomaTikZ (listed under exclusions)."
+      },
+      "verified": "2026-11-02, GitHub README and API read"
+    },
+    {
+      "id": "chartcoder",
+      "name": "ChartCoder",
+      "vendor": "THUNLP (ACL 2025 main)",
+      "kind": "model",
+      "status": "unknown",
+      "licence": {
+        "type": "unknown",
+        "name": "no licence on repo or HF card"
+      },
+      "url": "https://github.com/thunlp/ChartCoder",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "data-visualisation",
+          "feature": "chart-image-to-code",
+          "does": "Official code for an ACL 2025 paper on chart-to-code generation with a multimodal LLM. The README sends readers to the paper for ChartMimic, Plot2Code and ChartX results; its training section lists two downloads, deepseek-coder-6.7b-instruct and siglip-so400m-patch14-384.",
+          "inputs": "chart image",
+          "outputs": "plotting code",
+          "source": "https://github.com/thunlp/ChartCoder",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "Python plotting code",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "chart-to-code",
+        "params": "not stated on the README; its training section names deepseek-coder-6.7b-instruct and siglip-so400m-patch14-384 as the base downloads",
+        "released": "2025-01 (repo created)",
+        "weights_licence": "no licence listed (HF repo xxxllz/ChartCoder shows none)",
+        "commercial_use": "unknown",
+        "commercial_notes": "No licence.",
+        "outputs": [
+          "plotting code"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not checked."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/thunlp/ChartCoder",
+          "https://huggingface.co/api/models?search=ChartCoder&sort=downloads&direction=-1&limit=6"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://api.github.com/repos/thunlp/ChartCoder"
+        ],
+        "restrictions": "No licence.",
+        "notes": "Only the GitHub API page and the HF search API were read."
+      },
+      "verified": "2026-11-02, GitHub API and HF search API read only"
+    },
+    {
+      "id": "qwen3vl-flowchart-to-mermaid",
+      "name": "Qwen3-VL flowchart-to-Mermaid v3 (community fine-tune)",
+      "vendor": "DangIT02",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (HF tag)"
+      },
+      "url": "https://huggingface.co/DangIT02/qwen3vl-flowchart-to-mermaid_v3",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "diagramming",
+          "feature": "flowchart-image-to-mermaid",
+          "does": "Reads a picture of a flowchart and writes Mermaid text for it. The HF tags mark it as a flowchart and diagram-understanding fine-tune of Qwen3-VL-8B-Instruct, merged from a LoRA.",
+          "inputs": "flowchart image",
+          "outputs": "Mermaid source",
+          "source": "https://huggingface.co/api/models/DangIT02/qwen3vl-flowchart-to-mermaid_v3",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "Mermaid",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (transformers)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "flowchart image to Mermaid",
+        "params": "8.77B BF16",
+        "released": "2026-04",
+        "weights_licence": "Apache-2.0 tag; base Qwen3-VL-8B-Instruct",
+        "commercial_use": "conditional",
+        "commercial_notes": "Single-author fine-tune; dataset provenance not read.",
+        "outputs": [
+          "Mermaid text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not documented."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/api/models/DangIT02/qwen3vl-flowchart-to-mermaid_v3"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/api/models/DangIT02/qwen3vl-flowchart-to-mermaid_v3"
+        ],
+        "restrictions": null,
+        "notes": "Only the HF API metadata was read; quality figures on listing sites are self-reported and unchecked."
+      },
+      "verified": "2026-11-02, HF API metadata read only"
+    },
+    {
+      "id": "visual-erm",
+      "name": "Visual-ERM (visual equivalence reward model)",
+      "vendor": "InternLM",
+      "kind": "model",
+      "status": "unknown",
+      "licence": {
+        "type": "unknown",
+        "name": "not stated on README"
+      },
+      "url": "https://github.com/InternLM/Visual-ERM",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "render-compare-discrepancy-report",
+          "does": "A reward model for vision-to-code work. It checks the ground-truth image against the image rendered from a model's prediction and writes structured discrepancies (category, severity, location, description). Tasks: SVG-to-code, chart-to-code, table-to-markdown. README uses: GRPO reward, inference-time critic.",
+          "inputs": "target image plus rendered output",
+          "outputs": "discrepancy annotations",
+          "source": "https://github.com/InternLM/Visual-ERM",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "judge visual equivalence of vision-to-code output",
+        "params": "fine-tuned from Qwen3-VL-8B-Instruct (8B base, per the README)",
+        "released": "2026-03",
+        "weights_licence": "not stated",
+        "commercial_use": "unknown",
+        "commercial_notes": "No licence on the README.",
+        "outputs": [
+          "JSON-like discrepancy list"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not documented."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/InternLM/Visual-ERM"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://github.com/InternLM/Visual-ERM"
+        ],
+        "restrictions": null,
+        "notes": "NeurIPS 2026. Benchmark VC-RewardBench has 1,335 items."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "figedit",
+      "name": "FigEdit",
+      "vendor": "giszzt",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/giszzt/figedit",
+      "platforms": [
+        "cross-platform (Python 3.10+)"
+      ],
+      "engines": [
+        {
+          "name": "OCR and shape measurement",
+          "does": "Reads text with PaddleOCR (PP-OCRv6) and measures lines, rectangles and arrows with OpenCV, also sampling colours and fonts.",
+          "source": "https://github.com/giszzt/figedit"
+        }
+      ],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "raster-figure-to-editable-svg-pptx",
+          "does": "Agent skill that rebuilds a flat image as editable SVG and native PPTX. Labels become selectable text, panels and arrows become vector shapes, formulas become Office Math, and icons or photos are cropped when cleanly separable, otherwise regenerated or flattened.",
+          "inputs": "screenshot, paper figure, flowchart or poster image",
+          "outputs": "editable.svg, editable.pptx, preview and reports",
+          "source": "https://github.com/giszzt/figedit/blob/main/README.en.md",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "pixel-compare-rebuild-check",
+          "does": "The audit compares rebuild and source pixel by pixel and gives a heatmap of differences plus a score per tile, pointing to the most divergent regions. quality_report.md holds checks and export status; editability_report.md holds a text-lift and asset-text audit.",
+          "inputs": "original plus rebuild",
+          "outputs": "quality_report.md, editability_report.md",
+          "source": "https://github.com/giszzt/figedit/blob/main/README.en.md",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "PPTX",
+          "role": "export",
+          "open": "documented"
+        }
+      ],
+      "scripting": [
+        "Python CLI driven by an AI agent"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "agent-driven raster figure to editable vector rebuild",
+        "params": "no weights of its own; relies on an external multimodal agent model",
+        "released": "2026-06 (repo created)",
+        "weights_licence": "MIT code; third-party parts keep their own licence",
+        "commercial_use": "conditional",
+        "commercial_notes": "Quality depends on the agent model; README advises against agents without image input. Optional image-generation backends need API keys.",
+        "outputs": [
+          "SVG",
+          "PPTX"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README states only Python 3.10+. Hardware depends on the agent model chosen."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/giszzt/figedit"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/giszzt/figedit"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Version 0.2.0 at read time. Closest open reference to the owner's rebuild step."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "autofigure-edit",
+      "name": "AutoFigure-Edit",
+      "vendor": "ResearAI",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/ResearAI/AutoFigure-Edit",
+      "platforms": [
+        "cross-platform (Python 3.10+)"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "method-text-to-editable-svg",
+          "does": "Draws a raster draft of a paper figure from method text, finds icon and text regions with SAM 3, has an LLM write a placeholder SVG layout, then drops background-removed icon crops into it.",
+          "inputs": "method text or an existing figure",
+          "outputs": "final.svg and intermediates",
+          "source": "https://github.com/ResearAI/AutoFigure-Edit",
+          "basis": "model-card"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "embedded-svg-editor",
+          "does": "Ships a browser SVG editor for changing text, shapes and layout, with a history of past runs.",
+          "inputs": "generated SVG",
+          "outputs": "edited SVG",
+          "source": "https://github.com/ResearAI/AutoFigure-Edit",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python CLI"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "text or figure to editable SVG with SAM 3 segmentation",
+        "params": "no weights of its own; uses SAM 3, RMBG-2.0 and LLM APIs",
+        "released": "2026-04 (v1.1)",
+        "weights_licence": "MIT code",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP. Depends on RMBG-2.0 (custom bria licence, not read) and SAM 3 (SAM License, gated). Needs paid LLM API keys.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README does not require a GPU: SAM 3 can run through hosted APIs (fal.ai, Roboflow). Local SAM 3 needs CUDA 12.6."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/ResearAI/AutoFigure-Edit"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ResearAI/AutoFigure-Edit"
+        ],
+        "restrictions": "MIT; name and logo covered in TRADEMARK.md.",
+        "notes": "Predecessor AutoFigure accepted to ICLR 2026."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "vtracer",
+      "name": "VTracer",
+      "vendor": "Vision Cortex",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/visioncortex/vtracer",
+      "platforms": [
+        "windows",
+        "macos",
+        "linux",
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "colour-raster-to-svg-tracing",
+          "does": "Groups pixels into colour regions and fits curves to each, giving a stacked or seam-free (cutout) SVG. Options: speckle filter, colour precision, gradient step, curve mode (pixel, polygon, spline), simplify, palette and max colours.",
+          "inputs": "PNG, JPEG or other raster",
+          "outputs": "SVG",
+          "source": "https://github.com/visioncortex/vtracer",
+          "basis": "manual"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "tracing-presets-and-bindings",
+          "does": "Presets for black-and-white, poster and photo. Available as a Rust CLI and crate, a Python extension, and a WebAssembly build that runs in the browser or Node.",
+          "inputs": "image, preset",
+          "outputs": "SVG",
+          "source": "https://github.com/visioncortex/vtracer",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "PNG/JPEG",
+          "role": "import",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Rust crate",
+        "Python",
+        "Node.js (WASM)",
+        "CLI"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "classical raster-to-vector tracer (no neural net)",
+        "params": "n/a",
+        "released": "2020-10 (repo created); commits to 2026-10",
+        "weights_licence": "MIT code",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive; no weights.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "CPU-only native Rust program; README targets very large scans. No GPU needed. Speed on the busy the CPU server not measured."
+        },
+        "home_srv": "yes",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://github.com/visioncortex/vtracer",
+          "https://api.github.com/repos/visioncortex/vtracer"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/visioncortex/vtracer"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Traces regions; it does not name parts. Output is one flat shape per region."
+      },
+      "verified": "2026-11-02, GitHub README and API read"
+    },
+    {
+      "id": "potrace",
+      "name": "Potrace",
+      "vendor": "Peter Selinger",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "GPL-2.0-or-later; proprietary build (Potrace Professional) sold by Icosasoft"
+      },
+      "url": "https://potrace.sourceforge.net/",
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "bitmap-to-vector-trace",
+          "does": "Traces black-and-white bitmaps (PBM, PGM, PPM, BMP) into smooth curves. Options: speckle size, corner threshold, curve tolerance, turn policy.",
+          "inputs": "1-bit bitmap",
+          "outputs": "SVG, PDF, EPS, PostScript, DXF, GeoJSON, XFig",
+          "source": "https://potrace.sourceforge.net/",
+          "basis": "manual"
+        },
+        {
+          "area": "raster-editing",
+          "feature": "trace-preprocess-mkbitmap",
+          "does": "The bundled mkbitmap program converts greyscale or colour images to a clean bitmap that traces better.",
+          "inputs": "greyscale or colour image",
+          "outputs": "bitmap for tracing",
+          "source": "https://potrace.sourceforge.net/",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "EPS",
+          "role": "export",
+          "open": "documented"
+        },
+        {
+          "name": "DXF",
+          "role": "export",
+          "open": "documented"
+        }
+      ],
+      "scripting": [
+        "CLI",
+        "libpotrace C library"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "classical two-colour tracer",
+        "params": "n/a",
+        "released": "1.16 on 2019-09-17",
+        "weights_licence": "GPL-2.0-or-later (code)",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP. Copyleft: linking libpotrace into a sold engine forces GPL terms. Options: call it as a separate program, buy Potrace Professional, or use VTracer (MIT). The name Potrace is a trademark.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "CPU-only native program."
+        },
+        "home_srv": "yes",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://potrace.sourceforge.net/"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://potrace.sourceforge.net/"
+        ],
+        "restrictions": "GPL-2.0-or-later.",
+        "notes": "Black and white only; colour needs layering or another tool."
+      },
+      "verified": "2026-11-02, product page read"
+    },
+    {
+      "id": "autotrace",
+      "name": "AutoTrace",
+      "vendor": "AutoTrace project",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "GPL-2.0 (GitHub)"
+      },
+      "url": "https://github.com/autotrace/autotrace",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "bitmap-to-vector-convert",
+          "does": "Converts bitmaps to vector graphics (the repo description names no more detail).",
+          "inputs": "bitmap",
+          "outputs": "vector file",
+          "source": "https://api.github.com/repos/autotrace/autotrace",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "CLI"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "classical bitmap tracer",
+        "params": "n/a",
+        "released": "2013-07 (repo created)",
+        "weights_licence": "GPL-2.0",
+        "commercial_use": "conditional",
+        "commercial_notes": "Copyleft.",
+        "outputs": [
+          "vector file"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "CPU-only native program."
+        },
+        "home_srv": "yes",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://api.github.com/repos/autotrace/autotrace"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/autotrace/autotrace"
+        ],
+        "restrictions": "GPL-2.0.",
+        "notes": "Only the GitHub API page and the Wikipedia list were read; platforms listed by Wikipedia as cross-platform."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "img2num",
+      "name": "Img2Num",
+      "vendor": "Ryan Millard",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://img2num.dev/",
+      "platforms": [
+        "cross-platform"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "raster-to-clean-svg-library",
+          "does": "A cross-platform C++ library that converts natural raster images into clean, configurable SVGs.",
+          "inputs": "raster image",
+          "outputs": "SVG",
+          "source": "https://api.github.com/repos/Ryan-Millard/Img2Num",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "C++ library"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "classical raster-to-SVG library",
+        "params": "n/a",
+        "released": "2025-07 (repo created)",
+        "weights_licence": "MIT",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive.",
+        "outputs": [
+          "SVG"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Described as a C++ library; the algorithm and hardware needs were not read."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/Ryan-Millard/Img2Num"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/Ryan-Millard/Img2Num"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Only the GitHub API page was read; quality untested."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "sam3",
+      "name": "SAM 3 (Segment Anything Model 3)",
+      "vendor": "Meta",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "SAM License (custom, Meta)"
+      },
+      "url": "https://github.com/facebookresearch/sam3",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "raster-editing",
+          "feature": "concept-prompt-segmentation",
+          "does": "Finds and masks every instance of a concept named by a short phrase or shown by example images, as well as by points, boxes and masks. Used to split a picture into parts before tracing.",
+          "inputs": "image, text phrase or exemplar or box",
+          "outputs": "masks, boxes",
+          "source": "https://github.com/facebookresearch/sam3",
+          "basis": "model-card"
+        },
+        {
+          "area": "raster-editing",
+          "feature": "video-object-tracking",
+          "does": "Tracks the masked objects through video with a SAM 2 style tracker and allows interactive refinement.",
+          "inputs": "video plus prompts",
+          "outputs": "per-frame masks",
+          "source": "https://github.com/facebookresearch/sam3",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "promptable image and video segmentation with open-vocabulary concepts",
+        "params": "848M (README); 860M F32 in HF API",
+        "released": "2025-11 (HF repo created); SAM 3.1 update 2026-03-27",
+        "weights_licence": "SAM License: broad use, copy and derivative rights with no non-commercial limit stated; must carry the licence on redistribution; bans reverse engineering, ITAR-covered and military uses. HF checkpoints gated behind manual access approval.",
+        "commercial_use": "conditional",
+        "commercial_notes": "No non-commercial clause, but the licence has redistribution and use limits and the download needs an access request that the owner must file himself. Read the full text with a lawyer before shipping weights inside a product.",
+        "outputs": [
+          "masks",
+          "boxes"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "no",
+          "cpu_notes": "README lists a CUDA-capable GPU (CUDA 12.6 or newer), Python 3.12 and PyTorch 2.7 as requirements; no CPU route documented (documented requirement, not tested). Hosted APIs such as fal.ai are an alternative per the AutoFigure-Edit README."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/facebookresearch/sam3",
+          "https://github.com/facebookresearch/sam3/blob/main/LICENSE",
+          "https://huggingface.co/api/models/facebook/sam3"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://github.com/facebookresearch/sam3"
+        ],
+        "restrictions": "SAM License bars reverse engineering of the materials.",
+        "notes": "Code is public but the licence is custom; treat studying the weights as restricted."
+      },
+      "verified": "2026-11-02, GitHub README, LICENSE page and HF API read"
+    },
+    {
+      "id": "sam2",
+      "name": "SAM 2 and SAM 2.1",
+      "vendor": "Meta",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (checkpoints, code, training code)"
+      },
+      "url": "https://github.com/facebookresearch/sam2",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "raster-editing",
+          "feature": "promptable-segmentation",
+          "does": "Segments objects in images and video from clicks, boxes or masks, and tracks several objects through video.",
+          "inputs": "image or video plus prompts",
+          "outputs": "masks",
+          "source": "https://github.com/facebookresearch/sam2",
+          "basis": "model-card"
+        },
+        {
+          "area": "raster-editing",
+          "feature": "automatic-mask-generation",
+          "does": "Produces masks for everything it can find in an image without prompts.",
+          "inputs": "image",
+          "outputs": "mask set",
+          "source": "https://github.com/facebookresearch/sam2",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "promptable segmentation",
+        "params": "38.9M (tiny), 46M (small), 80.8M (base+), 224.4M (large)",
+        "released": "2024-07 (SAM 2), 2024-09 (SAM 2.1)",
+        "weights_licence": "Apache-2.0 for checkpoints and code",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive; third-party cc_torch post-processing code has its own licence.",
+        "outputs": [
+          "masks"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no CPU guidance; install compiles a CUDA kernel (needs nvcc); examples use CUDA autocast. Speeds quoted are on an A100."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/facebookresearch/sam2"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/facebookresearch/sam2"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "Smaller than SAM 3 and cleanly licensed; no text-phrase prompts."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "qwen-image-layered",
+      "name": "Qwen-Image-Layered",
+      "vendor": "Alibaba Qwen",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/QwenLM/Qwen-Image-Layered",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "raster-editing",
+          "feature": "image-to-rgba-layers",
+          "does": "Splits one image into several transparent layers (3, 4 or 8 in the examples) so each can be edited alone.",
+          "inputs": "image, layer count",
+          "outputs": "RGBA PNG layers",
+          "source": "https://github.com/QwenLM/Qwen-Image-Layered",
+          "basis": "model-card"
+        },
+        {
+          "area": "raster-editing",
+          "feature": "recursive-layer-split",
+          "does": "Any output layer can be split again into finer layers.",
+          "inputs": "one layer",
+          "outputs": "more layers",
+          "source": "https://github.com/QwenLM/Qwen-Image-Layered",
+          "basis": "model-card"
+        },
+        {
+          "area": "export-delivery",
+          "feature": "layer-export-psd-pptx",
+          "does": "The bundled Gradio app exports the layers to PSD, PPTX or ZIP.",
+          "inputs": "layers",
+          "outputs": "PSD, PPTX, ZIP",
+          "source": "https://github.com/QwenLM/Qwen-Image-Layered",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "PSD",
+          "role": "export",
+          "open": "documented"
+        },
+        {
+          "name": "PPTX",
+          "role": "export",
+          "open": "documented"
+        },
+        {
+          "name": "PNG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (diffusers pipeline)",
+        "Gradio"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "layered decomposition of an image into RGBA layers",
+        "params": "20.4B BF16 (HF API); fine-tune of Qwen-Image",
+        "released": "2025-12",
+        "weights_licence": "Apache-2.0",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive; base Qwen-Image licence not separately checked.",
+        "outputs": [
+          "RGBA layers"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README example loads the pipeline in bfloat16 on CUDA with 50 inference steps; no memory or timing given. Weights alone are about 41 GB at 16-bit (arithmetic from the parameter count, not a VRAM measurement)."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/QwenLM/Qwen-Image-Layered",
+          "https://huggingface.co/api/models/Qwen/Qwen-Image-Layered"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/QwenLM/Qwen-Image-Layered",
+          "https://arxiv.org/abs/2512.15603"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "Output layers are bitmaps, not vectors. Tracing each layer is a separate step."
+      },
+      "verified": "2026-11-02, GitHub README and HF API read"
+    },
+    {
+      "id": "birefnet",
+      "name": "BiRefNet",
+      "vendor": "ZhengPeng7",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://huggingface.co/ZhengPeng7/BiRefNet",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "raster-editing",
+          "feature": "background-removal-mask",
+          "does": "Segments the main subject at high detail for cut-outs. Tagged for background removal, dichotomous segmentation, camouflaged and salient object detection.",
+          "inputs": "image (resized to 1024 by 1024 in the example)",
+          "outputs": "foreground mask",
+          "source": "https://huggingface.co/ZhengPeng7/BiRefNet",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python (transformers)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "high-resolution foreground segmentation",
+        "params": "0.22B (F16)",
+        "released": "2024-07 (weights), updated 2026-02",
+        "weights_licence": "MIT",
+        "commercial_use": "yes",
+        "commercial_notes": "MIT on the card; training-set terms not checked.",
+        "outputs": [
+          "masks"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Example moves the model to CUDA in half precision; no VRAM figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/ZhengPeng7/BiRefNet",
+          "https://huggingface.co/api/models/ZhengPeng7/BiRefNet"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/ZhengPeng7/BiRefNet",
+          "https://arxiv.org/abs/2401.03407"
+        ],
+        "restrictions": "MIT.",
+        "notes": "A cleanly licensed alternative to RMBG-2.0 for cut-outs."
+      },
+      "verified": "2026-11-02, HF card and API read"
+    },
+    {
+      "id": "rmbg-2",
+      "name": "RMBG-2.0",
+      "vendor": "Bria AI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "custom bria-rmbg-2.0 licence (HF 'other'); text not read"
+      },
+      "url": "https://huggingface.co/briaai/RMBG-2.0",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "raster-editing",
+          "feature": "background-removal-mask",
+          "does": "Removes the background from an image; the HF tags list image segmentation and background removal.",
+          "inputs": "image",
+          "outputs": "foreground mask",
+          "source": "https://huggingface.co/api/models/briaai/RMBG-2.0",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python (transformers)",
+        "ONNX",
+        "transformers.js"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "background removal",
+        "params": "not checked",
+        "released": "2024-10",
+        "weights_licence": "bria-rmbg-2.0 (custom); not read",
+        "commercial_use": "unknown",
+        "commercial_notes": "LICENCE TRAP (unread). The licence is custom. Read it before use in a sold product. AutoFigure-Edit depends on this model.",
+        "outputs": [
+          "masks"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not checked."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/api/models/briaai/RMBG-2.0"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/api/models/briaai/RMBG-2.0"
+        ],
+        "restrictions": "Custom licence, unread.",
+        "notes": "Only the HF API metadata was read."
+      },
+      "verified": "2026-11-02, HF API metadata read only"
+    },
+    {
+      "id": "depth-anything-3",
+      "name": "Depth Anything 3",
+      "vendor": "ByteDance Seed / depth-anything org",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Apache-2.0 for some checkpoints, CC BY-NC 4.0 for others"
+      },
+      "url": "https://huggingface.co/depth-anything/DA3-BASE",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "scientific-computation",
+          "feature": "depth-and-camera-pose",
+          "does": "Predicts depth that stays consistent across any number of input views, with or without known cameras, and returns camera extrinsics and intrinsics. Useful as a depth cue for ordering layers in a rebuild.",
+          "inputs": "one or more images",
+          "outputs": "depth maps, camera parameters",
+          "source": "https://huggingface.co/depth-anything/DA3-BASE",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "depth and geometry from images",
+        "params": "DA3-BASE about 0.12B; other sizes not read",
+        "released": "2025-11",
+        "weights_licence": "Mixed per checkpoint (HF org listing): small, base, mono-large, metric-large and the -1.1 large are Apache-2.0; large, giant and nested-giant are CC BY-NC 4.0.",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP. Check each checkpoint. The Apache ones are the small and base models.",
+        "outputs": [
+          "depth maps"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "DA3-BASE sample code falls back to CPU when CUDA is absent; no speed figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/depth-anything/DA3-BASE",
+          "https://huggingface.co/api/models?author=depth-anything&sort=createdAt&direction=-1&limit=12"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/depth-anything/DA3-BASE"
+        ],
+        "restrictions": "Per checkpoint.",
+        "notes": "Only the BASE card was read in full."
+      },
+      "verified": "2026-11-02, HF card for DA3-BASE and org listing read"
+    },
+    {
+      "id": "lama",
+      "name": "LaMa (large mask inpainting)",
+      "vendor": "Samsung AI Center (advimman)",
+      "kind": "model",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (code)"
+      },
+      "url": "https://github.com/advimman/lama",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "raster-editing",
+          "feature": "large-mask-inpainting",
+          "does": "Image inpainting network (WACV 2022) built for large masks, using Fourier convolutions. The README says it generalises to much higher resolutions, around 2k, than its 256x256 training size.",
+          "inputs": "image plus mask",
+          "outputs": "inpainted image",
+          "source": "https://github.com/advimman/lama",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "image inpainting",
+        "params": "not checked",
+        "released": "2021-08 (repo created)",
+        "weights_licence": "Apache-2.0 code; weights licence not checked",
+        "commercial_use": "conditional",
+        "commercial_notes": "Weights terms not read.",
+        "outputs": [
+          "image"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not checked."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/advimman/lama"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/advimman/lama"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "Only the GitHub API page was read. Last push 2025-02."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "paddleocr",
+      "name": "PaddleOCR (PP-OCRv6, PP-StructureV3, PP-DocLayoutV3, PP-Chart2Table)",
+      "vendor": "PaddlePaddle",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/PaddlePaddle/PaddleOCR",
+      "platforms": [
+        "windows",
+        "macos",
+        "linux",
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "text-detect-recognise",
+          "does": "PP-OCRv6 finds and reads text in three sizes (1.5M, 7.7M and 34.5M parameters) across 50 languages, with a CPU speedup through OpenVINO.",
+          "inputs": "image",
+          "outputs": "text lines with boxes",
+          "source": "https://github.com/PaddlePaddle/PaddleOCR",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-assist",
+          "feature": "layout-detect",
+          "does": "PP-DocLayoutV3 locates page regions, including irregular shapes.",
+          "inputs": "page image",
+          "outputs": "region boxes and labels",
+          "source": "https://github.com/PaddlePaddle/PaddleOCR",
+          "basis": "model-card"
+        },
+        {
+          "area": "data-visualisation",
+          "feature": "chart-to-table",
+          "does": "PP-Chart2Table turns a chart image into a data table.",
+          "inputs": "chart image",
+          "outputs": "table",
+          "source": "https://github.com/PaddlePaddle/PaddleOCR",
+          "basis": "model-card"
+        },
+        {
+          "area": "layout-publishing",
+          "feature": "table-structure-recognition",
+          "does": "PP-StructureV3 recovers table cell coordinates and converts complex PDFs and images to Markdown or JSON; DOCX export is available.",
+          "inputs": "PDF or image",
+          "outputs": "Markdown, JSON, DOCX",
+          "source": "https://github.com/PaddlePaddle/PaddleOCR",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "Markdown",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "JSON",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "DOCX",
+          "role": "export",
+          "open": "documented"
+        }
+      ],
+      "scripting": [
+        "Python API",
+        "CLI",
+        "browser SDK (PaddleOCR.js)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "OCR, layout, table and chart parsing toolkit",
+        "params": "PP-OCRv6: 1.5M, 7.7M, 34.5M; VLM variants listed separately",
+        "released": "PP-OCRv6 in release 3.7.0 (2026-06)",
+        "weights_licence": "Apache-2.0",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive.",
+        "outputs": [
+          "text and boxes",
+          "Markdown",
+          "JSON"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "README lists Intel CPU among backends and reports a 5.2 times CPU speedup with OpenVINO for PP-OCRv6. Speed on the busy the CPU server not measured."
+        },
+        "home_srv": "yes",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://github.com/PaddlePaddle/PaddleOCR"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/PaddlePaddle/PaddleOCR"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "PP-OCRv6 models are at most 34.5M parameters, so GPU memory is not a concern on the laptop."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "paddleocr-vl-1.6",
+      "name": "PaddleOCR-VL-1.6 (0.9B)",
+      "vendor": "PaddlePaddle",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6",
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "document-parse-vlm",
+          "does": "A small vision-language model that reads regions found by a layout model: text, tables, formulas, charts and seals, with a spotting mode. Reports 96.33% on OmniDocBench v1.6 (authors' figure).",
+          "inputs": "page or region image, task name",
+          "outputs": "JSON or Markdown",
+          "source": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6",
+          "basis": "model-card"
+        },
+        {
+          "area": "data-visualisation",
+          "feature": "chart-recognition",
+          "does": "A chart task mode that reads chart images; the 1.6 release is reported to improve chart recognition over 1.5.",
+          "inputs": "chart image",
+          "outputs": "structured chart data",
+          "source": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "JSON",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "Markdown",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "PaddleOCR CLI",
+        "Python",
+        "vLLM server"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "document and chart parsing",
+        "params": "1.0B BF16 (card text says 0.9B)",
+        "released": "2026-05",
+        "weights_licence": "Apache-2.0",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive; layout model licence not stated on the card.",
+        "outputs": [
+          "JSON",
+          "Markdown"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "Card says the transformers path works on CPU or CUDA and a CPU build of PaddlePaddle exists; quantised builds for llama.cpp, Ollama and LM Studio are listed. No CPU speed figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6",
+          "https://arxiv.org/abs/2606.03264"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6",
+          "https://github.com/PaddlePaddle/PaddleOCR"
+        ],
+        "restrictions": "Apache-2.0.",
+        "notes": "A good small reader for text and chart data; it does not output SVG."
+      },
+      "verified": "2026-11-02, HF card and PaddleOCR README read"
+    },
+    {
+      "id": "surya",
+      "name": "Surya OCR (689M)",
+      "vendor": "datalab-to",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Apache-2.0 code; weights under a modified AI Pubs Open RAIL-M licence"
+      },
+      "url": "https://github.com/datalab-to/surya",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "ocr-reading-order",
+          "does": "Reads full pages or single blocks in 90 plus languages and returns text in reading order, with equations marked in KaTeX-style LaTeX.",
+          "inputs": "page image",
+          "outputs": "JSON, HTML",
+          "source": "https://github.com/datalab-to/surya",
+          "basis": "model-card"
+        },
+        {
+          "area": "layout-publishing",
+          "feature": "layout-analysis",
+          "does": "Labels page regions (tables, images, headers) with boxes, polygons and confidence scores.",
+          "inputs": "page image",
+          "outputs": "results.json with labelled boxes",
+          "source": "https://github.com/datalab-to/surya",
+          "basis": "model-card"
+        },
+        {
+          "area": "layout-publishing",
+          "feature": "table-recognition",
+          "does": "Rebuilds table structure including merged cells.",
+          "inputs": "table image",
+          "outputs": "JSON, Markdown or HTML",
+          "source": "https://github.com/datalab-to/surya",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "JSON",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "HTML",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python (pip surya-ocr)",
+        "CLI"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "OCR, layout and table recognition",
+        "params": "689M",
+        "released": "2.5 line current at read time (date not stated)",
+        "weights_licence": "Modified AI Pubs Open RAIL-M: free for research, personal use and startups under $5M funding or revenue; wider commercial use needs a paid licence",
+        "commercial_use": "conditional",
+        "commercial_notes": "LICENCE TRAP. Revenue or funding cap on the weights; a sold engine needs the paid licence or a different OCR (PaddleOCR is Apache-2.0).",
+        "outputs": [
+          "JSON",
+          "HTML"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "README documents a CPU and Apple Silicon route through llama.cpp, with about 4.8 GB peak memory measured on an M4 Max for Surya 2.5 in bf16. GPU route needs Docker and vLLM. No Xeon speed."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/datalab-to/surya"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://github.com/datalab-to/surya"
+        ],
+        "restrictions": "Code Apache-2.0; weights licence limits commercial use.",
+        "notes": ""
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "docling",
+      "name": "Docling (with GraniteDocling 258M)",
+      "vendor": "IBM Research / Docling project",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (code); models carry their own licences"
+      },
+      "url": "https://github.com/docling-project/docling",
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "layout-publishing",
+          "feature": "document-to-structured-formats",
+          "does": "Parses PDF, DOCX, PPTX, XLSX, HTML and images into structure: layout, reading order, tables, code and formulas. Exports Markdown, HTML, JSON and DocTags.",
+          "inputs": "document or image",
+          "outputs": "Markdown, HTML, JSON, DocTags",
+          "source": "https://github.com/docling-project/docling",
+          "basis": "model-card"
+        },
+        {
+          "area": "data-visualisation",
+          "feature": "chart-to-table-or-code",
+          "does": "Understands bar, pie and line charts and converts them to tables or code with a description.",
+          "inputs": "chart image",
+          "outputs": "table or code",
+          "source": "https://github.com/docling-project/docling",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [
+        {
+          "name": "PDF",
+          "role": "import",
+          "open": "documented"
+        },
+        {
+          "name": "Markdown",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "JSON",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "Python",
+        "CLI (--pipeline vlm)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "document conversion with a small vision-language model",
+        "params": "GraniteDocling 257.5M BF16 (HF API)",
+        "released": "GraniteDocling HF repo 2025-05",
+        "weights_licence": "MIT code; granite-docling-258M tagged Apache-2.0 on HF",
+        "commercial_use": "yes",
+        "commercial_notes": "README says each model keeps its own licence; check them in the original packages.",
+        "outputs": [
+          "Markdown",
+          "JSON"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no CPU or GPU guidance; runs locally and in air-gapped setups, on x86_64 and arm64."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/docling-project/docling",
+          "https://huggingface.co/api/models/ibm-granite/granite-docling-258M"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/docling-project/docling"
+        ],
+        "restrictions": "MIT.",
+        "notes": ""
+      },
+      "verified": "2026-11-02, GitHub README and HF API read"
+    },
+    {
+      "id": "qwen3.5-small",
+      "name": "Qwen3.5 small vision-language models (4B and 9B)",
+      "vendor": "Alibaba Qwen",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/api/models/Qwen/Qwen3.5-9B",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "vision-language-chat-small",
+          "does": "Dense image-text-to-text chat models in the Qwen3.5 line. The larger members of the family (35B-A3B, 122B-A10B, 397B-A17B) also take images. Only HF metadata was read for these two.",
+          "inputs": "image plus text",
+          "outputs": "text, which can be SVG, Mermaid or JSON",
+          "source": "https://huggingface.co/api/models/Qwen/Qwen3.5-9B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python (transformers)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "general vision-language model",
+        "params": "4.66B (4B) and 9.65B (9B) BF16",
+        "released": "2026-02",
+        "weights_licence": "Apache-2.0",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive.",
+        "outputs": [
+          "text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not documented in the metadata read. Community GGUF builds of the family exist per the Qwen3.6 card's link list."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/api/models/Qwen/Qwen3.5-9B",
+          "https://huggingface.co/api/models/Qwen/Qwen3.5-4B"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/api/models/Qwen/Qwen3.5-9B"
+        ],
+        "restrictions": null,
+        "notes": "Only HF API metadata read."
+      },
+      "verified": "2026-11-02, HF API metadata read only"
+    },
+    {
+      "id": "qwen3.6-35b-a3b",
+      "name": "Qwen3.6-35B-A3B",
+      "vendor": "Alibaba Qwen",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "chart-diagram-understanding",
+          "does": "Vision-language model with a vision encoder for images and video. The card reports 78.0 on CharXiv reasoning and 92.7 on AI2D (its own benchmark table).",
+          "inputs": "image plus text",
+          "outputs": "text answers or code",
+          "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "svg-and-front-end-code-writing",
+          "does": "The card lists a front-end generation benchmark (QwenWebBench) with an SVG category. The card does not say that benchmark gives image inputs.",
+          "inputs": "text prompt",
+          "outputs": "SVG, HTML, code",
+          "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "vLLM",
+        "SGLang",
+        "KTransformers",
+        "Transformers"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "general vision-language model (mixture of experts)",
+        "params": "35B total, 3B active (36B in HF metadata)",
+        "released": "2026-04",
+        "weights_licence": "Apache-2.0",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive.",
+        "outputs": [
+          "text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card links 944 community quantisations for llama.cpp, Ollama and LM Studio and names KTransformers (CPU-GPU hybrid). No official CPU speed. A search summary quotes about 5.6 tokens per second for Qwen3.5-35B-A3B on a desktop CPU (anecdote; not opened)."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+          "https://huggingface.co/api/models/Qwen/Qwen3.5-9B"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+        ],
+        "restrictions": null,
+        "notes": "Weights public; training data not."
+      },
+      "verified": "2026-11-02, HF card page read"
+    },
+    {
+      "id": "qwen3.8-27b",
+      "name": "Qwen3.8-27B",
+      "vendor": "Alibaba Qwen",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "chart-diagram-understanding",
+          "does": "Native image and video model. The card says it handles STEM diagrams and documents and reports a CharXiv reasoning score. It does not mention SVG or code-from-image output.",
+          "inputs": "image plus text",
+          "outputs": "text answers",
+          "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "SGLang",
+        "vLLM",
+        "TokenSpeed",
+        "Transformers"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "general vision-language model (dense)",
+        "params": "27B (28B in HF metadata)",
+        "released": "2026-08",
+        "weights_licence": "Apache-2.0 (the sibling Qwen3.8-Flash-Next is tagged 'other')",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive for the 27B; check licence tag per sibling.",
+        "outputs": [
+          "text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card gives no hardware needs and does not recommend llama.cpp (it appears only in the quantisation list). Dense 27B: no CPU speed source."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/Qwen/Qwen3.8-27B"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/Qwen/Qwen3.8-27B"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, HF card page read"
+    },
+    {
+      "id": "minicpm-v-4.7",
+      "name": "MiniCPM-V 4.7 (1B and 35B-A3B)",
+      "vendor": "OpenBMB",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B",
+      "platforms": [
+        "web",
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "image-multi-image-video-understanding",
+          "does": "Reads single images, image sets and video. Early visual-token compression (mixed 4x and 16x) keeps cost down. The card links cookbook pages for OCR, PDF parsing and grounding but makes no chart-to-SVG claim.",
+          "inputs": "images or video plus text",
+          "outputs": "text",
+          "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "llama.cpp",
+        "Ollama",
+        "LM Studio",
+        "vLLM",
+        "Transformers"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "efficient vision-language model; first MoE in the series",
+        "params": "1B and 35B-A3B (3B active)",
+        "released": "2026-10",
+        "weights_licence": "Apache-2.0; language backbone from Qwen3.5 or Qwen3.6, vision module SigLIP2",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive tags.",
+        "outputs": [
+          "text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "Card says GGUF weights support CPU inference and names llama.cpp and Ollama. It reports 13 plus tokens per second in about 3 GB on a phone (variant not stated). No server-class CPU figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B"
+        ],
+        "restrictions": null,
+        "notes": "Newest model seen with an explicit CPU route."
+      },
+      "verified": "2026-11-02, HF card page and org listing read"
+    },
+    {
+      "id": "gemma-4",
+      "name": "Gemma 4 (E2B, E4B, 12B, 26B-A4B, 31B)",
+      "vendor": "Google",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/google/gemma-4-12B-it",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "document-chart-ui-reading",
+          "does": "Reads documents and PDFs, screens and UIs, charts, multilingual and handwritten text, and can point at objects. Visual token budgets of 70 to 1120 trade speed for small-text accuracy.",
+          "inputs": "image plus text",
+          "outputs": "text, boxes",
+          "source": "https://huggingface.co/google/gemma-4-12B-it",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Transformers"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "general multimodal model",
+        "params": "E2B 2.3B effective, E4B 4.5B effective, 12B, 26B-A4B (3.8B active), 31B",
+        "released": "2026 (card gives no date; paper dated 2 July)",
+        "weights_licence": "Apache-2.0",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive per card.",
+        "outputs": [
+          "text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card has no CPU notes. Google lists official quantised GGUF and mobile builds, which suggests a llama.cpp route; no speed source."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/google/gemma-4-12B-it",
+          "https://huggingface.co/api/models?author=google&search=gemma-4&sort=createdAt&direction=-1&limit=20"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/google/gemma-4-12B-it"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, HF card page and org listing read"
+    },
+    {
+      "id": "internvl3.5",
+      "name": "InternVL3.5 (1B to 241B-A28B)",
+      "vendor": "OpenGVLab",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (model card statement)"
+      },
+      "url": "https://huggingface.co/api/models?author=OpenGVLab&sort=createdAt&direction=-1&limit=15",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "vision-language-chat-family",
+          "does": "Image-text-to-text family listed on the card at 1B, 2B, 4B, 8B, 14B, 38B, 20B-A4B, 30B-A3B and 241B-A28B parameters. The card names the Apache-2.0 licence.",
+          "inputs": "image plus text",
+          "outputs": "text",
+          "source": "https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Transformers",
+        "LMDeploy"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "general vision-language family",
+        "params": "1B, 2B, 4B, 8B, 14B, 38B, 20B-A4B, 30B-A3B, 241B-A28B (card table)",
+        "released": "2025 (the card gives no date; Flash variants appeared in a model listing dated 2025-09-28)",
+        "weights_licence": "Apache-2.0, as stated on the model card",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive tags.",
+        "outputs": [
+          "text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not read."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B",
+          "https://arxiv.org/abs/2508.18265"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/api/models?author=OpenGVLab&sort=createdAt&direction=-1&limit=15"
+        ],
+        "restrictions": null,
+        "notes": "No newer InternVL line was found in the sweep (search result only)."
+      },
+      "verified": "2026-11-02, HF listing read only"
+    },
+    {
+      "id": "molmo-2",
+      "name": "Molmo 2 (4B, 8B, 7B-O)",
+      "vendor": "Allen Institute for AI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (8B HF tag)"
+      },
+      "url": "https://huggingface.co/api/models/allenai/Molmo2-8B",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "image-video-qa-with-pointing",
+          "does": "Answers questions on images, multi-image sets and video, with training data for pointing and tracking (dataset tags: VideoPoint, VideoTrack, MultiImagePoint).",
+          "inputs": "images or video plus text",
+          "outputs": "text, points",
+          "source": "https://huggingface.co/api/models/allenai/Molmo2-8B",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Transformers (custom code)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "open vision-language model with grounding",
+        "params": "8B (8.66B F32); 4B and 7B-O variants named in the release coverage",
+        "released": "2025-12",
+        "weights_licence": "Apache-2.0 on the 8B repo",
+        "commercial_use": "yes",
+        "commercial_notes": "Permissive tag on the 8B.",
+        "outputs": [
+          "text",
+          "points"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not read."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/api/models/allenai/Molmo2-8B"
+        ]
+      },
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/api/models/allenai/Molmo2-8B"
+        ],
+        "restrictions": null,
+        "notes": "Only HF API metadata read."
+      },
+      "verified": "2026-11-02, HF API metadata read only"
+    },
+    {
+      "id": "florence-2",
+      "name": "Florence-2 (base and large)",
+      "vendor": "Microsoft",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://huggingface.co/microsoft/Florence-2-large",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "prompted-vision-tasks",
+          "does": "One small model that, by prompt, writes captions, detects objects, describes dense regions, proposes regions, grounds phrases from a caption, and reads text with or without boxes.",
+          "inputs": "image plus task prompt",
+          "outputs": "text, boxes",
+          "source": "https://huggingface.co/microsoft/Florence-2-large",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python (transformers, trust_remote_code)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "prompt-based captioning, detection and OCR",
+        "params": "0.77B (large)",
+        "released": "2024-06",
+        "weights_licence": "MIT",
+        "commercial_use": "yes",
+        "commercial_notes": "MIT on the card.",
+        "outputs": [
+          "text",
+          "boxes"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "Card sample runs on CUDA if present and otherwise on CPU (float32). No speed figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/microsoft/Florence-2-large",
+          "https://huggingface.co/api/models/microsoft/Florence-2-large"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/microsoft/Florence-2-large",
+          "https://arxiv.org/abs/2311.06242"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Older (2024) but small; no segmentation task is listed on the card."
+      },
+      "verified": "2026-11-02, HF card page and API read"
+    },
+    {
+      "id": "opencole",
+      "name": "OpenCOLE",
+      "vendor": "CyberAgent AI Lab",
+      "kind": "model",
+      "status": "discontinued",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (code); weights licence not stated"
+      },
+      "url": "https://github.com/CyberAgentAILab/opencole",
+      "platforms": [
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "layout-publishing",
+          "feature": "design-background-image-generation",
+          "does": "Generates the background images of a design with a fine-tuned Stable Diffusion XL base model.",
+          "inputs": "design prompt",
+          "outputs": "image",
+          "source": "https://github.com/CyberAgentAILab/opencole",
+          "basis": "model-card"
+        },
+        {
+          "area": "typography",
+          "feature": "typography-prediction",
+          "does": "A LLaVA-1.5 7B model with a LoRA adapter decides text styling for the design.",
+          "inputs": "design image plus text",
+          "outputs": "font and style choices",
+          "source": "https://github.com/CyberAgentAILab/opencole",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python (Poetry)"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "automatic graphic design generation (open reimplementation of COLE)",
+        "params": "SDXL base fine-tune plus LLaVA-1.5 7B LoRA",
+        "released": "2024-06 (CVPRW 2024)",
+        "weights_licence": "weights on HF under cyberagent; licence not stated on the README",
+        "commercial_use": "unknown",
+        "commercial_notes": "Weights and dataset licences not stated.",
+        "outputs": [
+          "image",
+          "design parameters"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no hardware needs."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/CyberAgentAILab/opencole"
+        ]
+      },
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/CyberAgentAILab/opencole"
+        ],
+        "restrictions": "Apache-2.0 code.",
+        "notes": "Repo is archived (read-only). Output format of a design was not described in the README."
+      },
+      "verified": "2026-11-02, GitHub README read"
+    },
+    {
+      "id": "postercraft",
+      "name": "PosterCraft",
+      "vendor": "MeiGen-AI (ICLR 2026)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "NOASSERTION on GitHub"
+      },
+      "url": "https://github.com/MeiGen-AI/PosterCraft",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "layout-publishing",
+          "feature": "aesthetic-poster-generation",
+          "does": "Generates finished poster images in one framework (diffusion-based, raster output). Described on GitHub as a unified framework for high-quality aesthetic posters.",
+          "inputs": "text prompt",
+          "outputs": "poster bitmap",
+          "source": "https://api.github.com/repos/MeiGen-AI/PosterCraft",
+          "basis": "source"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python"
+      ],
+      "outcomes": [],
+      "model": {
+        "task": "poster image generation",
+        "params": "not checked",
+        "released": "2025-06 (repo created)",
+        "weights_licence": "licence not asserted",
+        "commercial_use": "unknown",
+        "commercial_notes": "No clear licence.",
+        "outputs": [
+          "bitmap"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "vram_source": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not checked."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://api.github.com/repos/MeiGen-AI/PosterCraft"
+        ]
+      },
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://api.github.com/repos/MeiGen-AI/PosterCraft"
+        ],
+        "restrictions": "Licence not asserted.",
+        "notes": "Only the GitHub API page was read; output is raster, not layered."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "mermaid",
+      "name": "Mermaid",
+      "vendor": "Mermaid project",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/mermaid-js/mermaid",
+      "platforms": [
+        "web",
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "diagramming",
+          "feature": "diagram-from-text-markup",
+          "does": "JavaScript library that renders diagrams from Markdown-style text definitions. The README lists 20+ types, among them flowchart, sequence, class, state, ER, Gantt, git graph, mindmap, timeline and Sankey, and options for themes, colours, fonts and layout direction.",
+          "inputs": "Mermaid text",
+          "outputs": "SVG diagram",
+          "source": "https://github.com/mermaid-js/mermaid",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "JavaScript"
+      ],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/mermaid-js/mermaid"
+        ],
+        "restrictions": "MIT.",
+        "notes": "Only the GitHub API page was read. A language model can write it as plain text, which makes it a practical target for LLM-authored diagrams."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "d2",
+      "name": "D2",
+      "vendor": "Terrastruct",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MPL-2.0"
+      },
+      "url": "https://github.com/terrastruct/d2",
+      "platforms": [
+        "web",
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "diagramming",
+          "feature": "diagram-from-text-script",
+          "does": "A diagram scripting language that compiles text to diagrams with automatic layout.",
+          "inputs": "D2 text",
+          "outputs": "SVG diagram",
+          "source": "https://api.github.com/repos/terrastruct/d2",
+          "basis": "source"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "D2 language",
+        "Go"
+      ],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://api.github.com/repos/terrastruct/d2"
+        ],
+        "restrictions": "MPL-2.0.",
+        "notes": "Only the GitHub API page was read."
+      },
+      "verified": "2026-11-02, GitHub API page read only"
+    },
+    {
+      "id": "svgenius",
+      "name": "SVGenius (benchmark for LLMs on SVG)",
+      "vendor": "SVGenius authors",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "not read"
+      },
+      "url": "https://arxiv.org/abs/2506.03139",
+      "platforms": [],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "svg-llm-benchmark",
+          "does": "Scores language models on 2,377 queries across SVG understanding, editing and generation, in 8 task groups, 18 metrics and 24 application domains. In the June 2025 run, proprietary models led overall; reasoning-tuned open models (DeepSeek-R1, QwQ-32B) came closest. A 3B code model scored poorly.",
+          "inputs": "model under test",
+          "outputs": "per-task scores",
+          "source": "https://arxiv.org/html/2506.03139v1",
+          "basis": "paper"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://arxiv.org/abs/2506.03139",
+          "https://arxiv.org/html/2506.03139v1"
+        ],
+        "restrictions": null,
+        "notes": "22 models tested (Qwen2.5 and Qwen3 sizes 1.7B to 72B, Llama-3.2-3B, Mistral-Small-3.1, StarVector-8B, InternVL3-8B and others). Mid-2025 snapshot; newer open models are not in it. Only the first 100,000 characters of the HTML were read."
+      },
+      "verified": "2026-11-02, arXiv abstract and HTML read (partly)"
+    },
+    {
+      "id": "rapidata-svg-benchmark",
+      "name": "Rapidata static SVG generation benchmark",
+      "vendor": "Rapidata",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "freemium",
+        "name": "dataset CC BY 4.0 on Hugging Face"
+      },
+      "url": "https://huggingface.co/datasets/Rapidata/svg-benchmark",
+      "platforms": [
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-assist",
+          "feature": "svg-human-preference-benchmark",
+          "does": "People rate pairs of SVG images from two language models for preference, coherence and prompt match. The viewer shows 518K rows, last vote 2026-10-07, with GLM, Kimi, DeepSeek, Mistral, MiniMax and MiMo families. No ranking table was readable.",
+          "inputs": "model pair per prompt",
+          "outputs": "vote records",
+          "source": "https://huggingface.co/datasets/Rapidata/svg-benchmark",
+          "basis": "observed"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://huggingface.co/datasets/Rapidata/svg-benchmark"
+        ],
+        "restrictions": null,
+        "notes": "No leaderboard table on the page read. A claim that GLM-5.3-Flash is the top open model came from a social post and is unverified."
+      },
+      "verified": "2026-11-02, dataset page read"
+    },
+    {
+      "id": "recraft",
+      "name": "Recraft (V4.1 vector, V2 to V4 models, vectorize)",
+      "vendor": "Recraft",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "paid API and app plans; terms page not read"
+      },
+      "url": "https://www.recraft.ai/",
+      "platforms": [
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-vector-svg",
+          "does": "Generates SVG from a prompt through its API (a dedicated vector model id). The reply is a URL to the SVG, valid for about 24 hours. Older V2 is the cheapest vector option for icons.",
+          "inputs": "text prompt",
+          "outputs": "SVG URL",
+          "source": "https://www.recraft.ai/docs",
+          "basis": "manual"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "image-vectorize-api",
+          "does": "A Vectorize tool turns a PNG or JPG into SVG; the docs list it at $0.01 per call.",
+          "inputs": "PNG or JPG",
+          "outputs": "SVG",
+          "source": "https://www.recraft.ai/docs",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "REST API"
+      ],
+      "outcomes": [],
+      "rea": {
+        "studyable": "closed",
+        "public_sources": [
+          "https://www.recraft.ai/docs",
+          "https://www.recraft.ai/"
+        ],
+        "restrictions": null,
+        "notes": "Closed weights; the pages read do not say whether weights are open. Pricing: vector V4 from $0.04 per image, V2 from $0.022 (docs page)."
+      },
+      "verified": "2026-11-02, product page and API docs read"
+    },
+    {
+      "id": "adobe-generative-shape-fill",
+      "name": "Adobe Illustrator: Generative Shape Fill and Text to Pattern (Firefly Vector model)",
+      "vendor": "Adobe",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "Creative Cloud subscription"
+      },
+      "url": "https://blog.adobe.com/en/publish/2024/07/23/explore-new-creative-frontiers-latest-innovations-illustrator",
+      "platforms": [
+        "windows",
+        "macos"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "generative-shape-fill",
+          "does": "Fills a selected shape or outline with detailed, editable vector artwork from a text prompt, optionally using existing art as a style reference and adding effects such as 3D, geometric or pixel art.",
+          "inputs": "shape or outline, prompt, optional style art",
+          "outputs": "editable vector artwork",
+          "source": "https://blog.adobe.com/en/publish/2024/07/23/explore-new-creative-frontiers-latest-innovations-illustrator",
+          "basis": "release-notes"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "text-to-vector-pattern",
+          "does": "Creates tileable, editable and scalable vector patterns from text and saves them to swatches.",
+          "inputs": "text prompt",
+          "outputs": "vector pattern swatch",
+          "source": "https://blog.adobe.com/en/publish/2024/07/23/explore-new-creative-frontiers-latest-innovations-illustrator",
+          "basis": "release-notes"
+        }
+      ],
+      "formats": [
+        {
+          "name": "AI",
+          "role": "native",
+          "open": "proprietary"
+        },
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "closed",
+        "public_sources": [
+          "https://blog.adobe.com/en/publish/2024/07/23/explore-new-creative-frontiers-latest-innovations-illustrator"
+        ],
+        "restrictions": null,
+        "notes": "The 2024 blog post was read. Adobe help pages returned 403, so later changes are not verified; a search result mentions partner image models and a newer Firefly Vector version in 2026 (not opened)."
+      },
+      "verified": "2026-11-02, Adobe blog post read; help pages 403"
+    },
+    {
+      "id": "quiverai",
+      "name": "QuiverAI (Arrow models)",
+      "vendor": "QuiverAI",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "token-priced API and app plans"
+      },
+      "url": "https://docs.quiver.ai/",
+      "platforms": [
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-svg-api",
+          "does": "A POST endpoint creates SVG from a prompt and can take reference images. Models are listed through a models endpoint.",
+          "inputs": "text prompt, optional reference images",
+          "outputs": "SVG",
+          "source": "https://docs.quiver.ai/api-reference",
+          "basis": "manual"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "image-vectorize-api",
+          "does": "A second POST endpoint vectorises a raster image into SVG.",
+          "inputs": "raster image",
+          "outputs": "SVG",
+          "source": "https://docs.quiver.ai/api-reference",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        }
+      ],
+      "scripting": [
+        "REST API (OpenAI-style)"
+      ],
+      "outcomes": [],
+      "rea": {
+        "studyable": "closed",
+        "public_sources": [
+          "https://docs.quiver.ai/api-reference"
+        ],
+        "restrictions": null,
+        "notes": "API reference page names no models or parameters. Search results (not opened) say Arrow 2 and Arrow 2 Telos launched in September 2026 at $4 and $20 per million input and output tokens; unverified."
+      },
+      "verified": "2026-11-02, API reference and overview page read"
+    },
+    {
+      "id": "vectorizer-ai",
+      "name": "Vectorizer.AI",
+      "vendor": "Vectorizer.AI",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "subscription for downloads; free preview"
+      },
+      "url": "https://vectorizer.ai/",
+      "platforms": [
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "vector-drawing",
+          "feature": "full-colour-trace-service",
+          "does": "Traces raster images (PNG, JPG, GIF, BMP, WebP, with transparency) into SVG, EPS, PDF or DXF. Fits whole shapes such as circles and rounded rectangles as well as curves, and detects symmetry.",
+          "inputs": "raster up to 3 megapixels and 30 MB",
+          "outputs": "SVG, EPS, PDF, DXF",
+          "source": "https://vectorizer.ai/",
+          "basis": "observed"
+        },
+        {
+          "area": "vector-drawing",
+          "feature": "region-editing-and-api",
+          "does": "Lets the user recolour, merge or remove regions after tracing, and offers a REST API, SDKs and a command-line client.",
+          "inputs": "traced result",
+          "outputs": "edited vector",
+          "source": "https://vectorizer.ai/",
+          "basis": "observed"
+        }
+      ],
+      "formats": [
+        {
+          "name": "SVG",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "EPS",
+          "role": "export",
+          "open": "documented"
+        },
+        {
+          "name": "DXF",
+          "role": "export",
+          "open": "documented"
+        }
+      ],
+      "scripting": [
+        "REST API",
+        "CLI",
+        "SDKs"
+      ],
+      "outcomes": [],
+      "rea": {
+        "studyable": "closed",
+        "public_sources": [
+          "https://vectorizer.ai/"
+        ],
+        "restrictions": "Output may not be used to train machine-learning models (per its page).",
+        "notes": "Uploads kept 24 hours. Processing is on the company's servers. Technique claims are self-reported."
+      },
+      "verified": "2026-11-02, product page read"
+    },
+    {
+      "id": "kittl",
+      "name": "Kittl (AI Vector Generator and Vectorizer)",
+      "vendor": "Kittl",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "freemium",
+        "name": "free tier plus paid plans; licensing page not read"
+      },
+      "url": "https://www.kittl.com/",
+      "platforms": [
+        "web"
+      ],
+      "engines": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "ai-vector-generator",
+          "does": "Home page lists an AI Vector Generator for editable vector artwork and a Vectorizer that turns an image into paths. Export formats are not stated on the page.",
+          "inputs": "prompt or image",
+          "outputs": "vector paths",
+          "source": "https://www.kittl.com/",
+          "basis": "observed"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "closed",
+        "public_sources": [
+          "https://www.kittl.com/"
+        ],
+        "restrictions": null,
+        "notes": "Marketing page only; no technical detail."
+      },
+      "verified": "2026-11-02, home page read"
+    }
+  ]
+}

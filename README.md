@@ -25,6 +25,7 @@ The [gallery](gallery/) holds twelve figures from published open-access papers, 
 | `qa/` | Measure a built figure (ink, empty space, type size, words, fonts, width) and give the two readers their instructions. |
 | `templates/` | Copy one of eight figure pages and edit it. |
 | `film/` | Make a short narrated film of a method or a structure: scenes in code, subtitles, a voice-over, an MP4 (see [film/README.md](film/README.md)). |
+| `studio/` | Consolidated 2D, 3D and asset source index (`studio/library/sources.json`, 231 sources), grounded references (`studio/library/references.json`), access rules (`studio/library/access.json`), 8-domain software and model atlas (`studio/library/atlas/`), and the Studio world and lens engine. |
 | `claude/` | Install the Claude Code skill, the MCP server and the two optional hooks. |
 | `examples/` | See each template built, most of them on public PDB entries, each with a `how-made.md`. |
 | `docs/` | Read the drawing rules, the palette notes, the ChimeraX notes, the kit reference, a glossary and field notes. |
@@ -62,7 +63,7 @@ The build writes `out/pipeline.pdf`, `out/pipeline.png` and `out/pipeline.html`,
 
 ## Use it with Claude Code
 
-The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL.md`) gives Claude the drawing rules and the order of work. The MCP server (`claude/mcp/server.mjs`) gives Claude the fifteen tools below; they run the build, the QA script, the palette scripts and ChimeraX on your machine, and only `render_structure` with `fetch=true` goes to the network. The auto-trigger hook adds one line to any prompt that mentions a figure, plot, diagram or render, so that Claude loads the skill. To install them, open [INSTALL.md](INSTALL.md) and paste its first block into Claude Code. Claude installs the skill and the server, and prints the hook entries for you to paste into your settings. After a restart, ask for a figure in plain words, for example: "Make a contact map of a nanobody and its antigen from PDB 1MEL."
+The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL.md`) gives Claude the drawing rules and the order of work. The MCP server (`claude/mcp/server.mjs`) gives Claude the twenty tools below; they run the build, the QA script, the palette scripts and ChimeraX on your machine, and only `render_structure` with `fetch=true` goes to the network. The auto-trigger hook adds one line to any prompt that mentions a figure, plot, diagram or render, so that Claude loads the skill. To install them, open [INSTALL.md](INSTALL.md) and paste its first block into Claude Code. Claude installs the skill and the server, and prints the hook entries for you to paste into your settings. After a restart, ask for a figure in plain words, for example: "Make a contact map of a nanobody and its antigen from PDB 1MEL."
 
 | Tool | What it does |
 |---|---|
@@ -81,6 +82,11 @@ The `claude/` folder has three parts. The skill (`claude/skill/molecullage/SKILL
 | `new_film_beat` | Scaffolds one scene of a narrated film in `film/`. |
 | `narrate_film` | Speaks the narration, writes the subtitles and the soundtrack, and reports sentences that overlap. |
 | `render_film` | Renders a scene to an MP4 with sound, a stills sheet and a page audit. |
+| `film_doctor` | Checks the machine for the film work (Python, ffmpeg filters, disk, voice setting, voice cache, stale lock) and prints the exact next steps. |
+| `film_voice_status` | Shows, per episode, how many sentences still need Fish voice audio at a given speed, and the next command. |
+| `film_master_audio` | Treats one episode's soundtrack with a named preset and puts it under the rendered film. Never touches the raw sound. |
+| `film_verify_set` | Checks a set of finished films: frames, video stream, audio length, loudness, sync. |
+| `film_tidy` | Moves the leftovers of a working session into `film/_to_delete/` (dry run by default; never deletes). |
 
 ## Redesign every figure of a project
 
@@ -104,6 +110,10 @@ Everything it writes goes into a `molecullage/` folder inside your project. It d
 ## Narrated films
 
 The `film/` folder turns the same palette, radii and renders into short films. A scene is a React page that depends only on the clock; the renderer photographs it frame by frame in headless Chrome, checks it against the style rules, and joins the frames with a voice-over and soft music. Subtitles come from the narration text, word by word. The demo (`film/src/beats/demo`) is the Fv fragment of antibody D1.3, PDB 1VFB. Open [film/README.md](film/README.md) for the commands and [film/STYLE.md](film/STYLE.md) for the style rules.
+
+### The Russian course films: voice, sound, and instructions for any agent
+
+The 15-film biostatistics course is made with the Fish Audio voice and a studio-style soundtrack. [docs/film-protocol.md](docs/film-protocol.md) holds the rules and the runbooks (voice an episode, fix a stress, apply a sound preset, make a listening pack, verify a set, tidy). [docs/film-handbook.md](docs/film-handbook.md) holds what was measured and why every decision was taken. [AGENTS.md](AGENTS.md) and the [agents/](agents/README.md) folder let any coding agent, including small models (Antigravity, Claude Code, GLM), configure itself and follow the protocol.
 
 ## Settings
 
@@ -136,7 +146,7 @@ At `normal`, a figure passes when ink is at least 9 %, empty cells at most 25 %,
 
 ## Drawing rules and palette
 
-`docs/grammar.md` lists the 28 drawing rules, and each one says what goes wrong when you break it. `docs/palette.md` explains how the palette was sampled, how colours get their roles, and how to swap in your own.
+`docs/grammar.md` lists the 56 drawing rules (A to E, Nature mode F, and model schematics and anti-overplating G), and each one says what goes wrong when you break it. `docs/palette.md` explains how the palette was sampled, how colours get their roles, and how to swap in your own.
 
 ## Licence
 

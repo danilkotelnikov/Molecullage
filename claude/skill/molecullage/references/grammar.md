@@ -1,6 +1,6 @@
 # Drawing rules
 
-These 28 rules decide how a Molecullage figure is drawn. Each one can be checked on the finished figure, by the QA script or by eye, and each says what goes wrong when it is broken. Sizes are for a figure 178 mm wide; at 89 mm, halve the widths and keep the type sizes. The numeric limits are close to values measured on a set of published antibody-design figures. Treat them as a guide.
+These 28 rules (A to E), the ten rules of Nature mode (F, default for figures for papers) and the 18 rules of model schematics and anti-overplating (G) decide how a Molecullage figure is drawn. Each one can be checked on the finished figure, by the QA script or by eye, and each says what goes wrong when it is broken. Sizes are for a figure 178 mm wide; at 89 mm, halve the widths and keep the type sizes. The numeric limits are close to values measured on a set of published antibody-design figures. Treat them as a guide.
 
 ## A. What a figure is made of
 
@@ -47,10 +47,53 @@ These three rules came from a thesis, where the first block schematics were call
 27. Put one real example object in each block that matters: a thumbnail 12 to 22 mm wide (a structure render, a small matrix, or a mini plot made from the project's own data), with one frame style and the same place in every block, and its source (file, entry id, data file) in the notes. A thumbnail replaces words, so the word budget of rule 20 still holds. Structure renders must also pass the render-width check, so plan the page for it; the page then grows in height.
 28. A thumbnail never shows a result for a block that has not run. On a designed (white, dashed) block it shows an input or an intended object, drawn grey. Say on the picture or in the key that it is an example, name a stand-in system ("mi3", "toy square"), and call a fragment a fragment ("part of MS2, 5TC1"). The status key says what solid and dashed mean, and a picture does not use dashed strokes for content, because the reader then cannot tell a drawn dash from the status dash. Readers who did not know the figure mistook full-colour pictures on solid blocks for outputs until the key said otherwise.
 
+## F. Nature mode: draw the data, not boxes
+
+Rules 29 to 38 make a figure read as a figure from a paper. Full text, the table "choose the form from the message" and the checks: `docs/nature-mode.md`. A page that is a real process diagram says so in `molecullage.json` (`standards.mode: "diagram"`) and in its notes file.
+
+29. Form follows message: a number, a trend, a comparison, a ranking, shares and counts get axes and marks; boxes only for a process with real objects. At most one panel of a figure is a diagram. Rectangles that hold words cover at most 25 % of the area (QA mark `boxes`). A figure of boxes tells the order of steps and no number, so it reads as a slide.
+30. Every axis names its quantity and unit; the panel title gives the direction; a threshold is a line or a band named in place.
+31. Show the data: the points when a group has 30 values or fewer, a stated interval otherwise. Never draw a mean as a bare bar.
+32. Repeated comparisons are small multiples on one axis, one scale and one order.
+33. Label in place; a legend only for what cannot carry a label; no text over a shaded area or an image.
+34. Panel letters 8 pt bold lower case; other text 7 pt or smaller; floor 6.5 pt; one sans-serif font; lines 0.25 to 1 pt (Nature).
+35. Width 89 mm, 120 to 136 mm or 183 mm; depth at most 247 mm (Nature). Old figures at 178 mm stay valid.
+36. Vector PDF with live text; the PNG is for preview. Do not rasterise plots or text.
+37. One meaning per colour across the figure set; at most four hue families; sequential ramps in one hue; diverging only around a meaningful zero; no rainbow; check with `palette_check`.
+38. Source, number of items and a mark for every computed value stand on the figure. Never invent a curve, an error bar or a p-value.
+
+## G. Model and method schematics, and anti-overplating
+
+Rules 39 to 56 come from reading published machine-learning and chemistry figures in JCTC, JCIM, JACS, Nature Communications, Angewandte Chemie and Chemical Science, and from fixing overplated figures (2026-11-01 to 2026-11-07).
+
+39. Look at real papers before you draw. Read three to five published figures of the same kind and list in your notes what they show and what they leave out. A figure drawn from memory alone drifts into boxes.
+40. Boxes are for operations only. Molecules, point clouds, graphs, tensors, tokens and outputs sit on the page or in pale tint panels with no border. Never put a box inside a box (QA mark `overplate`). When everything sits in a box, the reader cannot tell an object from a step.
+41. Keep at most five groups on the page. Each group is a pale tint panel with no frame, no stage strip, no step badge and no corner tag. Every extra frame or badge steals space from the science.
+42. Write the title on the page. Leave out banner bars, paper tags, status keys and footers; put one short sentence at the bottom edge for the caption or claim boundary.
+43. Show a neural or mathematical layer by its shape. Draw an encoder or decoder as a funnel or trapezoid, attention as stacked planes, a message-passing step as nodes and edges on the molecule, and an energy term as a curve or surface.
+44. Write a formula once, in the place where it acts. Keep variable definitions in the caption. Repeating the same equation in a card and on an arrow wastes space.
+45. Show the input and the output at real size. In a figure 178 mm wide, the input molecule or complex and the output plot or structure are each at least 35 mm wide.
+46. Use one arrow between two groups. Each arrow is an orthogonal line or a smooth cubic curve. Its label sits beside the line with a 1.5 mm gap. No arrow crosses another arrow or a text label.
+47. Keep to at most 80 words on a model schematic. Each module name is one to three words, and each note is one short line of two to four words. Start every label and note with a capital letter.
+48. Spell out every uncommon abbreviation on the figure or in the caption. Never leave bare shorthand such as "2e", "14 res" or "GBDT" unexplained.
+49. Write chemical formulas with upright element symbols, subscripts and superscript charges. Draw the organic-phase overbar over the species only, never over stoichiometric coefficients or arrows.
+50. Sample the palette from a real render or reference figure with `palette_sample` and check it with `palette_check`, or use the native project palette. Do not apply default navy and amber fills or Molecullage palette G unless requested.
+51. Draw 2D chemical structures with RDKit `MolDraw2D` in ACS-1996 mode from a checked SMILES string. Never hand-code atom coordinates or bonds in SVG.
+52. Render 3D molecular complexes in ChimeraX, SAMSON or Blender with Molecular Nodes from verified coordinates, with soft studio or flat journal lighting and a clear camera. Never draw a protein or complex as a circle-and-stick cartoon or C-alpha bead cloud.
+53. Resolve every 2D icon, 3D model, HDRI, datasheet, structure and paper through the consolidated library (`studio/library/sources.json` and `studio/library/references.json`) before building.
+54. In a comparison matrix, put each cell's item count at the top-left of the cell, put the row total on the right of the row, and keep one graphic grammar across all cells.
+55. No divider, lifeline or connector may pass through a text label. Leave a clear gap or break the line around the label.
+56. For journal PDF submission, use Arial or Helvetica so text embeds as scalable vector fonts. If a slide font embeds as Type3 bitmaps in PDF, switch to Arial for the print PDF.
+
 ## Common faults
 
 These are the faults that the rules above catch most often:
 
+- a box with a number in it where a mark on an axis belongs (rule 29);
+- a bar for a mean with no points and no error (rule 31);
+- a box nested inside another box, or stage strips and badges wrapping inner cards (rules 40 and 41);
+- a divider, lifeline or arrow cutting through a text label (rules 46 and 55);
+- hand-coded SVG bonds or circle-and-stick cartoons in place of RDKit `MolDraw2D` or a 3D render (rules 51 and 52);
 - a chain of three to six boxes with one to three words each and no object;
 - a generic icon on every box;
 - a blob where a real object belongs;

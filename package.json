@@ -16,6 +16,8 @@
     "build": "node build/build.mjs",
     "examples": "node scripts/build_examples.mjs",
     "check": "node scripts/check.mjs",
+    "check:agents": "node agents/tools/check_adapters.mjs",
+    "check:studio": "node --test studio/tools/sources.test.mjs studio/tools/search.test.mjs studio/tools/access.test.mjs studio/tools/references.test.mjs studio/tools/library.test.mjs studio/tools/atlas.test.mjs studio/tools/atlas-gate.test.mjs",
     "install-notes": "node scripts/install.mjs"
   },
   "dependencies": {

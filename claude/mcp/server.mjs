@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// Molecullage MCP server (stdio). Fifteen tools that call the repository's scripts as subprocesses.
+// Molecullage MCP server (stdio). Twenty tools that call the repository's scripts as subprocesses.
 //   list_templates, new_figure, build_figure, qa_figure, palette_sample, palette_check, render_structure
 //   project-wide (claude/mcp/tools/): inventory_figures, audit_figure, plan_redesign, contact_sheet, make_brief
 //   films (claude/mcp/tools/film.mjs, engine in film/): new_film_beat, narrate_film, render_film
+//   film sound and housekeeping (claude/mcp/tools/filmsound.mjs): film_doctor, film_voice_status, film_master_audio, film_verify_set, film_tidy
 // The repository is found through $MOLECULLAGE_HOME, else from the location of this file.
 // Every argument is checked before it reaches a command or a path (lib/validate.mjs). Files are written only inside the project folder,
 // the folder of the nearest molecullage.json, else the working directory. Files may be read from the project and from the repository.
@@ -21,6 +22,12 @@ import { register as registerContact } from './tools/contact.mjs';
 import { register as registerBrief } from './tools/brief.mjs';
 import { register as registerFilm } from './tools/film.mjs';
 import { RE_ID, RE_ENTRY, RE_LOCAL_PATH, GROUPS, RENDER_KEYS, idOf, projectRoot, within, renderWords } from './lib/validate.mjs';
+
+const optTools = [];
+for (const f of ['filmsound.mjs', 'motion.mjs']) {
+  const p = new URL(`./tools/${f}`, import.meta.url);
+  if (fs.existsSync(p)) optTools.push((await import(p.href)).register);
+}
 
 const ok = (obj) => ({ content: [{ type: 'text', text: typeof obj === 'string' ? obj : JSON.stringify(obj, null, 1) }] });
 const fail = (msg) => ({ isError: true, content: [{ type: 'text', text: msg }] });
@@ -187,7 +194,7 @@ export function buildServer() {
     return ok({ png: Object.keys(index).map((k) => path.join(outDir, `${k}_t.png`)), anchors: Object.fromEntries(Object.entries(index).map(([k, v]) => [k, v.anchors])), art_dir: outDir });
   }));
 
-  for (const reg of [registerInventory, registerAudit, registerPlan, registerContact, registerBrief, registerFilm]) reg(server);
+  for (const reg of [registerInventory, registerAudit, registerPlan, registerContact, registerBrief, registerFilm, ...optTools]) reg(server);
   return server;
 }
 

@@ -13,9 +13,12 @@ Checks (limits close to what we measured on a set of published antibody-design f
   render   smallest embedded raster width, mm (structure renders; under 15 mm is an icon)
   words    words in the PDF against the budget of molecullage.json (schematic or plate)
   fonts    Arial only; pages: one; width: one of molecullage.json "widthMm"
+  boxes    Nature mode only (standards.mode, default nature): share of the area that rectangles holding words cover, limit standards.natureMode.boxShareMax (25 %); from <key>.build.json
+  typeMax  Nature mode only: warns when any text is above 8 pt (panel letters 8 pt, other text 7 pt or less)
 
 Strictness (molecullage.json "strictness", or --strictness):
   normal   ink >= 9, cells <= 25, band <= 4, blank <= 6, type >= 6.5, render >= 20. A failed check is FAIL; words, fonts and width are warnings.
+           In Nature mode, for a page whose box share is within the limit: ink >= 3, cells <= 50, blank <= 10 (standards.natureMode.density).
   strict   tighter limits: ink >= 20, cells <= 20, band <= 2.5, blank <= 4; type, render as normal. Words, fonts, width are FAIL too.
   loose    the normal limits, but every failed check is only a warning. The exit code stays 0.
 A check that fails is reported with its reason. Nothing is changed.
@@ -35,7 +38,7 @@ LIMITS = {
     "strict": dict(ink=(20.0, ">="), cells=(20.0, "<="), band=(2.5, "<="), blank=(4.0, "<="), type=(6.5, ">="), render=(20.0, ">=")),
 }
 LIMITS["loose"] = LIMITS["normal"]
-UNIT = dict(ink="%", cells="%", band="%", blank="%", type="pt", render="mm", words="")
+UNIT = dict(ink="%", cells="%", band="%", blank="%", type="pt", render="mm", words="", boxes="%", overplate="")
 TOL = 0.06  # a CSS size of 6.5 pt prints as 6.495 pt
 DEFAULT_WORDS = {"schematic": 130, "plate": 90}
 
@@ -103,6 +106,13 @@ def pdf_metrics(pdf: Path) -> dict:
 def judge(m: dict, strictness: str, cfg: dict, kind: str, quick: bool) -> dict:
     lim = LIMITS[strictness]
     soft = strictness == "loose"
+    # Nature mode: a data plot is mostly white (thin lines, small marks). The schematic density marks would push it toward filled boxes,
+    # so a figure whose box share is within the limit gets plot densities (standards.natureMode.density; strict keeps its own limits).
+    std0 = cfg.get("standards") or {}
+    nm = std0.get("natureMode") or {}
+    if std0.get("mode", "nature") == "nature" and strictness != "strict" and m.get("boxShare") is not None and m["boxShare"] * 100 <= float(nm.get("boxShareMax", 25.0)):
+        d = {**dict(ink=3.0, cells=50.0, blank=10.0), **(nm.get("density") or {})}
+        lim = dict(lim, ink=(float(d["ink"]), ">="), cells=(float(d["cells"]), "<="), blank=(float(d["blank"]), "<="))
     marks = {}
 
     def put(name, value, limit, op, status_fail="FAIL", note=""):
@@ -127,6 +137,18 @@ def judge(m: dict, strictness: str, cfg: dict, kind: str, quick: bool) -> dict:
         widths = cfg.get("widthMm") or [178, 89]
         okw = any(abs(m["mm"][0] - w) <= 1.0 for w in widths)
         marks["width"] = dict(value=m["mm"][0], limit=widths, status="ok" if okw else ("FAIL" if strictness == "strict" else "warn"), reason="" if okw else f"width {m['mm'][0]} mm is not one of {widths}")
+        # Nature mode (docs/nature-mode.md) and anti-overplating (docs/grammar.md rule 40): needs <key>.build.json, which build/build.mjs writes next to the PNG.
+        if m.get("nestedBoxes") is not None:
+            put("overplate", m["nestedBoxes"], 0, "<=", "FAIL" if strictness == "strict" else "warn",
+                " nested boxes; rule 40 forbids putting a box inside a box")
+        std = cfg.get("standards") or {}
+        if std.get("mode", "nature") == "nature" and m.get("boxShare") is not None:
+            lim_box = float((std.get("natureMode") or {}).get("boxShareMax", 25.0))
+            put("boxes", m["boxShare"] * 100, lim_box, "<=", "FAIL" if strictness == "strict" else "warn",
+                " of the area is rectangles that hold words; Nature mode wants data marks, not boxes (a diagram-mode page sets standards.mode to diagram)")
+            big = [s for s in m.get("textPt", []) if s > 8.05]
+            marks["typeMax"] = dict(value=max(m["textPt"]) if m.get("textPt") else None, limit=8, status="ok" if not big else "warn",
+                                    reason="" if not big else f"text of {big} pt: Nature sets panel letters at 8 pt and all other text at 7 pt or less")
     return marks
 
 
@@ -142,6 +164,10 @@ def run(target: str, outdir: str | None = None, strictness: str | None = None, k
     if not png.exists():
         raise SystemExit(f"not found: {png}")
     m = png_metrics(png)
+    bj = base.with_suffix(".build.json")      # written by build.mjs; the quick run reads it too, so Nature-mode plot densities apply in the hook
+    if bj.exists():
+        b = json.loads(bj.read_text(encoding="utf-8"))
+        m.update({k: b[k] for k in ("boxShare", "boxes", "nestedBoxes", "textPt") if k in b})
     if not quick:
         if not pdf.exists():
             raise SystemExit(f"not found: {pdf} (use --quick for the PNG marks only)")
@@ -154,7 +180,7 @@ def run(target: str, outdir: str | None = None, strictness: str | None = None, k
 
 def line(r: dict) -> str:
     ms = r["marks"]
-    cols = " ".join(f"{n} {ms[n]['value']}{UNIT.get(n, '')} {ms[n]['status']}" for n in ("ink", "cells", "band", "blank", "type", "render", "words") if n in ms and ms[n]["value"] is not None)
+    cols = " ".join(f"{n} {ms[n]['value']}{UNIT.get(n, '')} {ms[n]['status']}" for n in ("ink", "cells", "band", "blank", "type", "render", "words", "boxes") if n in ms and ms[n]["value"] is not None)
     return f"Molecullage QA {r['key']} [{r['strictness']}]: {'ok' if r['ok'] else 'FAIL'} | {cols}" + ("" if not r["failures"] else " | " + "; ".join(r["failures"]))
 
 

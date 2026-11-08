@@ -1,7 +1,7 @@
 // One smoke check:  npm run check
 // Builds the pipeline template, runs the QA marks on it, asks the MCP server for its tools over stdio,
 // fires the hooks with harmless payloads, calls the five project tools on a scratch copy of examples/sample-project,
-// and compares the skill's reference copies with their sources.
+// calls the film sound tools (read only: doctor, voice status, a tidy dry run) and compares the skill's reference copies with their sources.
 // Prints one pass or FAIL line per step; exits 1 if any step fails.
 import fs from 'node:fs';
 import os from 'node:os';
@@ -36,20 +36,28 @@ await step('qa', async () => {
   try { res = JSON.parse(r.stdout); } catch { /* fall through to the error below */ }
   need(res,(r.stderr || r.stdout || 'no output').trim().split('\n').pop() + ' (are the Python packages installed? pip install -r requirements.txt)');
   need(res.ok, 'checks failed: ' + res.failures.join('; '));
-  return `checks ok (ink ${res.marks.ink.value} %)`;
+  need(res.marks.overplate?.status === 'ok' && res.marks.overplate?.value === 0, 'overplate mark did not pass on pipeline');
+  const bj = path.join(out, 'pipeline.build.json');
+  const saved = fs.readFileSync(bj, 'utf8');
+  fs.writeFileSync(bj, JSON.stringify({ ...JSON.parse(saved), nestedBoxes: 2 }));
+  const bad = JSON.parse(py('qa/qa_fig.py', [path.join(out, 'pipeline'), '--strictness', 'strict', '--json']).stdout);
+  fs.writeFileSync(bj, saved);
+  need(bad.marks.overplate?.status === 'FAIL', 'overplate mark did not fail on nested boxes in strict mode');
+  return `checks ok (ink ${res.marks.ink.value} %, overplate 0)`;
 });
 
 await step('mcp', async () => {
   const client = new Client({ name: 'molecullage-check', version: '0.1.0' });
   await client.connect(new StdioClientTransport({ command: process.execPath, args: [path.join(REPO, 'claude', 'mcp', 'server.mjs')], cwd: REPO, env: { ...process.env } }));
   try {
+    const expected = fs.existsSync(path.join(REPO, 'claude', 'mcp', 'tools', 'filmsound.mjs')) ? 23 : 15;
     const tools = (await client.listTools()).tools.length;
-    need(tools === 15, `${tools} tools, expected 15`);
+    need(tools === expected, `${tools} tools, expected ${expected}`);
     const res = await client.callTool({ name: 'list_templates', arguments: {} });
     need(!res.isError, 'list_templates returned an error');
     const n = JSON.parse(res.content[0].text).length;
     need(n >= 8, `${n} templates, expected 8`);
-    return `15 tools, ${n} templates`;
+    return `${tools} tools, ${n} templates`;
   } finally { await client.close(); }
 });
 
@@ -110,13 +118,41 @@ await step('make_brief', async () => {
 });
 
 await step('film tools', async () => {
-  fs.cpSync(path.join(REPO, 'film'), path.join(proj, 'film'), { recursive: true, filter: (src) => !['node_modules', 'out', 'dist'].includes(path.basename(src)) });
+  if (!fs.existsSync(path.join(REPO, 'film', 'package.json'))) return 'skipped (film/ not in checkout)';
+  fs.cpSync(path.join(REPO, 'film'), path.join(proj, 'film'), { recursive: true, filter: (src) => !['node_modules', 'node_modules.dangling_link', '_to_delete', 'out', 'dist', 'layers', 'narration', 'snapshots'].includes(path.basename(src)) });
   const r = await json('new_film_beat', { id: 'checkbeat', seconds: 12, dir: 'film' });
   need(fs.existsSync(r.scene) && fs.existsSync(r.narration), 'no scene or narration written');
   const again = await call('new_film_beat', { id: 'checkbeat', dir: 'film' });
   const outside = await call('render_film', { beat: 'checkbeat', dir: '..' });
   need(again.error && outside.error, 'a second scaffold or an outside folder was accepted');
   return 'a beat scaffolded, a repeat and an outside folder refused';
+});
+
+await step('film sound tools', async () => {
+  if (!fs.existsSync(path.join(REPO, 'claude', 'mcp', 'tools', 'filmsound.mjs')) || !fs.existsSync(path.join(REPO, 'film', 'episodes'))) return 'skipped (course film tools not in checkout)';
+  // Read-only on the film/ folder of the repository: film_tidy is a dry run, nothing is voiced, mastered or moved. The assertions are on the shape of the answers, not on this machine being ready.
+  const client = new Client({ name: 'molecullage-check', version: '0.1.0' });
+  await client.connect(new StdioClientTransport({ command: process.execPath, args: [path.join(REPO, 'claude', 'mcp', 'server.mjs')], cwd: proj, env: { ...process.env } }));
+  const tool = async (name, args) => { const r = await client.callTool({ name, arguments: args }, undefined, { timeout: 300000 }); return { error: !!r.isError, text: r.content[0].text }; };
+  const asJson = async (name, args) => { const r = await tool(name, args); need(!r.error, `${name}: ${r.text.split('\n')[0]}`); const j = JSON.parse(r.text); need(typeof j.next === 'string' && j.next.length > 10, `${name}: no next`); return j; };
+  try {
+    const doc = await asJson('film_doctor', {});
+    need(typeof doc.ok === 'boolean' && Array.isArray(doc.next_steps) && doc.checks.length > 5, 'film_doctor: wrong shape');
+    need(doc.checks.every((c) => c.name && ['ok', 'warn', 'fail'].includes(c.status) && typeof c.detail === 'string' && typeof c.fix === 'string'), 'film_doctor: a check has no name, status, detail or fix');
+    const id = fs.readdirSync(path.join(REPO, 'film', 'episodes')).find((f) => /^e\d+_.+\.json$/.test(f))?.slice(0, -5);
+    need(id, 'no episode in film/episodes');
+    const vs = await asJson('film_voice_status', { speed: 1.0, ids: [id] });
+    need(vs.episodes[id].sentences > 0 && Number.isInteger(vs.episodes[id].missing), `film_voice_status: no counts for ${id}`);
+    const before = fs.existsSync(path.join(REPO, 'film', '_to_delete')) ? fs.readdirSync(path.join(REPO, 'film', '_to_delete')).join() : '';
+    const tidy = await asJson('film_tidy', {});
+    need(tidy.applied === false && tidy.moved_to === null && Array.isArray(tidy.items), 'film_tidy: the dry run is not a dry run');
+    const after = fs.existsSync(path.join(REPO, 'film', '_to_delete')) ? fs.readdirSync(path.join(REPO, 'film', '_to_delete')).join() : '';
+    need(before === after, 'film_tidy dry run changed film/_to_delete');
+    const badPreset = await tool('film_master_audio', { id, preset: 'no_such_preset' });
+    const outside = await tool('film_verify_set', { set: '../..', audio: 'out' });
+    need(badPreset.error && outside.error, 'an unknown preset or a folder outside film/out was accepted');
+    return `doctor ${doc.ok ? 'ready' : 'not ready'} (${doc.checks.length} checks), ${id}: ${vs.episodes[id].missing} of ${vs.episodes[id].sentences} sentences without audio at 1.0, tidy dry run ${tidy.count} item(s), unknown preset and outside folder refused`;
+  } finally { await client.close(); }
 });
 
 await step('project tools refuse outside paths', async () => {
@@ -153,6 +189,16 @@ await step('skill references', async () => {
   const stale = staleRefs();
   need(!stale.length, `out of date: ${stale.join(', ')}. Run: node scripts/install.mjs --sync-refs`);
   return 'current';
+});
+
+await step('studio library', async () => {
+  const lib = path.join(REPO, 'studio', 'library');
+  const sources = JSON.parse(fs.readFileSync(path.join(lib, 'sources.json'), 'utf8')).sources;
+  const refs = JSON.parse(fs.readFileSync(path.join(lib, 'references.json'), 'utf8')).entries;
+  const access = JSON.parse(fs.readFileSync(path.join(lib, 'access.json'), 'utf8')).sources;
+  const domains = fs.readdirSync(path.join(lib, 'atlas', 'domains')).filter((f) => f.endsWith('.json'));
+  need(sources.length >= 200 && refs.length >= 10 && access.length >= 5 && domains.length === 8, 'consolidated studio library incomplete');
+  return `${sources.length} sources, ${refs.length} references, ${access.length} access rules, ${domains.length} atlas domains`;
 });
 
 fs.rmSync(out, { recursive: true, force: true });

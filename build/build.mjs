@@ -74,7 +74,8 @@ export function assemble({ html, pageDir, tokens, cfg, tokenDir, artDir, outDir,
   const artRel = artDir ? path.relative(outDir, artDir).split(path.sep).join('/') || '.' : 'art';
   const config = { claimBoundary: cfg.claimBoundary || '', floorPt: lad.floor + 0.05, typeLadder: lad, strictness: cfg.strictness };
   // a replacer function: the kit source contains "$'" and other patterns that String.replace would expand in a plain replacement string
-  return html.replace('</head>', () => `<style>${css}${kitCss}${tokens.css || ''}</style><script>window.ICONS=${JSON.stringify(icons)};window.ART=${JSON.stringify(art)};window.ART_DIR=${JSON.stringify(artRel)};window.CONFIG=${JSON.stringify(config)};window.TOKENS=${JSON.stringify({ color: c, meta: tokens.meta || {}, provenance: tokens.provenance || {} })};</script><script>${kitJs}</script></head>`);
+  const ladder = `:root{--fs-letter:${pt(lad.letter)};--fs-title:${pt(lad.title)};--fs-label:${pt(lad.label)};--fs-floor:${pt(+(lad.floor + 0.05).toFixed(2))};--fs-math:${pt(lad.math)}}`;   // after kit.css, whose :root holds only fallbacks
+  return html.replace('</head>', () => `<style>${css}${kitCss}${ladder}${tokens.css || ''}</style><script>window.ICONS=${JSON.stringify(icons)};window.ART=${JSON.stringify(art)};window.ART_DIR=${JSON.stringify(artRel)};window.CONFIG=${JSON.stringify(config)};window.TOKENS=${JSON.stringify({ color: c, meta: tokens.meta || {}, provenance: tokens.provenance || {} })};</script><script>${kitJs}</script></head>`);
 }
 
 export async function build({ page, widthMm, tokensFile, outDir, artDir }) {
@@ -115,12 +116,34 @@ export async function build({ page, widthMm, tokensFile, outDir, artDir }) {
     const info = await pg.evaluate(() => {
       const sizes = new Set(); const over = [];
       document.querySelectorAll('body *').forEach((e) => {
+        if (e.tagName === 'SCRIPT' || e.tagName === 'STYLE') return;   // the page's own code is not text on the figure (it showed up as 12 pt)
         if ([...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) sizes.add(+(parseFloat(getComputedStyle(e).fontSize) * 0.75).toFixed(2));
         if (e.classList.contains('card') && (e.scrollHeight > e.clientHeight + 1 || e.scrollWidth > e.clientWidth + 1)) over.push(e.id);
       });
-      return { textPt: [...sizes].sort((a, b) => a - b), overflowingCards: over };
+      // Nature mode and anti-overplating: the share of the figure area that rectangles holding words cover, and whether any box sits inside another box (rule 40).
+      // State frames (they hold a picture), plot marks and swatches are not counted. docs/nature-mode.md and docs/grammar.md say why.
+      const fr = document.querySelector('.fig').getBoundingClientRect();
+      let boxArea = 0, boxes = 0;
+      const boxEls = [...document.querySelectorAll('.card,.pill,.stage,.band,.chipbox')];
+      const boxRects = [];
+      boxEls.forEach((e) => {
+        const r = e.getBoundingClientRect();
+        if (r.width > 0 && r.height > 0) {
+          boxArea += r.width * r.height;
+          boxes++;
+          if (e.textContent.trim()) boxRects.push({ el: e, r });
+        }
+      });
+      let nestedBoxes = 0;
+      for (const a of boxRects) {
+        const inside = boxRects.some((b) => b.el !== a.el && (b.el.contains(a.el) || (a.r.left >= b.r.left - 0.5 && a.r.right <= b.r.right + 0.5 && a.r.top >= b.r.top - 0.5 && a.r.bottom <= b.r.bottom + 0.5 && (b.r.width > a.r.width + 2 || b.r.height > a.r.height + 2))));
+        if (inside) nestedBoxes++;
+      }
+      return { textPt: [...sizes].sort((a, b) => a - b), overflowingCards: over, boxShare: +(boxArea / (fr.width * fr.height)).toFixed(3), boxes, nestedBoxes };
     });
-    return { name, widthMm: +(box.w / MM).toFixed(1), heightMm: +(box.h / MM).toFixed(1), ...info, errors, pdf: path.join(out, `${name}.pdf`), png: path.join(out, `${name}.png`), html: outHtml };
+    const result = { name, widthMm: +(box.w / MM).toFixed(1), heightMm: +(box.h / MM).toFixed(1), ...info, errors, pdf: path.join(out, `${name}.pdf`), png: path.join(out, `${name}.png`), html: outHtml };
+    fs.writeFileSync(path.join(out, `${name}.build.json`), JSON.stringify({ name, widthMm: result.widthMm, heightMm: result.heightMm, textPt: info.textPt, boxShare: info.boxShare, boxes: info.boxes, nestedBoxes: info.nestedBoxes }, null, 1));   // read by qa/qa_fig.py
+    return result;
   } finally {
     await browser.close();
   }

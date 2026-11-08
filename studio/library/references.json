@@ -1,0 +1,297 @@
+{
+  "about": "References for the Studio: models, data sheets, lighting files, structures and papers. Every real object in a scene comes from an entry here. An entry with an unknown licence can be a candidate only. See POLICY.md.",
+  "entries": [
+    {
+      "id": "model-pcr-tube-3dcc-428209",
+      "kind": "model",
+      "subject": "0.2 mL PCR tube with attached cap",
+      "name": "TEST TUBE 0,2 ml (generic test tube with attached lid, commonly used for PCR)",
+      "source": "https://www.3dcontentcentral.com/download-model.aspx?catalogid=171&id=428209",
+      "licence": "unknown",
+      "formats": [
+        "STEP",
+        "IGES",
+        "STL",
+        "SLDPRT",
+        "Parasolid",
+        "VRML"
+      ],
+      "status": "fetched",
+      "checked": "2026-11-01",
+      "note": "STL fetched on 2026-11-01 with the owner's yes. 6,392 triangles. Bounding box 7.06 x 23.44 x 21.06 mm. The SPL data sheet gives 7.26 mm diameter and 20.80 mm height (without an open lid). Which axis is the tube length, and how far the open lid reaches, are not yet read from the mesh, so the check against the sheet is still open. A generic tube, not a named maker's. The terms of 3D ContentCentral were not read, so the licence stays unknown and the file is not used in a pitch until they are read.",
+      "grounding": "n/a",
+      "fetched": "2026-11-01",
+      "file": "models/pcr-tube-3dcc-428209.stl",
+      "manifest": "model-pcr-tube-3dcc-428209",
+      "approvedBy": "the owner, 2026-11-01 (download for inspection)",
+      "useBlocked": true
+    },
+    {
+      "id": "model-pcr-tube-grabcad-0.2ml",
+      "kind": "model",
+      "subject": "0.2 mL PCR tube",
+      "name": "pcr tube 0.2ml (by smhs sutaer, SOLIDWORKS 2017)",
+      "source": "https://grabcad.com/library/tag/pcr",
+      "licence": "unknown",
+      "formats": [
+        "SOLIDWORKS"
+      ],
+      "status": "needs-login",
+      "checked": "2026-11-01",
+      "note": "Found in the GrabCAD list for the tag pcr; the model page has not been opened. The download needs an account and the licence is not stated in the list.",
+      "grounding": "n/a"
+    },
+    {
+      "id": "model-pcr-tube-grabcad-microamp",
+      "kind": "model",
+      "subject": "0.2 mL PCR tube (maker: Thermo Fisher MicroAmp), no cap",
+      "name": "Thermo Fisher MicroAmp PCR tube - NO cap (May 2020)",
+      "source": "https://grabcad.com/library/tag/pcr",
+      "licence": "unknown",
+      "formats": [
+        "CAD"
+      ],
+      "status": "needs-login",
+      "checked": "2026-11-01",
+      "note": "A named maker's tube body, without a cap. The model page has not been opened. The download needs an account.",
+      "grounding": "n/a"
+    },
+    {
+      "id": "model-pcr-plate-sketchfab-nss",
+      "kind": "model",
+      "subject": "96-well PCR plate (wells of the same shape family as a PCR tube; not a single tube)",
+      "name": "PCR Plate | FREE 3d | Low poly (Naked Singularity Studio)",
+      "source": "https://sketchfab.com/3d-models/none-e4bf80d20e914a749243a8b358cd1ec7",
+      "licence": "CC-BY-4.0",
+      "formats": [
+        "glTF",
+        "GLB",
+        "USDZ"
+      ],
+      "status": "candidate",
+      "checked": "2026-11-01",
+      "note": "9,960 faces, 1.1 MB glb. The page label says CC Attribution; the version of the licence has not been read. It does not hold a single tube with a cap.",
+      "grounding": "n/a"
+    },
+    {
+      "id": "datasheet-spl-60001",
+      "kind": "datasheet",
+      "subject": "0.2 mL PCR tube, single, flat cap (SPL #60001)",
+      "name": "SPL PCR Tube technical data sheet",
+      "source": "https://prolabcorp.com/content/PDF/SPL/TDS%20SPL%20PCR%20Tube.pdf",
+      "licence": "maker document, facts only",
+      "status": "verified",
+      "checked": "2026-11-01",
+      "values": {
+        "diameter_mm": 7.26,
+        "height_mm": 20.8,
+        "volume_ml": 0.2,
+        "material": "polypropylene"
+      },
+      "note": "The whole PDF text was read. The drawing itself was not seen: it shows 5.82 and 28.3 without labels in the text. These numbers only check a 3D model; they are not the source of its shape.",
+      "grounding": "full-text",
+      "readFrom": "https://prolabcorp.com/content/PDF/SPL/TDS%20SPL%20PCR%20Tube.pdf",
+      "read": "2026-11-01"
+    },
+    {
+      "id": "datasheet-axygen-pcr-02-c",
+      "kind": "datasheet",
+      "subject": "0.2 mL PCR tube, flat cap (Axygen PCR-02-C)",
+      "name": "Axygen Strip and Individual PCR Tubes product information sheet",
+      "source": "https://www.corning.com/catalog/cls/documents/product-information-sheets/CLS-A-PCR-001.pdf",
+      "licence": "maker document, facts only",
+      "status": "candidate",
+      "checked": "2026-11-01",
+      "note": "Only a search excerpt of the sheet was seen (catalogue numbers and cap types). It must be read in full before anything is taken from it.",
+      "grounding": "abstract-only"
+    },
+    {
+      "id": "hdri-studio-small-09",
+      "kind": "hdri",
+      "subject": "Studio lighting and reflections",
+      "name": "Studio Small 09 (2k), Sergej Majboroda",
+      "source": "https://polyhaven.com/a/studio_small_09",
+      "licence": "CC0-1.0",
+      "status": "fetched",
+      "manifest": "hdri-studio-small-09",
+      "checked": "2026-11-01",
+      "note": "Downloaded with the owner's yes on 2026-11-01. Size and md5 are checked in manifest.json.",
+      "grounding": "n/a"
+    },
+    {
+      "id": "hdri-studio-small-03",
+      "kind": "hdri",
+      "subject": "Studio lighting and reflections",
+      "name": "Studio Small 03 (2k), Greg Zaal",
+      "source": "https://polyhaven.com/a/studio_small_03",
+      "licence": "CC0-1.0",
+      "status": "fetched",
+      "manifest": "hdri-studio-small-03",
+      "checked": "2026-11-01",
+      "note": "Downloaded with the owner's yes on 2026-11-01. Size and md5 are checked in manifest.json.",
+      "grounding": "n/a"
+    },
+    {
+      "id": "structure-pdb-1igt",
+      "kind": "structure",
+      "subject": "Immunoglobulin G (whole mouse IgG2a antibody)",
+      "name": "PDB 1IGT",
+      "source": "https://www.rcsb.org/structure/1IGT",
+      "licence": "CC0-1.0",
+      "status": "fetched",
+      "checked": "2026-11-01",
+      "values": {
+        "atoms": 12530,
+        "longest_axis_angstrom": 147.6
+      },
+      "note": "The file is in the main Molecullage folder, data/pdb/1IGT.pdb. The longest axis is measured from the atom coordinates. The live mesh must stay close to the full surface; see POLICY.md.",
+      "grounding": "primary-data",
+      "readFrom": "https://www.rcsb.org/structure/1IGT",
+      "read": "2026-11-01"
+    },
+    {
+      "id": "paper-zhang-2019-talanta",
+      "kind": "paper",
+      "subject": "Antibodies per gold nanoparticle",
+      "name": "Zhang L et al. Direct quantification of surface coverage of antibody in IgG-Gold nanoparticles conjugates. Talanta 204:875-881 (2019)",
+      "source": "https://doi.org/10.1016/j.talanta.2019.05.104",
+      "doi": "10.1016/j.talanta.2019.05.104",
+      "licence": "journal article, cite only",
+      "status": "verified",
+      "checked": "2026-11-01",
+      "note": "Only the abstract was read; the journal text is behind a paywall and no open copy was found. The abstract claims about 4 IgG per 15 nm gold particle. Under the source policy this is ungrounded and no scene or slide may use it as evidence.",
+      "grounding": "abstract-only",
+      "claimedValues": {
+        "igg_per_particle": 4,
+        "particle_diameter_nm": 15
+      }
+    },
+    {
+      "id": "paper-zhang-2020-bios",
+      "kind": "paper",
+      "subject": "Antibody coverage and orientation on gold nanoparticles",
+      "name": "Zhang L et al. Antibody-Gold Nanoparticle Bioconjugates for Biosensors. Biosens Bioelectron 165:112370 (2020)",
+      "source": "https://doi.org/10.1016/j.bios.2020.112370",
+      "doi": "10.1016/j.bios.2020.112370",
+      "licence": "journal article, cite only",
+      "status": "verified",
+      "checked": "2026-11-01",
+      "note": "Only the abstract was read. The open copy on HAL (hal-02928749) has the right cover page but its body is a different paper, on water evaporation (a deposit error). No usable full text was obtained. It is ungrounded.",
+      "grounding": "not-obtained"
+    },
+    {
+      "id": "paper-conrad-2023-mikrochim",
+      "kind": "paper",
+      "subject": "Antibody gold conjugates in lateral flow tests",
+      "name": "Conrad M et al. Tools to compare antibody gold nanoparticle conjugates for a small molecule immunoassay. Mikrochim Acta 190:62 (2023)",
+      "source": "https://doi.org/10.1007/s00604-023-05637-x",
+      "doi": "10.1007/s00604-023-05637-x",
+      "licence": "journal article, cite only",
+      "status": "verified",
+      "checked": "2026-11-01",
+      "note": "Full text read in PubMed Central. It states that direct coating gives randomly oriented antibodies on the gold surface. The coverage numbers are the authors' calculation from the antibody footprint, not measurements; the particles were 20 nm (direct coating) and 40 nm (streptavidin gold).",
+      "grounding": "full-text",
+      "readFrom": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9859872/",
+      "read": "2026-11-01",
+      "values": {
+        "orientation_direct_coating": "random",
+        "antibody_footprint_nm": [
+          14.5,
+          8.5
+        ],
+        "antibodies_per_20nm_particle_full_monolayer": 10,
+        "antibodies_accommodated_by_40nm_particle": 40,
+        "layer_thickness_nm": {
+          "assumed_monolayer": 15,
+          "measured_uv_conjugate": 10
+        }
+      }
+    },
+    {
+      "kind": "model",
+      "checked": "2026-11-01",
+      "licence": "unknown",
+      "status": "rejected",
+      "id": "model-rack-printables-1377469",
+      "subject": "0.2 mL PCR tube rack (accessory)",
+      "name": "0.2ml PCR Tube Rack 96 or 120 Wells (Printables)",
+      "source": "https://www.printables.com/model/1377469-02ml-pcr-tube-rack-96-or-120-wells-for-multi-chann/related",
+      "formats": [
+        "STL"
+      ],
+      "note": "Downloads without an account, but it is a rack. The wells follow the tube loosely and carry no cap. Not a tube model.",
+      "grounding": "n/a"
+    },
+    {
+      "kind": "model",
+      "checked": "2026-11-01",
+      "licence": "unknown",
+      "status": "rejected",
+      "id": "model-rack-nih3d-000703",
+      "subject": "0.2 mL PCR tube rack (accessory)",
+      "name": "PCR tube rack (NIH 3D, boehninglab)",
+      "source": "https://3d.nih.gov/entries/3DPX-000703",
+      "formats": [
+        "STL"
+      ],
+      "note": "A rack for small (0.2 mL) tubes. Not a tube model. The licence on the entry page has not been read.",
+      "grounding": "n/a"
+    },
+    {
+      "kind": "model",
+      "checked": "2026-11-01",
+      "licence": "unknown",
+      "status": "rejected",
+      "id": "model-rotor-thingiverse-2839614",
+      "subject": "0.2 mL PCR tube rotor for a mini centrifuge (accessory)",
+      "name": "0.2 mL PCR Tube Rotor for Mini-Microcentrifuge (lambdahindiii)",
+      "source": "https://www.thingiverse.com/thing:2839614",
+      "formats": [
+        "STL"
+      ],
+      "note": "A centrifuge rotor. Not a tube model. The licence on the page has not been read.",
+      "grounding": "n/a"
+    },
+    {
+      "kind": "model",
+      "checked": "2026-11-01",
+      "licence": "unknown",
+      "status": "rejected",
+      "id": "model-opener-makerworld-1457820",
+      "subject": "0.2 mL PCR tube opener (accessory)",
+      "name": "PCR Tube Opener (0.2 mL tube), Various Sizes (uranium235)",
+      "source": "https://makerworld.com/en/models/1457820-pcr-tube-opener-0-2-ml-tube-various-sizes",
+      "formats": [
+        "3D print file"
+      ],
+      "note": "An opener tool. Not a tube model.",
+      "grounding": "n/a"
+    }
+  ],
+  "searches": [
+    {
+      "date": "2026-11-01",
+      "where": "Sketchfab (public search, downloadable models)",
+      "query": "pcr tube, pcr, eppendorf microtube",
+      "result": "No single PCR tube with a cap. Found a PCR plate (CC-BY), holders and machines. A Sketchfab download needs an account."
+    },
+    {
+      "date": "2026-11-01",
+      "where": "Printables, Thingiverse, MakerWorld, NIH 3D, GitHub (web search)",
+      "query": "0.2 mL PCR tube 3D model with cap",
+      "result": "Only racks, rotors and openers. No accurate single tube with a cap that downloads without an account."
+    },
+    {
+      "date": "2026-11-01",
+      "where": "Wikimedia Commons (3D files)",
+      "query": "PCR tube",
+      "result": "No results."
+    },
+    {
+      "date": "2026-11-01",
+      "where": "Maker catalogue sheets (SPL, Axygen/Corning)",
+      "query": "0.2 mL PCR tube dimensions and CAD",
+      "result": "SPL gives numbers for checking. Neither sheet links a CAD file."
+    }
+  ]
+}

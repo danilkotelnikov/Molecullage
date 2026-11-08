@@ -12,14 +12,16 @@ import { REPO, findChrome, findChimeraX, pythonCmd } from '../build/config.mjs';
 
 const SKILL_SRC = path.join(REPO, 'claude', 'skill', 'molecullage');
 // skill reference name -> file of the repository it copies
-const REFS = { 'grammar.md': 'docs/grammar.md', 'palette.md': 'docs/palette.md', 'chimerax.md': 'docs/chimerax.md', 'kit.md': 'docs/kit.md', 'blind-read.md': 'qa/blind_read.md', 'overclaim-read.md': 'qa/overclaim_read.md' };
+const REFS = { 'grammar.md': 'docs/grammar.md', 'palette.md': 'docs/palette.md', 'chimerax.md': 'docs/chimerax.md', 'kit.md': 'docs/kit.md', 'blind-read.md': 'qa/blind_read.md', 'nature-mode.md': 'docs/nature-mode.md', 'overclaim-read.md': 'qa/overclaim_read.md', 'film-protocol.md': 'docs/film-protocol.md', 'film-handbook.md': 'docs/film-handbook.md' };
 const lf = (s) => s.replace(/\r\n/g, '\n');
 
 /** Names of the skill references that differ from their source. With write=true, rewrites them. */
 export function staleRefs(write = false) {
   const stale = [];
   for (const [name, rel] of Object.entries(REFS)) {
-    const want = lf(fs.readFileSync(path.join(REPO, rel), 'utf8'));
+    const src = path.join(REPO, rel);
+    if (!fs.existsSync(src)) continue;
+    const want = lf(fs.readFileSync(src, 'utf8'));
     const f = path.join(SKILL_SRC, 'references', name);
     if (!fs.existsSync(f) || lf(fs.readFileSync(f, 'utf8')) !== want) { stale.push(name); if (write) fs.writeFileSync(f, want); }
   }

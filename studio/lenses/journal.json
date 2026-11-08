@@ -1,0 +1,93 @@
+{
+  "id": "journal",
+  "background": "#FFFFFF",
+  "text": {
+    "family": "Arial",
+    "color": "#0A0A0A",
+    "minPx": 37
+  },
+  "radius": 4,
+  "line": 2.5,
+  "feel": {
+    "ease": "power2.out",
+    "speed": 1
+  },
+  "roles": {
+    "plastic": {
+      "color": "#F4F8FB",
+      "metalness": 0,
+      "roughness": 0.1,
+      "transmission": 1,
+      "thickness": 0.03
+    },
+    "liquid": {
+      "color": "#E6F4F2",
+      "metalness": 0,
+      "roughness": 0.28,
+      "transmission": 1,
+      "thickness": 0.45,
+      "attenuation": {
+        "color": "#3FB8AF",
+        "distance": 0.4
+      },
+      "emissive": {
+        "color": "#3FB8AF",
+        "intensity": 0.25
+      }
+    },
+    "antibody": {
+      "color": "#E16F6B",
+      "metalness": 0,
+      "roughness": 0.6
+    },
+    "protein": {
+      "color": "#9B51E1",
+      "metalness": 0,
+      "roughness": 0.6
+    },
+    "nucleic-acid": {
+      "color": "#91D7AB",
+      "metalness": 0,
+      "roughness": 0.6
+    },
+    "gold": {
+      "color": "#FBB153",
+      "metalness": 0.6,
+      "roughness": 0.35
+    },
+    "strip": {
+      "color": "#FFEDD1",
+      "metalness": 0,
+      "roughness": 0.9
+    },
+    "line": {
+      "color": "#0A0A0A",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "diagram": {
+      "color": "#1D397B",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "tile": {
+      "color": "#EFCBFF",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "shape": {
+      "color": "#F1C3DD",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "label": {
+      "color": "#0A0A0A",
+      "metalness": 0,
+      "roughness": 1
+    }
+  },
+  "environment": {
+    "hdri": "hdri-studio-small-09",
+    "intensity": 1
+  }
+}

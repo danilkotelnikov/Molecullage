@@ -1,0 +1,3873 @@
+{
+  "world": {
+    "id": "zoom-test",
+    "duration": 12,
+    "frames": [
+      {
+        "id": "bench",
+        "parent": null,
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "tube",
+        "parent": "bench",
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "nano",
+        "parent": "tube",
+        "unit": 1e-9,
+        "origin": [
+          0,
+          -9,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "tube",
+        "kind": "mesh",
+        "frame": "tube",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 0.02,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "plastic"
+        ],
+        "asset": "builtin:tube"
+      },
+      {
+        "id": "liquid",
+        "kind": "mesh",
+        "frame": "tube",
+        "position": [
+          0,
+          -6.75,
+          0
+        ],
+        "size": 0.0055,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "liquid"
+        ],
+        "asset": "builtin:liquid"
+      },
+      {
+        "id": "igg",
+        "kind": "molecule",
+        "frame": "nano",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 1.5e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "igg.glb",
+        "standIn": {
+          "asset": "builtin:sphere",
+          "swapAt": 2e-7
+        }
+      },
+      {
+        "id": "gold-1",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 4e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "gold-2",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -300,
+          150,
+          -100
+        ],
+        "size": 4e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "gold-3",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          250,
+          -200,
+          80
+        ],
+        "size": 4e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "gold-4",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -150,
+          -300,
+          -250
+        ],
+        "size": 4e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "gold-5",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          400,
+          300,
+          150
+        ],
+        "size": 4e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-01",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -103,
+          -103,
+          -608
+        ],
+        "size": 1.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-02",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          722,
+          189,
+          47
+        ],
+        "size": 2.4000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-03",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -125,
+          154,
+          -296
+        ],
+        "size": 2.4000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-04",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -438,
+          -356,
+          -438
+        ],
+        "size": 2.8000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-05",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          236,
+          -202,
+          -896
+        ],
+        "size": 2.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-06",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          880,
+          -66,
+          323
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-07",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -572,
+          -154,
+          -433
+        ],
+        "size": 2e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-08",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -544,
+          397,
+          853
+        ],
+        "size": 2.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-09",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -840,
+          -416,
+          512
+        ],
+        "size": 1.8000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-10",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          721,
+          70,
+          -710
+        ],
+        "size": 2.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-11",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -623,
+          24,
+          327
+        ],
+        "size": 2.6e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-12",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          576,
+          -88,
+          -701
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-13",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          212,
+          352,
+          -99
+        ],
+        "size": 1.9e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-14",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -881,
+          -536,
+          173
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-15",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -558,
+          -348,
+          387
+        ],
+        "size": 2.4000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-16",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -280,
+          378,
+          76
+        ],
+        "size": 1.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-17",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          406,
+          243,
+          647
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-18",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          228,
+          370,
+          108
+        ],
+        "size": 1.4000000000000001e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-19",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          726,
+          -211,
+          111
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-20",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -144,
+          -213,
+          -532
+        ],
+        "size": 2.6e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-21",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          342,
+          276,
+          756
+        ],
+        "size": 1.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-22",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -915,
+          -362,
+          -681
+        ],
+        "size": 1.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-23",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -460,
+          -238,
+          191
+        ],
+        "size": 1.8000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-24",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          174,
+          135,
+          -87
+        ],
+        "size": 1.9e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-25",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -157,
+          348,
+          -837
+        ],
+        "size": 1.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-26",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          264,
+          -6,
+          156
+        ],
+        "size": 1.4000000000000001e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-27",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -456,
+          -532,
+          180
+        ],
+        "size": 1.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-28",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          282,
+          -142,
+          409
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-29",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -100,
+          233,
+          584
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-30",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          303,
+          -463,
+          259
+        ],
+        "size": 2.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-31",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -725,
+          497,
+          83
+        ],
+        "size": 2.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-32",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -844,
+          -243,
+          -325
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-33",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -384,
+          303,
+          -145
+        ],
+        "size": 2.4000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-34",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -496,
+          -175,
+          718
+        ],
+        "size": 1.8000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-35",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -840,
+          444,
+          -360
+        ],
+        "size": 2.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-36",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          927,
+          86,
+          -560
+        ],
+        "size": 2.1000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-37",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -46,
+          342,
+          528
+        ],
+        "size": 1.8000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-38",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          307,
+          -1,
+          -809
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-39",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -128,
+          104,
+          771
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-40",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -631,
+          -417,
+          842
+        ],
+        "size": 1.6e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-41",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -108,
+          348,
+          381
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-42",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          362,
+          -162,
+          938
+        ],
+        "size": 2.1000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-43",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -15,
+          57,
+          -981
+        ],
+        "size": 1.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-44",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          748,
+          546,
+          -550
+        ],
+        "size": 1.9e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-45",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -941,
+          -67,
+          613
+        ],
+        "size": 2.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-46",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          198,
+          -189,
+          624
+        ],
+        "size": 2.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-47",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          9,
+          -400,
+          978
+        ],
+        "size": 2.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-48",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          419,
+          -186,
+          -495
+        ],
+        "size": 2.1000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-49",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -615,
+          -256,
+          985
+        ],
+        "size": 2.4000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-50",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          37,
+          -324,
+          -288
+        ],
+        "size": 1.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-51",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          541,
+          -536,
+          545
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-52",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -88,
+          -138,
+          -334
+        ],
+        "size": 2.6e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-53",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -963,
+          18,
+          134
+        ],
+        "size": 2.4000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-54",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -906,
+          456,
+          -537
+        ],
+        "size": 2.2000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-55",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -600,
+          -523,
+          -858
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-56",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -127,
+          -334,
+          916
+        ],
+        "size": 2.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-57",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          889,
+          -319,
+          -853
+        ],
+        "size": 1.4000000000000001e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-58",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          226,
+          527,
+          -39
+        ],
+        "size": 1.4000000000000001e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-59",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          979,
+          134,
+          730
+        ],
+        "size": 1.8000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-60",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -894,
+          58,
+          -20
+        ],
+        "size": 2.6e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-61",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -581,
+          -547,
+          21
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-62",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          544,
+          236,
+          -732
+        ],
+        "size": 1.4000000000000001e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-63",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          931,
+          446,
+          207
+        ],
+        "size": 2.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-64",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          656,
+          -290,
+          -177
+        ],
+        "size": 2e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-65",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          149,
+          427,
+          889
+        ],
+        "size": 1.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-66",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          686,
+          274,
+          -581
+        ],
+        "size": 2e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-67",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          135,
+          -429,
+          -165
+        ],
+        "size": 2.6e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-68",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -802,
+          301,
+          -123
+        ],
+        "size": 2.1000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-69",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -668,
+          -156,
+          567
+        ],
+        "size": 2.8000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-70",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -443,
+          -116,
+          804
+        ],
+        "size": 1.7e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-71",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          371,
+          -532,
+          -632
+        ],
+        "size": 2.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-72",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          33,
+          -50,
+          -559
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-73",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          336,
+          -58,
+          901
+        ],
+        "size": 1.9e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-74",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          50,
+          221,
+          250
+        ],
+        "size": 1.3e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-75",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -508,
+          94,
+          430
+        ],
+        "size": 2.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-76",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          182,
+          -494,
+          663
+        ],
+        "size": 2.1000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-77",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          478,
+          338,
+          -774
+        ],
+        "size": 2.1000000000000003e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-78",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -329,
+          386,
+          834
+        ],
+        "size": 1.8000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-79",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          463,
+          -549,
+          441
+        ],
+        "size": 2.5000000000000002e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "buffer-80",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          276,
+          421,
+          -256
+        ],
+        "size": 1.9e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "coat-01",
+        "kind": "molecule",
+        "frame": "nano",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 1.5e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "igg.glb",
+        "standIn": {
+          "asset": "builtin:sphere",
+          "swapAt": 2e-7
+        },
+        "rotation": [
+          0.9,
+          2.1,
+          0.4
+        ]
+      },
+      {
+        "id": "coat-02",
+        "kind": "molecule",
+        "frame": "nano",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 1.5e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "igg.glb",
+        "standIn": {
+          "asset": "builtin:sphere",
+          "swapAt": 2e-7
+        },
+        "rotation": [
+          2.4,
+          0.6,
+          1.7
+        ]
+      },
+      {
+        "id": "coat-03",
+        "kind": "molecule",
+        "frame": "nano",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 1.5e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          12
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "igg.glb",
+        "standIn": {
+          "asset": "builtin:sphere",
+          "swapAt": 2e-7
+        },
+        "rotation": [
+          1.2,
+          3,
+          2.6
+        ]
+      }
+    ]
+  },
+  "timeline": {
+    "tracks": [
+      {
+        "target": "gold-1",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "t": 8,
+            "v": [
+              40,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "target": "igg",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 6,
+            "v": 0
+          },
+          {
+            "t": 8,
+            "v": 1
+          }
+        ]
+      },
+      {
+        "target": "buffer-01",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-02",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-03",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-04",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-05",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-06",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-07",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-08",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-09",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-10",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-11",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-12",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-13",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-14",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-15",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-16",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-17",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-18",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-19",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-20",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-21",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-22",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-23",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-24",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-25",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-26",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-27",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-28",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-29",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-30",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-31",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-32",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-33",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-34",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-35",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-36",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-37",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-38",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-39",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-40",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-41",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-42",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-43",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-44",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-45",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-46",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-47",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-48",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-49",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-50",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-51",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-52",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-53",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-54",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-55",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-56",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-57",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-58",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-59",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-60",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-61",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-62",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-63",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-64",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-65",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-66",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-67",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-68",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-69",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-70",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-71",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-72",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-73",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-74",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-75",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-76",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-77",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-78",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-79",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "buffer-80",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 5.5,
+            "v": 1
+          },
+          {
+            "t": 7,
+            "v": 0
+          }
+        ]
+      },
+      {
+        "target": "igg",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "t": 8,
+            "v": [
+              16,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "target": "coat-01",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              -20.78,
+              10.39,
+              6
+            ]
+          },
+          {
+            "t": 8,
+            "v": [
+              19.22,
+              10.39,
+              6
+            ]
+          }
+        ]
+      },
+      {
+        "target": "coat-01",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 6,
+            "v": 0
+          },
+          {
+            "t": 8,
+            "v": 1
+          }
+        ]
+      },
+      {
+        "target": "coat-02",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              -20.78,
+              -10.39,
+              6
+            ]
+          },
+          {
+            "t": 8,
+            "v": [
+              19.22,
+              -10.39,
+              6
+            ]
+          }
+        ]
+      },
+      {
+        "target": "coat-02",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 6,
+            "v": 0
+          },
+          {
+            "t": 8,
+            "v": 1
+          }
+        ]
+      },
+      {
+        "target": "coat-03",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              -20.78,
+              0,
+              -12
+            ]
+          },
+          {
+            "t": 8,
+            "v": [
+              19.22,
+              0,
+              -12
+            ]
+          }
+        ]
+      },
+      {
+        "target": "coat-03",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 6,
+            "v": 0
+          },
+          {
+            "t": 8,
+            "v": 1
+          }
+        ]
+      }
+    ]
+  },
+  "paths": [
+    {
+      "id": "deck",
+      "kind": "deck",
+      "stops": [
+        0,
+        4,
+        8
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              0,
+              0,
+              50
+            ]
+          },
+          "target": {
+            "frame": "tube",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40
+        },
+        {
+          "t": 4,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              0,
+              -9,
+              0.002
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              8,
+              0,
+              0
+            ]
+          },
+          "fov": 40
+        },
+        {
+          "t": 8,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              -14,
+              0,
+              0
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              16,
+              0,
+              0
+            ]
+          },
+          "fov": 62
+        }
+      ]
+    }
+  ],
+  "lens": "cinematic",
+  "langs": [
+    "en",
+    "ru"
+  ],
+  "layout": [
+    {
+      "stop": 0,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "A PCR tube",
+          "box": [
+            96,
+            770,
+            1000,
+            64
+          ]
+        },
+        {
+          "id": "s01-label",
+          "role": "label",
+          "text": "A 0.2 mL tube, seen from 5 cm",
+          "box": [
+            96,
+            842,
+            1100,
+            54
+          ]
+        },
+        {
+          "id": "s01-note",
+          "role": "note",
+          "text": "The camera starts outside the tube.",
+          "box": [
+            96,
+            912,
+            1300,
+            96
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 0,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Пробирка для ПЦР",
+          "box": [
+            96,
+            770,
+            1000,
+            64
+          ]
+        },
+        {
+          "id": "s01-label",
+          "role": "label",
+          "text": "Пробирка на 0,2 мл, вид с 5 см",
+          "box": [
+            96,
+            842,
+            1100,
+            54
+          ]
+        },
+        {
+          "id": "s01-note",
+          "role": "note",
+          "text": "Камера начинает съёмку снаружи пробирки.",
+          "box": [
+            96,
+            912,
+            1300,
+            96
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "Inside the liquid",
+          "box": [
+            96,
+            770,
+            1000,
+            64
+          ]
+        },
+        {
+          "id": "s02-label",
+          "role": "label",
+          "text": "A 2 µm view of the liquid",
+          "box": [
+            96,
+            842,
+            1100,
+            54
+          ]
+        },
+        {
+          "id": "s02-note",
+          "role": "note",
+          "text": "The gold particles and the small spheres are drawn by the engine. Their positions are sampled.",
+          "box": [
+            96,
+            912,
+            1300,
+            96
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "Внутри жидкости",
+          "box": [
+            96,
+            770,
+            1000,
+            64
+          ]
+        },
+        {
+          "id": "s02-label",
+          "role": "label",
+          "text": "Вид жидкости с расстояния 2 мкм",
+          "box": [
+            96,
+            842,
+            1100,
+            54
+          ]
+        },
+        {
+          "id": "s02-note",
+          "role": "note",
+          "text": "Золотые частицы и малые шарики нарисованы движком. Их положение выбрано случайно.",
+          "box": [
+            96,
+            912,
+            1300,
+            96
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Antibodies on gold",
+          "box": [
+            96,
+            770,
+            1000,
+            64
+          ]
+        },
+        {
+          "id": "s03-label",
+          "role": "label",
+          "text": "IgG on a 40 nm gold particle",
+          "box": [
+            96,
+            842,
+            1100,
+            54
+          ]
+        },
+        {
+          "id": "s03-note",
+          "role": "note",
+          "text": "Antibodies coat the surface of the particle. IgG is PDB 1IGT. How many sit on it, and how they face, is drawn as an illustration.",
+          "box": [
+            96,
+            898,
+            860,
+            132
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Антитела на золоте",
+          "box": [
+            96,
+            770,
+            1000,
+            64
+          ]
+        },
+        {
+          "id": "s03-label",
+          "role": "label",
+          "text": "IgG на золотой частице 40 нм",
+          "box": [
+            96,
+            842,
+            1100,
+            54
+          ]
+        },
+        {
+          "id": "s03-note",
+          "role": "note",
+          "text": "Антитела покрывают поверхность частицы. IgG: PDB 1IGT. Их число и ориентация нарисованы для иллюстрации.",
+          "box": [
+            96,
+            898,
+            860,
+            132
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "0": {
+      "en": "Start at the bench. The tube is 20 mm tall.",
+      "ru": "Начните со стола. Пробирка высотой 20 мм."
+    },
+    "1": {
+      "en": "We are inside the liquid now, 2 micrometres from the antibody.",
+      "ru": "Теперь мы внутри жидкости, в 2 микрометрах от антитела."
+    },
+    "2": {
+      "en": "One antibody, about 15 nanometres long.",
+      "ru": "Одно антитело длиной около 15 нанометров."
+    }
+  }
+}

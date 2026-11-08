@@ -1,6 +1,6 @@
 ---
 name: molecullage
-description: Use for any figure work, new or old. A figure, panel, schematic, diagram, pipeline picture, graphical abstract, infographic, poster or slide picture, a plot to style or fix, a colour palette for figures, a render of a protein or molecule, a contact map, a sequence view. Also when someone says "make this figure look publishable", "redo all figures", "unify the figures", "check my figures" or "the figures look different from each other". Works on one figure or on every figure of a project, with or without ChimeraX and with any plotting library. Covers ChimeraX renders, figure pages in millimetres, the PDF and PNG build, the palette, the QA checks, the blind read (a reader who sees only the PNG and says what it shows), and a project-wide audit and redesign. Also short narrated films of a method or a structure: scenes in code, subtitles, a voice-over, an MP4 (the film engine in film/).
+description: Use for any figure work: a figure, panel, schematic, diagram, pipeline picture, graphical abstract, infographic, poster or slide picture, a plot to style or fix, a figure palette, a protein or molecule render, a contact map, a sequence view; also "make figures publishable", "redo all figures", "unify the figures", "check my figures". Covers ChimeraX renders, figure pages in millimetres, the PDF and PNG build, the QA checks, blind reads and a project-wide audit and redesign. Also narrated films (film engine in film/): scenes in code, subtitles, voice-over, MP4. Also the voice and sound of the Russian course films: Fish Audio voice and speed, wrong stress, robotic, echo, boxy or choppy sound, studio mastering presets, listening packs, verifying film sets, tidying leftovers (docs/film-protocol.md).
 ---
 
 # Molecullage
@@ -18,6 +18,18 @@ The repository is the folder in `$MOLECULLAGE_HOME`. The `page` paths that `list
 - Figures for a poster or slides. The same rules and the same palette apply; use the width of the page.
 
 Do not use it for photos, micrographs, or images that would need generative art. No figure in this work comes from an image model.
+
+## Nature mode and the anti-overplating workflow (triggered on every figure build)
+
+Before you draw, write the message of the figure in one sentence and pick the form from the table in `references/nature-mode.md`. A number, a trend, a comparison, a ranking, shares or counts get axes and marks (dots, bars, lines, a unit matrix, parallel scales). Boxes are for a process with real objects, and at most one panel of a figure is a diagram. Rectangles that hold words cover at most 25 % of the area (QA mark `boxes`), and no box may sit inside another box (QA mark `overplate`). The blind read has a fourth question for this (`references/blind-read.md`). A page that is a real process diagram sets `"standards": {"mode": "diagram"}` in `molecullage.json` and says why in its notes file. Rules 29 to 38 are in `references/grammar.md`, section F, and rules 39 to 56 are in section G.
+
+Every figure build runs these five anti-overplating gates:
+
+1. **Journal exemplar gate (rule 39).** Before writing a schematic or plate, read three to five published figures of the same kind (JCTC, JCIM, JACS, Nature Communications, Angewandte Chemie, Chemical Science, Nature) and list their DOIs and what they show and omit in `<key>.notes.md`.
+2. **Consolidated source and library gate (rules 50 to 53).** Resolve every 2D icon, 3D model, HDRI, datasheet, structure and paper through `studio/library/sources.json` (231 sources) and `studio/library/references.json` (`node studio/tools/search.mjs <query>`), following `studio/library/POLICY.md` and `studio/library/access.json`. Draw 2D chemical structures with RDKit `MolDraw2D` in ACS-1996 mode from a checked SMILES string. Render 3D complexes in ChimeraX, SAMSON or Blender with Molecular Nodes from verified coordinates. Sample the palette from a real render or reference figure with `palette_sample` and check it with `palette_check`, or use the native project palette.
+3. **Zero box-nesting and decoration gate (rules 40 to 47).** Put molecules, point clouds, graphs, tensors and outputs directly on the page or in pale tint panels with no border. Reserve boxes for operations only, and never put a box inside a box (`overplate = 0`). Keep at most five groups, leave out banner bars, stage strips, step badges, paper tags, status keys and footers, keep to at most 80 words on a model schematic, and start every label and note with a capital letter.
+4. **Notation, matrix and connector gate (rules 48, 49, 54, 55).** Spell out uncommon abbreviations on the figure or in the caption. Write upright chemical symbols with real subscripts and superscripts and place the organic-phase overbar over the species only. In a comparison matrix, put each cell's item count at the top-left and the row total on the right. Leave a clear gap where any divider, lifeline or arrow meets a text label.
+5. **Automated QA and blind-read gate (rules 24, 25, 56).** Run `build_figure`, then `qa_figure` (full run, checking `boxes`, `overplate`, `type`, `fonts`, `ink`, `cells`, `band`, `blank`), and then a fresh-agent blind read on the PNG alone answering all four questions in `references/blind-read.md`. For journal PDF submission, use Arial or Helvetica so text embeds as vector outlines.
 
 ## First, read molecullage.json
 
@@ -57,6 +69,20 @@ Use this when someone wants a moving explanation of a method, a pipeline or a st
 4. `narrate_film(beat)` speaks it, writes the subtitles and the soundtrack and reports sentences that overlap. Fix the timing until there are no problems.
 5. `render_film(beat)` writes a draft MP4 with sound, the stills sheet and the audit. Look at the stills and at single frames at every scene change and with a subtitle on screen. A second reader checks the narration against its sources. `exact=true` only for the final file.
 
+## Film voice and sound (the Russian course films)
+
+Use this for anything about the voice (Fish Audio), its speed or stress, the soundtrack (robotic, echo, boxy, choppy, loudness), a set of finished films, or clearing the disk after a long session. Read `references/film-protocol.md` first: hard rules, then the runbook for your job (RB1 orient, RB2 voice an episode, RB4 stress, RB5 apply a preset, RB6 listening pack, RB7 verify, RB9 tidy). `references/film-handbook.md` has the measurements and the reasons.
+
+Short version, for a quick start:
+
+1. Orient: `film_doctor`, then `film_voice_status`. Fix every `fail` before anything else.
+2. You cannot hear. Measure facts; give the owner 3-4 clips of the same 22 seconds at equal loudness when taste decides; apply a preset to all films only after the owner says so. The final preset today is `studio3_voice`.
+3. The picture timing is baked into the rendered films. Treat the sound of the same voice (no re-render). Changing the voice speed, or cutting words to a new rhythm, needs a re-render and an owner decision. Never cut inside a phrase.
+4. Fish has no Russian stress control. Respell in `film/tools/lex_extra/*.json` and test by ear.
+5. Never delete project data: `film_tidy` moves leftovers to `film/_to_delete/`; only the owner deletes it. Start `tools/heavy.py` without `-X utf8`.
+6. Verify before you report: `film_verify_set` must say 0 problems. Report what you did not check.
+7. Memory: recall first, retain after each decision, wait two minutes, read back, supersede wrong notes.
+
 ## Tools (MCP server `molecullage`)
 
 | Tool | Use |
@@ -76,6 +102,11 @@ Use this when someone wants a moving explanation of a method, a pipeline or a st
 | `new_film_beat(id, seconds?, dir?)` | scaffold a film beat (scene and narration) in the film folder |
 | `narrate_film(beat, dir?, voice?)` | voice-over, subtitles (`cues.json`) and soundtrack; reports overlapping sentences (Windows voices) |
 | `render_film(beat, dir?, lang?, exact?, from?, to?)` | headless render to MP4 with sound, stills sheet and audit |
+| `film_doctor(dir?)` | environment self-check for the film work (Python, ffmpeg filters, disk, voice setting, voice cache, stale lock); returns `next_steps` |
+| `film_voice_status(speed?, ids?)` | per episode: sentences and how many still need Fish audio at that speed; says the next command |
+| `film_master_audio(id, preset, out_name?, remux?)` | master one episode's soundtrack with a preset and put it under the rendered film; never touches `out/audio` |
+| `film_verify_set(set, audio, ids?, words?)` | frames, video stream, audio length, loudness, sync of a set of finished films |
+| `film_tidy(apply?)` | dry run by default; `apply` only MOVES leftovers to `film/_to_delete/` (never deletes) |
 
 All paths must lie inside the project folder. The project tools write only under `<dir>/molecullage/`; the film tools write only inside the film folder. No tool uses the network, except `render_structure` with `fetch=true`, which downloads an entry from the RCSB.
 
@@ -106,7 +137,9 @@ py -3 -I palette/check_palette.py <tokens.json>
 
 For a schematic read by someone outside the field (rules 26 to 28): a one-line purpose at the top, one real thumbnail in each important block, and never a picture of a result on a designed block.
 
-All 28 rules, each with what goes wrong when it is broken: `references/grammar.md`. Type and colour: `references/type-ladder.md`, `references/palette.md`.
+In Nature mode the ladder is 8 pt for panel letters and 7 pt or less for everything else (floor 6.5 pt), the widths are 89, 120 to 136 and 183 mm, and rules 29 to 56 apply on top.
+
+All 56 rules, each with what goes wrong when it is broken: `references/grammar.md`. Type and colour: `references/type-ladder.md`, `references/palette.md`. Consolidated 2D, 3D and asset sources (231 sources, verified references, access list and 8-domain software atlas): `studio/library/POLICY.md`, `studio/library/sources.json`, `studio/library/references.json`, `studio/library/access.json` and `studio/library/atlas/`.
 
 ## Commands that matter
 
@@ -142,6 +175,11 @@ If no second model or person is available, use a fresh agent with the adversaria
 - Put an unpublished number or a private path in a public figure repository.
 - Overwrite an original figure, or edit a caption, without being asked.
 - Certify your own figure.
+- Delete project data of the film work, or touch `film/narration/`, `film/out/audio/`, `film/out/personal_set/` or the rendered films. Use `film_tidy`.
+- Say that a sound "is good". You cannot hear; measure, and let the owner listen.
+- Apply a sound preset to all films before the owner has chosen it, or write over a finished set (new results go to new folders).
+- Cut words apart to match a rhythm; extra time belongs only at commas and sentence ends.
+- Start `tools/heavy.py` with `python -X utf8`, or stop a job by command-line pattern (kill by process id).
 
 ## What the notes file holds
 
@@ -149,4 +187,4 @@ Every figure has `<key>.notes.md` with: the message in one sentence; what each p
 
 ## References
 
-`grammar.md` (the 28 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`. `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md` and `overclaim-read.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.
+`grammar.md` (the 56 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`, `film.md`, `film-protocol.md` (rules and runbooks for the course films' voice and sound), `film-handbook.md` (what was measured and why). `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `film-protocol.md` and `film-handbook.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.

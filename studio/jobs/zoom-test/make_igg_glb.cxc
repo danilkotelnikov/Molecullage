@@ -1,0 +1,8 @@
+# Makes igg.glb for the zoom-test job. Run it from this folder (see the plan, Task 7 Step 1).
+# 1IGT is read only, by absolute path. The surface is coarse (6 A) on purpose: it is a stand-in mesh for the live view.
+# Atoms, bonds and ribbons are hidden so that only the surface goes into the file.
+open ./data/pdb/1IGT.pdb
+hide #1 target abpc
+surface resolution 6
+save igg.glb
+exit

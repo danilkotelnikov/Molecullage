@@ -1,0 +1,4834 @@
+{
+  "domain": "gen-3d",
+  "title": "Models and services that generate 3D content (meshes, textures, rigs, motion, worlds, CAD, molecule meshes) and whether they run locally",
+  "checked": "2026-11-02",
+  "notes": "Scope: which models and services make 3D content, which have open weights, which can run on the CPU server (Linux, 76 CPU cores, 503 GB RAM, no GPU, usually busy) and on an 8 GB laptop GPU (RTX 4060 Laptop). Verdict rules: home_srv and laptop_gpu_8gb are 'unknown' unless a source says it; no source gave a CPU speed for any mesh generator except 'very slow' for SPAR3D and trellis.cpp, so no model is marked 'yes' for the CPU server. min_vram_gb is null when no page states a figure. Licence type rule: OSI licences (MIT, Apache, GPL) are open-source; custom, non-commercial and gated licences (Tencent community, Stability community, S-Lab, NVIDIA NC, CC BY-NC, SAM, OpenRAIL, Hi3D, Apple) are source-available; services are proprietary. Pages were read through a page-fetch tool that summarises, so each entry is marked as read from README or model card.",
+  "enumeration": {
+    "frames": [
+      {
+        "name": "Hugging Face models, task image-to-3d, sorted by trending (opened 2026-11-02, first page of 30)",
+        "url": "https://huggingface.co/models?pipeline_tag=image-to-3d&sort=trending"
+      },
+      {
+        "name": "Hugging Face models, task text-to-3d, sorted by trending (opened 2026-11-02, first page of 30 of 147)",
+        "url": "https://huggingface.co/models?pipeline_tag=text-to-3d&sort=trending"
+      },
+      {
+        "name": "GitHub list Awesome-3D-AIGC by mdyao (seen in search results, not opened)",
+        "url": "https://github.com/mdyao/Awesome-3D-AIGC"
+      },
+      {
+        "name": "GitHub list Awesome-AIGC-3D by hitcslj (seen in search results, not opened)",
+        "url": "https://github.com/hitcslj/Awesome-AIGC-3D"
+      },
+      {
+        "name": "GitHub list awesome-3D-generation by justimyhxu (seen in search results, not opened)",
+        "url": "https://github.com/justimyhxu/awesome-3D-generation"
+      }
+    ],
+    "searched": [
+      "new open-source image-to-3D mesh generation model released 2026 weights Hugging Face",
+      "awesome 3D generation papers code list github image-to-3D text-to-3D mesh generation",
+      "Hunyuan3D 3.0 open source release weights Tencent 2026",
+      "Hunyuan3D 2.1 3.0 open weights license territory exclusion European Union",
+      "TRELLIS.2 Microsoft open source image to 3D model weights licence",
+      "trellis.cpp ilintar TRELLIS.2 ggml GGUF CPU Vulkan CUDA inference github",
+      "TripoSR run on CPU only inference time seconds no GPU",
+      "Hunyuan3D 2 CPU only inference no CUDA possible minutes mesh generation",
+      "image to 3D model CPU inference ONNX OR GGUF OR llama.cpp 3D generation no GPU 2026",
+      "Hunyuan3D 2.5 open weights released Hugging Face shape model 10B",
+      "HY-World 2.0 Tencent open source 3D world generation April 2026 weights license",
+      "WorldGen text to 3D world generation open source code 2026",
+      "Seed3D ByteDance open source weights github huggingface licence",
+      "Seed3D 1.0 ByteDance simulation-ready 3D asset generation availability API weights",
+      "FreeMesh arXiv artist-created mesh generation code release weights 2025",
+      "open source autoregressive quad mesh generation retopology model 2025 2026 weights QuadGPT FastMesh Mesh-RFT",
+      "UniLat3D geometry-appearance unified latents single-stage 3D generation github huggingface",
+      "RigAnything template-free autoregressive rigging code release github",
+      "Make-It-Animatable github auto rigging licence Blender add-on",
+      "Puppeteer rig and animate your 3D models github Seed3D licence",
+      "MaterialMVP illumination-invariant material generation Hunyuan3D PBR open source github weights",
+      "HY-Motion 1.0 Tencent text to 3D human motion open source licence VRAM",
+      "CAD-MLLM code release weights github multimodal CAD generation 2025",
+      "Img2CAD conditioned 3D CAD model generation from single image code release",
+      "CAD-Coder open-source vision-language model CadQuery code generation huggingface weights licence",
+      "Blender MCP server official Blender Foundation OR Blender Lab MCP 2026",
+      "Luma Genie 3D generation discontinued OR shut down OR no longer available",
+      "Tripo AI API documentation text_to_model image_to_model multiview rig animate texture",
+      "TRELLIS.2 pipeline uses briaai RMBG-2.0 background removal and DINOv3 gated licence"
+    ],
+    "excluded": [
+      {
+        "name": "Hunyuan3D 2.5, 3.0 and 3.1 (hosted)",
+        "reason": "No open weights found. 2.5 has a technical report only; 3.x runs as a hosted service (3D AI Studio lists Hunyuan3D 3.1). The notebookcheck and pandaily pages were seen only in search results."
+      },
+      {
+        "name": "Seed3D 1.0 (ByteDance)",
+        "reason": "Only a technical paper and news about a cloud API were found; no weights or licence found. Official page not opened."
+      },
+      {
+        "name": "Luma Genie",
+        "reason": "Official page lumalabs.ai/genie did not mention Genie when opened; a third-party directory lists Genie on Luma's API (August 2025, Pro tier). Status unconfirmed, so no entry is written from search excerpts alone."
+      },
+      {
+        "name": "FreeMesh",
+        "reason": "Paper only (arXiv 2505.13573); no repository or checkpoint found."
+      },
+      {
+        "name": "QuadGPT and QuadLink (quad mesh generation)",
+        "reason": "Papers found (QuadGPT is ICLR 2026); no confirmation that code or weights are released."
+      },
+      {
+        "name": "SQuadGen",
+        "reason": "Authors say they will release code; not released as of the search."
+      },
+      {
+        "name": "BPT (blocked and patchified tokenization)",
+        "reason": "Only a project-page fork was opened; no weights or licence visible."
+      },
+      {
+        "name": "FastMesh",
+        "reason": "A model-card title was seen in search results; not opened."
+      },
+      {
+        "name": "CAD-MLLM",
+        "reason": "Dataset and evaluation code are public; a search listing says inference and training code were still pending and found no weights. Repository not opened."
+      },
+      {
+        "name": "Img2CAD",
+        "reason": "Paper only (arXiv 2410.03417); no confirmed code release."
+      },
+      {
+        "name": "CAD-Coder image-to-CadQuery vision-language model (arXiv 2505.14646)",
+        "reason": "Weights page not opened; the text-to-CadQuery CAD-Coder is listed instead."
+      },
+      {
+        "name": "RomanTex",
+        "reason": "Announced by Tencent; the repository URL tried returned 404."
+      },
+      {
+        "name": "TripoSF, CraftsMan3D, Michelangelo, Stable Zero123, One-2-3-45, GaussianDreamer, ShapeLLM-Omni, TRELLIS MLX and other ports",
+        "reason": "Named in listings or search results, but pages not opened in this pass; a later pass can add them."
+      },
+      {
+        "name": "SAM 3D Body",
+        "reason": "Companion to SAM 3D Objects (human mesh recovery); mentioned on the Objects page only, not opened."
+      },
+      {
+        "name": "Meta WorldGen paper implementation",
+        "reason": "The open WorldGen repository found is independent and does not mention the Meta paper (arXiv 2511.16825, seen in search results); no Meta code found."
+      },
+      {
+        "name": "Closed world models (Marble, Genie 3 and similar)",
+        "reason": "Not searched; no open weights are known to us and they are outside the local-use question."
+      },
+      {
+        "name": "Hitem3D",
+        "reason": "Named in the 3D AI Studio model list; own page not opened."
+      },
+      {
+        "name": "MotionGPT3, HY-Motion variants, other text-to-motion models",
+        "reason": "Only MDM, MotionGPT and HY-Motion were opened."
+      },
+      {
+        "name": "Material-from-image models (image to PBR maps)",
+        "reason": "Not searched in this pass; only mesh-based PBR texturing (Hunyuan3D-Paint 2.1, MaterialMVP) is covered. A later pass can add them."
+      },
+      {
+        "name": "Other quad-remeshing neural nets",
+        "reason": "Search found only the quad-mesh papers listed above."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "trellis",
+      "name": "TRELLIS (v1)",
+      "vendor": "Microsoft",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT for models and most code; submodules diffoctreerast and modified FlexiCubes carry their own licences"
+      },
+      "url": "https://github.com/microsoft/TRELLIS",
+      "platforms": [
+        "linux"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes a textured mesh, 3D Gaussians or a radiance field from one image with the image-large model; the repository advises the image model over the text models.",
+          "inputs": "single image",
+          "outputs": "GLB mesh, PLY Gaussians, preview MP4",
+          "source": "https://github.com/microsoft/TRELLIS",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "text-to-mesh",
+          "does": "Text-conditioned variants at 342M, 1.1B and 2.0B parameters make the same representations from a prompt; the README says they are less creative and detailed than the image model.",
+          "inputs": "text prompt",
+          "outputs": "GLB mesh, PLY Gaussians",
+          "source": "https://github.com/microsoft/TRELLIS",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "multi-image-to-mesh",
+          "does": "Accepts several views of one object as conditioning without extra tuning; added in December 2024.",
+          "inputs": "several images of one object",
+          "outputs": "GLB mesh",
+          "source": "https://github.com/microsoft/TRELLIS",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/microsoft/TRELLIS"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D and text-to-3D, structured latents",
+        "params": "1.2B (image-large); text models 342M, 1.1B, 2.0B",
+        "released": "2024-12",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh (GLB)",
+          "3D Gaussians (PLY)",
+          "radiance field"
+        ],
+        "hardware": {
+          "min_vram_gb": 16,
+          "cpu_ok": "no",
+          "cpu_notes": "README requires an NVIDIA GPU with at least 16 GB (tested on A100 and A6000); example calls pipeline.cuda(); no CPU path stated.",
+          "vram_notes": "16 GB stated as minimum."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/microsoft/TRELLIS",
+          "https://arxiv.org/abs/2412.01506"
+        ],
+        "commercial_use": "yes (MIT); check the submodule licences"
+      }
+    },
+    {
+      "id": "trellis-2",
+      "name": "TRELLIS.2",
+      "vendor": "Microsoft",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT for model and code; nvdiffrast and nvdiffrec have their own licences"
+      },
+      "url": "https://github.com/microsoft/TRELLIS.2",
+      "platforms": [
+        "linux"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes a textured mesh with PBR maps (base colour, roughness, metallic, opacity) from one image; resolutions 512, 1024 and 1536 cubed. Timings on H100: about 3 s, 17 s and 60 s.",
+          "inputs": "single image",
+          "outputs": "GLB mesh with PBR textures, preview MP4",
+          "source": "https://github.com/microsoft/TRELLIS.2",
+          "basis": "manual"
+        },
+        {
+          "area": "pipeline-interchange",
+          "feature": "mesh-voxel-conversion",
+          "does": "The O-Voxel tool converts a textured mesh to the O-Voxel representation and back; the README says mesh to O-Voxel takes under 10 s on a single CPU and the reverse under 100 ms on CUDA.",
+          "inputs": "textured mesh or O-Voxel",
+          "outputs": "O-Voxel or textured mesh",
+          "source": "https://github.com/microsoft/TRELLIS.2",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/microsoft/TRELLIS.2"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D with PBR materials",
+        "params": "4B",
+        "released": "2025-12",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh (GLB)",
+          "PBR textures",
+          "preview video"
+        ],
+        "hardware": {
+          "min_vram_gb": 24,
+          "cpu_ok": "no",
+          "cpu_notes": "README says inference needs an NVIDIA GPU with at least 24 GB (A100 and H100 verified); Linux only tested. A community GGML port can fall back to CPU (see trellis-cpp).",
+          "vram_notes": "24 GB stated as minimum."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/microsoft/TRELLIS.2",
+          "https://arxiv.org/abs/2512.14692"
+        ],
+        "licence_trap": "nvdiffrast and nvdiffrec (non-commercial per the ComfyUI post of 2026-08-31; the NVIDIA licence text itself was not read) and DINOv3 (gated, custom Meta licence)",
+        "commercial_use": "weights MIT; reference pipeline needs nvdiffrast and nvdiffrec, which a ComfyUI post says are NVIDIA non-commercial; the DINOv3 encoder has a custom Meta licence"
+      }
+    },
+    {
+      "id": "trellis-cpp",
+      "name": "trellis.cpp (TRELLIS.2 in C++/GGML)",
+      "vendor": "pwilkin (community port)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "code MIT; model files follow the TRELLIS.2 MIT weights, DINOv3 file under the Meta DINOv3 licence"
+      },
+      "url": "https://github.com/pwilkin/trellis.cpp",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Runs the TRELLIS.2 image-to-3D pipeline with no Python at runtime, through a command line tool, an HTTP server and a desktop app; writes GLB with a UV atlas and PBR textures.",
+          "inputs": "single image",
+          "outputs": "GLB with UV atlas and PBR textures",
+          "source": "https://github.com/pwilkin/trellis.cpp",
+          "basis": "manual"
+        },
+        {
+          "area": "modeling-polygon",
+          "feature": "mesh-remesh-quad",
+          "does": "Optional retopology path writes an all-quad textured export; the prebuilt binaries leave it out and it needs ample disk space.",
+          "inputs": "generated mesh",
+          "outputs": "quad textured mesh",
+          "source": "https://github.com/pwilkin/trellis.cpp",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/pwilkin/trellis.cpp"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "TRELLIS.2 image-to-3D in GGML",
+        "params": "same weights as TRELLIS.2 (4B); about 16.5 GB full, q4 folder available",
+        "released": "2026 (version 0.8.0 adds Pixal3D; month not stated)",
+        "weights_licence": "TRELLIS.2 MIT; DINOv3 Meta licence; two helper models are gated upstream",
+        "outputs": [
+          "mesh (GLB)",
+          "UV atlas",
+          "PBR textures (WebP or PNG)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "slow",
+          "cpu_notes": "README: CPU-only builds work through a fallback and are very slow and RAM-hungry; no CPU timing given. GPU timings, image to GLB at 1024: RTX 5060 Ti CUDA about 3:16 to 7:23 min; Strix Halo iGPU Vulkan about 6:09 to 12:39 min; Apple M5 at 512 about 9:21 min with 5.6 GB peak RSS.",
+          "vram_notes": "The 1024 cascade is said to run on a 16 GB card. The 5.6 GB figure is unified memory on an Apple M5, not discrete VRAM."
+        },
+        "home_srv": "slow",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/pwilkin/trellis.cpp",
+          "https://huggingface.co/ilintar/trellis2-gguf",
+          "https://huggingface.co/fernandotonon/QtMeshEditor-trellis2-gguf"
+        ],
+        "licence_trap": "dinov3.gguf is under the Meta DINOv3 licence, not MIT",
+        "commercial_use": "code MIT and weights MIT; the DINOv3 file needs the Meta licence conditions"
+      }
+    },
+    {
+      "id": "pixal3d",
+      "name": "Pixal3D",
+      "vendor": "TencentARC",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT; third-party parts keep their own licences (NOTICE file)"
+      },
+      "url": "https://huggingface.co/TencentARC/Pixal3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Projects image pixel features into 3D space to make a GLB mesh with PBR textures from one image; default resolution 1536, 1024 in low-VRAM mode.",
+          "inputs": "single image",
+          "outputs": "GLB mesh",
+          "source": "https://huggingface.co/TencentARC/Pixal3D",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/TencentARC/Pixal3D"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "pixel-aligned image-to-3D",
+        "params": "not stated (config names hint at about 1.3B, unconfirmed)",
+        "released": "2026-05",
+        "weights_licence": "MIT (project); see NOTICE for third-party parts",
+        "outputs": [
+          "mesh (GLB)",
+          "PBR textures"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Needs a CUDA natten build; the demo targets H-series GPUs. A low-VRAM mode loads models on demand. trellis.cpp lists Pixal3D support from version 0.8.0.",
+          "vram_notes": "No VRAM figure stated."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/TencentARC/Pixal3D"
+        ],
+        "commercial_use": "project MIT; main branch builds on TRELLIS.2, paper branch on Direct3D-S2"
+      }
+    },
+    {
+      "id": "hunyuan3d-2",
+      "name": "Hunyuan3D 2.0 family (2.0, 2mini, 2mv, Turbo)",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Tencent Hunyuan 3D 2.0 Community License"
+      },
+      "url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Shape model (DiT, 1.1B) makes a mesh from one image; 2mini is 0.6B, 2mv takes several views, and the Fast and Turbo versions cut inference time (FlashVDM).",
+          "inputs": "single image or several views",
+          "outputs": "trimesh object, GLB or OBJ",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "Paint model (1.3B) makes texture maps for a generated or hand-made mesh from an image.",
+          "inputs": "mesh plus image",
+          "outputs": "textured mesh",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2",
+          "basis": "manual"
+        },
+        {
+          "area": "scripting-automation",
+          "feature": "blender-addon-bridge",
+          "does": "A Blender add-on and an API server connect generation to Blender.",
+          "inputs": "image",
+          "outputs": "mesh in Blender",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-2"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D shape plus texture",
+        "params": "shape 1.1B (mini 0.6B, mv 1.1B); Paint 1.3B",
+        "released": "2025-01",
+        "weights_licence": "Tencent Hunyuan 3D 2.0 Community License",
+        "outputs": [
+          "mesh (GLB/OBJ)",
+          "texture maps (no PBR in 2.0)"
+        ],
+        "hardware": {
+          "min_vram_gb": 6,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README gives no CPU path and the official examples call cuda. One blog (seen in a search excerpt only) says a build without the GPU extensions runs but takes hours to days per asset; this is not a measurement.",
+          "vram_notes": "README: about 6 GB for shape, about 16 GB for shape plus texture."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-2",
+          "https://huggingface.co/tencent/Hunyuan3D-2/blob/main/LICENSE"
+        ],
+        "licence_trap": "Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models",
+        "commercial_use": "conditional: Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models"
+      }
+    },
+    {
+      "id": "hunyuan3d-2-1",
+      "name": "Hunyuan3D 2.1",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Tencent Hunyuan 3D 2.1 Community License"
+      },
+      "url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Hunyuan3D-Shape-v2-1 (3.3B) makes a mesh from one image; training code and a technical report are public.",
+          "inputs": "single image",
+          "outputs": "mesh",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "pbr-texture-for-mesh",
+          "does": "Hunyuan3D-Paint-v2-1 (2B) makes PBR textures (the README names metallic and subsurface effects) for a mesh, replacing the RGB-only paint model.",
+          "inputs": "mesh plus image",
+          "outputs": "mesh with PBR maps",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D shape plus PBR texture",
+        "params": "shape 3.3B; Paint 2B",
+        "released": "2025-06",
+        "weights_licence": "Tencent Hunyuan 3D 2.1 Community License",
+        "outputs": [
+          "mesh",
+          "PBR textured mesh"
+        ],
+        "hardware": {
+          "min_vram_gb": 10,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README does not mention CPU; install steps assume a CUDA PyTorch build.",
+          "vram_notes": "README: about 10 GB shape, 21 GB texture, 29 GB both."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1",
+          "https://raw.githubusercontent.com/Tencent-Hunyuan/Hunyuan3D-2.1/main/LICENSE"
+        ],
+        "licence_trap": "Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models",
+        "commercial_use": "conditional: Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models"
+      }
+    },
+    {
+      "id": "hunyuan3d-omni",
+      "name": "Hunyuan3D-Omni",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Tencent Hunyuan 3D Omni Community License"
+      },
+      "url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes a shape from an image with an extra control signal: point cloud, voxel, skeleton pose or bounding box.",
+          "inputs": "image plus control signal",
+          "outputs": "mesh",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "control-signal-conditioning",
+          "does": "Takes one of four control signals next to the image: a point cloud, a voxel grid, a skeleton pose or a bounding box.",
+          "inputs": "bounding box, point cloud, voxel or skeleton",
+          "outputs": "mesh matching the control",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "controllable image-to-3D shape",
+        "params": "3.3B",
+        "released": "2025-09",
+        "weights_licence": "Tencent Hunyuan 3D Omni Community License",
+        "outputs": [
+          "mesh (format not named on the page)"
+        ],
+        "hardware": {
+          "min_vram_gb": 10,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": "README: about 10 GB for generation."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni",
+          "https://raw.githubusercontent.com/Tencent-Hunyuan/Hunyuan3D-Omni/main/License.txt"
+        ],
+        "licence_trap": "Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models",
+        "commercial_use": "conditional: Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models"
+      }
+    },
+    {
+      "id": "hunyuan3d-part",
+      "name": "Hunyuan3D-Part (P3-SAM and X-Part)",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "LICENSE and NOTICE files exist; terms not read"
+      },
+      "url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Part",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "mesh-part-segmentation",
+          "does": "P3-SAM splits any input mesh into parts and returns semantic features, part masks and part bounding boxes.",
+          "inputs": "mesh",
+          "outputs": "part segmentation, bounding boxes",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Part",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "part-aware-mesh-generation",
+          "does": "X-Part (light version in the repository) generates complete part meshes from a scanned or generated whole mesh; the full version is on a hosted studio.",
+          "inputs": "whole mesh",
+          "outputs": "part meshes",
+          "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Part",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-Part"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "3D part segmentation and part-level generation",
+        "params": "not stated",
+        "released": "unknown",
+        "weights_licence": "not read (Tencent licence files)",
+        "outputs": [
+          "part segmentation",
+          "part bounding boxes",
+          "part meshes"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/Tencent-Hunyuan/Hunyuan3D-Part"
+        ],
+        "commercial_use": "not read; other Tencent Hunyuan 3D releases exclude the EU, the UK and South Korea"
+      }
+    },
+    {
+      "id": "triposr",
+      "name": "TripoSR",
+      "vendor": "Stability AI and Tripo (VAST)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (code, weights, demo)"
+      },
+      "url": "https://github.com/VAST-AI-Research/TripoSR",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Reconstructs a 3D model from one image in under 0.5 s on an A100; vertex colours are the default.",
+          "inputs": "single image",
+          "outputs": "mesh with vertex colours",
+          "source": "https://github.com/VAST-AI-Research/TripoSR",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "texture-baking-from-vertex-colours",
+          "does": "An option bakes a texture image instead of vertex colours, with a separate pixel-resolution setting.",
+          "inputs": "generated mesh",
+          "outputs": "UV texture",
+          "source": "https://github.com/VAST-AI-Research/TripoSR",
+          "basis": "manual"
+        },
+        {
+          "area": "scripting-automation",
+          "feature": "cpu-fallback-cli",
+          "does": "The run script uses CUDA by default and falls back to the CPU when no CUDA device exists; a chunk-size option trades VRAM for time and the marching-cubes resolution defaults to 256.",
+          "inputs": "image paths",
+          "outputs": "mesh files",
+          "source": "https://raw.githubusercontent.com/VAST-AI-Research/TripoSR/main/run.py",
+          "basis": "source"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/VAST-AI-Research/TripoSR"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "single-image reconstruction to mesh",
+        "params": "not stated",
+        "released": "2024-03",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh (vertex colours or baked texture)"
+        ],
+        "hardware": {
+          "min_vram_gb": 6,
+          "cpu_ok": "yes",
+          "cpu_notes": "run.py documents a fallback to cpu when CUDA is absent. No CPU timing is published; mesh extraction at higher marching-cubes resolution is likely the slow step (not measured).",
+          "vram_notes": "README: about 6 GB for one image at default settings."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://github.com/VAST-AI-Research/TripoSR",
+          "https://raw.githubusercontent.com/VAST-AI-Research/TripoSR/main/run.py",
+          "https://arxiv.org/abs/2403.02151"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "triposg",
+      "name": "TripoSG",
+      "vendor": "VAST-AI-Research",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/VAST-AI-Research/TripoSG",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Rectified-flow shape model (1.5B) makes a GLB mesh from one image; a face-count option caps the triangle count.",
+          "inputs": "single image",
+          "outputs": "GLB mesh",
+          "source": "https://github.com/VAST-AI-Research/TripoSG",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "sketch-to-mesh",
+          "does": "TripoSG-scribble is a distilled model that makes a quick shape from a scribble plus a text prompt.",
+          "inputs": "scribble and text",
+          "outputs": "mesh",
+          "source": "https://github.com/VAST-AI-Research/TripoSG",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/VAST-AI-Research/TripoSG"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D shape (rectified flow)",
+        "params": "1.5B",
+        "released": "2025-03",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh (GLB)"
+        ],
+        "hardware": {
+          "min_vram_gb": 8,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README asks for a CUDA GPU; CPU not mentioned.",
+          "vram_notes": "README: at least 8 GB."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/VAST-AI-Research/TripoSG"
+        ],
+        "commercial_use": "yes (MIT); the pipeline downloads RMBG-1.4 for background removal, whose licence was not read"
+      }
+    },
+    {
+      "id": "stable-fast-3d",
+      "name": "Stable Fast 3D (SF3D)",
+      "vendor": "Stability AI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Stability AI Community License (free below US$1M annual revenue)"
+      },
+      "url": "https://huggingface.co/stabilityai/stable-fast-3d",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes a UV-unwrapped, low-polygon textured mesh from one 512x512 image in under a second, with colour de-lighting and per-object roughness and metallic values.",
+          "inputs": "single image",
+          "outputs": "GLB with UV texture",
+          "source": "https://huggingface.co/stabilityai/stable-fast-3d",
+          "basis": "model-card"
+        },
+        {
+          "area": "modeling-polygon",
+          "feature": "mesh-remesh-quad",
+          "does": "Remesh option: none, triangle or quad flow (quad is split to triangles for GLB); an optional target vertex count is a rough goal.",
+          "inputs": "generated mesh",
+          "outputs": "remeshed GLB",
+          "source": "https://github.com/Stability-AI/stable-fast-3d",
+          "basis": "manual"
+        },
+        {
+          "area": "materials-shading",
+          "feature": "material-parameter-prediction",
+          "does": "Predicts roughness and metallic values and removes baked lighting from the colour so the asset suits game engines.",
+          "inputs": "single image",
+          "outputs": "material parameters",
+          "source": "https://huggingface.co/stabilityai/stable-fast-3d",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/stabilityai/stable-fast-3d"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "fast single-image to textured mesh",
+        "params": "about 1B",
+        "released": "2024-08",
+        "weights_licence": "Stability AI Community License",
+        "outputs": [
+          "mesh (GLB)",
+          "UV texture",
+          "roughness and metallic values"
+        ],
+        "hardware": {
+          "min_vram_gb": 6,
+          "cpu_ok": "yes",
+          "cpu_notes": "README: the CPU backend is used automatically when no GPU is found; SF3D_USE_CPU=1 forces it. No CPU timing published. Apple MPS is experimental.",
+          "vram_notes": "README: about 6 GB for one image at default settings."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://huggingface.co/stabilityai/stable-fast-3d",
+          "https://github.com/Stability-AI/stable-fast-3d",
+          "https://arxiv.org/abs/2408.00653"
+        ],
+        "licence_trap": "Stability Community Licence revenue threshold; weights are gated on Hugging Face",
+        "commercial_use": "conditional: free below US$1M annual revenue, Enterprise licence above"
+      }
+    },
+    {
+      "id": "spar3d",
+      "name": "SPAR3D (Stable Point-Aware 3D)",
+      "vendor": "Stability AI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Stability AI Community License (free below US$1M annual revenue)"
+      },
+      "url": "https://huggingface.co/stabilityai/stable-point-aware-3d",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Uses a fast point-diffusion model as conditioning and makes a UV-unwrapped, textured mesh from one image in under a second.",
+          "inputs": "single image",
+          "outputs": "GLB with UV texture",
+          "source": "https://huggingface.co/stabilityai/stable-point-aware-3d",
+          "basis": "model-card"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "point-cloud-edit-before-mesh",
+          "does": "The intermediate point cloud can be edited in an outside tool or the demo to fill in missing back-side detail before meshing.",
+          "inputs": "edited point cloud",
+          "outputs": "mesh",
+          "source": "https://github.com/Stability-AI/stable-point-aware-3d",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/stabilityai/stable-point-aware-3d"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "point-aware single-image to mesh",
+        "params": "about 2B",
+        "released": "2025-01",
+        "weights_licence": "Stability AI Community License",
+        "outputs": [
+          "mesh (GLB)",
+          "UV texture",
+          "point cloud"
+        ],
+        "hardware": {
+          "min_vram_gb": 7,
+          "cpu_ok": "slow",
+          "cpu_notes": "README: the CPU is used automatically without a GPU but is very slow; --device=cpu forces it. No timing given.",
+          "vram_notes": "README: about 10.5 GB by default, about 7 GB in low-VRAM mode (slower); it also mentions about 6 GB for a single manual run."
+        },
+        "home_srv": "slow",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://huggingface.co/stabilityai/stable-point-aware-3d",
+          "https://github.com/Stability-AI/stable-point-aware-3d",
+          "https://arxiv.org/abs/2501.04689"
+        ],
+        "licence_trap": "Stability Community Licence revenue threshold; gated download",
+        "commercial_use": "conditional: free below US$1M annual revenue"
+      }
+    },
+    {
+      "id": "instantmesh",
+      "name": "InstantMesh",
+      "vendor": "TencentARC",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (repository and Hugging Face weights tag)"
+      },
+      "url": "https://github.com/TencentARC/InstantMesh",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Uses Zero123++ multi-view diffusion as its base, then builds an OBJ mesh with vertex colours; a flag exports a texture map instead, which is slower.",
+          "inputs": "single image",
+          "outputs": "OBJ mesh",
+          "source": "https://github.com/TencentARC/InstantMesh",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "multiview-image-generation",
+          "does": "The model card supplies a Zero123++ UNet tuned to give white-background multi-view images.",
+          "inputs": "single image",
+          "outputs": "multi-view images",
+          "source": "https://github.com/TencentARC/InstantMesh",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/TencentARC/InstantMesh"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image to mesh through multi-view generation and reconstruction",
+        "params": "not stated",
+        "released": "2024-04",
+        "weights_licence": "Apache-2.0 (per Hugging Face tag)",
+        "outputs": [
+          "mesh (OBJ)",
+          "vertex colours or texture map"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Install assumes CUDA 12.1 and xformers; CPU not mentioned.",
+          "vram_notes": "Not stated; the demo splits across two GPUs when present."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/TencentARC/InstantMesh",
+          "https://huggingface.co/TencentARC/InstantMesh",
+          "https://arxiv.org/abs/2404.07191"
+        ],
+        "licence_trap": "Zero123++ lineage (CC BY-NC 4.0 weights); not confirmed whether it carries over",
+        "commercial_use": "listed Apache-2.0; the multi-view stage derives from Zero123++, whose own weights are CC BY-NC 4.0, so check before use"
+      }
+    },
+    {
+      "id": "direct3d-s2",
+      "name": "Direct3D-S2",
+      "vendor": "DreamTech",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/DreamTechAI/Direct3D-S2",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes meshes from one image with spatial sparse attention, at 512 or 1024 resolution; a remeshing option lowers the triangle count.",
+          "inputs": "single image",
+          "outputs": "OBJ mesh",
+          "source": "https://github.com/DreamTechAI/Direct3D-S2",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/DreamTechAI/Direct3D-S2"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D geometry, sparse SDF volumes",
+        "params": "not stated",
+        "released": "2025-05",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh (OBJ), geometry only"
+        ],
+        "hardware": {
+          "min_vram_gb": 10,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Setup and example target CUDA 12.1 and cuda:0.",
+          "vram_notes": "README: at least 10 GB at 512 (not advised), about 24 GB at 1024."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/DreamTechAI/Direct3D-S2"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "step1x-3d",
+      "name": "Step1X-3D",
+      "vendor": "StepFun",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/stepfun-ai/Step1X-3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Geometry stage (1.3B) makes an untextured GLB mesh from one image; a label-conditioned variant also exists.",
+          "inputs": "single image",
+          "outputs": "GLB mesh",
+          "source": "https://github.com/stepfun-ai/Step1X-3D",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "Texture stage (3.5B) paints the mesh using the input image and writes a textured GLB.",
+          "inputs": "mesh plus image",
+          "outputs": "textured GLB",
+          "source": "https://github.com/stepfun-ai/Step1X-3D",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/stepfun-ai/Step1X-3D"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "two-stage image-to-textured-3D",
+        "params": "geometry 1.3B; texture 3.5B",
+        "released": "2025-05",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "mesh (GLB)",
+          "textured mesh (GLB)"
+        ],
+        "hardware": {
+          "min_vram_gb": 27,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Examples call .to(\"cuda\"); CPU not mentioned. About 152 s for 50 steps on an unnamed GPU.",
+          "vram_notes": "README: about 27 GB for geometry plus texture; per-stage figures not given."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/stepfun-ai/Step1X-3D",
+          "https://arxiv.org/abs/2505.07747"
+        ],
+        "commercial_use": "yes (Apache-2.0)"
+      }
+    },
+    {
+      "id": "sam-3d-objects",
+      "name": "SAM 3D Objects",
+      "vendor": "Meta",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "SAM License (19 November 2025)"
+      },
+      "url": "https://github.com/facebookresearch/sam-3d-objects",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-gaussian-splat",
+          "does": "Reconstructs a masked object from one image with shape, texture, pose and layout; the example exports a Gaussian splat PLY and mesh export is not mentioned.",
+          "inputs": "image plus object mask",
+          "outputs": "PLY Gaussian splat, pose, layout",
+          "source": "https://github.com/facebookresearch/sam-3d-objects",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "multi-object-scene-layout",
+          "does": "Handles single and multi-object scenes and returns each object with its position; a notebook aligns the results with SAM 3D Body.",
+          "inputs": "scene image plus masks",
+          "outputs": "objects with layout",
+          "source": "https://github.com/facebookresearch/sam-3d-objects",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/facebookresearch/sam-3d-objects"
+        ],
+        "restrictions": "Redistribution requires the licence text and bars reverse engineering of the materials (SAM License, read).",
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "single-image object and scene reconstruction",
+        "params": "not stated",
+        "released": "2025-11",
+        "weights_licence": "SAM License",
+        "outputs": [
+          "Gaussian splat (PLY)",
+          "pose and layout"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/facebookresearch/sam-3d-objects",
+          "https://raw.githubusercontent.com/facebookresearch/sam-3d-objects/main/LICENSE"
+        ],
+        "licence_trap": "no-reverse-engineering clause on redistributed materials, and prohibited-use list",
+        "commercial_use": "licence text does not mention commercial use; worldwide grant, no user-count limit; bars military, ITAR and weapons uses; redistributors must not reverse engineer the materials; publications must acknowledge use"
+      }
+    },
+    {
+      "id": "hi3dgen",
+      "name": "Hi3DGen (Stable3DGen)",
+      "vendor": "Stable-X",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/Stable-X/Hi3DGen",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Modular 3D generation framework adapted from TRELLIS with the NVIDIA-only libraries (kaolin, nvdiffrast, flexicube) removed; the paper title describes geometry from images via normal bridging.",
+          "inputs": "single image",
+          "outputs": "3D geometry (format not stated)",
+          "source": "https://github.com/Stable-X/Hi3DGen",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Stable-X/Hi3DGen"
+        ],
+        "restrictions": null,
+        "notes": "Work in progress per the README. Not the same project as Hi3D v1.0."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-geometry via normal bridging",
+        "params": "not stated",
+        "released": "2025-03 (paper)",
+        "weights_licence": "MIT",
+        "outputs": [
+          "geometry (format not stated)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Install needs CUDA PyTorch, spconv and xformers builds.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/Stable-X/Hi3DGen",
+          "https://arxiv.org/abs/2503.22236"
+        ],
+        "commercial_use": "yes (MIT); pipeline avoids NVIDIA non-commercial libraries"
+      }
+    },
+    {
+      "id": "sparc3d",
+      "name": "Sparc3D",
+      "vendor": "lizhihao6",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "not shown on the page"
+      },
+      "url": "https://github.com/lizhihao6/Sparc3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-scan-reconstruction",
+          "feature": "sparse-deformable-marching-cubes",
+          "does": "Sparcubes converts a raw mesh to a 1024-cubed surface with arbitrary topology using signed distance and deformation fields on a sparse cube; Sparconv-VAE is built on it for latent diffusion.",
+          "inputs": "mesh",
+          "outputs": "high-resolution surface",
+          "source": "https://github.com/lizhihao6/Sparc3D",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://github.com/lizhihao6/Sparc3D"
+        ],
+        "restrictions": null,
+        "notes": "The repository page shows a README and assets; code and weights status is unclear. Hi3D v1.0 builds on this representation."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "high-resolution shape representation and VAE for 3D generation",
+        "params": "not stated",
+        "released": "2025-05 (paper)",
+        "weights_licence": "not stated",
+        "outputs": [
+          "surface at 1024 cubed"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/lizhihao6/Sparc3D",
+          "https://arxiv.org/abs/2505.14521"
+        ],
+        "commercial_use": "unknown"
+      }
+    },
+    {
+      "id": "hi3d-v1",
+      "name": "Hi3D v1.0",
+      "vendor": "hi3d-official",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Hi3D Open License Agreement 1.0 (with Apache-2.0 and MIT parts)"
+      },
+      "url": "https://huggingface.co/hi3d-official/Hi3Dv1.0",
+      "platforms": [
+        "linux"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "mesh-refinement-from-reference-image",
+          "does": "Refines a coarse mesh into higher-resolution geometry guided by a reference image of the same object; resolutions 512, 1024 and 1536; output is geometry only.",
+          "inputs": "coarse mesh plus reference image",
+          "outputs": "untextured GLB mesh",
+          "source": "https://huggingface.co/hi3d-official/Hi3Dv1.0",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/hi3d-official/Hi3Dv1.0"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "geometry refinement built on Sparc3D",
+        "params": "not stated",
+        "released": "2026-10",
+        "weights_licence": "Hi3D Open License Agreement 1.0",
+        "outputs": [
+          "geometry-only mesh (GLB)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "no",
+          "cpu_notes": "Card says there is no CPU inference path; needs an NVIDIA GPU of compute capability 8.0 or higher with CUDA 12.0 to 12.5 and flash-attn; sequential CPU offload exists.",
+          "vram_notes": "The 1536 setting was validated only on a 96 GB H20; no minimum stated."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/hi3d-official/Hi3Dv1.0"
+        ],
+        "licence_trap": "user and revenue thresholds and a mandatory credit line; output is recentred and normalised, so original scale is lost",
+        "commercial_use": "conditional: allowed, but above 200,000 monthly active users or US$1M monthly revenue the licensor must be told and a separate licence sought; commercial integrations must show the credit line Powered by Hi3D 1.0"
+      }
+    },
+    {
+      "id": "partcrafter",
+      "name": "PartCrafter",
+      "vendor": "wgsxm (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/wgsxm/PartCrafter",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "part-aware-mesh-generation",
+          "does": "Generates several parts or objects together from one RGB image in a single pass and returns a structured, part-aware mesh set; built on the TripoSG DiT.",
+          "inputs": "single image",
+          "outputs": "part meshes",
+          "source": "https://github.com/wgsxm/PartCrafter",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/wgsxm/PartCrafter"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "part-aware 3D mesh generation from one image",
+        "params": "not stated",
+        "released": "2025-07",
+        "weights_licence": "MIT",
+        "outputs": [
+          "part meshes"
+        ],
+        "hardware": {
+          "min_vram_gb": 8,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not mentioned.",
+          "vram_notes": "README: CUDA GPU with at least 8 GB; fewer parts or tokens lowers memory."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/wgsxm/PartCrafter"
+        ],
+        "commercial_use": "yes (MIT); inherits TripoSG DiT (MIT)"
+      }
+    },
+    {
+      "id": "partpacker",
+      "name": "PartPacker",
+      "vendor": "NVIDIA",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "NVIDIA Non-Commercial License (weights, per Hugging Face card)"
+      },
+      "url": "https://github.com/NVlabs/PartPacker",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "part-aware-mesh-generation",
+          "does": "Part-level 3D object generation from one image using dual volume packing; the flow model makes the object, the VAE reconstructs meshes, and a script splits a GLB into two meshes.",
+          "inputs": "single image (518x518)",
+          "outputs": "untextured GLB, up to 512 cubed",
+          "source": "https://huggingface.co/nvidia/PartPacker",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/NVlabs/PartPacker"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "part-level image-to-3D",
+        "params": "not stated",
+        "released": "2025-06",
+        "weights_licence": "NVIDIA Non-Commercial License",
+        "outputs": [
+          "mesh (GLB), no texture"
+        ],
+        "hardware": {
+          "min_vram_gb": 10,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Tested on 3090, 4090 and A100; CPU not mentioned.",
+          "vram_notes": "README: about 10 GB in float16."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/NVlabs/PartPacker",
+          "https://huggingface.co/nvidia/PartPacker",
+          "https://arxiv.org/abs/2506.09980"
+        ],
+        "licence_trap": "non-commercial weights",
+        "commercial_use": "no (non-commercial licence)"
+      }
+    },
+    {
+      "id": "unilat3d",
+      "name": "UniLat3D",
+      "vendor": "UniLat3D authors (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 for original code; third-party parts keep their licences"
+      },
+      "url": "https://github.com/UniLat3D/UniLat3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "One latent holds geometry and appearance, so a single flow-matching transformer makes the asset in one stage; decoders give 3D Gaussians and meshes.",
+          "inputs": "single image",
+          "outputs": "3D Gaussians, mesh",
+          "source": "https://github.com/UniLat3D/UniLat3D",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/UniLat3D/UniLat3D"
+        ],
+        "restrictions": null,
+        "notes": "Encoder, 3DGS decoder and flow checkpoints released 2025-11-03; mesh decoder 2025-11-10 (README)."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "single-stage image-to-3D with unified latents",
+        "params": "not stated",
+        "released": "2025-11",
+        "weights_licence": "Apache-2.0 (code); checkpoint licence not stated",
+        "outputs": [
+          "3D Gaussians",
+          "mesh"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated; the mesh path needs modified spconv-int32 and cumm-int32.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/UniLat3D/UniLat3D",
+          "https://arxiv.org/abs/2509.25079"
+        ],
+        "commercial_use": "unknown for the checkpoints; DINOv3 weights are a separate gated download"
+      }
+    },
+    {
+      "id": "idol",
+      "name": "Idol",
+      "vendor": "speridlabs",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0; needs gated DINOv3 and FLUX.2-dev VAE weights"
+      },
+      "url": "https://huggingface.co/speridlabs/idol",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-gaussian-splat",
+          "does": "Makes a 3D Gaussian splat (up to 1,048,576 Gaussians) from one image, removing the background and predicting unseen sides; synthetic and real-photo modes use different crop margins.",
+          "inputs": "single image",
+          "outputs": "3DGS PLY, camera JSON",
+          "source": "https://huggingface.co/speridlabs/idol",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/speridlabs/idol"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-3D Gaussian splats",
+        "params": "about 1.8B in total",
+        "released": "unknown (2026; depends on FLUX.2 VAE)",
+        "weights_licence": "Apache-2.0; DINOv3 and FLUX.2-dev VAE are gated with their own licences",
+        "outputs": [
+          "Gaussian splat (PLY)"
+        ],
+        "hardware": {
+          "min_vram_gb": 7.2,
+          "cpu_ok": "no",
+          "cpu_notes": "Card says an NVIDIA GPU with CUDA is needed. Benchmarks: 3.4 s on B300, 19.1 s on RTX 4090 (262k Gaussians, 50 steps).",
+          "vram_notes": "Card: peak about 7.2 GB, weights about 3 GB."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://huggingface.co/speridlabs/idol"
+        ],
+        "licence_trap": "gated FLUX.2-dev VAE and DINOv3: their licences were not read",
+        "commercial_use": "code Apache-2.0; the gated encoder and VAE licences were not read"
+      }
+    },
+    {
+      "id": "meshaxiom",
+      "name": "MeshAxiom-Base",
+      "vendor": "Alaya Lab",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "standalone licence pending; DINOv3 tensors carry the DINOv3 licence"
+      },
+      "url": "https://huggingface.co/AlayaLab/MeshAxiom-Base",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Two-stage diffusion (vertices, then topology) makes a mesh from a 512x512 image on a black background; a face budget guides the result but actual counts differ and meshes can have open boundaries.",
+          "inputs": "single image",
+          "outputs": "OBJ, JSON or GLB mesh",
+          "source": "https://huggingface.co/AlayaLab/MeshAxiom-Base",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/AlayaLab/MeshAxiom-Base"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image-to-mesh with learned topology",
+        "params": "not stated",
+        "released": "unknown (2026; the cited paper is July 2026)",
+        "weights_licence": "pending",
+        "outputs": [
+          "mesh (OBJ, JSON, GLB)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Tested on an H200.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/AlayaLab/MeshAxiom-Base"
+        ],
+        "commercial_use": "unknown (licence pending)"
+      }
+    },
+    {
+      "id": "uniforge3d",
+      "name": "UniForge3D",
+      "vendor": "xibushu",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "CC-BY-NC-4.0"
+      },
+      "url": "https://huggingface.co/xibushu/UniForge3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "multiview-to-3d-asset",
+          "does": "Makes a complete 3D asset from sparse, unposed multi-view images, doing reconstruction and generation together in one anchor-guided space.",
+          "inputs": "several unposed images",
+          "outputs": "3D asset (format not stated)",
+          "source": "https://huggingface.co/xibushu/UniForge3D",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/xibushu/UniForge3D"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "sparse multi-view to 3D asset",
+        "params": "not stated",
+        "released": "unknown",
+        "weights_licence": "CC-BY-NC-4.0",
+        "outputs": [
+          "3D asset"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/xibushu/UniForge3D"
+        ],
+        "licence_trap": "non-commercial licence",
+        "commercial_use": "no (non-commercial)"
+      }
+    },
+    {
+      "id": "roblox-cube",
+      "name": "Cube 3D",
+      "vendor": "Roblox",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "LICENSE file linked; terms not read"
+      },
+      "url": "https://github.com/Roblox/cube",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-mesh",
+          "does": "Text-to-shape model that writes an OBJ mesh; version 0.5 adds bounding-box conditioning so target dimensions can be given with the prompt.",
+          "inputs": "text prompt, optional bounding box",
+          "outputs": "OBJ mesh",
+          "source": "https://github.com/Roblox/cube",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Roblox/cube"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text-to-shape generation",
+        "params": "not stated",
+        "released": "2025-03 (v0.5 in 2025-07)",
+        "weights_licence": "not read",
+        "outputs": [
+          "mesh (OBJ)",
+          "turntable GIF (needs Blender 4.3+)"
+        ],
+        "hardware": {
+          "min_vram_gb": 16,
+          "cpu_ok": "unknown",
+          "cpu_notes": "MPS works on Apple Silicon M2 to M4; CPU not stated.",
+          "vram_notes": "README: 16 GB, or 24 GB with fast inference."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/Roblox/cube"
+        ],
+        "commercial_use": "unknown (licence not read)"
+      }
+    },
+    {
+      "id": "roblox-cubepart",
+      "name": "CubePart",
+      "vendor": "Roblox",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "OpenRAIL"
+      },
+      "url": "https://huggingface.co/Roblox/cubepart",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "part-aware-mesh-generation",
+          "does": "Takes a text prompt and a user-defined parts schema and makes one mesh per schema entry that together form the object.",
+          "inputs": "text prompt plus parts schema (and an input mesh per the GitHub page)",
+          "outputs": "separate part meshes",
+          "source": "https://huggingface.co/Roblox/cubepart",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/Roblox/cubepart"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "open-vocabulary part-controllable mesh generation",
+        "params": "not stated",
+        "released": "2026-05",
+        "weights_licence": "OpenRAIL",
+        "outputs": [
+          "part meshes"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/Roblox/cubepart",
+          "https://github.com/Roblox/cube"
+        ],
+        "commercial_use": "OpenRAIL use restrictions apply; terms not read"
+      }
+    },
+    {
+      "id": "ml-sharp",
+      "name": "Sharp (ml-sharp)",
+      "vendor": "Apple",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Apple Machine Learning Research Model License (non-commercial research only)"
+      },
+      "url": "https://github.com/apple/ml-sharp",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-gaussian-splat",
+          "does": "Predicts a metric-scale 3D Gaussian scene from one photo in one pass, under a second on a standard GPU; nearby viewpoints render in real time.",
+          "inputs": "single photo",
+          "outputs": "3DGS PLY",
+          "source": "https://github.com/apple/ml-sharp",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/apple/ml-sharp"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "single-photo 3D Gaussian scene",
+        "params": "not stated",
+        "released": "2025-12",
+        "weights_licence": "Apple ML Research Model License (non-commercial)",
+        "outputs": [
+          "Gaussian splat (PLY)",
+          "optional trajectory video"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "yes",
+          "cpu_notes": "README: Gaussian prediction runs on CPU, CUDA and MPS; video rendering needs CUDA. No CPU timing given.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/apple/ml-sharp",
+          "https://raw.githubusercontent.com/apple/ml-sharp/main/LICENSE_MODEL"
+        ],
+        "licence_trap": "model licence bars commercial use",
+        "commercial_use": "no (research and academic use only)"
+      }
+    },
+    {
+      "id": "lgm",
+      "name": "LGM (Large Multi-View Gaussian Model)",
+      "vendor": "3DTopia",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/3DTopia/LGM",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-gaussian-splat",
+          "does": "Writes Gaussian splats (PLY) and preview video; the README memory figure includes the ImageDream and MVDream models used to make the multi-view input.",
+          "inputs": "image or text",
+          "outputs": "PLY Gaussians, MP4",
+          "source": "https://github.com/3DTopia/LGM",
+          "basis": "manual"
+        },
+        {
+          "area": "pipeline-interchange",
+          "feature": "gaussian-to-mesh-conversion",
+          "does": "A separate script turns the Gaussian PLY into a mesh using nvdiffrast.",
+          "inputs": "Gaussian PLY",
+          "outputs": "mesh",
+          "source": "https://github.com/3DTopia/LGM",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/3DTopia/LGM"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "feed-forward multi-view to Gaussians",
+        "params": "about 0.4B (Hugging Face listing)",
+        "released": "2024 (ECCV 2024; month not stated)",
+        "weights_licence": "MIT",
+        "outputs": [
+          "Gaussian splat (PLY)",
+          "mesh via script"
+        ],
+        "hardware": {
+          "min_vram_gb": 10,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Install assumes CUDA PyTorch and xformers.",
+          "vram_notes": "README: about 10 GB for inference, including ImageDream and MVDream."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/3DTopia/LGM"
+        ],
+        "commercial_use": "yes (MIT); ImageDream and MVDream licences not read"
+      }
+    },
+    {
+      "id": "crm",
+      "name": "CRM (Convolutional Reconstruction Model)",
+      "vendor": "Tsinghua (thu-ml)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/thu-ml/CRM",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes six views with coordinate maps and then an OBJ mesh with UV textures from one image; the project claims about 10 seconds, and UV texturing is slower than the demo.",
+          "inputs": "single image",
+          "outputs": "OBJ with UV texture",
+          "source": "https://github.com/thu-ml/CRM",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/thu-ml/CRM"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image to textured mesh",
+        "params": "not stated",
+        "released": "2024-03",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh (OBJ) with UV texture"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Examples use CUDA builds; CPU not stated.",
+          "vram_notes": "Not stated; a to-do item asks for low-memory support."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/thu-ml/CRM",
+          "https://arxiv.org/abs/2403.05034"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "unique3d",
+      "name": "Unique3D",
+      "vendor": "AiuniAI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/AiuniAI/Unique3D",
+      "platforms": [
+        "linux",
+        "windows"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes a textured mesh from one image in about 30 seconds; the README advises the highest-resolution input.",
+          "inputs": "single image",
+          "outputs": "textured mesh",
+          "source": "https://github.com/AiuniAI/Unique3D",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/AiuniAI/Unique3D"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image to high-fidelity textured mesh",
+        "params": "not stated",
+        "released": "2024-05",
+        "weights_licence": "MIT",
+        "outputs": [
+          "textured mesh"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Setup targets Ubuntu 22.04 with CUDA 12.1; CPU not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/AiuniAI/Unique3D",
+          "https://arxiv.org/abs/2405.20343"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "wonder3d",
+      "name": "Wonder3D",
+      "vendor": "xxlong0 (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/xxlong0/Wonder3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "multiview-image-generation",
+          "does": "Makes six consistent views as normal maps and colour images at 256x256 from one image.",
+          "inputs": "single image",
+          "outputs": "multi-view normal and colour images",
+          "source": "https://github.com/xxlong0/Wonder3D",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Builds a textured mesh from those views with instant-nsr-pl or NeuS; NeuS uses less GPU memory and gives smoother surfaces. The project quotes 2 to 3 minutes.",
+          "inputs": "multi-view maps",
+          "outputs": "textured mesh",
+          "source": "https://github.com/xxlong0/Wonder3D",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/xxlong0/Wonder3D"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "single image to multi-view normals and colours, then mesh",
+        "params": "not stated",
+        "released": "2023-10",
+        "weights_licence": "MIT",
+        "outputs": [
+          "mesh",
+          "multi-view images"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Sample code uses CUDA when available; CPU not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/xxlong0/Wonder3D"
+        ],
+        "commercial_use": "yes (MIT); README asks for an acknowledgement"
+      }
+    },
+    {
+      "id": "zero123plus",
+      "name": "Zero123++",
+      "vendor": "SUDO-AI-3D",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "code Apache-2.0; weights CC BY-NC 4.0"
+      },
+      "url": "https://github.com/SUDO-AI-3D/zero123plus",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "multiview-image-generation",
+          "does": "Makes six fixed-camera views of an object from one image; v1.2 adds a 30 degree field of view and a normal-map ControlNet, v1.1 a depth ControlNet.",
+          "inputs": "single image",
+          "outputs": "six view images",
+          "source": "https://github.com/SUDO-AI-3D/zero123plus",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/SUDO-AI-3D/zero123plus"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image to consistent multi-view images",
+        "params": "not stated",
+        "released": "unknown (2023)",
+        "weights_licence": "CC BY-NC 4.0",
+        "outputs": [
+          "six view images"
+        ],
+        "hardware": {
+          "min_vram_gb": 5,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not mentioned.",
+          "vram_notes": "README: about 5 GB for the v1.1 example, about 5.7 GB with the depth ControlNet."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "yes",
+        "evidence": [
+          "https://github.com/SUDO-AI-3D/zero123plus"
+        ],
+        "licence_trap": "non-commercial weights",
+        "commercial_use": "no for the weights (CC BY-NC); the README says the generated outputs can be used freely"
+      }
+    },
+    {
+      "id": "sv3d",
+      "name": "Stable Video 3D (SV3D)",
+      "vendor": "Stability AI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Stability AI Community License (gated)"
+      },
+      "url": "https://huggingface.co/stabilityai/sv3d",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "orbital-video-from-image",
+          "does": "Makes a 21-frame 576x576 orbit video of an object from one image; SV3D_u has no camera input, SV3D_p follows a given camera path.",
+          "inputs": "single image",
+          "outputs": "orbital video",
+          "source": "https://huggingface.co/stabilityai/sv3d",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/stabilityai/sv3d"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "image to orbital video for 3D",
+        "params": "not stated",
+        "released": "2024-03",
+        "weights_licence": "Stability AI Community License",
+        "outputs": [
+          "orbital video"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/stabilityai/sv3d"
+        ],
+        "licence_trap": "gated access and Stability licence thresholds",
+        "commercial_use": "conditional: Stability licence; the card points to a separate commercial licence"
+      }
+    },
+    {
+      "id": "shap-e",
+      "name": "Shap-E",
+      "vendor": "OpenAI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/openai/shap-e",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-3d-object",
+          "does": "Samples a 3D object from a text prompt or a synthetic-view image through notebooks; the page does not state the output format, and the encoding notebook needs Blender.",
+          "inputs": "text or image",
+          "outputs": "3D object",
+          "source": "https://github.com/openai/shap-e",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/openai/shap-e"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text and image to 3D implicit functions",
+        "params": "not stated",
+        "released": "unknown (2023)",
+        "weights_licence": "MIT",
+        "outputs": [
+          "3D object (format not stated on the page)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not mentioned.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/openai/shap-e"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "point-e",
+      "name": "Point-E",
+      "vendor": "OpenAI",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/openai/point-e",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-3d-object",
+          "does": "Samples point clouds from a small text model or from a synthetic-view image; a separate SDF model turns point clouds into meshes. The README calls the text model limited.",
+          "inputs": "text or image",
+          "outputs": "point cloud, mesh",
+          "source": "https://github.com/openai/point-e",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/openai/point-e"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text and image to point clouds",
+        "params": "not stated",
+        "released": "unknown (2022)",
+        "weights_licence": "MIT",
+        "outputs": [
+          "point cloud",
+          "mesh via SDF model"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not mentioned.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/openai/point-e"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "dreamgaussian",
+      "name": "DreamGaussian",
+      "vendor": "dreamgaussian (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT, plus a separate Gaussian-splatting licence file"
+      },
+      "url": "https://github.com/dreamgaussian/dreamgaussian",
+      "platforms": [
+        "linux",
+        "windows"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Optimises Gaussians (about 1 minute for 500 iterations) and then extracts and refines a mesh (about 1 minute for 50 iterations), exported as OBJ or GLB.",
+          "inputs": "single image",
+          "outputs": "PLY Gaussians, OBJ or GLB mesh, preview video",
+          "source": "https://github.com/dreamgaussian/dreamgaussian",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/dreamgaussian/dreamgaussian"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "optimisation-based image-to-3D with Gaussian splatting",
+        "params": "not applicable (per-asset optimisation)",
+        "released": "2023-10",
+        "weights_licence": "MIT; Gaussian splatting licence file included",
+        "outputs": [
+          "Gaussian splat (PLY)",
+          "mesh (OBJ/GLB)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "README describes GPU use only (V100 and an RTX 3070 tested); CPU not stated.",
+          "vram_notes": "No VRAM figure stated. An RTX 3070 was a tested card."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/dreamgaussian/dreamgaussian"
+        ],
+        "commercial_use": "MIT code; the Gaussian-splatting licence file was not read"
+      }
+    },
+    {
+      "id": "threestudio",
+      "name": "threestudio",
+      "vendor": "threestudio-project",
+      "kind": "model",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/threestudio-project/threestudio",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "score-distillation-text-to-3d",
+          "does": "Unified framework that runs many text- and image-to-3D optimisation methods (DreamFusion, Magic3D, ProlificDreamer, Fantasia3D, Magic123 and more) with textured OBJ export and turntable video.",
+          "inputs": "text prompt or image",
+          "outputs": "NeRF, textured mesh (OBJ with MTL or vertex colours), video",
+          "source": "https://github.com/threestudio-project/threestudio",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/threestudio-project/threestudio"
+        ],
+        "restrictions": null,
+        "notes": "The page was read only up to character 100000 of 118548."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text-to-3D by score distillation (many methods)",
+        "params": "not applicable (per-asset optimisation)",
+        "released": "unknown (2023; latest news item 2024-08-11)",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "NeRF",
+          "mesh (OBJ)",
+          "video"
+        ],
+        "hardware": {
+          "min_vram_gb": 6,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Install requires an NVIDIA GPU with CUDA; CPU not stated.",
+          "vram_notes": "README: about 6 GB minimum; per method: Magic3D about 6 GB coarse and 5 GB refine; DreamFusion about 10 GB with IF; ProlificDreamer about 15 to 30 GB."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/threestudio-project/threestudio"
+        ],
+        "commercial_use": "framework Apache-2.0; each method brings its own diffusion-model licence"
+      }
+    },
+    {
+      "id": "meshanything",
+      "name": "MeshAnything (V1, V2, 350M)",
+      "vendor": "buaacyw (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "S-Lab License 1.0 (non-commercial; commercial use needs permission from the contributors)"
+      },
+      "url": "https://github.com/buaacyw/MeshAnything",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-polygon",
+          "feature": "point-cloud-to-artist-mesh",
+          "does": "Turns a point cloud (.npy, N x 6 with normals) or an .obj mesh into a mesh with artist-style topology; V1 was trained on meshes under 800 faces and V2 raises the limit to 1600.",
+          "inputs": "point cloud or mesh",
+          "outputs": "low-face-count mesh",
+          "source": "https://github.com/buaacyw/MeshAnything",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/buaacyw/MeshAnything"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "artist-style mesh from point cloud or mesh",
+        "params": "350M version; V1 size not stated",
+        "released": "2024-06",
+        "weights_licence": "S-Lab License 1.0",
+        "outputs": [
+          "mesh (about 800 to 1600 faces)"
+        ],
+        "hardware": {
+          "min_vram_gb": 7,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Tested on A100, A800 and A6000 with CUDA 11.8; CPU not mentioned.",
+          "vram_notes": "README: about 7 GB, about 30 s per mesh on an A6000."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/buaacyw/MeshAnything",
+          "https://raw.githubusercontent.com/buaacyw/MeshAnything/main/LICENSE.txt"
+        ],
+        "licence_trap": "non-commercial S-Lab licence",
+        "commercial_use": "no without permission (S-Lab licence read)"
+      }
+    },
+    {
+      "id": "llama-mesh",
+      "name": "LLaMA-Mesh",
+      "vendor": "NVIDIA Toronto AI Lab (nv-tlabs)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "LICENSE and LICENSE_LLAMA files exist; terms not read"
+      },
+      "url": "https://github.com/nv-tlabs/LLaMA-Mesh",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-mesh",
+          "does": "A fine-tuned language model writes mesh vertex coordinates and faces as plain text, so a mesh can be made by chatting; a Gradio app, a Hugging Face demo and a Blender add-on are linked.",
+          "inputs": "text prompt",
+          "outputs": "mesh as text",
+          "source": "https://github.com/nv-tlabs/LLaMA-Mesh",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "mesh-understanding",
+          "does": "The model is trained on interleaved text and mesh data, so besides generating meshes it can also interpret them. The README states this ability but shows no question-answering example.",
+          "inputs": "mesh as text",
+          "outputs": "text",
+          "source": "https://github.com/nv-tlabs/LLaMA-Mesh",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/nv-tlabs/LLaMA-Mesh"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text-to-mesh and mesh understanding with an LLM",
+        "params": "fine-tuned Llama; size not stated on the repo page",
+        "released": "2024-11",
+        "weights_licence": "not read (Llama licence file present)",
+        "outputs": [
+          "mesh as text (OBJ-like)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Transformers example uses device_map=auto; no CPU or quantised option stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/nv-tlabs/LLaMA-Mesh",
+          "https://arxiv.org/abs/2411.09595"
+        ],
+        "commercial_use": "unknown (Llama licence plus repo licence not read)"
+      }
+    },
+    {
+      "id": "deepmesh",
+      "name": "DeepMesh",
+      "vendor": "zhaorw02 (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 per the repository listing; the README badge says MIT (inconsistent)"
+      },
+      "url": "https://github.com/zhaorw02/DeepMesh",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-polygon",
+          "feature": "point-cloud-to-artist-mesh",
+          "does": "Autoregressive transformer makes a mesh conditioned on an input point cloud; the 0.5B pretrained weights are on Hugging Face and a 1B version is listed as future work.",
+          "inputs": "point cloud",
+          "outputs": "artist-style mesh",
+          "source": "https://github.com/zhaorw02/DeepMesh",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/zhaorw02/DeepMesh"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "autoregressive mesh generation from point clouds",
+        "params": "0.5B",
+        "released": "2025-03",
+        "weights_licence": "Apache-2.0 or MIT (README inconsistent)",
+        "outputs": [
+          "mesh"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Setup assumes NVIDIA GPUs with CUDA 11.8 (A100, A800, A6000 tested).",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/zhaorw02/DeepMesh",
+          "https://arxiv.org/abs/2503.15265"
+        ],
+        "commercial_use": "listed open licence; the LICENSE file would settle MIT versus Apache"
+      }
+    },
+    {
+      "id": "mv-adapter",
+      "name": "MV-Adapter",
+      "vendor": "huanngzh (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 for the adapter; base model licences (SDXL, SD2.1) not read"
+      },
+      "url": "https://github.com/huanngzh/MV-Adapter",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "multiview-image-generation",
+          "does": "Plug-in that turns a text-to-image model (SDXL at 768 px, or SD2.1) into a multi-view generator from text or one image, with 2, 3, 4 or 6 views; also works with personalised models, LCM and ControlNet.",
+          "inputs": "text or image",
+          "outputs": "multi-view images",
+          "source": "https://github.com/huanngzh/MV-Adapter",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "Geometry-guided mode paints an existing mesh and saves a shaded GLB.",
+          "inputs": "mesh plus text or image",
+          "outputs": "textured GLB",
+          "source": "https://github.com/huanngzh/MV-Adapter",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/huanngzh/MV-Adapter"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "multi-view generation and mesh texturing adapter",
+        "params": "adapter on top of SDXL or SD2.1",
+        "released": "2024-12",
+        "weights_licence": "Apache-2.0 (adapter)",
+        "outputs": [
+          "multi-view images",
+          "textured mesh (GLB)"
+        ],
+        "hardware": {
+          "min_vram_gb": 6,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Install lists CUDA PyTorch only.",
+          "vram_notes": "README: text+geometry to multi-view SD2.1 below 6 GB, SDXL above 12 GB; image+geometry SD2.1 below 10 GB, SDXL above 16 GB; image to multi-view about 14 GB; texture generation suggests SD2.1 under 10 GB."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/huanngzh/MV-Adapter",
+          "https://arxiv.org/abs/2412.03632"
+        ],
+        "commercial_use": "adapter Apache-2.0; base model licences not read"
+      }
+    },
+    {
+      "id": "paint3d",
+      "name": "Paint3D",
+      "vendor": "OpenTexture",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0; dependencies and datasets have their own licences"
+      },
+      "url": "https://github.com/OpenTexture/Paint3D",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "Coarse-to-fine pipeline makes a lighting-free UV texture (about 2K) for an untextured mesh from text or an image; a refinement stage fills gaps and removes baked light.",
+          "inputs": "mesh plus text or image",
+          "outputs": "UV albedo texture",
+          "source": "https://github.com/OpenTexture/Paint3D",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/OpenTexture/Paint3D"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "lighting-free texture generation for meshes",
+        "params": "not stated",
+        "released": "2024-04",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "UV texture map (albedo)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Only a CUDA 11.6 environment is described.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/OpenTexture/Paint3D"
+        ],
+        "commercial_use": "Apache-2.0 code; diffusion model licences not read"
+      }
+    },
+    {
+      "id": "texgen",
+      "name": "TEXGen",
+      "vendor": "CVMI-Lab",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "licence not shown on the page"
+      },
+      "url": "https://github.com/CVMI-Lab/TEXGen",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "Feed-forward diffusion directly in UV space makes an albedo texture for a mesh from a text prompt; a flow-matching checkpoint is on Hugging Face.",
+          "inputs": "mesh plus text",
+          "outputs": "UV albedo texture",
+          "source": "https://github.com/CVMI-Lab/TEXGen",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/CVMI-Lab/TEXGen"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "UV-space texture diffusion",
+        "params": "not stated",
+        "released": "2024-12",
+        "weights_licence": "not stated",
+        "outputs": [
+          "UV albedo texture"
+        ],
+        "hardware": {
+          "min_vram_gb": 24,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not mentioned. Needs lambdalabs/sd-image-variations-diffusers and stabilityai/stable-diffusion-2-depth.",
+          "vram_notes": "README: testing needs about 24 GB; training more than 40 GB."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/CVMI-Lab/TEXGen"
+        ],
+        "commercial_use": "unknown"
+      }
+    },
+    {
+      "id": "materialmvp",
+      "name": "MaterialMVP",
+      "vendor": "ZebinHe (with Tencent authors)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "licence not stated on the page"
+      },
+      "url": "https://github.com/ZebinHe/MaterialMVP",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "uv-texturing",
+          "feature": "pbr-texture-for-mesh",
+          "does": "Multi-view diffusion makes albedo, metallic-roughness, normal and position maps for a mesh from an image prompt, aiming at material output that stays stable under changed lighting.",
+          "inputs": "mesh plus image",
+          "outputs": "PBR maps",
+          "source": "https://github.com/ZebinHe/MaterialMVP",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ZebinHe/MaterialMVP"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "illumination-invariant PBR material generation",
+        "params": "not stated",
+        "released": "2025-07",
+        "weights_licence": "not stated",
+        "outputs": [
+          "albedo",
+          "metallic-roughness",
+          "normal",
+          "position maps"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Needs PyTorch 2.5.1 with CUDA 12.4 and a Real-ESRGAN checkpoint.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/ZebinHe/MaterialMVP",
+          "https://arxiv.org/abs/2503.10289"
+        ],
+        "licence_trap": "possible inherited Tencent licence; paper-version weights still marked coming soon",
+        "commercial_use": "unknown; the downloadable professional version is built on Hunyuan3D-Paint-v2-1, so the Tencent licence may carry over (not verified)"
+      }
+    },
+    {
+      "id": "unirig",
+      "name": "UniRig",
+      "vendor": "VAST-AI-Research",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/VAST-AI-Research/UniRig",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "An autoregressive transformer predicts a skeleton for a mesh, then per-vertex skinning weights; inputs .obj, .fbx, .glb or .vrm; FBX output, merged into a GLB; covers humans, animals and objects.",
+          "inputs": "mesh",
+          "outputs": "rigged FBX or GLB",
+          "source": "https://github.com/VAST-AI-Research/UniRig",
+          "basis": "manual"
+        },
+        {
+          "area": "scripting-automation",
+          "feature": "blender-vrm-addon",
+          "does": "A modified VRM add-on for Blender in the repository imports and exports .vrm files for the pipeline.",
+          "inputs": "VRM file",
+          "outputs": "Blender scene",
+          "source": "https://github.com/VAST-AI-Research/UniRig",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/VAST-AI-Research/UniRig"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "automatic skeleton and skinning prediction",
+        "params": "not stated",
+        "released": "2025-04",
+        "weights_licence": "MIT (checkpoint trained on Articulation-XL2.0)",
+        "outputs": [
+          "skeleton and skin (FBX)",
+          "merged GLB"
+        ],
+        "hardware": {
+          "min_vram_gb": 8,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Install depends on CUDA-specific packages.",
+          "vram_notes": "README: at least 8 GB for generation; skin training at least 60 GB."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "tight",
+        "evidence": [
+          "https://github.com/VAST-AI-Research/UniRig",
+          "https://arxiv.org/abs/2504.12451"
+        ],
+        "commercial_use": "yes (MIT); the training datasets have their own terms, not read"
+      }
+    },
+    {
+      "id": "make-it-animatable",
+      "name": "Make-It-Animatable",
+      "vendor": "jasongzy (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT; SMPL and dataset licences apply separately"
+      },
+      "url": "https://github.com/jasongzy/Make-It-Animatable",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "Separate models predict skinning weights, bone positions and poses for a character mesh; v2 takes meshes only and adds better skinning post-processing.",
+          "inputs": "character mesh",
+          "outputs": "skinning weights, bones, pose",
+          "source": "https://github.com/jasongzy/Make-It-Animatable",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/jasongzy/Make-It-Animatable"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "rig and skin humanoid characters",
+        "params": "not stated",
+        "released": "2024-11 (CVPR 2025 Highlight)",
+        "weights_licence": "MIT",
+        "outputs": [
+          "skinning weights",
+          "bone positions",
+          "pose"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not mentioned.",
+          "vram_notes": "Training is tuned for an 80 GB A100; no inference figure."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/jasongzy/Make-It-Animatable",
+          "https://arxiv.org/abs/2411.18197"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "riganything",
+      "name": "RigAnything",
+      "vendor": "Isabellaliu (Adobe Research paper)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "licence not stated on the card"
+      },
+      "url": "https://huggingface.co/Isabellaliu/RigAnything",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "Template-free model predicts a skeleton and skinning for a GLB or OBJ mesh and writes a rigged GLB for Blender, plus joints and weights as npz.",
+          "inputs": "GLB or OBJ mesh",
+          "outputs": "rigged GLB",
+          "source": "https://huggingface.co/Isabellaliu/RigAnything",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/Isabellaliu/RigAnything"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "template-free autoregressive rigging",
+        "params": "not stated",
+        "released": "2025-02 (paper)",
+        "weights_licence": "not stated",
+        "outputs": [
+          "rigged GLB",
+          "joints and weights (npz)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Inference code targets cuda:0; the card advises simplifying the mesh if memory runs short.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/Isabellaliu/RigAnything",
+          "https://arxiv.org/abs/2502.09615"
+        ],
+        "commercial_use": "unknown"
+      }
+    },
+    {
+      "id": "puppeteer",
+      "name": "Puppeteer",
+      "vendor": "Seed3D (ByteDance Seed, NTU, A*STAR)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 for the repository; checkpoint and dataset licences not stated"
+      },
+      "url": "https://github.com/Seed3D/Puppeteer",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "Predicts a skeleton and skinning weights for a 3D object; rigged meshes export to FBX with a script that needs bpy 4.2.0.",
+          "inputs": "3D object",
+          "outputs": "rig files, FBX",
+          "source": "https://github.com/Seed3D/Puppeteer",
+          "basis": "manual"
+        },
+        {
+          "area": "animation-character",
+          "feature": "video-guided-animation",
+          "does": "Animates the rigged model through differentiable optimisation guided by a video and renders several views.",
+          "inputs": "rigged model plus video",
+          "outputs": "animation renders",
+          "source": "https://github.com/Seed3D/Puppeteer",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Seed3D/Puppeteer"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "rigging plus video-guided animation",
+        "params": "not stated",
+        "released": "2025-09",
+        "weights_licence": "not stated for checkpoints",
+        "outputs": [
+          "rig",
+          "FBX",
+          "animation renders"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Setup targets CUDA 11.8 and PyTorch 2.1.1.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/Seed3D/Puppeteer",
+          "https://arxiv.org/abs/2508.10898"
+        ],
+        "commercial_use": "code Apache-2.0; checkpoint and Articulation-XL2.0 dataset terms not read"
+      }
+    },
+    {
+      "id": "hy-motion",
+      "name": "HY-Motion 1.0 (and Lite)",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "tencent-hunyuan-community (name on the Hugging Face card); terms not read"
+      },
+      "url": "https://github.com/Tencent-Hunyuan/HY-Motion-1.0",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "capabilities": [
+        {
+          "area": "animation-character",
+          "feature": "text-to-motion",
+          "does": "Makes skeleton-based 3D character animation from a text prompt; an optional LLM module predicts duration and rewrites the prompt and can be switched off. File formats are not named on the page.",
+          "inputs": "text prompt",
+          "outputs": "skeleton animation",
+          "source": "https://github.com/Tencent-Hunyuan/HY-Motion-1.0",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Tencent-Hunyuan/HY-Motion-1.0"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text-to-3D-human-motion",
+        "params": "1.0B (Lite 0.46B)",
+        "released": "2025-12",
+        "weights_licence": "Tencent community licence (not read)",
+        "outputs": [
+          "skeleton animation"
+        ],
+        "hardware": {
+          "min_vram_gb": 24,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": "README: at least 26 GB (standard) or 24 GB (Lite), without the LLM prompt module; shorter prompts and motions lower it."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/Tencent-Hunyuan/HY-Motion-1.0",
+          "https://huggingface.co/tencent/HY-Motion-1.0"
+        ],
+        "commercial_use": "unknown (licence text not read; other Tencent 3D releases exclude the EU, the UK and South Korea)"
+      }
+    },
+    {
+      "id": "mdm",
+      "name": "Human Motion Diffusion Model (MDM)",
+      "vendor": "GuyTevet (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT; CLIP, SMPL and dataset licences apply separately"
+      },
+      "url": "https://github.com/GuyTevet/motion-diffusion-model",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "animation-character",
+          "feature": "text-to-motion",
+          "does": "Diffusion model makes human motion from a text prompt or an action label; output is joint positions (npy), stick-figure MP4, or SMPL parameters and per-frame OBJ meshes.",
+          "inputs": "text or action label",
+          "outputs": "joint positions, SMPL meshes",
+          "source": "https://github.com/GuyTevet/motion-diffusion-model",
+          "basis": "manual"
+        },
+        {
+          "area": "animation-character",
+          "feature": "motion-editing",
+          "does": "Fills in the middle of a motion or regenerates the upper body; also supports unconstrained generation.",
+          "inputs": "partial motion",
+          "outputs": "edited motion",
+          "source": "https://github.com/GuyTevet/motion-diffusion-model",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/GuyTevet/motion-diffusion-model"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text and action to human motion",
+        "params": "not stated",
+        "released": "2022-10",
+        "weights_licence": "MIT",
+        "outputs": [
+          "joint positions (npy)",
+          "SMPL parameters",
+          "OBJ meshes",
+          "MP4"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "no",
+          "cpu_notes": "README lists a CUDA-capable GPU as a requirement and says mesh rendering needs a GPU.",
+          "vram_notes": "Not stated; the 50-step model takes about 0.4 s per sample."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/GuyTevet/motion-diffusion-model"
+        ],
+        "commercial_use": "code MIT; SMPL licence not read"
+      }
+    },
+    {
+      "id": "motiongpt",
+      "name": "MotionGPT",
+      "vendor": "OpenMotionLab",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT; SMPL and dataset licences apply separately"
+      },
+      "url": "https://github.com/OpenMotionLab/MotionGPT",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "animation-character",
+          "feature": "text-to-motion",
+          "does": "Language model on T5-770M with vector-quantised motion tokens does text-to-motion, motion-to-text, motion prediction and in-betweening; outputs npy motions, optional SMPL meshes and PLY files.",
+          "inputs": "text or motion",
+          "outputs": "motion npy, SMPL mesh",
+          "source": "https://github.com/OpenMotionLab/MotionGPT",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/OpenMotionLab/MotionGPT"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "motion language model",
+        "params": "T5-770M base",
+        "released": "2023-06",
+        "weights_licence": "MIT",
+        "outputs": [
+          "motion (npy)",
+          "SMPL mesh",
+          "PLY"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated; the SMPL fitting command has a --cuda flag.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/OpenMotionLab/MotionGPT"
+        ],
+        "commercial_use": "code MIT; SMPL licence not read"
+      }
+    },
+    {
+      "id": "actionmesh",
+      "name": "ActionMesh",
+      "vendor": "Meta (facebook)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "licence tag other; terms are in the GitHub LICENSE file (not read)"
+      },
+      "url": "https://huggingface.co/facebook/ActionMesh",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "animation-character",
+          "feature": "video-to-animated-mesh",
+          "does": "Feed-forward model adds a time axis to 3D diffusion and makes an animated 3D mesh from an input video; a fast mode exists.",
+          "inputs": "video",
+          "outputs": "animated mesh",
+          "source": "https://huggingface.co/facebook/ActionMesh",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/facebook/ActionMesh"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "video to animated mesh",
+        "params": "not stated",
+        "released": "2026-01",
+        "weights_licence": "other (see repository LICENSE)",
+        "outputs": [
+          "animated mesh"
+        ],
+        "hardware": {
+          "min_vram_gb": 32,
+          "cpu_ok": "no",
+          "cpu_notes": "Card requires an NVIDIA GPU.",
+          "vram_notes": "Card: at least 32 GB."
+        },
+        "home_srv": "no",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://huggingface.co/facebook/ActionMesh",
+          "https://arxiv.org/abs/2601.16148"
+        ],
+        "commercial_use": "unknown (licence not read)"
+      }
+    },
+    {
+      "id": "hunyuanworld-1",
+      "name": "HunyuanWorld 1.0 (and Lite)",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "Tencent HunyuanWorld-1.0 Community License"
+      },
+      "url": "https://github.com/Tencent-Hunyuan/HunyuanWorld-1.0",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "panorama-to-3d-world",
+          "does": "Starts from a 360 degree panorama and splits it into layered 3D meshes with separate objects, from text or image input; the open version is built on Flux and can be previewed in a browser viewer.",
+          "inputs": "text or image",
+          "outputs": "layered meshes",
+          "source": "https://github.com/Tencent-Hunyuan/HunyuanWorld-1.0",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/Tencent-Hunyuan/HunyuanWorld-1.0"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text or image to explorable 3D world",
+        "params": "panorama models about 478 MB each (parameter count not stated)",
+        "released": "2025-07",
+        "weights_licence": "Tencent HunyuanWorld-1.0 Community License",
+        "outputs": [
+          "layered meshes",
+          "Draco export"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": "No figure; the Lite quantised release (2025-08) is described as running on consumer cards such as a 4090."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/Tencent-Hunyuan/HunyuanWorld-1.0",
+          "https://raw.githubusercontent.com/Tencent-Hunyuan/HunyuanWorld-1.0/main/LICENSE"
+        ],
+        "licence_trap": "Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models; it also uses Flux, whose licence was not read",
+        "commercial_use": "conditional: Tencent community licence: worldwide except the EU, the UK and South Korea; a licence request is needed above 1 million monthly active users; outputs may not be used to improve other AI models"
+      }
+    },
+    {
+      "id": "hy-world-2",
+      "name": "HY-World 2.0 (WorldMirror 2.0, HY-Pano-2, WorldStereo-2)",
+      "vendor": "Tencent",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "tencent-hy-world-2.0-community (name on the card); terms not read"
+      },
+      "url": "https://huggingface.co/tencent/HY-World-2.0",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "panorama-to-3d-world",
+          "does": "HY-Pano-2 makes a 360 degree panorama from text or an image and WorldStereo-2 lifts it into a 3D Gaussian world; meshes and 3DGS are the stated outputs.",
+          "inputs": "text or image",
+          "outputs": "3DGS world, meshes",
+          "source": "https://huggingface.co/tencent/HY-World-2.0",
+          "basis": "model-card"
+        },
+        {
+          "area": "modeling-scan-reconstruction",
+          "feature": "multiview-reconstruction",
+          "does": "WorldMirror 2.0 (about 1.2B parameters) takes multi-view images or casual video, optionally with camera and depth priors, and predicts depth, normals, camera parameters, point clouds and 3DGS attributes in one forward pass.",
+          "inputs": "images or video",
+          "outputs": "point cloud, depth, normals, cameras, 3DGS",
+          "source": "https://huggingface.co/tencent/HY-World-2.0",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/tencent/HY-World-2.0"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "world generation and multi-view reconstruction",
+        "params": "WorldMirror 2.0 about 1.2B; HY-Pano-2 about 80B; WorldStereo-2 about 17B",
+        "released": "2026-04 (WorldMirror 2.0); panorama and world generation weights 2026-05",
+        "weights_licence": "tencent-hy-world-2.0-community (not read)",
+        "outputs": [
+          "meshes",
+          "3DGS",
+          "point clouds",
+          "depth maps",
+          "normals"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card recommends CUDA 12.8; FlashAttention-3 for Hopper; no CPU statement.",
+          "vram_notes": "No figure. The 80B panorama model is far beyond any local card listed here."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/tencent/HY-World-2.0"
+        ],
+        "commercial_use": "unknown (licence text not read; HunyuanWorld 1.0 excludes the EU, the UK and South Korea)"
+      }
+    },
+    {
+      "id": "worldgen",
+      "name": "WorldGen (open implementation)",
+      "vendor": "Ziyang Xie (independent)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0; needs gated FLUX.1-dev weights"
+      },
+      "url": "https://github.com/ZiYang-xie/WorldGen",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-3d-scene",
+          "does": "Makes an indoor or outdoor scene from text or one image as a Gaussian splat PLY or a mesh PLY, with 360 degree exploration and custom camera paths.",
+          "inputs": "text or image",
+          "outputs": "3DGS PLY or mesh PLY",
+          "source": "https://github.com/ZiYang-xie/WorldGen",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "panorama-to-3d-world",
+          "does": "Also converts a 2:1 equirectangular panorama into a scene.",
+          "inputs": "panorama",
+          "outputs": "3D scene",
+          "source": "https://github.com/ZiYang-xie/WorldGen",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ZiYang-xie/WorldGen"
+        ],
+        "restrictions": null,
+        "notes": "The README does not mention Meta; it is not the code of Meta's WorldGen paper."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text or image to 3D scene",
+        "params": "not stated",
+        "released": "2025-04",
+        "weights_licence": "Apache-2.0 (code); FLUX.1-dev gated",
+        "outputs": [
+          "Gaussian splat (PLY)",
+          "mesh (PLY)"
+        ],
+        "hardware": {
+          "min_vram_gb": 10,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Example code falls back to CPU if CUDA is missing, but install needs GPU PyTorch and no CPU performance is given.",
+          "vram_notes": "README: about 10 GB in low-VRAM mode; set low_vram under 24 GB."
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "no",
+        "evidence": [
+          "https://github.com/ZiYang-xie/WorldGen"
+        ],
+        "licence_trap": "gated FLUX.1-dev weights (licence not read)",
+        "commercial_use": "code Apache-2.0; the FLUX.1-dev licence was not read"
+      }
+    },
+    {
+      "id": "text2cad",
+      "name": "Text2CAD",
+      "vendor": "SadilKhan (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "CC BY-NC-SA 4.0 (LICENSE file read)"
+      },
+      "url": "https://github.com/SadilKhan/Text2CAD",
+      "platforms": [
+        "linux"
+      ],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "text-to-cad-sequence",
+          "does": "Makes sequential CAD designs from text prompts that range from beginner to expert wording; test inference writes a pickle that an evaluation script reads. A v1.0 checkpoint is on Hugging Face.",
+          "inputs": "text prompt",
+          "outputs": "CAD construction sequence",
+          "source": "https://github.com/SadilKhan/Text2CAD",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/SadilKhan/Text2CAD"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text to sequential CAD designs",
+        "params": "not stated",
+        "released": "2024 (NeurIPS 2024 Spotlight)",
+        "weights_licence": "CC BY-NC-SA 4.0 (non-commercial)",
+        "outputs": [
+          "CAD sequence (pickle)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Linux, Python 3.9+; CPU not mentioned.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/SadilKhan/Text2CAD",
+          "https://raw.githubusercontent.com/SadilKhan/Text2CAD/main/LICENSE"
+        ],
+        "licence_trap": "CC BY-NC-SA 4.0",
+        "commercial_use": "no (non-commercial)"
+      }
+    },
+    {
+      "id": "cad-recode",
+      "name": "CAD-Recode",
+      "vendor": "filaPro (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "source-available",
+        "name": "weights CC-BY-NC-4.0 (v1.5 card); code licence not read"
+      },
+      "url": "https://github.com/filaPro/cad-recode",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "point-cloud-to-cad-code",
+          "does": "A Qwen2-1.5B based model reads a point cloud and writes Python code that builds the CAD model (the GitHub page names CadQuery); a notebook demo and a ZeroGPU Space exist.",
+          "inputs": "point cloud",
+          "outputs": "CAD Python code",
+          "source": "https://github.com/filaPro/cad-recode",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/filaPro/cad-recode"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "point cloud to CAD code",
+        "params": "about 2B tensors (Qwen2-1.5B plus one linear layer)",
+        "released": "2024-12",
+        "weights_licence": "CC-BY-NC-4.0",
+        "outputs": [
+          "CAD Python code"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Docker and notebook given; no hardware statement.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/filaPro/cad-recode",
+          "https://huggingface.co/filapro/cad-recode-v1.5"
+        ],
+        "licence_trap": "CC-BY-NC-4.0 weights",
+        "commercial_use": "no for the weights (non-commercial)"
+      }
+    },
+    {
+      "id": "cadfusion",
+      "name": "CADFusion",
+      "vendor": "Microsoft",
+      "kind": "model",
+      "status": "unknown",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT (repository archived, read-only); base model is Llama 3"
+      },
+      "url": "https://github.com/microsoft/CADFusion",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "text-to-cad-sequence",
+          "does": "Fine-tunes a Llama 3 model on text-to-CAD data, then alternates with a visual feedback model; samples are saved as JSONL, point clouds, OBJ, STEP and STL. Checkpoints v1.0 and v1.1 are on Hugging Face.",
+          "inputs": "text description",
+          "outputs": "CAD sequence; STEP, STL, OBJ",
+          "source": "https://github.com/microsoft/CADFusion",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/microsoft/CADFusion"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text to CAD with visual feedback",
+        "params": "Llama 3 fine-tune; size not stated",
+        "released": "2025 (ICML 2025)",
+        "weights_licence": "MIT code; Llama 3 weights licence not read",
+        "outputs": [
+          "CAD models (STEP, STL, OBJ)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Multi-GPU training described; CPU not mentioned.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/microsoft/CADFusion"
+        ],
+        "licence_trap": "Llama 3 licence on the weights (not read)",
+        "commercial_use": "code MIT; Llama 3 licence terms not read"
+      }
+    },
+    {
+      "id": "cad-coder",
+      "name": "CAD-Coder (text to CadQuery)",
+      "vendor": "gudo7208 (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (same as Qwen2.5-7B-Instruct base)"
+      },
+      "url": "https://huggingface.co/gudo7208/CAD-Coder",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "text-to-cad-code",
+          "does": "Qwen2.5-7B-Instruct fine-tuned by supervised learning and then GRPO writes executable CadQuery code from a text description; the card reports mean Chamfer distance 6.54 against 29.29 for Text2CAD (x10^3, lower is better).",
+          "inputs": "text description",
+          "outputs": "CadQuery Python code",
+          "source": "https://huggingface.co/gudo7208/CAD-Coder",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/gudo7208/CAD-Coder"
+        ],
+        "restrictions": null,
+        "notes": "Not the same as the image-to-CadQuery CAD-Coder vision-language model (arXiv 2505.14646), whose weights page was not opened."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text to CadQuery code",
+        "params": "8B listed (Qwen2.5-7B-Instruct base)",
+        "released": "2025-05",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "CadQuery Python code"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "BF16 weights; example uses device_map=auto; needs cadquery 2.3.1 and numpy below 2.0 to run the code.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/gudo7208/CAD-Coder",
+          "https://arxiv.org/abs/2505.19713"
+        ],
+        "commercial_use": "yes (Apache-2.0); training data terms not read"
+      }
+    },
+    {
+      "id": "nurbgen",
+      "name": "NURBGen",
+      "vendor": "SadilKhan (academic)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0 (gated download)"
+      },
+      "url": "https://huggingface.co/SadilKhan/NURBGen",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "text-to-nurbs",
+          "does": "A Qwen3-4B model with a LoRA adapter turns a text description into NURBS surface data written as text; the card does not name a STEP or other export.",
+          "inputs": "text description",
+          "outputs": "NURBS text",
+          "source": "https://huggingface.co/SadilKhan/NURBGen",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/SadilKhan/NURBGen"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text to NURBS CAD",
+        "params": "Qwen3-4B base plus LoRA",
+        "released": "2025-11 (paper; AAAI 2026)",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "NURBS text"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Examples use bfloat16, device_map=auto, optional vLLM.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/SadilKhan/NURBGen",
+          "https://arxiv.org/abs/2511.06194"
+        ],
+        "commercial_use": "yes (Apache-2.0); training data terms not read"
+      }
+    },
+    {
+      "id": "qwen3-coder-30b-a3b",
+      "name": "Qwen3-Coder-30B-A3B-Instruct",
+      "vendor": "Qwen (Alibaba)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "llm-writes-cad-script",
+          "does": "General code model with a 262k-token context; the card does not mention CAD, so writing CadQuery or OpenSCAD scripts from stated dimensions is an untested use for us, not a documented feature.",
+          "inputs": "prompt with dimensions",
+          "outputs": "script text",
+          "source": "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "code generation (used here for CAD scripts)",
+        "params": "30.5B total, 3.3B active per token",
+        "released": "2025 (month not stated)",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "code"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Card lists llama.cpp, Ollama, LM Studio, MLX-LM and KTransformers as local runtimes; no CPU speed is given. 31B BF16 weights are about 62 GB by arithmetic, which fits in 503 GB RAM.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct"
+        ],
+        "commercial_use": "yes (Apache-2.0)"
+      }
+    },
+    {
+      "id": "blenderllm",
+      "name": "BlenderLLM",
+      "vendor": "FreedomIntelligence",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/FreedomIntelligence/BlenderLLM",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "scripting-automation",
+          "feature": "llm-writes-blender-script",
+          "does": "Qwen2.5-Coder-7B-Instruct fine-tuned on about 12k instruction-script pairs writes Blender Python from text; a second script runs it in a local Blender. It covers basic modelling, text input only, no multi-turn dialogue.",
+          "inputs": "text instruction",
+          "outputs": "Blender Python script, render",
+          "source": "https://github.com/FreedomIntelligence/BlenderLLM",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/FreedomIntelligence/BlenderLLM"
+        ],
+        "restrictions": null,
+        "notes": "Reported on its own CADBench: 0.748 average on the simulated set, 0.664 on the forum set, 3.4% syntax errors (judge: GPT-4o)."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "text to Blender Python scripts",
+        "params": "7B base (Hugging Face listing shows 8B)",
+        "released": "2024-12",
+        "weights_licence": "Apache-2.0",
+        "outputs": [
+          "Blender Python script"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Not stated.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://github.com/FreedomIntelligence/BlenderLLM"
+        ],
+        "commercial_use": "yes (Apache-2.0); training data produced partly with GPT-4o, terms not read"
+      }
+    },
+    {
+      "id": "cadquery",
+      "name": "CadQuery",
+      "vendor": "CadQuery project",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "Apache-2.0"
+      },
+      "url": "https://github.com/CadQuery/cadquery",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "parametric-cad-scripting",
+          "does": "Python module that builds parametric 3D CAD models from short scripts on the OpenCASCADE kernel; runs as a library without a GUI.",
+          "inputs": "Python script with dimensions",
+          "outputs": "solid model",
+          "source": "https://github.com/CadQuery/cadquery",
+          "basis": "manual"
+        },
+        {
+          "area": "pipeline-interchange",
+          "feature": "cad-export",
+          "does": "Exports STEP and DXF (lossless) and STL, VRML, AMF and 3MF.",
+          "inputs": "solid model",
+          "outputs": "STEP, DXF, STL, VRML, AMF, 3MF",
+          "source": "https://github.com/CadQuery/cadquery",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "STEP",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "STL",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "DXF",
+          "role": "export",
+          "open": "documented"
+        }
+      ],
+      "scripting": [
+        "Python API"
+      ],
+      "outcomes": [
+        "exact parametric parts",
+        "STEP files for CAD exchange"
+      ],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/CadQuery/cadquery"
+        ],
+        "restrictions": null,
+        "notes": "Target language for the LLM-writes-CAD route. Pip install works for Python 3.9 to 3.12; conda-forge is better supported."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "openscad",
+      "name": "OpenSCAD",
+      "vendor": "OpenSCAD project",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "GPL v2"
+      },
+      "url": "https://openscad.org/about.html",
+      "platforms": [
+        "linux",
+        "windows",
+        "macos"
+      ],
+      "capabilities": [
+        {
+          "area": "modeling-parametric-cad",
+          "feature": "parametric-cad-scripting",
+          "does": "Script-driven solid modeller that compiles a text file into a 3D model using constructive solid geometry and extrusion of 2D outlines; aimed at engineering parts.",
+          "inputs": "script file",
+          "outputs": "solid model",
+          "source": "https://openscad.org/about.html",
+          "basis": "manual"
+        },
+        {
+          "area": "pipeline-interchange",
+          "feature": "cad-export",
+          "does": "Imports DXF outlines and reads and writes STL and OFF models.",
+          "inputs": "script or DXF",
+          "outputs": "STL, OFF",
+          "source": "https://openscad.org/about.html",
+          "basis": "manual"
+        }
+      ],
+      "formats": [
+        {
+          "name": "STL",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "OFF",
+          "role": "export",
+          "open": "open"
+        },
+        {
+          "name": "DXF",
+          "role": "import",
+          "open": "documented"
+        }
+      ],
+      "scripting": [
+        "OpenSCAD language"
+      ],
+      "outcomes": [
+        "parametric printable parts"
+      ],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://openscad.org/about.html"
+        ],
+        "restrictions": null,
+        "notes": "Second target language for the LLM-writes-CAD route; only the About page was read."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "uni-3dar",
+      "name": "Uni-3DAR",
+      "vendor": "DP Technology (dptech)",
+      "kind": "model",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://huggingface.co/dptech/Uni-3DAR",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "scientific-computation",
+          "feature": "molecule-structure-generation",
+          "does": "Autoregressive model for generating and understanding 3D structures of molecules, proteins and crystals; the released pipeline covers QM9 molecules. It makes atomic structures, not surface meshes.",
+          "inputs": "task setup",
+          "outputs": "molecule structures",
+          "source": "https://huggingface.co/dptech/Uni-3DAR",
+          "basis": "model-card"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://huggingface.co/dptech/Uni-3DAR"
+        ],
+        "restrictions": null,
+        "notes": ""
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch",
+      "model": {
+        "task": "3D structure generation for molecules, proteins, crystals",
+        "params": "not stated",
+        "released": "2025-03",
+        "weights_licence": "MIT",
+        "outputs": [
+          "atomic structures (QM9 pipeline)"
+        ],
+        "hardware": {
+          "min_vram_gb": null,
+          "cpu_ok": "unknown",
+          "cpu_notes": "Needs Uni-Core; Docker image references CUDA 12.5.",
+          "vram_notes": ""
+        },
+        "home_srv": "unknown",
+        "laptop_gpu_8gb": "unknown",
+        "evidence": [
+          "https://huggingface.co/dptech/Uni-3DAR"
+        ],
+        "commercial_use": "yes (MIT)"
+      }
+    },
+    {
+      "id": "molecular-nodes",
+      "name": "Molecular Nodes",
+      "vendor": "Brady Johnston and contributors",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "GPL-3.0"
+      },
+      "url": "https://github.com/BradyAJohnston/MolecularNodes",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "molecular-visualisation",
+          "feature": "molecule-import-geometry-nodes",
+          "does": "Blender add-on that imports PDB and AlphaFold structures, MD topologies and trajectories and oxDNA simulations, and builds them as editable Geometry Nodes styles (cartoon, ball-and-stick).",
+          "inputs": "PDB, AlphaFold, MD, oxDNA files",
+          "outputs": "molecule geometry in Blender",
+          "source": "https://github.com/BradyAJohnston/MolecularNodes",
+          "basis": "manual"
+        },
+        {
+          "area": "molecular-visualisation",
+          "feature": "density-and-cell-model-import",
+          "does": "Also imports EM density maps, .star files and CellPack models or ensembles.",
+          "inputs": "density map, star file, CellPack model",
+          "outputs": "geometry in Blender",
+          "source": "https://github.com/BradyAJohnston/MolecularNodes",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python package (experimental API)",
+        "Blender Geometry Nodes"
+      ],
+      "outcomes": [
+        "stills",
+        "animations from trajectories"
+      ],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/BradyAJohnston/MolecularNodes"
+        ],
+        "restrictions": null,
+        "notes": "Runs inside Blender (version 520.x targets Blender 5.2). The page does not state a GPU need."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "cellpack",
+      "name": "cellPACK",
+      "vendor": "Allen Institute for Cell Science (mesoscope)",
+      "kind": "library",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/mesoscope/cellPACK",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "scientific-computation",
+          "feature": "cell-model-packing",
+          "does": "Python algorithm that packs molecules from JSON recipes (v1 or v2 format) into 3D cell models; recipes can load from remote servers. Output file types are not stated on the page.",
+          "inputs": "recipe JSON, config",
+          "outputs": "packed 3D cell model",
+          "source": "https://github.com/mesoscope/cellPACK",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python package (pip install cellpack)"
+      ],
+      "outcomes": [
+        "packed cell models"
+      ],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/mesoscope/cellPACK"
+        ],
+        "restrictions": null,
+        "notes": "Installable from PyPI; a web version is listed. Hardware needs are not stated."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "mcp-for-blender",
+      "name": "MCP for Blender (formerly blender-mcp)",
+      "vendor": "Siddharth Ahuja (community)",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "open-source",
+        "name": "MIT"
+      },
+      "url": "https://github.com/ahujasid/blender-mcp",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "scripting-automation",
+          "feature": "mcp-blender-control",
+          "does": "Connects an LLM client to a Blender add-on over a local socket; tools run Python in the live session, summarise the scene and render viewport views so the model can check its work.",
+          "inputs": "LLM tool calls",
+          "outputs": "changes in Blender, screenshots",
+          "source": "https://github.com/ahujasid/blender-mcp",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "generate-3d-via-cloud-services",
+          "does": "The generate_3d tool makes and imports a model through Tripo, Hunyuan3D (Tencent Cloud), Hyper3D Rodin or Meshy; most routes need a paid key or the paid Premium tier.",
+          "inputs": "prompt",
+          "outputs": "imported model",
+          "source": "https://github.com/ahujasid/blender-mcp",
+          "basis": "manual"
+        },
+        {
+          "area": "scripting-automation",
+          "feature": "asset-library-search",
+          "does": "Searches and imports assets from Poly Haven (free, CC0), Sketchfab and Poly Pizza (API key needed).",
+          "inputs": "search text",
+          "outputs": "imported asset",
+          "source": "https://github.com/ahujasid/blender-mcp",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python (execute_blender_code)",
+        "MCP"
+      ],
+      "outcomes": [
+        "scripted Blender scenes",
+        "imported assets"
+      ],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://github.com/ahujasid/blender-mcp"
+        ],
+        "restrictions": null,
+        "notes": "Needs Blender 3.0+, Python 3.10+ and uv. The socket has no authentication, so keep it on localhost. Telemetry of content is opt-in; a minimal usage record is on by default. A third-party blog (search result, not opened) reports CVEs in 2026; read the repository advisories before use."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "blender-lab-mcp",
+      "name": "Blender Lab MCP server",
+      "vendor": "Blender Lab (Blender project)",
+      "kind": "application",
+      "status": "active",
+      "licence": {
+        "type": "unknown",
+        "name": "linked source code; licence not shown on the page"
+      },
+      "url": "https://www.blender.org/lab/mcp-server/",
+      "platforms": [],
+      "capabilities": [
+        {
+          "area": "scripting-automation",
+          "feature": "mcp-blender-control",
+          "does": "Gives an LLM a natural-language route into Blender's Python API for scene analysis, renaming data-blocks, querying relations such as which objects use a material, and documenting geometry node setups.",
+          "inputs": "LLM tool calls",
+          "outputs": "scene reports, edits",
+          "source": "https://www.blender.org/lab/mcp-server/",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [
+        "Python API",
+        "MCP"
+      ],
+      "outcomes": [
+        "scene analysis",
+        "documentation of node setups"
+      ],
+      "rea": {
+        "studyable": "open-source-readable",
+        "public_sources": [
+          "https://www.blender.org/lab/mcp-server/"
+        ],
+        "restrictions": null,
+        "notes": "Needs Blender 5.1 or newer and three parts (add-on, MCP server, LLM client). llama.cpp is the documented client, so a local model can drive it. The page warns that the LLM's code runs with no safeguards; use a virtual machine or a machine with no sensitive data. Download links show version 1.0.3."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "meshy",
+      "name": "Meshy",
+      "vendor": "Meshy",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "paid credits; API needs a Pro plan or higher; rights for API outputs not stated on the page"
+      },
+      "url": "https://www.meshy.ai/api",
+      "platforms": [
+        "web"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "text-to-mesh",
+          "does": "API makes a mesh from text, from one image or from several images; 3D tasks start at 20 credits; the page names the Meshy 7 model series.",
+          "inputs": "text or images",
+          "outputs": "3D model",
+          "source": "https://www.meshy.ai/api",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "AI texturing task for an existing model, priced by resolution, with 8K listed.",
+          "inputs": "mesh plus prompt",
+          "outputs": "textured model",
+          "source": "https://www.meshy.ai/api",
+          "basis": "manual"
+        },
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "Auto-rigging (5 credits) and animation (3 credits) tasks, plus a remesh task (5 credits).",
+          "inputs": "model",
+          "outputs": "rigged and animated model",
+          "source": "https://www.meshy.ai/api",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [
+        "game and print props from prompts"
+      ],
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://www.meshy.ai/api"
+        ],
+        "restrictions": null,
+        "notes": "Cloud only; no weights."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "tripo",
+      "name": "Tripo (API v3)",
+      "vendor": "Tripo (VAST)",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "credit-based API; prices and output rights not on the page read"
+      },
+      "url": "https://developers.tripo3d.com/en/docs/introduction",
+      "platforms": [
+        "web"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Generation endpoints for text, one image and several views, each with H Series and P Series variants; tasks are queued and polled.",
+          "inputs": "text, image or views",
+          "outputs": "3D model",
+          "source": "https://developers.tripo3d.com/en/docs/introduction",
+          "basis": "manual"
+        },
+        {
+          "area": "uv-texturing",
+          "feature": "texture-for-mesh",
+          "does": "Texture, convert, semantic segment, mesh completion and decimate (retopology) endpoints work on an existing model.",
+          "inputs": "model",
+          "outputs": "textured or processed model",
+          "source": "https://developers.tripo3d.com/en/docs/introduction",
+          "basis": "manual"
+        },
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "The Animation group of the v3 API has three endpoints: rig-check (rigging compatibility), rig (rig a model) and retarget (retarget an animation). The page gives no detail on skeleton or skinning.",
+          "inputs": "model",
+          "outputs": "rigged model, animation",
+          "source": "https://developers.tripo3d.com/en/docs/introduction",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [
+        "props, characters, rigged assets"
+      ],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://developers.tripo3d.com/en/docs/introduction"
+        ],
+        "restrictions": null,
+        "notes": "Cloud only. The vendor's TripoSR and TripoSG models are open (see those entries). The main site returned 403 to the page fetch."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "rodin-hyper3d",
+      "name": "Rodin (Hyper3D)",
+      "vendor": "Hyper3D",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "free credits then paid tiers; prices not shown on the page"
+      },
+      "url": "https://hyper3d.ai/",
+      "platforms": [
+        "web"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Makes 3D models from text or reference images with clean topology and PBR materials with UVs; the page lists Gen-2.5, Remix and Turbo options and exports to STL, FBX, OBJ, GLB, GLTF and USDZ.",
+          "inputs": "text or images",
+          "outputs": "3D model",
+          "source": "https://hyper3d.ai/",
+          "basis": "manual"
+        },
+        {
+          "area": "ai-generative",
+          "feature": "control-signal-conditioning",
+          "does": "Bounding box, voxel and point cloud ControlNets steer the shape; an editing area offers Parts, Refine and Modify for uploaded OBJ, FBX or GLB files.",
+          "inputs": "control geometry",
+          "outputs": "controlled model",
+          "source": "https://hyper3d.ai/",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [
+        "props with PBR"
+      ],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://hyper3d.ai/"
+        ],
+        "restrictions": null,
+        "notes": "Cloud only, with an API platform and plugins for Blender, Unity, Unreal, Godot, Maya and 3ds Max. The page does not say whether any weights are open."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "sloyd",
+      "name": "Sloyd",
+      "vendor": "Sloyd",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "free start, commercial licence included in plans; plan terms not shown"
+      },
+      "url": "https://www.sloyd.ai/",
+      "platforms": [
+        "web"
+      ],
+      "capabilities": [
+        {
+          "area": "modeling-procedural",
+          "feature": "parametric-template-generation",
+          "does": "Hundreds of customisable templates with a Template Editor that also takes text prompts; the page claims game-ready output with polygon targets and quad topology, and watertight models for printing.",
+          "inputs": "template parameters or text",
+          "outputs": "3D model",
+          "source": "https://www.sloyd.ai/",
+          "basis": "manual"
+        },
+        {
+          "area": "scripting-automation",
+          "feature": "generation-api",
+          "does": "A 3D generation API takes text or images with control over polygon count and texture resolution and a job-status endpoint; plugins exist for Blender, Godot, Maya, Roblox, Unity and Unreal.",
+          "inputs": "text or image",
+          "outputs": "3D model",
+          "source": "https://www.sloyd.ai/",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [
+        "game props",
+        "printable models"
+      ],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://www.sloyd.ai/"
+        ],
+        "restrictions": null,
+        "notes": "Cloud only. The page does not mention LODs or UVs."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "3d-ai-studio",
+      "name": "3D AI Studio",
+      "vendor": "3D AI Studio",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "subscriptions from US$12/month billed annually, credit packs, pay-as-you-go API"
+      },
+      "url": "https://www.3daistudio.com/",
+      "platforms": [
+        "web"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "One site fronting 20+ 3D generators, among them TRELLIS 2, Hitem3D 3.0, Rodin Gen-2.5, Tripo P2, Hunyuan3D 3.1, Meshy 7.1 and Prism 3.1. The FAQ says fast models finish in under 90 seconds. Its export lists vary: GLB, FBX, OBJ, STL, 3MF, USDZ, BLEND, DAE.",
+          "inputs": "text or image",
+          "outputs": "3D model",
+          "source": "https://www.3daistudio.com/",
+          "basis": "manual"
+        },
+        {
+          "area": "modeling-polygon",
+          "feature": "mesh-remesh-quad",
+          "does": "Quad remeshing, AI texturing, segmentation, GLB compression and format conversion tools work on uploaded models.",
+          "inputs": "model",
+          "outputs": "processed model",
+          "source": "https://www.3daistudio.com/",
+          "basis": "manual"
+        },
+        {
+          "area": "rigging-skeleton",
+          "feature": "auto-rig-skeleton-skinning",
+          "does": "Auto-rigging is listed as a tool, with an MCP connector for Claude and ChatGPT and a REST API.",
+          "inputs": "model",
+          "outputs": "rigged model",
+          "source": "https://www.3daistudio.com/",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [
+        "multi-model comparison",
+        "print and game assets"
+      ],
+      "rea": {
+        "studyable": "public-docs-only",
+        "public_sources": [
+          "https://www.3daistudio.com/"
+        ],
+        "restrictions": null,
+        "notes": "Cloud only. It lists Hunyuan3D 3.1, so the Hunyuan 3D 3.x line is reachable through hosted services, but no open weights for 3.x were found."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    },
+    {
+      "id": "kaedim",
+      "name": "Kaedim",
+      "vendor": "Kaedim",
+      "kind": "service",
+      "status": "active",
+      "licence": {
+        "type": "proprietary",
+        "name": "pricing not shown; customers are said to own their custom assets"
+      },
+      "url": "https://www.kaedim3d.com/",
+      "platforms": [
+        "web"
+      ],
+      "capabilities": [
+        {
+          "area": "ai-generative",
+          "feature": "image-to-mesh",
+          "does": "Turns sketches, concept art, product photos and briefs into 3D assets for games, product design and e-commerce, with turnaround of hours.",
+          "inputs": "sketches, photos, briefs",
+          "outputs": "3D asset",
+          "source": "https://www.kaedim3d.com/",
+          "basis": "manual"
+        },
+        {
+          "area": "collaboration-versioning",
+          "feature": "review-iteration-loop",
+          "does": "A review, mark-up, iterate and approve loop with unlimited revisions; the page does not say whether human artists are involved.",
+          "inputs": "review comments",
+          "outputs": "revised asset",
+          "source": "https://www.kaedim3d.com/",
+          "basis": "manual"
+        }
+      ],
+      "formats": [],
+      "scripting": [],
+      "outcomes": [
+        "production assets from art direction"
+      ],
+      "rea": {
+        "studyable": "unknown",
+        "public_sources": [
+          "https://www.kaedim3d.com/"
+        ],
+        "restrictions": null,
+        "notes": "Cloud only; the case-study numbers on the page are self-reported."
+      },
+      "verified": "2026-11-02, how: README or model card read through a page fetch"
+    }
+  ]
+}

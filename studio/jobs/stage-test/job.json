@@ -1,0 +1,65 @@
+{
+  "world": {
+    "id": "stage-test",
+    "duration": 1,
+    "frames": [
+      {
+        "id": "bench",
+        "parent": null,
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": []
+  },
+  "timeline": {
+    "tracks": []
+  },
+  "paths": [
+    {
+      "id": "deck",
+      "kind": "deck",
+      "stops": [
+        0
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              0,
+              0,
+              50
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40
+        }
+      ]
+    }
+  ],
+  "lens": "cinematic",
+  "langs": [
+    "en"
+  ],
+  "layout": [
+    {
+      "stop": 0,
+      "lang": "en",
+      "blocks": []
+    }
+  ],
+  "notes": {}
+}

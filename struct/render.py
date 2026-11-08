@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cx_common import *  # noqa: E402,F401,F403
 import cx_common as CX  # noqa: E402
 
-COLOURS = {"mint": MINT, "rose": ROSE, "peri": PERI, "apricot": APRICOT, "palepink": ST.comp(P["palepink"]), "palelilac": ST.comp(P["palelilac"])}
+COLOURS = {"mint": MINT, "rose": ROSE, "peri": PERI, "apricot": APRICOT, "palepink": ST.comp(P["palepink"]), "palelilac": ST.comp(P["palelilac"]), "grey": "#94A3B8", "slate": "#64748B"}
 
 
 def read_contacts(path):

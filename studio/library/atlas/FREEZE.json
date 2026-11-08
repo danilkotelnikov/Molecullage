@@ -1,0 +1,18 @@
+{
+ "frozen": "2026-11-08T11:44:21.300Z",
+ "files": {
+  "BRIEF.md": "52904fd2eb024f8eb592fe2b5a1fb6de36c73e88ecb884d7d86a6dbe9b84c98b",
+  "PROPOSAL.md": "e4e2ef3305ac1f60f503f96db621a885684c89ca25bf321cc101814a6d6a7f8d",
+  "cleanroom-method.md": "3caa35c62f76eacc33ef0ecf1c091ef068b31d9fd91e07dc5d9fe6593613c972",
+  "domains/cad-geometry.json": "d5c798fcbf1536ef78c7a7f14e5502d581d245902a9d11041af7157f54f90cde",
+  "domains/dcc-3d.json": "3eb88fcab23e6c77c5553c325ae87e3de11700a979329831b2b1df699b53b1c8",
+  "domains/design-2d.json": "0ac806773f9e2ea16674031fa846a9dcb44052e196942a78a687352ec5716cb9",
+  "domains/gen-3d.json": "f7e582acbbab86ef9d7d46f54b2bf8800de159f1b322b555d6db1bba5bedfcff",
+  "domains/gen-vector.json": "09cf2a1822328573bb1c65449dec9ec340473ca3e8c2de62c4cd648c0c72267d",
+  "domains/motion-video.json": "c7ababef9c17f63125fc61de8126a0d01c873a892909f1d97d066c0179ee8ed9",
+  "domains/realtime-render.json": "d16bb29340eb3dd6d3a55ed3d2acbab09d468f197b08b430a6c215d56f03c38d",
+  "domains/science-viz.json": "720506f67a31acc2c568b319fcc06eda459efc4849d11627f9734a295ac924c3",
+  "verdict-gen-3d.md": "a8ecbd688ab51342ba55787a679a66279947389976e957d4431aa5330d4129f5",
+  "verdict-gen-vector.md": "d7acba73e48d2c1183e1783e8a97fd2190b66b9e6c5f658e7d836652197fa155"
+ }
+}

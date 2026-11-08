@@ -1,0 +1,93 @@
+{
+  "id": "cinematic",
+  "background": "#050507",
+  "text": {
+    "family": "Geist, \"SF Pro Display\", \"Segoe UI\", \"Helvetica Neue\"",
+    "color": "#F5F5F7",
+    "minPx": 37
+  },
+  "radius": 14,
+  "line": 2,
+  "feel": {
+    "ease": "sine.inOut",
+    "speed": 0.8
+  },
+  "roles": {
+    "plastic": {
+      "color": "#F2F7FF",
+      "metalness": 0,
+      "roughness": 0.06,
+      "transmission": 1,
+      "thickness": 0.03
+    },
+    "liquid": {
+      "color": "#CFE2FF",
+      "metalness": 0,
+      "roughness": 0.28,
+      "transmission": 1,
+      "thickness": 0.45,
+      "attenuation": {
+        "color": "#1F6BFF",
+        "distance": 0.4
+      },
+      "emissive": {
+        "color": "#1F6BFF",
+        "intensity": 0.4
+      }
+    },
+    "antibody": {
+      "color": "#FF6A5E",
+      "metalness": 0,
+      "roughness": 0.22
+    },
+    "protein": {
+      "color": "#8F86FF",
+      "metalness": 0,
+      "roughness": 0.25
+    },
+    "nucleic-acid": {
+      "color": "#4FE0B6",
+      "metalness": 0,
+      "roughness": 0.25
+    },
+    "gold": {
+      "color": "#FFC14D",
+      "metalness": 1,
+      "roughness": 0.25
+    },
+    "strip": {
+      "color": "#DAD3C2",
+      "metalness": 0,
+      "roughness": 0.7
+    },
+    "line": {
+      "color": "#F5F5F7",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "diagram": {
+      "color": "#5AA2FF",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "tile": {
+      "color": "#2B2B33",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "shape": {
+      "color": "#3C3C46",
+      "metalness": 0,
+      "roughness": 1
+    },
+    "label": {
+      "color": "#F5F5F7",
+      "metalness": 0,
+      "roughness": 1
+    }
+  },
+  "environment": {
+    "hdri": "hdri-studio-small-03",
+    "intensity": 1
+  }
+}

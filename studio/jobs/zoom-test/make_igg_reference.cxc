@@ -1,0 +1,10 @@
+# Makes igg_reference.glb: the full source surface that the live igg.glb is measured against (library/POLICY.md rule 8).
+# The reference is NOT committed (see .gitignore). Rebuild it with this script, then run `node tools/decimate.mjs` on it.
+# Run from this folder: ChimeraX --nogui --exit --script make_igg_reference.cxc (see ledger/plan1.md, low-poly antibody trial).
+# 1IGT is read only, by absolute path. Atoms, bonds and ribbons are hidden so that only the surface goes into the file.
+# Same as make_igg_glb.cxc but with the grid spacing 1 A: about 184,000 triangles instead of 518,000.
+open ./data/pdb/1IGT.pdb
+hide #1 target abpc
+surface resolution 6 gridSpacing 1
+save igg_reference.glb
+exit

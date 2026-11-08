@@ -13,7 +13,12 @@
 | words | words in the PDF against `words.schematic` (130) or `words.plate` (90) with `kind` | warning | FAIL |
 | fonts | Arial only | warning | FAIL |
 | pages | one | FAIL | FAIL |
-| width | one of `widthMm` (178, 89) within 1 mm | warning | FAIL |
+| width | one of `widthMm` (183, 136, 89 in Nature mode; 178 stays valid) within 1 mm | warning | FAIL |
+| overplate | nested word-holding boxes (a box inside a box, rule 40); needs `<key>.build.json` | 0 (warning) | 0 (FAIL) |
+| boxes | Nature mode: share of the area covered by rectangles that hold words (cards, tool blocks, pills, stage strips, bands); needs `<key>.build.json` | at most 25 % (warning) | at most 25 % (FAIL) |
+| typeMax | Nature mode: text above 8 pt (panel letters 8 pt, other text 7 pt or less) | warning | warning |
+
+In Nature mode a page whose box share is within the limit is judged with plot densities (ink at least 3 %, empty cells at most 50 %, largest empty block at most 10 %; `standards.natureMode.density`). `boxes` and `typeMax` run only in Nature mode (`standards.mode`, default `nature`; `docs/nature-mode.md`). A page that is a real process diagram sets `"standards": {"mode": "diagram"}` and says why in its notes file. The limit comes from `standards.natureMode.boxShareMax`.
 
 `loose` uses the normal limits and reports every failure as a warning; the exit code stays 0. Any FAIL gives exit code 1.
 

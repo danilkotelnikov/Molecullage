@@ -1,0 +1,45 @@
+{
+  "assets": [
+    {
+      "id": "hdri-studio-small-09",
+      "kind": "hdri",
+      "file": "hdri/studio_small_09_2k.hdr",
+      "name": "Studio Small 09 (2k)",
+      "author": "Sergej Majboroda",
+      "source": "https://polyhaven.com/a/studio_small_09",
+      "download": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/studio_small_09_2k.hdr",
+      "licence": "CC0-1.0",
+      "bytes": 6312947,
+      "md5": "b056fea247bc84b81d2e0987d44c87d8",
+      "fetched": "2026-11-01"
+    },
+    {
+      "id": "hdri-studio-small-03",
+      "kind": "hdri",
+      "file": "hdri/studio_small_03_2k.hdr",
+      "name": "Studio Small 03 (2k)",
+      "author": "Greg Zaal",
+      "source": "https://polyhaven.com/a/studio_small_03",
+      "download": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/studio_small_03_2k.hdr",
+      "licence": "CC0-1.0",
+      "bytes": 6673807,
+      "md5": "ec6591c2a18e9bbb27206b99b28dade5",
+      "fetched": "2026-11-01"
+    },
+    {
+      "id": "model-pcr-tube-3dcc-428209",
+      "kind": "model",
+      "file": "models/pcr-tube-3dcc-428209.stl",
+      "name": "TEST TUBE 0,2 ml (STL, 6392 triangles, attached lid)",
+      "author": "Dale Emery (3D ContentCentral contributor)",
+      "source": "https://www.3dcontentcentral.com/download-model.aspx?catalogid=171&id=428209",
+      "download": null,
+      "manual": "Needs a signed-in download page. the owner said yes on 2026-11-01; the file came from the temporary zip link the page gave.",
+      "licence": "unknown",
+      "bytes": 319684,
+      "md5": "b177bd1b65ee2955ec7c523e54e09251",
+      "fetched": "2026-11-01",
+      "useBlocked": true
+    }
+  ]
+}

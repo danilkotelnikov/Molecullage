@@ -1,0 +1,5 @@
+node_modules/
+web/dist/
+out/
+jobs/zoom-test/igg_reference.glb
+library/atlas/review/

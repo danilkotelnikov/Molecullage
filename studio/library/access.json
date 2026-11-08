@@ -1,0 +1,71 @@
+{
+  "about": "Which sources in sources.json need a sign-in, and whether a script can use them without an interactive browser. Kept by hand. tools/access.mjs prints it. Keys and tokens are never stored here; tokenEnv names the environment variable that would hold one.",
+  "checked": "2026-11-01",
+  "sources": [
+    {
+      "id": "sketchfab",
+      "signIn": "account",
+      "free": true,
+      "signUpUrl": "https://sketchfab.com/signup",
+      "gateway": "token-api",
+      "autonomous": "yes-with-your-token",
+      "tokenEnv": "SKETCHFAB_TOKEN",
+      "tokenUrl": "https://sketchfab.com/settings/password",
+      "docs": "https://sketchfab.com/developers/download-api",
+      "how": "GET https://api.sketchfab.com/v3/models/{uid}/download with an Authorization header returns short-lived links (glTF, USDZ; the link expires in 300 s). Search is open and needs no token.",
+      "limits": "The docs say users of an app must be able to log in. Using your own token for your own use fits that. Downloads with no user login need a deal with Sketchfab. The sample uses an OAuth Bearer token; the Data API page names the personal API token as the other way. Which of the two the download endpoint accepts was not tested.",
+      "verified": "2026-11-01, docs read (download-api, downloading-models, data-api/v3)"
+    },
+    {
+      "id": "3d-contentcentral",
+      "signIn": "account",
+      "free": true,
+      "signUpUrl": "https://www.3dcontentcentral.com/Register.aspx",
+      "gateway": "none-found",
+      "autonomous": "no",
+      "docs": "https://www.3dcontentcentral.com/",
+      "how": "The download is a web form: pick a format, press Download, and the page shows a temporary link to a zip file. No public API was found. The temporary link itself can be fetched by a script once the form has made it.",
+      "limits": "Terms of use not read. Scripted use of the form was not checked against the terms.",
+      "verified": "2026-11-01, one download done by hand with the owner's yes; a web search found no API"
+    },
+    {
+      "id": "grabcad",
+      "signIn": "account",
+      "free": true,
+      "signUpUrl": "https://grabcad.com/profile/register",
+      "gateway": "none-found",
+      "autonomous": "no",
+      "docs": "https://print-api.grabcad.com/public/documentation",
+      "how": "The one public API is the GrabCAD Print API. It drives printers and has no model library. The Community Library downloads only through the signed-in website.",
+      "limits": "Terms of service not read (https://grabcad.com/terms). On 2026-11-01 grabcad.com answered with a CloudFront 403 \"Request blocked\" in the built-in browser and in the owner's own desktop browser, so the site cannot be reached from this machine for now.",
+      "verified": "2026-11-01, third-party profile (API Evangelist) and search results read; GrabCAD's own pages not read (blocked, 403)"
+    },
+    {
+      "id": "blenderkit-blendkit",
+      "signIn": "account",
+      "free": true,
+      "signUpUrl": "https://www.blenderkit.com/",
+      "gateway": "add-on-key",
+      "autonomous": "unverified",
+      "tokenEnv": "BLENDERKIT_API_KEY",
+      "tokenUrl": "https://www.blenderkit.com/profile",
+      "docs": "https://docs.blender.org/manual/en/2.93/addons/3d_view/blenderkit.html",
+      "how": "The Blender add-on signs in and keeps an API key from your profile. No public REST documentation for other programs was found.",
+      "limits": "Free and paid tiers. Whether a script outside Blender may use the key is not documented. Do not assume it.",
+      "verified": "2026-11-01, search excerpts only"
+    },
+    {
+      "id": "noun-project",
+      "signIn": "api-key",
+      "free": false,
+      "signUpUrl": "https://thenounproject.com/",
+      "gateway": "token-api",
+      "autonomous": "yes-with-paid-key",
+      "tokenEnv": "NOUN_PROJECT_KEY",
+      "docs": "https://thenounproject.com/legal/",
+      "how": "The API needs a key and a paid tier.",
+      "limits": "Taken from the research table R5. Not rechecked today.",
+      "verified": "not rechecked; from research table R5"
+    }
+  ]
+}
