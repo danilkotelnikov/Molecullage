@@ -1,0 +1,4 @@
+# One phrase per line, lower case. Added to the Omniverso prose guard's own list.
+leverage
+unlock
+holistic

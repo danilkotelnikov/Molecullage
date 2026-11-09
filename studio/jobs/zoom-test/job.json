@@ -3869,5 +3869,48 @@
       "en": "One antibody, about 15 nanometres long.",
       "ru": "Одно антитело длиной около 15 нанометров."
     }
-  }
+  },
+  "story": [
+    {
+      "stop": 0,
+      "title": {
+        "en": "A PCR tube",
+        "ru": "Пробирка для ПЦР"
+      },
+      "say": {
+        "en": "The tube sits on the bench.",
+        "ru": "Пробирка стоит на столе."
+      },
+      "show": "bench tube",
+      "facts": []
+    },
+    {
+      "stop": 1,
+      "title": {
+        "en": "Inside the liquid",
+        "ru": "Внутри жидкости"
+      },
+      "say": {
+        "en": "Particles float inside the liquid.",
+        "ru": "Частицы плывут внутри жидкости."
+      },
+      "show": "liquid drop",
+      "facts": []
+    },
+    {
+      "stop": 2,
+      "title": {
+        "en": "Antibodies on gold",
+        "ru": "Антитела на золоте"
+      },
+      "say": {
+        "en": "Antibodies coat the gold particle.",
+        "ru": "Антитела покрывают золотую частицу."
+      },
+      "show": "antibody on gold",
+      "facts": []
+    }
+  ]
 }
+
+

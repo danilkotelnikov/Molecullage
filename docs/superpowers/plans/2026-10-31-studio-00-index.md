@@ -1,4 +1,4 @@
-<!-- version: i6 | date: 2026-11-08 | status: ready for execution; Plan 1 built (tasks 0–9), Plan 2 (3d-toolkit) built; i6 adds the 231-source library, 8-domain atlas, 56-rule anti-overplating gate (bd96b6d) and Arc Harness concept v8 alignment -->
+<!-- version: i7 | date: 2026-11-09 | status: Plans 1–7 built; i7 records hand-over interfaces for Plans 3, 4, 5, 6 and 7 -->
 # Molecullage Studio: plan index, shared names and executor rules
 
 Read this file first, then the design (`.\docs\superpowers\specs\2026-10-31-engine-design.md`), then the one plan you are running. The plan documents live in `.\docs\superpowers\plans\`. Read and update them there, by absolute path. The plans are written for **Claude Sonnet 5.5 High** as the executor. They are strict on purpose: follow them as written.
@@ -9,11 +9,11 @@ Read this file first, then the design (`.\docs\superpowers\specs\2026-10-31-engi
 |---|---|---|---|---|
 | 1 | `2026-10-31-molecullage-studio-plan1-world-and-live-deck.md` | World, clock, timeline, scale frames, camera paths, lenses, layout layer, live renderer, deck player, MP4 export, deep-zoom test | — | built (tasks 0–9) |
 | 2 | `2026-10-31-studio-02-3d-toolkit.md` | Surfaces, copies and effects, moving parts, materials-light-camera; docs and demos for each | 1 | built |
-| 3 | `2026-10-31-studio-03-photoreal.md` | World-to-Blender bridge, Cycles renders, baked frames by t, home-server jobs | 1, 2 | planned |
-| 4 | `2026-10-31-studio-04-vector-and-rebuild.md` | Named vector layer, GSAP player for 2D, raster rebuild with an overlay score | 1 | planned |
-| 5 | `2026-10-31-studio-05-editing.md` | Edits with undo; click and change; timeline; words; 3D camera shots | 1, 4 | planned |
-| 6 | `2026-10-31-studio-06-content-and-delivery.md` | Brief, research ledger, story, both languages, narration, storyboard stop, PDF, Vercel link | 1, 3, 5 | planned |
-| 7 | `2026-10-31-studio-07-arc-science.md` | The Arc Science pilot deck | 1–6 | planned |
+| 3 | `2026-10-31-studio-03-photoreal.md` | World-to-Blender bridge, Cycles renders, baked frames by t, home-server jobs | 1, 2 | built |
+| 4 | `2026-10-31-studio-04-vector-and-rebuild.md` | Named vector layer, GSAP player for 2D, raster rebuild with an overlay score | 1 | built |
+| 5 | `2026-10-31-studio-05-editing.md` | Edits with undo; click and change; timeline; words; 3D camera shots | 1, 4 | built |
+| 6 | `2026-10-31-studio-06-content-and-delivery.md` | Brief, research ledger, story, both languages, narration, storyboard stop, PDF, Vercel link | 1, 3, 5 | built |
+| 7 | `2026-10-31-studio-07-arc-science.md` | The Arc Science pilot deck | 1–6 | built |
 | 8 | `2026-10-31-studio-08-miraeles.md` | The Miraeles pilot deck | 7 | planned |
 | 9 | `2026-10-31-studio-09-ml-explainer.md` | The ML model explainer showcase | 7 | planned |
 

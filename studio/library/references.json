@@ -150,6 +150,26 @@
       "read": "2026-11-01"
     },
     {
+      "id": "structure-pdb-1mel",
+      "kind": "structure",
+      "subject": "Camel single-domain VH antibody fragment in complex with hen egg-white lysozyme",
+      "name": "PDB 1MEL",
+      "source": "https://www.rcsb.org/structure/1MEL",
+      "licence": "CC0-1.0",
+      "status": "fetched",
+      "checked": "2026-11-09",
+      "values": {
+        "resolution_angstrom": 2.5,
+        "vhh_residues": 132,
+        "lysozyme_residues": 127,
+        "contact_pairs_4_5A": 55
+      },
+      "note": "The file is in the main Molecullage folder, data/pdb/1MEL.pdb, with contacts in motion/films/assets/contacts_1MEL.json.",
+      "grounding": "primary-data",
+      "readFrom": "https://www.rcsb.org/structure/1MEL",
+      "read": "2026-11-09"
+    },
+    {
       "id": "paper-zhang-2019-talanta",
       "kind": "paper",
       "subject": "Antibodies per gold nanoparticle",
@@ -266,6 +286,28 @@
       ],
       "note": "An opener tool. Not a tube model.",
       "grounding": "n/a"
+    },
+    {
+      "id": "model-plastic-thermos-polyhaven",
+      "kind": "model",
+      "subject": "insulated plastic thermos with wide screw cap (stand-in for the 300 ml thermos TS8-201)",
+      "name": "Plastic Thermos (Poly Haven)",
+      "source": "https://polyhaven.com/a/plastic_thermos",
+      "licence": "CC0-1.0",
+      "formats": [
+        "glTF",
+        "BLEND",
+        "FBX",
+        "USD"
+      ],
+      "status": "fetched",
+      "checked": "2026-11-09",
+      "note": "Dimensions from the Poly Haven API: 140.6 x 109.3 x 320.4 mm, larger than the 300 ml thermos of the Miraeles v8 design; scale and the scale factor must be stated on the slide (illustration). Licence: all Poly Haven assets are CC0.",
+      "grounding": "n/a",
+      "fetched": "2026-11-09",
+      "file": "models/plastic_thermos_polyhaven/plastic_thermos_2k.gltf",
+      "manifest": "model-plastic-thermos-polyhaven",
+      "approvedBy": "the owner, 2026-11-09 (Miraeles deck, prompt D-20261109-03)"
     }
   ],
   "searches": [

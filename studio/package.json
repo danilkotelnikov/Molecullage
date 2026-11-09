@@ -10,9 +10,22 @@
     "dev": "vite --config web/vite.config.ts",
     "build": "vite build --config web/vite.config.ts",
     "preview": "vite preview --config web/vite.config.ts --port 4380 --host 127.0.0.1",
-    "export": "node tools/export.mjs"
+    "export": "node tools/export.mjs",
+    "bake": "node tools/bake.mjs",
+    "remote": "node tools/remote.mjs",
+    "rebuild": "node tools/rebuild/cli.mjs",
+    "score": "node tools/rebuild/score.mjs",
+    "edit": "node tools/words.mjs",
+    "check": "node tools/check.mjs",
+    "brief": "node tools/brief.mjs",
+    "narrate": "node tools/narrate.mjs",
+    "storyboard": "node tools/storyboard.mjs",
+    "pdf": "node tools/pdf.mjs",
+    "site": "node tools/site.mjs build",
+    "publish": "node tools/site.mjs publish"
   },
   "dependencies": {
+    "gsap": "^3.15.0",
     "playwright-core": "1.64.1",
     "three": "0.186.1",
     "zod": "4.6.7"

@@ -115,7 +115,10 @@ export function checkJob(job, opts = {}) {
 
   // 2. Timeline monotonicity: tracks and camera paths
   if (job.timeline && Array.isArray(job.timeline.tracks)) {
-    const tlErrors = validateTimeline(job.timeline, world);
+    const worldWithVectors = Array.isArray(job.vectors)
+      ? { ...world, objects: [...(world.objects ?? []), ...job.vectors.map((v) => ({ id: v.id }))] }
+      : world;
+    const tlErrors = validateTimeline(job.timeline, worldWithVectors);
     for (const err of tlErrors) {
       add('timeline-monotonicity', 'timeline', err);
     }
@@ -204,8 +207,19 @@ export function checkJob(job, opts = {}) {
 export async function checkPage(page, minPx = 37) {
   return page.evaluate((minFontPx) => {
     const out = [];
-    const blocks = document.querySelectorAll('[data-block]');
     const lang = document.documentElement.lang || 'en';
+
+    const bakedImg = document.querySelector('img[data-baked]');
+    if (bakedImg && bakedImg.dataset.missingBake) {
+      out.push({
+        id: 'baked',
+        lang,
+        kind: 'missing-bake',
+        detail: bakedImg.dataset.missingBake,
+      });
+    }
+
+    const blocks = document.querySelectorAll('[data-block]');
     for (const el of blocks) {
       const id = el.getAttribute('data-block') || '';
       if (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1) {
@@ -239,6 +253,36 @@ export async function checkPage(page, minPx = 37) {
         });
       }
     }
+
+    const vecLabels = document.querySelectorAll('[data-id][data-vector-type="label"]');
+    for (const el of vecLabels) {
+      const style = window.getComputedStyle(el);
+      if (style.display === 'none') continue;
+      const id = el.getAttribute('data-id') || '';
+      const px = parseFloat(el.getAttribute('font-size') || style.fontSize || '0');
+      if (px < minFontPx - 0.1) {
+        out.push({
+          id,
+          lang,
+          kind: 'small-text',
+          detail: `vector label "${id}" font-size ${px}px is below ${minFontPx}px`,
+        });
+      }
+      const boxW = parseFloat(el.getAttribute('data-box-w') || '0');
+      const boxH = parseFloat(el.getAttribute('data-box-h') || '0');
+      if (typeof el.getBBox === 'function' && boxW > 0 && boxH > 0) {
+        const bb = el.getBBox();
+        if (bb.width > boxW + 1 || bb.height > boxH + 1) {
+          out.push({
+            id,
+            lang,
+            kind: 'overflow',
+            detail: `vector label "${id}" overflows (${bb.width.toFixed(1)}x${bb.height.toFixed(1)} > ${boxW}x${boxH})`,
+          });
+        }
+      }
+    }
+
     return out;
   }, minPx);
 }
@@ -267,4 +311,3 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   }
   console.log(`ok (${path.basename(path.dirname(jobFile))})`);
 }
-

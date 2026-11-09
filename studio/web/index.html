@@ -3,13 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
 <title>Molecullage Studio</title>
 <style>
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
   #fit { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
   #fit canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
+  [data-vectors] { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+  [data-vectors] * { pointer-events: all; }
   [data-layout] { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
-  .block { position: absolute; margin: 0; line-height: 1.2; overflow: visible; }
+  .block { position: absolute; margin: 0; line-height: 1.2; overflow: visible; pointer-events: auto; }
   /* Header hierarchy: a bold title, then the label and the note in the same colour, softer. The sizes come from the role ladder. */
   .block[data-role="title"] { font-weight: 700; letter-spacing: -0.01em; line-height: 1.08; }
   .block[data-role="label"] { opacity: 0.72; letter-spacing: 0.005em; }
@@ -18,20 +21,31 @@
 </style>
 </head>
 <body>
-<div id="fit"><canvas id="c" width="1920" height="1080"></canvas><div data-layout></div></div>
+<div id="fit">
+  <canvas id="c" width="1920" height="1080"></canvas>
+  <svg data-vectors width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+  <div data-layout></div>
+</div>
 <div id="message"></div>
 <script type="module">
 import { loadJob } from '../core/job.ts';
+import { applyEdits } from '../core/edits.ts';
 import { createStage } from './renderer.ts';
+import { createVectorLayer } from './vector.ts';
+import { exportAt } from './gltf.ts';
+import { pickAt } from './editor/pick.ts';
+import { mountEditor } from './editor/index.ts';
 import { loadAssets, assetIds, loadEnvironment } from './assets.ts';
 
-// Page query: ?job=<id>&lens=<id>&lang=<en|ru>&path=<id>
+// Page query: ?job=<id>&lens=<id>&lang=<en|ru>&path=<id>&edits=<0|1>&edit=<1>
 const q = new URLSearchParams(location.search);
 const ID = /^[a-z0-9-]{1,40}$/;
 const jobId = q.get('job') ?? 'zoom-test';
 const lensQ = q.get('lens');
 const langQ = q.get('lang');
 const pathQ = q.get('path');
+const editsQ = q.get('edits');
+const editMode = q.get('edit') === '1';
 const message = document.getElementById('message');
 const fit = document.getElementById('fit');
 
@@ -40,7 +54,7 @@ const badLang = langQ !== null && langQ !== 'en' && langQ !== 'ru';
 
 function scaleToWindow() {
   const s = Math.min(innerWidth / 1920, innerHeight / 1080);
-  fit.style.transform = `translate(${(innerWidth - 1920 * s) / 2}px, ${(innerHeight - 1080 * s) / 2}px) scale(${s})`;
+  fit.style.transform = `translate(${(innerWidth - 1920 * s) / 2}px, ${(innerHeight - 1920 * s * 9 / 16) / 2}px) scale(${s})`;
 }
 
 if (badId || badLang) {
@@ -61,7 +75,20 @@ if (badId || badLang) {
     for (const id of new Set([jobJson.lens, lensQ ?? jobJson.lens])) lenses[id] = await getJson(`lenses/${id}.json`);
     const r = loadJob(jobJson, lenses);
     if (!r.ok) throw new Error(r.errors.join('\n'));
-    const job = r.job;
+    let job = r.job;
+    if (editsQ !== '0') {
+      const er = await fetch(`jobs/${jobId}/edits.jsonl`);
+      if (er.ok) {
+        const text = await er.text();
+        const edits = text
+          .split(/\r?\n/)
+          .filter((l) => l.trim().length > 0)
+          .map((l) => JSON.parse(l));
+        if (edits.length > 0) {
+          job = applyEdits(job, edits, lenses);
+        }
+      }
+    }
     const lens = lenses[lensQ ?? job.lens];
     const lang = langQ ?? job.langs[0];
     if (!job.langs.includes(lang)) throw new Error(`the job has no ${lang} layout`);
@@ -69,9 +96,34 @@ if (badId || badLang) {
     if (!pathId) throw new Error('the job has no deck path');
     const assets = await loadAssets(`jobs/${jobId}/`, assetIds(job));
     const environment = await loadEnvironment(lens);
-    stage = createStage(document.getElementById('c'), job, lens, pathId, assets, environment);
+    stage = createStage(document.getElementById('c'), job, lens, pathId, assets, environment, jobId);
     stage.lang = lang;
+    const svgEl = document.querySelector('[data-vectors]');
+    const vectorLayer = createVectorLayer(svgEl, stage, job, lens);
+    const baseSeek = stage.seek.bind(stage);
+    stage.seek = async (t) => {
+      await baseSeek(t);
+      vectorLayer.draw(t);
+    };
     await stage.seek(0);
+    if (editMode) {
+      mountEditor(
+        stage,
+        job,
+        document.body,
+        async (edit) => {
+          const resp = await fetch(`/__edits/${jobId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(edit),
+          });
+          if (!resp.ok) throw new Error(await resp.text());
+        },
+        async () => {
+          await fetch(`/__edits/${jobId}/undo`, { method: 'POST' });
+        },
+      );
+    }
   })();
   ready.catch((e) => {
     message.textContent = `error: ${e.message}`;
@@ -81,6 +133,17 @@ if (badId || badLang) {
     seek: (t) => ready.then(() => stage.seek(t)),
     get duration() { return stage?.duration; },
     get stops() { return stage?.stops; },
+    mode: () => stage?.mode() ?? 'live',
+    project: (p) => stage?.project(p) ?? null,
+    pickAt: (x, y) => pickAt(stage, x, y),
+    snapshot: async (t) => {
+      await ready;
+      const { glb, camera } = await exportAt(stage, t);
+      const bytes = new Uint8Array(glb);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      return { glbBase64: btoa(bin), camera };
+    },
   };
 }
 </script>

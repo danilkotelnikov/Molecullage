@@ -21,3 +21,10 @@ gallery/*/data/**/*.xlsx
 .env
 .DS_Store
 Thumbs.db
+
+# set-aside leftovers of working sessions (tools/tidy_out.py); the human deletes this folder
+film/_to_delete/
+studio/out/
+studio/cache/
+studio/web/dist/
+

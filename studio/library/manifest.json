@@ -40,6 +40,19 @@
       "md5": "b177bd1b65ee2955ec7c523e54e09251",
       "fetched": "2026-11-01",
       "useBlocked": true
+    },
+    {
+      "id": "model-plastic-thermos-polyhaven",
+      "kind": "model",
+      "file": "models/plastic_thermos_polyhaven/plastic_thermos_2k.gltf",
+      "name": "Plastic Thermos (glTF, 2k textures, 5,514 polys)",
+      "author": "PierreB3D",
+      "source": "https://polyhaven.com/a/plastic_thermos",
+      "download": "https://api.polyhaven.com/files/plastic_thermos (gltf 2k; files md5-checked against the API)",
+      "licence": "CC0-1.0",
+      "bytes": 2786,
+      "md5": "5c11d8e53a4b68df0e71cf4b5adda89c",
+      "fetched": "2026-11-09"
     }
   ]
 }

@@ -1,0 +1,54 @@
+{
+  "image": "studio/tools/rebuild/test/fixture.png",
+  "width": 1200,
+  "height": 800,
+  "source": {
+    "kind": "file",
+    "ref": "studio/tools/rebuild/test/fixture.png"
+  },
+  "evidence": "architecture",
+  "parts": [
+    {
+      "id": "rect",
+      "kind": "shape",
+      "box": [100, 100, 300, 200],
+      "form": "vector",
+      "vector": {
+        "type": "shape",
+        "shape": "rect"
+      },
+      "roles": ["surface"]
+    },
+    {
+      "id": "arrow",
+      "kind": "arrow",
+      "box": [450, 188, 250, 24],
+      "form": "vector",
+      "vector": {
+        "type": "arrow",
+        "from": [450, 200],
+        "to": [700, 200]
+      },
+      "roles": ["path"]
+    },
+    {
+      "id": "title-gold",
+      "kind": "text",
+      "box": [800, 170, 160, 60],
+      "form": "text",
+      "text": {
+        "en": "Gold",
+        "ru": "Золото"
+      },
+      "roles": ["focal"]
+    },
+    {
+      "id": "circle",
+      "kind": "shape",
+      "box": [230, 480, 140, 140],
+      "form": "vector",
+      "trace": true,
+      "roles": ["focal"]
+    }
+  ]
+}

@@ -6,25 +6,29 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { launch } from './browser.mjs';
+import { ensureStudioServer, launch } from './browser.mjs';
 import { validateWorld } from '../core/world.ts';
 import { cameraAt } from '../core/camera.ts';
 
 const studio = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const JOB = process.env.STUDIO_JOB ?? 'zoom-test';
-const BASE = 'http://127.0.0.1:4380/';
+let BASE = 'http://127.0.0.1:4380/';
 const readJson = (...p) => JSON.parse(fs.readFileSync(path.join(studio, ...p), 'utf8'));
 const jobJson = readJson('jobs', JOB, 'job.json');
 const deckPath = jobJson.paths.find((p) => p.kind === 'deck');
 const lang0 = jobJson.langs[0];
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 
+let srv;
 let browser;
 before(async () => {
+  srv = await ensureStudioServer({ studioDir: studio, reuseExisting: true });
+  BASE = `${srv.url}/`;
   browser = await launch();
 });
 after(async () => {
   await browser?.close();
+  await srv?.close();
 });
 
 async function openPage(query = '') {

@@ -1,0 +1,1802 @@
+{
+  "brief": {
+    "idea": "Arc Science is a computational platform for designing biomolecules. One shared base serves four projects. Omniverso is the first.",
+    "details": "A 12-slide pitch deck. Lenses: journal and cinematic. Check-ins: one storyboard stop. Outputs: live deck, MP4, PDF, web link.",
+    "concepts": [
+      "four projects on one shared base",
+      "Omniverso and its nanobody target",
+      "the model in brief",
+      "how research is checked",
+      "the request to Yandex Cloud"
+    ],
+    "audience": "a senior manager of Yandex Cloud and the Yandex Cloud science programme lead",
+    "product": "arc-science",
+    "langs": [
+      "en",
+      "ru"
+    ],
+    "timeBudget": {
+      "hours": 8
+    },
+    "files": []
+  },
+  "facts": [
+    {
+      "id": "f-platform",
+      "text": {
+        "en": "Arc Science (Arc Harness) is a scientific harness and computational platform for designing biomolecules.",
+        "ru": "Arc Science (Arc Harness) — научная среда и вычислительная платформа для конструирования биомолекул."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-01-title"
+      },
+      "usedBy": [
+        "s00-title",
+        "s00-label-1",
+        "mel"
+      ]
+    },
+    {
+      "id": "f-four",
+      "text": {
+        "en": "Four projects stand on one shared base: Omniverso, Snoggo, RNAv-G, Arc Chemistry.",
+        "ru": "Четыре проекта стоят на одной общей основе: Omniverso, Snoggo, RNAv-G, Arc Chemistry."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "usedBy": [
+        "s01-title",
+        "s01-label-1",
+        "v-tiles"
+      ]
+    },
+    {
+      "id": "f-proj-omniverso",
+      "text": {
+        "en": "Omniverso designs VHH nanobodies and antibodies for a chosen antigen.",
+        "ru": "Omniverso конструирует нанотела VHH и антитела к выбранному антигену."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "usedBy": [
+        "s01-label-1"
+      ]
+    },
+    {
+      "id": "f-proj-snoggo",
+      "text": {
+        "en": "Snoggo estimates binding free energy changes for beta-tubulin mutations.",
+        "ru": "Snoggo оценивает изменение свободной энергии связывания при мутациях бета-тубулина."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "usedBy": [
+        "s07-title",
+        "s07-label-1"
+      ]
+    },
+    {
+      "id": "f-proj-rnavg",
+      "text": {
+        "en": "RNAv-G describes viral capsid assembly and genome placement.",
+        "ru": "RNAv-G описывает сборку вирусного капсида и укладку генома."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "usedBy": [
+        "s08-title",
+        "s08-label-1"
+      ]
+    },
+    {
+      "id": "f-proj-chem",
+      "text": {
+        "en": "Arc Chemistry selects extractants to separate neodymium and praseodymium.",
+        "ru": "Arc Chemistry подбирает экстрагенты для разделения неодима и празеодима."
+      },
+      "level": "target",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "usedBy": [
+        "s09-title",
+        "s09-label-1"
+      ]
+    },
+    {
+      "id": "f-workspaces",
+      "text": {
+        "en": "Unified C2 console with four workspaces (Research, Memory, Molecullage, Prose) and four connectors (Servers, Keys, Apps, Audit).",
+        "ru": "Единая консоль C2 с четырьмя рабочими областями (Research, Memory, Molecullage, Prose) и четырьмя соединителями (Servers, Keys, Apps, Audit)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "usedBy": [
+        "s02-title",
+        "s02-label-1",
+        "v-workspaces"
+      ]
+    },
+    {
+      "id": "f-cammut",
+      "text": {
+        "en": "Cammut keeps memory and connectors; Arc Kit shares arc-core MCP, the 231-source Shelf and Workshop toolpacks; Molecullage is the film and figure engine.",
+        "ru": "Cammut хранит память и соединители; Arc Kit объединяет сервер arc-core, полку из 231 источника и наборы инструментов; Molecullage строит фильмы и рисунки."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/library/sources.json#summary"
+      },
+      "usedBy": [
+        "s02-label-1"
+      ]
+    },
+    {
+      "id": "f-1mel",
+      "text": {
+        "en": "PDB 1MEL: camel VH in complex with lysozyme, 2.5 A.",
+        "ru": "PDB 1MEL: домен VH верблюда в комплексе с лизоцимом, 2.5 А."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.1038/nsb0996-803"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s03-title",
+        "s03-label-1",
+        "mel"
+      ]
+    },
+    {
+      "id": "f-contacts",
+      "text": {
+        "en": "In PDB 1MEL, 24 lysozyme residues and 18 nanobody residues form 55 residue pairs within 4.5 A (heavy atoms).",
+        "ru": "В структуре PDB 1MEL 24 остатка лизоцима и 18 остатков нанотела образуют 55 пар остатков ближе 4.5 А по тяжелым атомам."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.1038/nsb0996-803"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s03-label-1",
+        "s04-title",
+        "s04-label-1",
+        "contacts"
+      ]
+    },
+    {
+      "id": "f-cdr3",
+      "text": {
+        "en": "One half of CDR3 contacts the VH region; the other half protrudes and penetrates deeply into the active site of lysozyme.",
+        "ru": "Одна половина петли CDR3 касается домена VH, а вторая половина глубоко входит в активный центр лизоцима."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.1038/nsb0996-803"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s05-title",
+        "s05-label-1",
+        "mel-site"
+      ]
+    },
+    {
+      "id": "f-ae",
+      "text": {
+        "en": "The autoencoder has 255,873,676 parameters, calculated from module shapes (no weights).",
+        "ru": "Автокодировщик содержит 255,873,676 параметров по размерам слоев без обученных весов."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "usedBy": [
+        "s06-title",
+        "s06-label-1",
+        "v-model"
+      ]
+    },
+    {
+      "id": "f-dn",
+      "text": {
+        "en": "The denoiser has 153,102,091 parameters, calculated from module shapes (no weights).",
+        "ru": "Модуль снятия шума содержит 153,102,091 параметров по размерам слоев без обученных весов."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "usedBy": [
+        "s06-label-1",
+        "v-model"
+      ]
+    },
+    {
+      "id": "f-path",
+      "text": {
+        "en": "Training uses a straight path from noise to data; the denoiser learns the velocity, data minus noise.",
+        "ru": "Обучение идет по прямому пути от шума к данным, и сеть предсказывает скорость как разность данных и шума."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+      },
+      "usedBy": [
+        "s06-label-1"
+      ]
+    },
+    {
+      "id": "f-judge",
+      "text": {
+        "en": "A judge compares candidates with the target and an off-target panel; a solver picks exactly N designs.",
+        "ru": "Оценщик сравнивает кандидатов с мишенью и панелью сторонних белков, а модуль отбора выбирает ровно N конструкций."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "usedBy": [
+        "s10-label-1",
+        "v-tree"
+      ]
+    },
+    {
+      "id": "f-status",
+      "text": {
+        "en": "Arc Harness Phase 0 and Phase 1, Cammut, the Molecullage 231-source library, and the two base network modules exist in code; Phase 4 Research UI and Omniverso weights are designed and not yet trained.",
+        "ru": "Фазы 0 и 1 среды Arc Harness, Cammut, библиотека Molecullage из 231 источника и два базовых сетевых модуля написаны в коде, а интерфейс фазы 4 и веса Omniverso спроектированы и еще не обучены."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "usedBy": [
+        "s11-label-1"
+      ]
+    },
+    {
+      "id": "f-tree",
+      "text": {
+        "en": "Tree-HoH tests hypothesis branches by likelihood-ratio support score and value of information per cost, pruning weak branches via Sequential Halving into a claim graph.",
+        "ru": "Дерево гипотез оценивает ветви по отношению правдоподобия и ценности информации на единицу затрат, отсекая слабые ветви методом последовательного деления в граф утверждений."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-06-tree"
+      },
+      "usedBy": [
+        "s10-title",
+        "s10-label-1",
+        "v-tree"
+      ]
+    },
+    {
+      "id": "f-gpu",
+      "text": {
+        "en": "Request: 8,320 GPU-hours on NVIDIA A100 80 GB in Yandex Cloud over 12 months, in two stages (A 2,080 h pilot, B 6,240 h).",
+        "ru": "Запрос: 8,320 часов работы ускорителей NVIDIA A100 80 ГБ в Yandex Cloud на 12 месяцев в два этапа (этап A 2,080 часов, этап B 6,240 часов)."
+      },
+      "level": "target",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "usedBy": [
+        "s11-title",
+        "s11-label-1"
+      ]
+    }
+  ],
+  "story": [
+    {
+      "stop": 0,
+      "title": {
+        "en": "Arc Science",
+        "ru": "Arc Science"
+      },
+      "say": {
+        "en": "Arc Science is a scientific harness and computational platform for designing biomolecules.",
+        "ru": "Arc Science — научная среда и вычислительная платформа для конструирования биомолекул."
+      },
+      "facts": [
+        "f-platform"
+      ]
+    },
+    {
+      "stop": 1,
+      "title": {
+        "en": "Four projects on one shared base",
+        "ru": "Четыре проекта на одной общей основе"
+      },
+      "say": {
+        "en": "Four projects stand on one shared base: Omniverso, Snoggo, RNAv-G and Arc Chemistry.",
+        "ru": "Четыре проекта стоят на одной общей основе: Omniverso, Snoggo, RNAv-G и Arc Chemistry."
+      },
+      "facts": [
+        "f-four",
+        "f-proj-omniverso",
+        "f-proj-snoggo",
+        "f-proj-rnavg",
+        "f-proj-chem"
+      ]
+    },
+    {
+      "stop": 2,
+      "title": {
+        "en": "The four workspaces",
+        "ru": "Четыре рабочие области"
+      },
+      "say": {
+        "en": "The console links four workspaces with Cammut, Arc Kit and the 231-source library.",
+        "ru": "Консоль объединяет четыре рабочие области, память Cammut, пакет Arc Kit и полку из 231 источника."
+      },
+      "facts": [
+        "f-workspaces",
+        "f-cammut"
+      ]
+    },
+    {
+      "stop": 3,
+      "title": {
+        "en": "One result from source to sentence",
+        "ru": "Один результат от источника до фразы"
+      },
+      "say": {
+        "en": "PDB 1MEL shows camel VH with lysozyme at 2.5 A and 55 residue pairs.",
+        "ru": "Структура PDB 1MEL показывает домен верблюда с лизоцимом при 2.5 А и 55 пар остатков."
+      },
+      "facts": [
+        "f-1mel",
+        "f-contacts"
+      ]
+    },
+    {
+      "stop": 4,
+      "title": {
+        "en": "Omniverso and its target",
+        "ru": "Omniverso и его мишень"
+      },
+      "say": {
+        "en": "In PDB 1MEL, 24 lysozyme residues and 18 nanobody residues form 55 residue pairs within 4.5 A.",
+        "ru": "В структуре PDB 1MEL 24 остатка лизоцима и 18 остатков нанотела образуют 55 пар остатков ближе 4.5 А."
+      },
+      "facts": [
+        "f-contacts"
+      ]
+    },
+    {
+      "stop": 5,
+      "title": {
+        "en": "The loop that reaches into the target",
+        "ru": "Петля в активном центре мишени"
+      },
+      "say": {
+        "en": "One half of the loop contacts the domain while the other half enters the active site of lysozyme.",
+        "ru": "Одна половина петли касается домена, а вторая половина глубоко входит в активный центр лизоцима."
+      },
+      "facts": [
+        "f-cdr3"
+      ]
+    },
+    {
+      "stop": 6,
+      "title": {
+        "en": "Inside the model",
+        "ru": "Устройство модели"
+      },
+      "say": {
+        "en": "The autoencoder has 255,873,676 parameters and the denoiser has 153,102,091 parameters along a straight path.",
+        "ru": "Автокодировщик содержит 255,873,676 параметров, а модуль снятия шума содержит 153,102,091 параметров на прямом пути."
+      },
+      "facts": [
+        "f-ae",
+        "f-dn",
+        "f-path"
+      ]
+    },
+    {
+      "stop": 7,
+      "title": {
+        "en": "Snoggo",
+        "ru": "Snoggo"
+      },
+      "say": {
+        "en": "Snoggo estimates binding free energy changes for beta-tubulin mutations.",
+        "ru": "Snoggo оценивает изменение свободной энергии связывания при мутациях бета-тубулина."
+      },
+      "facts": [
+        "f-proj-snoggo"
+      ]
+    },
+    {
+      "stop": 8,
+      "title": {
+        "en": "RNAv-G",
+        "ru": "RNAv-G"
+      },
+      "say": {
+        "en": "RNAv-G describes viral capsid assembly and genome placement.",
+        "ru": "RNAv-G описывает сборку вирусного капсида и укладку генома."
+      },
+      "facts": [
+        "f-proj-rnavg"
+      ]
+    },
+    {
+      "stop": 9,
+      "title": {
+        "en": "Arc Chemistry",
+        "ru": "Arc Chemistry"
+      },
+      "say": {
+        "en": "Arc Chemistry selects extractants to separate neodymium and praseodymium.",
+        "ru": "Arc Chemistry подбирает экстрагенты для разделения неодима и празеодима."
+      },
+      "facts": [
+        "f-proj-chem"
+      ]
+    },
+    {
+      "stop": 10,
+      "title": {
+        "en": "How research is checked",
+        "ru": "Проверка гипотез и отбор"
+      },
+      "say": {
+        "en": "The hypothesis tree prunes weak branches into a claim graph and the judge compares candidates.",
+        "ru": "Дерево гипотез отсекает слабые ветви в граф утверждений, а оценщик сравнивает кандидатов с мишенью."
+      },
+      "facts": [
+        "f-tree",
+        "f-judge"
+      ]
+    },
+    {
+      "stop": 11,
+      "title": {
+        "en": "What we ask of Yandex Cloud",
+        "ru": "Запрос к Yandex Cloud"
+      },
+      "say": {
+        "en": "We request 8,320 GPU-hours over 12 months in two stages: 2,080 h pilot and 6,240 h scale.",
+        "ru": "Мы запрашиваем 8,320 часов на 12 месяцев в два этапа: 2,080 часов и 6,240 часов."
+      },
+      "facts": [
+        "f-gpu",
+        "f-status"
+      ]
+    }
+  ],
+  "world": {
+    "id": "arc-science",
+    "duration": 72,
+    "frames": [
+      {
+        "id": "board",
+        "parent": null,
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "complex",
+        "parent": "board",
+        "unit": 1e-9,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "site",
+        "parent": "complex",
+        "unit": 1e-10,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "mel",
+        "kind": "molecule",
+        "frame": "complex",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 4e-9,
+        "source": {
+          "kind": "pdb",
+          "ref": "1MEL"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "1mel.glb"
+      },
+      {
+        "id": "mel-site",
+        "kind": "molecule",
+        "frame": "site",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 1.5e-9,
+        "source": {
+          "kind": "pdb",
+          "ref": "1MEL"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "1mel_site.glb",
+        "standIn": {
+          "asset": "1mel.glb",
+          "swapAt": 3e-9
+        }
+      },
+      {
+        "id": "contacts",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 4e-9,
+        "source": {
+          "kind": "pdb",
+          "ref": "1MEL"
+        },
+        "evidence": "published",
+        "window": [
+          18,
+          36
+        ],
+        "roles": [
+          "line"
+        ],
+        "asset": "1mel_contacts.glb"
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "id": "v-tiles",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        160,
+        180,
+        640,
+        260
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        12
+      ]
+    },
+    {
+      "id": "v-workspaces",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        160,
+        180,
+        720,
+        280
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-02-platform"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        18
+      ]
+    },
+    {
+      "id": "v-model",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        160,
+        180,
+        820,
+        280
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        42
+      ]
+    },
+    {
+      "id": "v-tree",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        160,
+        180,
+        780,
+        280
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-06-tree"
+      },
+      "evidence": "architecture",
+      "window": [
+        60,
+        66
+      ]
+    }
+  ],
+  "timeline": {
+    "tracks": [
+      {
+        "target": "contacts",
+        "prop": "opacity",
+        "keys": [
+          {
+            "t": 24,
+            "v": 0
+          },
+          {
+            "t": 25.5,
+            "v": 1,
+            "ease": "power2.out"
+          }
+        ]
+      }
+    ]
+  },
+  "paths": [
+    {
+      "id": "deck-main",
+      "kind": "deck",
+      "stops": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.out"
+        },
+        {
+          "t": 6,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              1.5,
+              0.5,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 12,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -1.5,
+              0.5,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 18,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.8,
+              10
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 24,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              12
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 27,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              12
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 30,
+          "at": {
+            "frame": "site",
+            "pos": [
+              0,
+              0,
+              14
+            ]
+          },
+          "target": {
+            "frame": "site",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 33,
+          "at": {
+            "frame": "site",
+            "pos": [
+              0,
+              0,
+              14
+            ]
+          },
+          "target": {
+            "frame": "site",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 36,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              9.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 42,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              1.2,
+              -0.5,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 48,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -1.2,
+              0.5,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 54,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0.8,
+              0.8,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 60,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -0.8,
+              0.6,
+              9.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 66,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 72,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              8.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.out"
+        }
+      ]
+    }
+  ],
+  "lens": "journal",
+  "langs": [
+    "en",
+    "ru"
+  ],
+  "layout": [
+    {
+      "stop": 0,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s00-title",
+          "role": "title",
+          "text": "Arc Science",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s00-label-1",
+          "role": "label",
+          "text": "Arc Science is a scientific harness and computational platform for designing biomolecules.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 0,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s00-title",
+          "role": "title",
+          "text": "Arc Science",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s00-label-1",
+          "role": "label",
+          "text": "Arc Science — научная среда и вычислительная платформа для конструирования биомолекул.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Four projects on one shared base",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s01-label-1",
+          "role": "label",
+          "text": "Four projects stand on one shared base: Omniverso, Snoggo, RNAv-G and Arc Chemistry.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Четыре проекта на одной общей основе",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s01-label-1",
+          "role": "label",
+          "text": "Четыре проекта стоят на одной общей основе: Omniverso, Snoggo, RNAv-G и Arc Chemistry.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "The four workspaces",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s02-label-1",
+          "role": "label",
+          "text": "The console links four workspaces with Cammut, Arc Kit and the 231-source library.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "Четыре рабочие области",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s02-label-1",
+          "role": "label",
+          "text": "Консоль объединяет четыре рабочие области, память Cammut, пакет Arc Kit и полку из 231 источника.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 3,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "One result from source to sentence",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s03-label-1",
+          "role": "label",
+          "text": "PDB 1MEL shows camel VH with lysozyme at 2.5 A and 55 residue pairs.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 3,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Один результат от источника до фразы",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s03-label-1",
+          "role": "label",
+          "text": "Структура PDB 1MEL показывает домен верблюда с лизоцимом при 2.5 А и 55 пар остатков.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 4,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s04-title",
+          "role": "title",
+          "text": "Omniverso and its target",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s04-label-1",
+          "role": "label",
+          "text": "In PDB 1MEL, 24 lysozyme residues and 18 nanobody residues form 55 residue pairs within 4.5 A.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 4,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s04-title",
+          "role": "title",
+          "text": "Omniverso и его мишень",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s04-label-1",
+          "role": "label",
+          "text": "В структуре PDB 1MEL 24 остатка лизоцима и 18 остатков нанотела образуют 55 пар остатков ближе 4.5 А.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 5,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s05-title",
+          "role": "title",
+          "text": "The loop that reaches into the target",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s05-label-1",
+          "role": "label",
+          "text": "One half of the loop contacts the domain while the other half enters the active site of lysozyme.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 5,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s05-title",
+          "role": "title",
+          "text": "Петля в активном центре мишени",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s05-label-1",
+          "role": "label",
+          "text": "Одна половина петли касается домена, а вторая половина глубоко входит в активный центр лизоцима.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 6,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s06-title",
+          "role": "title",
+          "text": "Inside the model",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s06-label-1",
+          "role": "label",
+          "text": "The autoencoder has 255,873,676 parameters and the denoiser has 153,102,091 parameters along a straight path.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 6,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s06-title",
+          "role": "title",
+          "text": "Устройство модели",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s06-label-1",
+          "role": "label",
+          "text": "Автокодировщик содержит 255,873,676 параметров, а модуль снятия шума содержит 153,102,091 параметров на прямом пути.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 7,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s07-title",
+          "role": "title",
+          "text": "Snoggo",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s07-label-1",
+          "role": "label",
+          "text": "Snoggo estimates binding free energy changes for beta-tubulin mutations.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 7,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s07-title",
+          "role": "title",
+          "text": "Snoggo",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s07-label-1",
+          "role": "label",
+          "text": "Snoggo оценивает изменение свободной энергии связывания при мутациях бета-тубулина.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 8,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s08-title",
+          "role": "title",
+          "text": "RNAv-G",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s08-label-1",
+          "role": "label",
+          "text": "RNAv-G describes viral capsid assembly and genome placement.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 8,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s08-title",
+          "role": "title",
+          "text": "RNAv-G",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s08-label-1",
+          "role": "label",
+          "text": "RNAv-G описывает сборку вирусного капсида и укладку генома.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 9,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s09-title",
+          "role": "title",
+          "text": "Arc Chemistry",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s09-label-1",
+          "role": "label",
+          "text": "Arc Chemistry selects extractants to separate neodymium and praseodymium.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 9,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s09-title",
+          "role": "title",
+          "text": "Arc Chemistry",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s09-label-1",
+          "role": "label",
+          "text": "Arc Chemistry подбирает экстрагенты для разделения неодима и празеодима.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 10,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s10-title",
+          "role": "title",
+          "text": "How research is checked",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s10-label-1",
+          "role": "label",
+          "text": "The hypothesis tree prunes weak branches into a claim graph and the judge compares candidates.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 10,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s10-title",
+          "role": "title",
+          "text": "Проверка гипотез и отбор",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s10-label-1",
+          "role": "label",
+          "text": "Дерево гипотез отсекает слабые ветви в граф утверждений, а оценщик сравнивает кандидатов с мишенью.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 11,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s11-title",
+          "role": "title",
+          "text": "What we ask of Yandex Cloud",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s11-label-1",
+          "role": "label",
+          "text": "We request 8,320 GPU-hours over 12 months in two stages: 2,080 h pilot and 6,240 h scale.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 11,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s11-title",
+          "role": "title",
+          "text": "Запрос к Yandex Cloud",
+          "box": [
+            96,
+            770,
+            1200,
+            64
+          ]
+        },
+        {
+          "id": "s11-label-1",
+          "role": "label",
+          "text": "Мы запрашиваем 8,320 часов на 12 месяцев в два этапа: 2,080 часов и 6,240 часов.",
+          "box": [
+            96,
+            842,
+            1500,
+            108
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "0": {
+      "en": "Stop 0: Arc Science is a scientific harness and computational platform for designing biomolecules. Facts: f-platform.",
+      "ru": "Слайд 0: Arc Science — научная среда и вычислительная платформа для конструирования биомолекул. Факты: f-platform."
+    },
+    "1": {
+      "en": "Stop 1: Four projects stand on one shared base: Omniverso, Snoggo, RNAv-G and Arc Chemistry. Facts: f-four, f-proj-omniverso, f-proj-snoggo, f-proj-rnavg, f-proj-chem.",
+      "ru": "Слайд 1: Четыре проекта стоят на одной общей основе: Omniverso, Snoggo, RNAv-G и Arc Chemistry. Факты: f-four, f-proj-omniverso, f-proj-snoggo, f-proj-rnavg, f-proj-chem."
+    },
+    "2": {
+      "en": "Stop 2: The console links four workspaces with Cammut, Arc Kit and the 231-source library. Facts: f-workspaces, f-cammut.",
+      "ru": "Слайд 2: Консоль объединяет четыре рабочие области, память Cammut, пакет Arc Kit и полку из 231 источника. Факты: f-workspaces, f-cammut."
+    },
+    "3": {
+      "en": "Stop 3: PDB 1MEL shows camel VH with lysozyme at 2.5 A and 55 residue pairs. Facts: f-1mel, f-contacts.",
+      "ru": "Слайд 3: Структура PDB 1MEL показывает домен верблюда с лизоцимом при 2.5 А и 55 пар остатков. Факты: f-1mel, f-contacts."
+    },
+    "4": {
+      "en": "Stop 4: In PDB 1MEL, 24 lysozyme residues and 18 nanobody residues form 55 residue pairs within 4.5 A. Facts: f-contacts.",
+      "ru": "Слайд 4: В структуре PDB 1MEL 24 остатка лизоцима и 18 остатков нанотела образуют 55 пар остатков ближе 4.5 А. Факты: f-contacts."
+    },
+    "5": {
+      "en": "Stop 5: One half of the loop contacts the domain while the other half enters the active site of lysozyme. Facts: f-cdr3.",
+      "ru": "Слайд 5: Одна половина петли касается домена, а вторая половина глубоко входит в активный центр лизоцима. Факты: f-cdr3."
+    },
+    "6": {
+      "en": "Stop 6: The autoencoder has 255,873,676 parameters and the denoiser has 153,102,091 parameters along a straight path. Facts: f-ae, f-dn, f-path.",
+      "ru": "Слайд 6: Автокодировщик содержит 255,873,676 параметров, а модуль снятия шума содержит 153,102,091 параметров на прямом пути. Факты: f-ae, f-dn, f-path."
+    },
+    "7": {
+      "en": "Stop 7: Snoggo estimates binding free energy changes for beta-tubulin mutations. Facts: f-proj-snoggo.",
+      "ru": "Слайд 7: Snoggo оценивает изменение свободной энергии связывания при мутациях бета-тубулина. Факты: f-proj-snoggo."
+    },
+    "8": {
+      "en": "Stop 8: RNAv-G describes viral capsid assembly and genome placement. Facts: f-proj-rnavg.",
+      "ru": "Слайд 8: RNAv-G описывает сборку вирусного капсида и укладку генома. Факты: f-proj-rnavg."
+    },
+    "9": {
+      "en": "Stop 9: Arc Chemistry selects extractants to separate neodymium and praseodymium. Facts: f-proj-chem.",
+      "ru": "Слайд 9: Arc Chemistry подбирает экстрагенты для разделения неодима и празеодима. Факты: f-proj-chem."
+    },
+    "10": {
+      "en": "Stop 10: The hypothesis tree prunes weak branches into a claim graph and the judge compares candidates. Facts: f-tree, f-judge.",
+      "ru": "Слайд 10: Дерево гипотез отсекает слабые ветви в граф утверждений, а оценщик сравнивает кандидатов с мишенью. Факты: f-tree, f-judge."
+    },
+    "11": {
+      "en": "Stop 11: We request 8,320 GPU-hours over 12 months in two stages: 2,080 h pilot and 6,240 h scale. Facts: f-gpu, f-status.",
+      "ru": "Слайд 11: Мы запрашиваем 8,320 часов на 12 месяцев в два этапа: 2,080 часов и 6,240 часов. Факты: f-gpu, f-status."
+    }
+  },
+  "storyboard": {
+    "approvedAt": "2026-11-09T00:00:00Z",
+    "note": "Approved 12-slide storyboard for Arc Science pilot deck"
+  }
+}

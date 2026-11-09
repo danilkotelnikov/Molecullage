@@ -1,21 +1,39 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { cameraAt, stopIndexAt, swapAlpha } from '../core/camera.ts';
-import { toCamera } from '../core/frames.ts';
+import { rootOf, toCamera, type Place } from '../core/frames.ts';
 import { resolve } from '../core/lens.ts';
 import type { Lens } from '../core/lens.ts';
 import { sample } from '../core/timeline.ts';
 import type { Job } from '../core/job.ts';
 import type { WorldObject } from '../core/world.ts';
+import { frameAt, frameUrl, shotAt } from '../core/bake.ts';
 
-export type Stage = { seek(t: number): Promise<void>; duration: number; stops: number[]; lang: 'en' | 'ru' };
+export type Stage = {
+  seek(t: number): Promise<void>;
+  duration: number;
+  stops: number[];
+  lang: 'en' | 'ru';
+  three: { scene: THREE.Scene; camera: THREE.PerspectiveCamera };
+  job: Job;
+  lens: Lens;
+  pathId: string;
+  jobId: string;
+  mode(): 'live' | 'baked';
+  project(p: Place): [number, number] | null;
+  pick(x: number, y: number): string | null;
+  freeCamera(on: boolean): void;
+  cameraPlace(): { at: Place; target: Place; fov: number };
+};
 
 const W = 1920;
 const H = 1080;
 // Font size by block role, in layout pixels at 1920 wide (stage/SPEC.md section 3).
 const ROLE_PX = { title: 51, label: 42, note: 37 } as const;
 const DRAWN: WorldObject['kind'][] = ['molecule', 'mesh', 'surface'];
-const TRACK_PROPS = ['position', 'opacity'];
+const WORLD_TRACK_PROPS = ['position', 'opacity'];
+const VECTOR_TRACK_PROPS = ['opacity', 'x', 'y', 'scale', 'draw'];
 const HIDE_BELOW = 0.002;
 // Planes in camera distances. The far plane is far out, so a closed container such as the liquid stays in view while the camera is deep inside it. The depth buffer is logarithmic.
 const NEAR = 1e-3;
@@ -62,8 +80,9 @@ function backdrop(lens: Lens): THREE.CanvasTexture {
   return texture;
 }
 
-function paint(object: THREE.Object3D, material: THREE.Material) {
+function paint(object: THREE.Object3D, material: THREE.Material, objId: string) {
   object.traverse((o) => {
+    o.userData.id = objId;
     const m = o as THREE.Mesh;
     if (m.isMesh) m.material = material;
   });
@@ -76,12 +95,20 @@ export function createStage(
   path: string,
   assets: Map<string, THREE.Object3D>,
   environment?: THREE.Texture | null,
+  jobId = 'zoom-test',
 ): Stage {
   const camPath = job.paths.find((p) => p.id === path);
   if (!camPath) throw new Error(`unknown path "${path}"`);
   const world = job.world;
+  const worldObjIds = new Set(world.objects.map((o) => o.id));
   for (const tr of job.timeline.tracks) {
-    if (!TRACK_PROPS.includes(tr.prop)) throw new Error(`timeline prop "${tr.prop}" on "${tr.target}" is not supported`);
+    if (worldObjIds.has(tr.target)) {
+      if (!WORLD_TRACK_PROPS.includes(tr.prop)) {
+        throw new Error(`timeline prop "${tr.prop}" on "${tr.target}" is not supported`);
+      }
+    } else if (!VECTOR_TRACK_PROPS.includes(tr.prop)) {
+      throw new Error(`timeline prop "${tr.prop}" on "${tr.target}" is not supported`);
+    }
   }
 
   const renderer = new THREE.WebGLRenderer({
@@ -95,7 +122,7 @@ export function createStage(
   renderer.setClearColor(new THREE.Color(lens.background));
 
   const scene = new THREE.Scene();
-  scene.background = backdrop(lens);
+  scene.background = job.rebuild ? new THREE.Color(lens.background) : backdrop(lens);
   const camera = new THREE.PerspectiveCamera(40, W / H, NEAR, FAR);
   scene.add(camera);
   // Light and reflections come from the lens HDRI in the material library. Without one, a plain built-in room is used.
@@ -159,8 +186,12 @@ export function createStage(
     const proto = assets.get(obj.asset);
     if (!proto) throw new Error(`object "${obj.id}": asset "${obj.asset}" is not loaded`);
     const exact = proto.clone(true);
-    paint(exact, mats.exact);
+    exact.name = obj.id;
+    exact.userData.id = obj.id;
+    paint(exact, mats.exact, obj.id);
     const group = new THREE.Group();
+    group.name = obj.id;
+    group.userData.id = obj.id;
     if (obj.rotation) group.rotation.set(obj.rotation[0], obj.rotation[1], obj.rotation[2]);
     group.add(exact);
     let stand: THREE.Object3D | null = null;
@@ -168,7 +199,10 @@ export function createStage(
       const sp = assets.get(obj.standIn.asset);
       if (!sp) throw new Error(`object "${obj.id}": stand-in asset "${obj.standIn.asset}" is not loaded`);
       stand = sp.clone(true);
-      paint(stand, mats.stand);
+      stand.name = `${obj.id}:standIn`;
+      stand.userData.id = obj.id;
+      stand.userData.standIn = true;
+      paint(stand, mats.stand, obj.id);
       group.add(stand);
     }
     // Glass does not see other glass behind it, so a later object in the job draws over an earlier one: list the liquid after its tube.
@@ -190,17 +224,42 @@ export function createStage(
     });
   }
 
+  // Baked frame image element over the canvas, below layout and vector layers
+  const parentEl = canvas.parentElement;
+  let bakedImg: HTMLImageElement | null = null;
+  if (parentEl) {
+    bakedImg = parentEl.querySelector<HTMLImageElement>('img[data-baked]');
+    if (!bakedImg) {
+      bakedImg = document.createElement('img');
+      bakedImg.dataset.baked = '';
+      Object.assign(bakedImg.style, {
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        width: `${W}px`,
+        height: `${H}px`,
+        display: 'none',
+        pointerEvents: 'none',
+      });
+      canvas.insertAdjacentElement('afterend', bakedImg);
+    }
+  }
+
   // Layout blocks: HTML over the canvas. One block list per stop and language.
-  const layoutEl = canvas.parentElement?.querySelector<HTMLElement>('[data-layout]') ?? null;
+  const layoutEl = parentEl?.querySelector<HTMLElement>('[data-layout]') ?? null;
   let shown = '';
   function showLayout(stop: number, lang: 'en' | 'ru') {
     if (!layoutEl) return;
-    layoutEl.style.background = `linear-gradient(to top, ${lens.background}d9 0%, ${lens.background}00 42%)`;
-    const id = `${stop}/${lang}`;
+    const entry = job.layout.find((l) => l.stop === stop && l.lang === lang);
+    const hasBlocks = (entry?.blocks?.length ?? 0) > 0;
+    layoutEl.style.background =
+      hasBlocks && !job.rebuild
+        ? `linear-gradient(to top, ${lens.background}d9 0%, ${lens.background}00 42%)`
+        : 'none';
+    const id = `${stop}/${lang}:${JSON.stringify(entry?.blocks ?? [])}`;
     if (id === shown) return;
     shown = id;
     layoutEl.replaceChildren();
-    const entry = job.layout.find((l) => l.stop === stop && l.lang === lang);
     for (const b of entry?.blocks ?? []) {
       const el = document.createElement('div');
       el.className = 'block';
@@ -221,38 +280,165 @@ export function createStage(
     }
   }
 
+  let currentT = 0;
+  let currentMode: 'live' | 'baked' = 'live';
+  let isFree = false;
+  let controls: OrbitControls | null = null;
+  let lastLook: [number, number, number] = [0, 0, -1];
+  const raycaster = new THREE.Raycaster();
+  const getCamPath = () => job.paths.find((p) => p.id === path) ?? camPath;
+  const getWorld = () => job.world;
+
   const stage: Stage = {
     duration: world.duration,
     stops: camPath.stops.slice(),
     lang: job.langs[0],
+    three: { scene, camera },
+    job,
+    lens,
+    pathId: path,
+    jobId,
+    mode() {
+      return currentMode;
+    },
+    project(p: Place): [number, number] | null {
+      const curWorld = getWorld();
+      const curCamPath = getCamPath();
+      const cam = cameraAt(curWorld, curCamPath, currentT);
+      const d = cam.distance;
+      const rel = toCamera(curWorld, p, cam.at);
+      const v = new THREE.Vector3(rel[0] / d, rel[1] / d, rel[2] / d);
+      const vCam = v.clone().applyMatrix4(camera.matrixWorldInverse);
+      if (!(vCam.z < 0)) return null;
+      v.project(camera);
+      if (v.z < -1 || v.z > 1) return null;
+      return [(v.x + 1) * (W / 2), (1 - v.y) * (H / 2)];
+    },
+    pick(x: number, y: number): string | null {
+      const roots = entries.filter((e) => e.group.visible).map((e) => e.group);
+      const offsets: [number, number][] = [
+        [0, 0],
+        [10, 0],
+        [-10, 0],
+        [0, 10],
+        [0, -10],
+        [20, 0],
+        [-20, 0],
+        [0, 20],
+        [0, -20],
+      ];
+      let bestId: string | null = null;
+      let bestDist = Infinity;
+      for (const [dx, dy] of offsets) {
+        const ndc = new THREE.Vector2(((x + dx) / W) * 2 - 1, -((y + dy) / H) * 2 + 1);
+        raycaster.setFromCamera(ndc, camera);
+        const hits = raycaster.intersectObjects(roots, true);
+        for (const hit of hits) {
+          let cur: THREE.Object3D | null = hit.object;
+          let vis = true;
+          while (cur) {
+            if (!cur.visible) {
+              vis = false;
+              break;
+            }
+            cur = cur.parent;
+          }
+          if (vis && hit.object.userData?.id) {
+            if (hit.distance < bestDist - 1e-4) {
+              bestDist = hit.distance;
+              bestId = hit.object.userData.id as string;
+            }
+            break;
+          }
+        }
+      }
+      return bestId;
+    },
+    freeCamera(on: boolean) {
+      if (on === isFree) return;
+      isFree = on;
+      if (on) {
+        controls = new OrbitControls(camera, canvas);
+        controls.target.set(lastLook[0], lastLook[1], lastLook[2]);
+        controls.minDistance = 0.1;
+        controls.maxDistance = 10;
+        controls.update();
+        controls.addEventListener('change', () => {
+          camera.updateMatrixWorld(true);
+          renderer.render(scene, camera);
+        });
+      } else {
+        if (controls) {
+          controls.dispose();
+          controls = null;
+        }
+        void stage.seek(currentT);
+      }
+    },
+    cameraPlace(): { at: Place; target: Place; fov: number } {
+      const curWorld = getWorld();
+      const curCamPath = getCamPath();
+      const cam = cameraAt(curWorld, curCamPath, currentT);
+      const d = cam.distance;
+      const F = cam.target.frame;
+      const scale = rootOf(curWorld, F).scale;
+      const tx = controls ? controls.target.x : lastLook[0];
+      const ty = controls ? controls.target.y : lastLook[1];
+      const tz = controls ? controls.target.z : lastLook[2];
+      const dx = (camera.position.x - tx) * d;
+      const dy = (camera.position.y - ty) * d;
+      const dz = (camera.position.z - tz) * d;
+      const atPos: [number, number, number] = [
+        cam.target.pos[0] + dx / scale,
+        cam.target.pos[1] + dy / scale,
+        cam.target.pos[2] + dz / scale,
+      ];
+      return {
+        at: { frame: F, pos: atPos },
+        target: { frame: F, pos: [cam.target.pos[0], cam.target.pos[1], cam.target.pos[2]] },
+        fov: camera.fov,
+      };
+    },
     async seek(t: number) {
-      const cam = cameraAt(world, camPath, t);
+      currentT = t;
+      const curWorld = getWorld();
+      const curCamPath = getCamPath();
+      const cam = cameraAt(curWorld, curCamPath, t);
       const d = cam.distance; // one render unit is one camera distance
-      camera.fov = cam.fov;
-      camera.near = NEAR;
-      camera.far = FAR;
-      camera.updateProjectionMatrix();
-      camera.position.set(0, 0, 0);
-      const look = toCamera(world, cam.target, cam.at);
-      const lx = look[0] / d;
-      const ly = look[1] / d;
-      const lz = look[2] / d;
-      camera.up.set(0, Math.abs(ly) > 0.999 ? 0 : 1, Math.abs(ly) > 0.999 ? 1 : 0);
-      camera.lookAt(lx, ly, lz);
-      camera.updateMatrixWorld(true);
+      if (!isFree) {
+        camera.fov = cam.fov;
+        camera.near = NEAR;
+        camera.far = FAR;
+        camera.updateProjectionMatrix();
+        camera.position.set(0, 0, 0);
+        const look = toCamera(curWorld, cam.target, cam.at);
+        const lx = look[0] / d;
+        const ly = look[1] / d;
+        const lz = look[2] / d;
+        lastLook = [lx, ly, lz];
+        camera.up.set(0, Math.abs(ly) > 0.999 ? 0 : 1, Math.abs(ly) > 0.999 ? 1 : 0);
+        camera.lookAt(lx, ly, lz);
+        camera.updateMatrixWorld(true);
+      }
 
       for (const e of entries) {
-        const { obj } = e;
+        const obj = curWorld.objects.find((o) => o.id === e.obj.id) ?? e.obj;
+        e.obj = obj;
+        const style = resolve(obj, lens);
+        e.mats.exact.color.set(style.color);
+        e.mats.stand.color.set(style.color);
+        const posTrackIdx = job.timeline.tracks.findIndex((tr) => tr.target === obj.id && tr.prop === 'position');
+        const opTrackIdx = job.timeline.tracks.findIndex((tr) => tr.target === obj.id && tr.prop === 'opacity');
         const live = t >= obj.window[0] && t <= obj.window[1];
         const pos =
-          e.positionTrack >= 0
-            ? (sample(job.timeline.tracks[e.positionTrack], t) as [number, number, number])
+          posTrackIdx >= 0
+            ? (sample(job.timeline.tracks[posTrackIdx], t) as [number, number, number])
             : obj.position;
-        const rel = toCamera(world, { frame: obj.frame, pos }, cam.at); // metres
+        const rel = toCamera(curWorld, { frame: obj.frame, pos }, cam.at); // metres
         e.group.position.set(rel[0] / d, rel[1] / d, rel[2] / d);
         e.group.scale.setScalar(obj.size / d);
         const dist = Math.hypot(rel[0], rel[1], rel[2]);
-        const anim = e.opacityTrack >= 0 ? (sample(job.timeline.tracks[e.opacityTrack], t) as number) : 1;
+        const anim = opTrackIdx >= 0 ? (sample(job.timeline.tracks[opTrackIdx], t) as number) : 1;
         const alpha = obj.standIn ? swapAlpha(dist, obj.standIn.swapAt) : 0;
         const exactOp = live ? (1 - alpha) * anim * e.base : 0;
         const standOp = live ? alpha * anim * e.base : 0;
@@ -264,8 +450,33 @@ export function createStage(
         if (e.stand) e.stand.visible = standOp > HIDE_BELOW;
         e.group.visible = live && (exactOp > HIDE_BELOW || standOp > HIDE_BELOW);
       }
-      renderer.render(scene, camera);
-      showLayout(stopIndexAt(camPath, t), stage.lang);
+
+      // Check for baked shot at t
+      const shot = shotAt(job, path, t);
+      if (shot && bakedImg) {
+        const f = frameAt(shot, t);
+        const url = frameUrl(jobId, shot.id, f);
+        try {
+          bakedImg.src = url;
+          await bakedImg.decode();
+          bakedImg.style.display = 'block';
+          delete bakedImg.dataset.missingBake;
+          currentMode = 'baked';
+        } catch {
+          bakedImg.style.display = 'none';
+          bakedImg.dataset.missingBake = `${shot.id} frame ${f}`;
+          currentMode = 'live';
+          renderer.render(scene, camera);
+        }
+      } else {
+        if (bakedImg) {
+          bakedImg.style.display = 'none';
+          delete bakedImg.dataset.missingBake;
+        }
+        currentMode = 'live';
+        renderer.render(scene, camera);
+      }
+      showLayout(stopIndexAt(curCamPath, t), stage.lang);
     },
   };
   return stage;

@@ -1,11 +1,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { isBig } from '../core/job.ts';
+import { applyEdits } from '../core/edits.ts';
+import { SHIPPED_LENSES } from '../core/lenses.ts';
 import { checkJob } from './checks.mjs';
+import { readEdits } from './edits-store.mjs';
 
 const TOOLS_DIR = path.dirname(fileURLToPath(import.meta.url));
 const STUDIO_DIR = path.resolve(TOOLS_DIR, '..');
 const ALLOWED_FORMATS = new Set(['png', 'svg', 'mp4']);
+export const BIG_JOB_REFUSAL =
+  "This is a big job. Its storyboard needs the owner's approval first (job.storyboard.approvedAt).";
 
 function padFrame(n) {
   return String(n).padStart(5, '0');
@@ -55,6 +61,7 @@ export function buildExportPlan(job, opts = {}) {
   const svgDir = path.join(outDir, 'svg', stem);
   const mp4Path = path.join(outDir, `${stem}.mp4`);
   const checksPath = path.join(outDir, `${stem}.checks.json`);
+  const wavPath = path.join(outDir, 'audio', `${jobId}-${lang}.wav`);
 
   const frameCount = Math.max(1, Math.round(duration * fps));
   const frames = [];
@@ -95,8 +102,10 @@ export function buildExportPlan(job, opts = {}) {
     cursor += count;
   }
 
-  const query = `?job=${encodeURIComponent(jobId)}&lens=${encodeURIComponent(lens)}&lang=${encodeURIComponent(lang)}&path=${encodeURIComponent(pathId)}`;
+  const noEditsSuffix = opts.noEdits ? '&edits=0' : '';
+  const query = `?job=${encodeURIComponent(jobId)}&lens=${encodeURIComponent(lens)}&lang=${encodeURIComponent(lang)}&path=${encodeURIComponent(pathId)}${noEditsSuffix}`;
 
+  const useVoice = Boolean(opts.voice && fs.existsSync(wavPath));
   const ffmpegArgs = formats.includes('mp4')
     ? [
         '-y',
@@ -104,6 +113,7 @@ export function buildExportPlan(job, opts = {}) {
         String(fps),
         '-i',
         path.join(frameDir, '%05d.png'),
+        ...(useVoice ? ['-i', wavPath, '-c:a', 'aac', '-b:a', '192k', '-shortest'] : []),
         '-c:v',
         'libx264',
         '-pix_fmt',
@@ -129,6 +139,7 @@ export function buildExportPlan(job, opts = {}) {
     stops,
     workerSlices,
     query,
+    voice: useVoice ? wavPath : null,
     outputs: {
       outDir,
       frameDir,
@@ -152,6 +163,8 @@ function parseCliArgs(argv) {
     else if (a === '--fps') opts.fps = Number(argv[++i]);
     else if (a === '--workers') opts.workers = Number(argv[++i]);
     else if (a === '--out') opts.outDir = argv[++i];
+    else if (a === '--no-edits') opts.noEdits = true;
+    else if (a === '--voice') opts.voice = true;
     else if (a === '--dry-run' || a === '--plan') opts.dryRun = true;
     else if (!a.startsWith('--')) positional.push(a);
   }
@@ -159,7 +172,7 @@ function parseCliArgs(argv) {
   return opts;
 }
 
-// CLI runner: node tools/export.mjs <job> [--lens <id>] [--lang <en|ru>] [--path <id>] [--format png|svg|mp4] [--fps <n>] [--workers <n>] [--plan]
+// CLI runner: node tools/export.mjs <job> [--lens <id>] [--lang <en|ru>] [--path <id>] [--format png|svg|mp4] [--fps <n>] [--workers <n>] [--no-edits] [--voice] [--plan]
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   const opts = parseCliArgs(process.argv.slice(2));
   const jobDir = path.resolve(STUDIO_DIR, 'jobs', opts.jobId);
@@ -168,7 +181,19 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     console.error(`job file not found: ${jobFile}`);
     process.exit(1);
   }
-  const job = JSON.parse(fs.readFileSync(jobFile, 'utf8'));
+  let job = JSON.parse(fs.readFileSync(jobFile, 'utf8'));
+  if (!opts.noEdits) {
+    const edits = readEdits(jobDir);
+    if (edits.length > 0) {
+      job = applyEdits(job, edits, SHIPPED_LENSES);
+    }
+  }
+
+  if (isBig(job) && !job.storyboard?.approvedAt) {
+    console.error(BIG_JOB_REFUSAL);
+    process.exit(2);
+  }
+
   const check = checkJob(job, { jobDir });
   const plan = buildExportPlan(job, opts);
   fs.mkdirSync(plan.outputs.outDir, { recursive: true });
@@ -185,6 +210,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
         fps: plan.fps,
         frameCount: plan.frameCount,
         workers: plan.workerSlices.length,
+        query: plan.query,
+        voice: plan.voice,
         checksPath: plan.outputs.checksPath,
       },
       null,
@@ -193,4 +220,3 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   );
   if (!check.ok) process.exit(1);
 }
-

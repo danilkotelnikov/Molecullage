@@ -6,6 +6,13 @@ import type { Timeline } from './timeline.ts';
 import type { CameraPath } from './camera.ts';
 import { checkLens } from './lens.ts';
 import type { Lens } from './lens.ts';
+import { validateShots } from './bake.ts';
+import type { Shot } from './bake.ts';
+import { validateVectors } from './vector.ts';
+import type { VectorObject } from './vector.ts';
+import type { Brief } from './brief.ts';
+import type { Fact } from './facts.ts';
+import type { Slide } from './story.ts';
 
 export type Block = {
   id: string;
@@ -22,6 +29,14 @@ export type Job = {
   langs: ('en' | 'ru')[];
   layout: StopLayout[];
   notes: Record<number, Partial<Record<'en' | 'ru', string>>>;
+  shots?: Shot[];
+  budget?: { secondsPerFrame: number };
+  vectors?: VectorObject[];
+  rebuild?: true;
+  brief?: Brief;
+  facts?: Fact[];
+  story?: Slide[];
+  storyboard?: { approvedAt: string; note?: string };
 };
 
 const SAFE = 48; // px margin inside the 1920x1080 frame
@@ -68,6 +83,16 @@ const jobSchema = z.looseObject({
   notes: z.record(z.string(), z.strictObject({ en: z.string().optional(), ru: z.string().optional() })).default({}),
 });
 
+export function isBig(job: Job): boolean {
+  for (const p of job.paths ?? []) {
+    if (p.kind === 'deck' && p.stops.length > 6) return true;
+  }
+  for (const s of job.shots ?? []) {
+    if (s.render === 'baked') return true;
+  }
+  return false;
+}
+
 /** Pure: runs in the browser as well as in Node. It reads no files and no environment. */
 export function loadJob(
   input: unknown,
@@ -87,8 +112,32 @@ export function loadJob(
   const job = parsed.data;
   const worldForTimeline = w.ok
     ? w.world
-    : ({ objects: Array.isArray(rawWorld?.objects) ? rawWorld.objects : [] } as unknown as World);
-  errors.push(...validateTimeline(job.timeline as Timeline, worldForTimeline));
+    : ({
+        duration: typeof (rawWorld as { duration?: unknown })?.duration === 'number' ? (rawWorld as { duration: number }).duration : 0,
+        frames: Array.isArray((rawWorld as { frames?: unknown })?.frames) ? (rawWorld as { frames: unknown[] }).frames : [],
+        objects: Array.isArray(rawWorld?.objects) ? rawWorld.objects : [],
+      } as unknown as World);
+
+  const rawVectors = (job as { vectors?: VectorObject[] }).vectors;
+  if (rawVectors !== undefined) {
+    errors.push(...validateVectors(rawVectors, worldForTimeline));
+  }
+
+  const worldWithVectors = Array.isArray(rawVectors)
+    ? ({
+        ...worldForTimeline,
+        objects: [
+          ...worldForTimeline.objects,
+          ...rawVectors.filter((v) => v && typeof v.id === 'string').map((v) => ({ id: v.id })),
+        ],
+      } as unknown as World)
+    : worldForTimeline;
+
+  errors.push(...validateTimeline(job.timeline as Timeline, worldWithVectors));
+
+  const rawShots = (job as { shots?: Shot[] }).shots;
+  const rawBudget = (job as { budget?: { secondsPerFrame: number } }).budget;
+  errors.push(...validateShots(rawShots, job.paths as CameraPath[], rawBudget));
 
   // camera paths
   const frameIds = w.ok ? new Set(w.world.frames.map((f) => f.id)) : null;

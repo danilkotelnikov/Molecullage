@@ -1,0 +1,87 @@
+[
+ {
+  "a": 0.6,
+  "b": 3.359,
+  "text": "The tube sits on the bench.",
+  "words": [
+   {
+    "w": "The",
+    "t0": 0.737
+   },
+   {
+    "w": "tube",
+    "t0": 0.875
+   },
+   {
+    "w": "sits",
+    "t0": 1.323
+   },
+   {
+    "w": "on",
+    "t0": 1.736
+   },
+   {
+    "w": "the",
+    "t0": 1.922
+   },
+   {
+    "w": "bench.",
+    "t0": 2.032
+   }
+  ]
+ },
+ {
+  "a": 4.6,
+  "b": 8.6,
+  "text": "Particles float inside the liquid.",
+  "words": [
+   {
+    "w": "Particles",
+    "t0": 4.737
+   },
+   {
+    "w": "float",
+    "t0": 5.453
+   },
+   {
+    "w": "inside",
+    "t0": 5.915
+   },
+   {
+    "w": "the",
+    "t0": 6.48
+   },
+   {
+    "w": "liquid.",
+    "t0": 6.611
+   }
+  ]
+ },
+ {
+  "a": 8.6,
+  "b": 11.9,
+  "text": "Antibodies coat the gold particle.",
+  "words": [
+   {
+    "w": "Antibodies",
+    "t0": 8.737
+   },
+   {
+    "w": "coat",
+    "t0": 9.702
+   },
+   {
+    "w": "the",
+    "t0": 10.101
+   },
+   {
+    "w": "gold",
+    "t0": 10.246
+   },
+   {
+    "w": "particle.",
+    "t0": 10.68
+   }
+  ]
+ }
+]

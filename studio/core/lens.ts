@@ -1,5 +1,4 @@
 import type { Ease } from './timeline.ts';
-import type { WorldObject } from './world.ts';
 
 export type RoleStyle = {
   color: string; // #rrggbb
@@ -29,10 +28,18 @@ const MIN_TEXT_PX = 37;
 const MIN_CONTRAST = 4.5;
 const HEX = /^#[0-9a-fA-F]{6}$/;
 
+const ROLE_ALIASES: Record<string, string> = {
+  surface: 'diagram',
+  path: 'line',
+  focal: 'gold',
+};
+
 /** The first of obj.roles that the lens styles. A role the lens does not style is an error. */
-export function resolve(obj: WorldObject, lens: Lens): RoleStyle {
+export function resolve(obj: { roles: string[] }, lens: Lens): RoleStyle {
   for (const r of obj.roles) {
     if (Object.prototype.hasOwnProperty.call(lens.roles, r)) return lens.roles[r];
+    const alias = ROLE_ALIASES[r];
+    if (alias && Object.prototype.hasOwnProperty.call(lens.roles, alias)) return lens.roles[alias];
   }
   throw new Error(`no style for roles [${obj.roles.join(',')}] in lens "${lens.id}"`);
 }

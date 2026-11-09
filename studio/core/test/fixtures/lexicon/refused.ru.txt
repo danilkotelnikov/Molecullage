@@ -1,0 +1,3 @@
+# Each line is a lowercase Russian word stem matched at the start of a word.
+инновационн
+уникальн

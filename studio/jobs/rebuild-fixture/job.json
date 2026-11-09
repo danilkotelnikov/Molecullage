@@ -1,0 +1,200 @@
+{
+  "rebuild": true,
+  "world": {
+    "id": "rebuild",
+    "duration": 10,
+    "frames": [
+      {
+        "id": "root",
+        "parent": null,
+        "unit": 1,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": []
+  },
+  "timeline": {
+    "tracks": []
+  },
+  "paths": [
+    {
+      "id": "deck",
+      "kind": "deck",
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "root",
+            "pos": [
+              0,
+              0,
+              2
+            ]
+          },
+          "target": {
+            "frame": "root",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40
+        }
+      ],
+      "stops": [
+        0
+      ]
+    }
+  ],
+  "lens": "journal",
+  "langs": [
+    "en"
+  ],
+  "layout": [
+    {
+      "stop": 0,
+      "lang": "en",
+      "blocks": []
+    }
+  ],
+  "notes": {},
+  "vectors": [
+    {
+      "id": "rect",
+      "type": "shape",
+      "frame": null,
+      "box": [
+        285,
+        135,
+        405,
+        270
+      ],
+      "shape": "rect",
+      "roles": [
+        "surface"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/tools/rebuild/test/fixture.png"
+      },
+      "evidence": "architecture",
+      "window": [
+        0,
+        10
+      ]
+    },
+    {
+      "id": "arrow",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        757.5,
+        253.8,
+        337.5,
+        32.400000000000006
+      ],
+      "from": [
+        757.5,
+        270
+      ],
+      "to": [
+        1095,
+        270
+      ],
+      "roles": [
+        "path"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/tools/rebuild/test/fixture.png"
+      },
+      "evidence": "architecture",
+      "window": [
+        0,
+        10
+      ]
+    },
+    {
+      "id": "title-gold",
+      "type": "label",
+      "frame": null,
+      "box": [
+        1230,
+        229.50000000000003,
+        216,
+        81
+      ],
+      "text": {
+        "en": "Gold",
+        "ru": "Золото"
+      },
+      "roles": [
+        "focal"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/tools/rebuild/test/fixture.png"
+      },
+      "evidence": "architecture",
+      "window": [
+        0,
+        10
+      ]
+    },
+    {
+      "id": "circle-p1",
+      "type": "path",
+      "frame": null,
+      "box": [
+        474,
+        661.5,
+        163.35000000000002,
+        163.35000000000002
+      ],
+      "d": "M 545.55 661.5 L 565.8 661.5 L 583.35 665.55 L 592.8 669.6 L 599.55 673.65 L 604.95 677.7 L 610.35 681.75 L 614.4 685.8 L 618.45 689.85 L 621.15 693.9 L 623.85 697.95 L 626.55 702 L 629.25 706.05 L 630.6 710.1 L 631.95 714.15 L 633.3 718.2 L 634.65 722.25 L 636 726.3 L 636 730.35 L 637.35 734.4 L 637.35 738.45 L 637.35 742.5 L 637.35 746.55 L 637.35 750.6 L 636 754.65 L 636 758.7 L 634.65 762.75 L 633.3 766.8 L 631.95 770.85 L 630.6 774.9 L 629.25 778.95 L 626.55 783 L 623.85 787.05 L 621.15 791.1 L 618.45 795.15 L 614.4 799.2 L 610.35 803.25 L 604.95 807.3 L 599.55 811.35 L 592.8 815.4 L 583.35 819.45 L 565.8 823.5 L 545.55 824.85 L 528 820.8 L 518.55 816.75 L 511.8 812.7 L 506.4 808.65 L 501 804.6 L 496.95 800.55 L 492.9 796.5 L 490.2 792.45 L 487.5 788.4 L 484.8 784.35 L 482.1 780.3 L 480.75 776.25 L 479.4 772.2 L 478.05 768.15 L 476.7 764.1 L 475.35 760.05 L 475.35 756 L 474 751.95 L 474 747.9 L 474 743.85 L 474 739.8 L 474 735.75 L 475.35 731.7 L 475.35 727.65 L 476.7 723.6 L 478.05 719.55 L 479.4 715.5 L 480.75 711.45 L 482.1 707.4 L 484.8 703.35 L 487.5 699.3 L 490.2 695.25 L 492.9 691.2 L 496.95 687.15 L 501 683.1 L 506.4 679.05 L 511.8 675 L 518.55 670.95 L 528 666.9 L 545.55 662.85 Z",
+      "roles": [
+        "focal"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/tools/rebuild/test/fixture.png"
+      },
+      "evidence": "architecture",
+      "window": [
+        0,
+        10
+      ]
+    },
+    {
+      "id": "circle",
+      "type": "group",
+      "frame": null,
+      "box": [
+        460.5,
+        648,
+        189,
+        189
+      ],
+      "children": [
+        "circle-p1"
+      ],
+      "roles": [
+        "focal"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/tools/rebuild/test/fixture.png"
+      },
+      "evidence": "architecture",
+      "window": [
+        0,
+        10
+      ]
+    }
+  ]
+}

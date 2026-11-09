@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import type { Plugin } from 'vite';
+import { editsPlugin } from '../tools/edits-server.mjs';
 
 const web = path.dirname(fileURLToPath(import.meta.url));
 const studio = path.resolve(web, '..');
@@ -60,11 +61,16 @@ function studioFiles(): Plugin {
 export default defineConfig({
   root: web,
   base: './',
-  plugins: [studioFiles()],
+  plugins: [studioFiles(), editsPlugin(fileURLToPath(new URL('../jobs', import.meta.url)))],
   server: { fs: { allow: ['..'] } },
   build: {
     outDir: path.resolve(web, 'dist'),
     emptyOutDir: true,
-    rollupOptions: { input: { index: path.resolve(web, 'index.html') } },
+    rollupOptions: {
+      input: {
+        index: path.resolve(web, 'index.html'),
+        gsap: path.resolve(web, 'test/gsap.html'),
+      },
+    },
   },
 });

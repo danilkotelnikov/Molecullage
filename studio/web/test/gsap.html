@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GSAP Player Test</title>
+</head>
+<body>
+<svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect data-id="box" x="0" y="0" width="100" height="80" fill="#336699" />
+  <g data-id="mover"><circle cx="50" cy="50" r="25" fill="#cc8833" /></g>
+  <path data-id="line" d="M0 0 L200 0" stroke="#111111" stroke-width="4" fill="none" />
+</svg>
+<script type="module">
+import { createGsapPlayer } from '../gsap-player.ts';
+import { sample } from '../../core/timeline.ts';
+
+const tracks = [
+  {
+    target: 'box',
+    prop: 'opacity',
+    keys: [
+      { t: 0, v: 0 },
+      { t: 2, v: 1, ease: 'power2.out' },
+      { t: 4, v: 0.25, ease: 'sine.inOut' },
+    ],
+  },
+  {
+    target: 'mover',
+    prop: 'x',
+    keys: [
+      { t: 0, v: 10 },
+      { t: 3, v: 310, ease: 'power3.out' },
+    ],
+  },
+  {
+    target: 'mover',
+    prop: 'scale',
+    keys: [
+      { t: 0, v: 1 },
+      { t: 3, v: 2.5, ease: 'power2.inOut' },
+    ],
+  },
+  {
+    target: 'line',
+    prop: 'draw',
+    keys: [
+      { t: 0, v: 0 },
+      { t: 1, v: 1, ease: 'linear' },
+    ],
+  },
+];
+
+const svg = document.getElementById('svg');
+const player = createGsapPlayer(svg, tracks);
+player.set(0);
+
+window.__gsapTest = {
+  tracks,
+  sample,
+  set: (t) => player.set(t),
+  svg,
+};
+</script>
+</body>
+</html>

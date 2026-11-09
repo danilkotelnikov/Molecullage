@@ -21,7 +21,7 @@ Do not use it for photos, micrographs, or images that would need generative art.
 
 ## Nature mode and the anti-overplating workflow (triggered on every figure build)
 
-Before you draw, write the message of the figure in one sentence and pick the form from the table in `references/nature-mode.md`. A number, a trend, a comparison, a ranking, shares or counts get axes and marks (dots, bars, lines, a unit matrix, parallel scales). Boxes are for a process with real objects, and at most one panel of a figure is a diagram. Rectangles that hold words cover at most 25 % of the area (QA mark `boxes`), and no box may sit inside another box (QA mark `overplate`). The blind read has a fourth question for this (`references/blind-read.md`). A page that is a real process diagram sets `"standards": {"mode": "diagram"}` in `molecullage.json` and says why in its notes file. Rules 29 to 38 are in `references/grammar.md`, section F, and rules 39 to 56 are in section G.
+Before you draw, write the message of the figure in one sentence and pick the form from the table in `references/nature-mode.md`. A number, a trend, a comparison, a ranking, shares or counts get axes and marks (dots, bars, lines, a unit matrix, parallel scales). Boxes are for a process with real objects, and at most one panel of a figure is a diagram. Rectangles that hold words cover at most 25 % of the area (QA mark `boxes`), and no box may sit inside another box (QA mark `overplate`). The blind read has a fourth question for this (`references/blind-read.md`). A page that is a real process diagram sets `"standards": {"mode": "diagram"}` in `molecullage.json` and says why in its notes file. Rules 29 to 38 are in `references/grammar.md`, section F, and rules 39 to 61 are in section G.
 
 Every figure build runs these five anti-overplating gates:
 
@@ -83,6 +83,12 @@ Short version, for a quick start:
 6. Verify before you report: `film_verify_set` must say 0 problems. Report what you did not check.
 7. Memory: recall first, retain after each decision, wait two minutes, read back, supersede wrong notes.
 
+## Molecullage Studio (`studio/`) contracts (Plans 3 to 9)
+
+1. **Twelve-role lens and story timing contract.** Use only the twelve lens roles (`plastic`, `liquid`, `antibody`, `protein`, `nucleic-acid`, `gold`, `strip`, `line`, `diagram`, `tile`, `shape`, `label`) across `journal` and `cinematic`. Keep `job.timeline` as `{ tracks: [...] }` where each track holds `{ target, prop, keys }`. Keep each spoken sentence (`say`) inside the stop window (`0.6 + words * 0.42 <= nextStop - stop` in English, `0.5` s per word in Russian) and list supporting fact IDs in `facts: string[]` whenever `say` or `title` contains a digit. Run `node tools/check.mjs <job>` after every edit to verify the schema, grounded facts, bilingual lexicon terms and prose rules.
+2. **Camera-space glTF export and stand-in thresholds.** Pass `{ binary: true, trs: true }` to `GLTFExporter.parseAsync` in `studio/web/gltf.ts` and wrap normalized assets in a camera-space group node so inner unit scales stay intact and `:standIn` nodes are omitted. When zooming into a child frame with `unit: 1e-10` (Å) to trigger a stand-in swap at `< 1.5 nm`, set the target camera key inside the threshold (for example `pos: [0, 0, 14]` for `1.4 nm`) so IEEE-754 float64 rounding (`15 * 1e-10 = 1.5000000000000002e-9`) stays below the `1.5e-9` boundary.
+3. **Headless ChimeraX, GSAP DrawSVG and isolated Playwright servers.** Generate each molecular `.glb` view from PDB coordinates with headless ChimeraX (`ChimeraX-console.exe --nogui --script <file.cxc> --exit`); export distance pseudobonds from submodel `#1.1` (`save <contacts.glb> models #1.1`). Render vector arrows as `<path>` and `<marker>` so `gsap` and `DrawSVGPlugin` animate the shaft length. Use `ensureStudioServer()` with an ephemeral port fallback in `studio/tools/browser.mjs` so parallel `node --test` browser suites keep their preview server open until the suite finishes. Exclude `review/` notes from the forbidden-file check in `studio/tools/site.mjs`.
+
 ## Tools (MCP server `molecullage`)
 
 | Tool | Use |
@@ -137,9 +143,9 @@ py -3 -I palette/check_palette.py <tokens.json>
 
 For a schematic read by someone outside the field (rules 26 to 28): a one-line purpose at the top, one real thumbnail in each important block, and never a picture of a result on a designed block.
 
-In Nature mode the ladder is 8 pt for panel letters and 7 pt or less for everything else (floor 6.5 pt), the widths are 89, 120 to 136 and 183 mm, and rules 29 to 56 apply on top.
+In Nature mode the ladder is 8 pt for panel letters and 7 pt or less for everything else (floor 6.5 pt), the widths are 89, 120 to 136 and 183 mm, and rules 29 to 61 apply on top.
 
-All 56 rules, each with what goes wrong when it is broken: `references/grammar.md`. Type and colour: `references/type-ladder.md`, `references/palette.md`. Consolidated 2D, 3D and asset sources (231 sources, verified references, access list and 8-domain software atlas): `studio/library/POLICY.md`, `studio/library/sources.json`, `studio/library/references.json`, `studio/library/access.json` and `studio/library/atlas/`.
+All 61 rules, each with what goes wrong when it is broken: `references/grammar.md`. Type and colour: `references/type-ladder.md`, `references/palette.md`. Consolidated 2D, 3D and asset sources (231 sources, verified references, access list and 8-domain software atlas): `studio/library/POLICY.md`, `studio/library/sources.json`, `studio/library/references.json`, `studio/library/access.json` and `studio/library/atlas/`.
 
 ## Commands that matter
 
@@ -187,4 +193,4 @@ Every figure has `<key>.notes.md` with: the message in one sentence; what each p
 
 ## References
 
-`grammar.md` (the 56 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`, `film.md`, `film-protocol.md` (rules and runbooks for the course films' voice and sound), `film-handbook.md` (what was measured and why). `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `film-protocol.md` and `film-handbook.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.
+`grammar.md` (the 61 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`, `film.md`, `film-protocol.md` (rules and runbooks for the course films' voice and sound), `film-handbook.md` (what was measured and why). `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `film-protocol.md` and `film-handbook.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.

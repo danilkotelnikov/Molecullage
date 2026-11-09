@@ -1,0 +1,83 @@
+# CDR3 residue range of chain A: 99-118 (from contacts_1MEL.json and Desmyter et al. 1996, doi:10.1038/nsb0996-803)
+open ../../../data/pdb/1MEL.pdb
+delete #1/B,M
+delete solvent
+graphics quality 0.5
+hide #1 atoms
+show #1/A,L cartoons
+save 1mel.glb models #1
+
+hide #1 cartoons
+hide #1 atoms
+show #1/A,L@CA atoms
+distance /A:29@CA /L:75@CA
+distance /A:29@CA /L:101@CA
+distance /A:30@CA /L:62@CA
+distance /A:31@CA /L:62@CA
+distance /A:32@CA /L:62@CA
+distance /A:53@CA /L:61@CA
+distance /A:53@CA /L:62@CA
+distance /A:53@CA /L:73@CA
+distance /A:54@CA /L:61@CA
+distance /A:54@CA /L:73@CA
+distance /A:55@CA /L:48@CA
+distance /A:55@CA /L:61@CA
+distance /A:57@CA /L:47@CA
+distance /A:57@CA /L:48@CA
+distance /A:101@CA /L:103@CA
+distance /A:101@CA /L:107@CA
+distance /A:102@CA /L:62@CA
+distance /A:102@CA /L:63@CA
+distance /A:102@CA /L:75@CA
+distance /A:102@CA /L:103@CA
+distance /A:102@CA /L:107@CA
+distance /A:103@CA /L:63@CA
+distance /A:103@CA /L:106@CA
+distance /A:103@CA /L:107@CA
+distance /A:103@CA /L:109@CA
+distance /A:103@CA /L:112@CA
+distance /A:104@CA /L:57@CA
+distance /A:104@CA /L:58@CA
+distance /A:104@CA /L:59@CA
+distance /A:104@CA /L:63@CA
+distance /A:104@CA /L:98@CA
+distance /A:104@CA /L:107@CA
+distance /A:104@CA /L:108@CA
+distance /A:105@CA /L:35@CA
+distance /A:105@CA /L:52@CA
+distance /A:105@CA /L:57@CA
+distance /A:105@CA /L:59@CA
+distance /A:105@CA /L:107@CA
+distance /A:105@CA /L:108@CA
+distance /A:105@CA /L:109@CA
+distance /A:106@CA /L:46@CA
+distance /A:106@CA /L:47@CA
+distance /A:106@CA /L:48@CA
+distance /A:106@CA /L:50@CA
+distance /A:106@CA /L:52@CA
+distance /A:106@CA /L:59@CA
+distance /A:106@CA /L:109@CA
+distance /A:107@CA /L:109@CA
+distance /A:107@CA /L:112@CA
+distance /A:108@CA /L:47@CA
+distance /A:111@CA /L:112@CA
+distance /A:111@CA /L:113@CA
+distance /A:118@CA /L:106@CA
+distance /A:118@CA /L:112@CA
+distance /A:118@CA /L:116@CA
+distance style radius 0.1 dashes 0
+label delete
+info models
+save 1mel_contacts.glb models #2
+
+close all
+open ../../../data/pdb/1MEL.pdb
+delete #1/B,M
+delete solvent
+delete ~(#1/A:99-118 | (#1/L & (#1/A:99-118 :<6.0)))
+graphics quality 0.05
+hide #1 cartoons
+show #1 atoms
+style #1 stick
+save 1mel_site.glb models #1
+exit

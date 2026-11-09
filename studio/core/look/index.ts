@@ -8,7 +8,9 @@ export type MaterialPresetName =
   | 'mattePlastic'
   | 'lipidMembrane'
   | 'proteinSurface'
-  | 'goldFoil';
+  | 'goldFoil'
+  | 'crystal'
+  | 'focalStick';
 
 export type MaterialDescriptor = {
   id: MaterialPresetName;
@@ -138,6 +140,27 @@ export const MATERIALS: Record<MaterialPresetName, MaterialDescriptor> = {
     transmission: 0.0,
     ior: 1.0,
     clearcoat: 0.35,
+    choice: 'design',
+  },
+  crystal: {
+    id: 'crystal',
+    color: '#C0D4E6',
+    roughness: 0.06,
+    metalness: 0.0,
+    transmission: 0.92,
+    ior: 1.38,
+    clearcoat: 1.0,
+    thickness: 0.42,
+    choice: 'design',
+  },
+  focalStick: {
+    id: 'focalStick',
+    color: '#D48F50',
+    roughness: 0.18,
+    metalness: 0.05,
+    transmission: 0.0,
+    ior: 1.48,
+    clearcoat: 0.6,
     choice: 'design',
   },
 };
