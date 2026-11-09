@@ -1,0 +1,2219 @@
+{
+  "brief": {
+    "idea": "Arc Science pairs a structure autoencoder and rectified-flow denoiser explained from PDB 1MEL atoms to GPU memory bytes.",
+    "details": "A 10-stop ML architecture explainer deck and film path. Lenses: journal and cinematic. Check-ins: one storyboard stop. Outputs: live deck, MP4, PDF, web link.",
+    "concepts": [
+      "PDB 1MEL antigen-nanobody complex",
+      "autoencoder parameter and memory footprint",
+      "continuous 512x256 latent grid and straight flow path",
+      "denoiser and quadratic pair attention activations",
+      "80 GiB NVIDIA A100 memory budget and specificity judge"
+    ],
+    "audience": "machine learning researchers, structural biologists, and cloud compute reviewers",
+    "product": "arc-science",
+    "langs": [
+      "en",
+      "ru"
+    ],
+    "timeBudget": {
+      "hours": 8
+    },
+    "files": []
+  },
+  "facts": [
+    {
+      "id": "f-1mel",
+      "text": {
+        "en": "PDB 1MEL crystal structure resolves camel VH bound to hen egg-white lysozyme at 2.5 A with 55 heavy-atom residue pairs within 4.5 A.",
+        "ru": "Кристаллическая структура PDB 1MEL показывает домен VH верблюда с лизоцимом при 2.5 А и 55 пар остатков ближе 4.5 А."
+      },
+      "level": "published",
+      "source": {
+        "kind": "pdb",
+        "ref": "1MEL"
+      },
+      "usedBy": [
+        "s00-title",
+        "s00-part",
+        "mel"
+      ]
+    },
+    {
+      "id": "m-input",
+      "text": {
+        "en": "Input representation holds up to 512 residue positions with heavy-atom coordinates around the target epitope.",
+        "ru": "Входное представление содержит до 512 позиций остатков с координатами тяжелых атомов вокруг эпитопа мишени."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#seqLen"
+      },
+      "usedBy": [
+        "s01-title",
+        "s01-part",
+        "s01-hw",
+        "v-input-seq"
+      ]
+    },
+    {
+      "id": "m-ae",
+      "text": {
+        "en": "The autoencoder has 255,873,676 parameters (511,747,352 B in bf16, 1,023,494,704 B in fp32, 3.813 GiB Adam training state).",
+        "ru": "Автокодировщик содержит 255,873,676 параметров (3.813 ГиБ в обучении с моментами Adam)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "usedBy": [
+        "s02-title",
+        "s02-part",
+        "s02-hw",
+        "v-ae-box"
+      ]
+    },
+    {
+      "id": "b-ae",
+      "text": {
+        "en": "Encoder-bottleneck-decoder architecture compresses atomic coordinates into a continuous latent representation.",
+        "ru": "Схема кодировщика и декодировщика сжимает атомные координаты в непрерывное скрытое представление."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.48550/arXiv.1312.6114"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s02-part",
+        "s03-part"
+      ]
+    },
+    {
+      "id": "m-latent",
+      "text": {
+        "en": "Latent grid shape is 512 by 256 (131,072 values, 0.5 MiB in fp32 per complex).",
+        "ru": "Скрытая сетка имеет размер 512 на 256 (131,072 чисел, 0.5 МиБ в fp32 на один комплекс)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#hiddenValues"
+      },
+      "usedBy": [
+        "s03-title",
+        "s03-part",
+        "s03-hw",
+        "v-latent-grid"
+      ]
+    },
+    {
+      "id": "b-path",
+      "text": {
+        "en": "Rectified flow matching interpolates linearly from Gaussian noise x0 to latent data x1 with target velocity x1 minus x0.",
+        "ru": "Согласование потока ведет точку по прямой от гауссова шума x0 к данным x1 со скоростью x1 минус x0."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.48550/arXiv.2209.03003"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s04-title",
+        "s04-part",
+        "s04-hw",
+        "v-flow-arrow"
+      ]
+    },
+    {
+      "id": "b-flow-matching",
+      "text": {
+        "en": "Continuous-time flow matching trains a vector field network directly on conditional transport paths.",
+        "ru": "Непрерывное согласование потоков обучает векторное поле прямо на условных траекториях переноса."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.48550/arXiv.2210.02747"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s04-part",
+        "s05-part"
+      ]
+    },
+    {
+      "id": "m-dn",
+      "text": {
+        "en": "The denoiser has 153,102,091 parameters (306,204,182 B in bf16, 612,408,364 B in fp32, 2.281 GiB Adam training state).",
+        "ru": "Модуль снятия шума содержит 153,102,091 параметров (2.281 ГиБ в обучении с моментами Adam)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "usedBy": [
+        "s05-title",
+        "s05-part",
+        "s05-hw",
+        "v-dn-box"
+      ]
+    },
+    {
+      "id": "b-attention",
+      "text": {
+        "en": "Multi-head attention scales quadratically with sequence length: 8 heads over 512 by 512 pairs hold 2,097,152 values (8 MiB fp32 per layer, 96 MiB across 12 layers).",
+        "ru": "Многоголовое внимание растет квадратично по длине: 8 голов на сетке 512 на 512 дают 2,097,152 чисел (8 МиБ на слой, 96 МиБ на 12 слоев)."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.48550/arXiv.1706.03762"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s06-title",
+        "s06-part",
+        "s06-hw",
+        "v-pair-matrix"
+      ]
+    },
+    {
+      "id": "b-adam",
+      "text": {
+        "en": "Mixed-precision Adam stores fp32 master weights, fp32 gradients, and two fp32 moment buffers totaling 16 bytes per parameter.",
+        "ru": "Оптимизатор Adam в смешанной точности хранит основные веса, градиенты и два буфера моментов в fp32 — всего 16 байт на параметр."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.48550/arXiv.1412.6980"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s02-hw",
+        "s05-hw",
+        "s07-part",
+        "s07-hw"
+      ]
+    },
+    {
+      "id": "h-a100",
+      "text": {
+        "en": "Combined parameter and Adam states across 408,975,767 parameters occupy 6.094 GiB (7.62% of an 80 GiB NVIDIA A100), leaving 73.9 GiB for batched pair activations.",
+        "ru": "Веса и состояния Adam для 408,975,767 параметров занимают 6.094 ГиБ (7.62% памяти A100 80 ГиБ), оставляя 73.9 ГиБ под пакеты активаций."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#share80"
+      },
+      "usedBy": [
+        "s07-title",
+        "s07-part",
+        "s07-hw",
+        "v-gpu-bar-total",
+        "v-gpu-bar-weights"
+      ]
+    },
+    {
+      "id": "m-judge",
+      "text": {
+        "en": "Generated candidates pass through the decoder to an off-target panel judge and subset solver that selects N diverse designs.",
+        "ru": "Сгенерированные кандидаты проходят через декодировщик в оценщик панели мишеней и модуль отбора N различных конструкций."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "usedBy": [
+        "s08-title",
+        "s08-part",
+        "s08-hw",
+        "v-judge-flow"
+      ]
+    },
+    {
+      "id": "m-status",
+      "text": {
+        "en": "Architecture status: autoencoder and denoiser modules exist in code with verified shapes; 0 weights are trained yet and 0 wet-lab binders exist.",
+        "ru": "Статус архитектуры: автокодировщик и модуль снятия шума написаны в коде; обученных весов пока 0, проверенных в лаборатории молекул 0."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "usedBy": [
+        "s00-hw",
+        "s09-title",
+        "s09-part",
+        "s09-hw"
+      ]
+    }
+  ],
+  "story": [
+    {
+      "stop": 0,
+      "title": {
+        "en": "Generative binder architecture",
+        "ru": "Архитектура генеративной модели"
+      },
+      "say": {
+        "en": "The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL.",
+        "ru": "Модель объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL."
+      },
+      "facts": [
+        "f-1mel",
+        "m-status"
+      ]
+    },
+    {
+      "stop": 1,
+      "title": {
+        "en": "Residue sequence and atom coordinates",
+        "ru": "Последовательность остатков и координаты атомов"
+      },
+      "say": {
+        "en": "Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site.",
+        "ru": "Каждый пример объединяет до 512 остатков с координатами тяжелых атомов вокруг участка связывания."
+      },
+      "facts": [
+        "m-input"
+      ]
+    },
+    {
+      "stop": 2,
+      "title": {
+        "en": "Autoencoder parameter footprint",
+        "ru": "Объем параметров автокодировщика"
+      },
+      "say": {
+        "en": "The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states.",
+        "ru": "Автокодировщик содержит 255,873,676 параметров и занимает 3.813 ГиБ памяти вместе с состояниями Adam."
+      },
+      "facts": [
+        "m-ae",
+        "b-ae",
+        "b-adam"
+      ]
+    },
+    {
+      "stop": 3,
+      "title": {
+        "en": "Latent representation grid",
+        "ru": "Сетка скрытого представления"
+      },
+      "say": {
+        "en": "The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values.",
+        "ru": "Кодировщик переводит атомы в скрытую сетку 512 на 256 из 131,072 непрерывных величин."
+      },
+      "facts": [
+        "m-latent",
+        "b-ae"
+      ]
+    },
+    {
+      "stop": 4,
+      "title": {
+        "en": "Straight path from noise to data",
+        "ru": "Прямой путь от шума к данным"
+      },
+      "say": {
+        "en": "During training, a point moves along a straight segment from Gaussian noise to the encoded complex.",
+        "ru": "При обучении точка движется по прямому отрезку от гауссова шума к закодированному комплексу."
+      },
+      "facts": [
+        "b-path",
+        "b-flow-matching"
+      ]
+    },
+    {
+      "stop": 5,
+      "title": {
+        "en": "Flow denoiser velocity module",
+        "ru": "Модуль скорости снятия шума"
+      },
+      "say": {
+        "en": "The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t.",
+        "ru": "Модуль снятия шума содержит 153,102,091 параметров и предсказывает вектор скорости в момент t."
+      },
+      "facts": [
+        "m-dn",
+        "b-flow-matching",
+        "b-adam"
+      ]
+    },
+    {
+      "stop": 6,
+      "title": {
+        "en": "Quadratic pair attention map",
+        "ru": "Квадратичная карта парного внимания"
+      },
+      "say": {
+        "en": "Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers.",
+        "ru": "Восемь голов внимания на сетке 512 на 512 хранят 2,097,152 чисел, или 96 МиБ на 12 слоев."
+      },
+      "facts": [
+        "b-attention"
+      ]
+    },
+    {
+      "stop": 7,
+      "title": {
+        "en": "Memory share on one A100 80 GiB",
+        "ru": "Доля памяти на ускорителе A100 80 ГиБ"
+      },
+      "say": {
+        "en": "Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card.",
+        "ru": "Веса и буферы Adam занимают 6.094 ГиБ, то есть 7.62 процента памяти ускорителя A100 на 80 ГиБ."
+      },
+      "facts": [
+        "h-a100",
+        "b-adam"
+      ]
+    },
+    {
+      "stop": 8,
+      "title": {
+        "en": "Candidate decoding and specificity judge",
+        "ru": "Декодирование кандидатов и проверка специфичности"
+      },
+      "say": {
+        "en": "Decoded nanobody candidates are scored against the target and off-target panel to choose N designs.",
+        "ru": "Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N конструкций."
+      },
+      "facts": [
+        "m-judge"
+      ]
+    },
+    {
+      "stop": 9,
+      "title": {
+        "en": "Verified code and untrained weights",
+        "ru": "Проверенный код и необученные веса"
+      },
+      "say": {
+        "en": "Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet.",
+        "ru": "Оба сетевых модуля написаны в коде с проверенными размерами; обученных весов пока 0 и образцов 0."
+      },
+      "facts": [
+        "m-status"
+      ]
+    }
+  ],
+  "lens": "journal",
+  "langs": [
+    "en",
+    "ru"
+  ],
+  "world": {
+    "id": "ml-explainer",
+    "duration": 60,
+    "frames": [
+      {
+        "id": "board",
+        "parent": null,
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "complex",
+        "parent": "board",
+        "unit": 1e-9,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "mel",
+        "kind": "molecule",
+        "frame": "complex",
+        "position": [
+          0,
+          0.4,
+          0
+        ],
+        "size": 4.4e-9,
+        "source": {
+          "kind": "pdb",
+          "ref": "1MEL"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "1mel.glb",
+        "standIn": {
+          "asset": "1mel_coarse.glb",
+          "swapAt": 1.2e-8
+        }
+      },
+      {
+        "id": "latent-node-1",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          -5.2,
+          2.4,
+          -1.8
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-2",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          5.4,
+          2.1,
+          -1.6
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-3",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          -4.8,
+          -2.5,
+          -1.4
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-4",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          5,
+          -2.3,
+          -1.9
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-5",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          -2.8,
+          3.6,
+          1.2
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-6",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          3.1,
+          3.4,
+          1.1
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-7",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          -3.2,
+          -3.4,
+          1.3
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "latent-node-8",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          3.3,
+          -3.2,
+          1
+        ],
+        "size": 1.35e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "id": "v-input-seq",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        120,
+        720,
+        120
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#seqLen"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        12
+      ]
+    },
+    {
+      "id": "v-ae-box",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        120,
+        760,
+        150
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        18
+      ]
+    },
+    {
+      "id": "v-latent-grid",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        120,
+        512,
+        256
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#hiddenValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        18,
+        24
+      ]
+    },
+    {
+      "id": "v-flow-arrow",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        96,
+        160,
+        760,
+        80
+      ],
+      "from": [
+        120,
+        200
+      ],
+      "to": [
+        820,
+        200
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        30
+      ]
+    },
+    {
+      "id": "v-dn-box",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        120,
+        700,
+        150
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "evidence": "architecture",
+      "window": [
+        30,
+        36
+      ]
+    },
+    {
+      "id": "v-pair-matrix",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        110,
+        320,
+        320
+      ],
+      "roles": [
+        "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        42
+      ]
+    },
+    {
+      "id": "v-gpu-bar-total",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        140,
+        800,
+        56
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#gpuBytes"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        48
+      ]
+    },
+    {
+      "id": "v-gpu-bar-weights",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        140,
+        61,
+        56
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#share80"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        48
+      ]
+    },
+    {
+      "id": "v-judge-flow",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        120,
+        780,
+        140
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "evidence": "architecture",
+      "window": [
+        48,
+        54
+      ]
+    }
+  ],
+  "timeline": {
+    "tracks": []
+  },
+  "paths": [
+    {
+      "id": "deck-main",
+      "kind": "deck",
+      "stops": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              9.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.out"
+        },
+        {
+          "t": 6,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              2.2,
+              1,
+              13.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 12,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -2.4,
+              1.2,
+              18
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 18,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              28
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 24,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              5.4
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 30,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              1.6,
+              0.8,
+              9.2
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 36,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -1.8,
+              1,
+              12
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 42,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.8,
+              14
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 48,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              1.8,
+              -0.2,
+              10.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 54,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 60,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0.6,
+              0.4,
+              9.2
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "sine.inOut"
+        }
+      ]
+    },
+    {
+      "id": "film-main",
+      "kind": "film",
+      "stops": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              9.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.out"
+        },
+        {
+          "t": 6,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              2.2,
+              1,
+              13.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 12,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -2.4,
+              1.2,
+              18
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 18,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              28
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 24,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              5.4
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 30,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              1.6,
+              0.8,
+              9.2
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 36,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              -1.8,
+              1,
+              12
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 42,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.8,
+              14
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 48,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              1.8,
+              -0.2,
+              10.5
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 54,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              9
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 60,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0.6,
+              0.4,
+              9.2
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0,
+              0.4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "sine.inOut"
+        }
+      ]
+    }
+  ],
+  "layout": [
+    {
+      "stop": 0,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s00-title",
+          "role": "title",
+          "text": "Generative binder architecture",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s00-part",
+          "role": "label",
+          "text": "The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s00-hw",
+          "role": "note",
+          "text": "Status: code shapes verified; 0 trained weights.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 0,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s00-title",
+          "role": "title",
+          "text": "Архитектура генеративной модели",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s00-part",
+          "role": "label",
+          "text": "Модель объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s00-hw",
+          "role": "note",
+          "text": "Статус: размеры тензоров проверены; обученных весов 0.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Residue sequence and atom coordinates",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s01-part",
+          "role": "label",
+          "text": "Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s01-hw",
+          "role": "note",
+          "text": "Max sequence length L = 512 residues around epitope.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Последовательность остатков и координаты атомов",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s01-part",
+          "role": "label",
+          "text": "Каждый пример объединяет до 512 остатков с координатами тяжелых атомов вокруг участка связывания.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s01-hw",
+          "role": "note",
+          "text": "Длина входа до L = 512 остатков вокруг эпитопа.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "Autoencoder parameter footprint",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s02-part",
+          "role": "label",
+          "text": "The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s02-hw",
+          "role": "note",
+          "text": "255,873,676 * 16 B = 3.813 GiB Adam state in fp32.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "Объем параметров автокодировщика",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s02-part",
+          "role": "label",
+          "text": "Автокодировщик содержит 255,873,676 параметров и занимает 3.813 ГиБ памяти вместе с состояниями Adam.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s02-hw",
+          "role": "note",
+          "text": "255,873,676 * 16 Б = 3.813 ГиБ состояния Adam в fp32.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 3,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Latent representation grid",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s03-part",
+          "role": "label",
+          "text": "The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s03-hw",
+          "role": "note",
+          "text": "512 * 256 * 4 B = 524,288 B (0.5 MiB) in fp32.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 3,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Сетка скрытого представления",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s03-part",
+          "role": "label",
+          "text": "Кодировщик переводит атомы в скрытую сетку 512 на 256 из 131,072 непрерывных величин.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s03-hw",
+          "role": "note",
+          "text": "512 * 256 * 4 Б = 524,288 Б (0.5 МиБ) в fp32.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 4,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s04-title",
+          "role": "title",
+          "text": "Straight path from noise to data",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s04-part",
+          "role": "label",
+          "text": "During training, a point moves along a straight segment from Gaussian noise to the encoded complex.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s04-hw",
+          "role": "note",
+          "text": "Linear transport x_t = (1 - t)*x_0 + t*x_1.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 4,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s04-title",
+          "role": "title",
+          "text": "Прямой путь от шума к данным",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s04-part",
+          "role": "label",
+          "text": "При обучении точка движется по прямому отрезку от гауссова шума к закодированному комплексу.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s04-hw",
+          "role": "note",
+          "text": "Линейный перенос x_t = (1 - t)*x_0 + t*x_1.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 5,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s05-title",
+          "role": "title",
+          "text": "Flow denoiser velocity module",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s05-part",
+          "role": "label",
+          "text": "The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s05-hw",
+          "role": "note",
+          "text": "153,102,091 * 16 B = 2.281 GiB Adam state in fp32.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 5,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s05-title",
+          "role": "title",
+          "text": "Модуль скорости снятия шума",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s05-part",
+          "role": "label",
+          "text": "Модуль снятия шума содержит 153,102,091 параметров и предсказывает вектор скорости в момент t.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s05-hw",
+          "role": "note",
+          "text": "153,102,091 * 16 Б = 2.281 ГиБ состояния Adam в fp32.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 6,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s06-title",
+          "role": "title",
+          "text": "Quadratic pair attention map",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s06-part",
+          "role": "label",
+          "text": "Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s06-hw",
+          "role": "note",
+          "text": "512 * 512 * 8 * 4 B = 8.0 MiB per layer (96.0 MiB for 12 layers).",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 6,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s06-title",
+          "role": "title",
+          "text": "Квадратичная карта парного внимания",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s06-part",
+          "role": "label",
+          "text": "Восемь голов внимания на сетке 512 на 512 хранят 2,097,152 чисел, или 96 МиБ на 12 слоев.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s06-hw",
+          "role": "note",
+          "text": "512 * 512 * 8 * 4 Б = 8.0 МиБ на слой (96.0 МиБ на 12 слоев).",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 7,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s07-title",
+          "role": "title",
+          "text": "Memory share on one A100 80 GiB",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s07-part",
+          "role": "label",
+          "text": "Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s07-hw",
+          "role": "note",
+          "text": "6.094 GiB / 80 GiB = 7.62%; 73.9 GiB remains for batches.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 7,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s07-title",
+          "role": "title",
+          "text": "Доля памяти на ускорителе A100 80 ГиБ",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s07-part",
+          "role": "label",
+          "text": "Веса и буферы Adam занимают 6.094 ГиБ, то есть 7.62 процента памяти ускорителя A100 на 80 ГиБ.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s07-hw",
+          "role": "note",
+          "text": "6.094 ГиБ / 80 ГиБ = 7.62%; 73.9 ГиБ остается под пакеты.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 8,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s08-title",
+          "role": "title",
+          "text": "Candidate decoding and specificity judge",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s08-part",
+          "role": "label",
+          "text": "Decoded nanobody candidates are scored against the target and off-target panel to choose N designs.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s08-hw",
+          "role": "note",
+          "text": "Solver selects N diverse candidates after off-target check.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 8,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s08-title",
+          "role": "title",
+          "text": "Декодирование кандидатов и проверка специфичности",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s08-part",
+          "role": "label",
+          "text": "Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N конструкций.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s08-hw",
+          "role": "note",
+          "text": "Модуль отбора выбирает N различных кандидатов.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 9,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s09-title",
+          "role": "title",
+          "text": "Verified code and untrained weights",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s09-part",
+          "role": "label",
+          "text": "Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s09-hw",
+          "role": "note",
+          "text": "Honest boundary: architecture only; 0 trained weights.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 9,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s09-title",
+          "role": "title",
+          "text": "Проверенный код и необученные веса",
+          "box": [
+            96,
+            756,
+            1480,
+            64
+          ]
+        },
+        {
+          "id": "s09-part",
+          "role": "label",
+          "text": "Оба сетевых модуля написаны в коде с проверенными размерами; обученных весов пока 0 и образцов 0.",
+          "box": [
+            96,
+            828,
+            1640,
+            112
+          ]
+        },
+        {
+          "id": "s09-hw",
+          "role": "note",
+          "text": "Граница утверждений: только архитектура; 0 обученных весов.",
+          "box": [
+            96,
+            948,
+            1640,
+            64
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "0": {
+      "en": "Stop 0: The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL. (Status: code shapes verified; 0 trained weights.) Facts: f-1mel, m-status.",
+      "ru": "Слайд 0: Модель объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL. (Статус: размеры тензоров проверены; обученных весов 0.) Факты: f-1mel, m-status."
+    },
+    "1": {
+      "en": "Stop 1: Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site. (Max sequence length L = 512 residues around epitope.) Facts: m-input.",
+      "ru": "Слайд 1: Каждый пример объединяет до 512 остатков с координатами тяжелых атомов вокруг участка связывания. (Длина входа до L = 512 остатков вокруг эпитопа.) Факты: m-input."
+    },
+    "2": {
+      "en": "Stop 2: The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states. (255,873,676 * 16 B = 3.813 GiB Adam state in fp32.) Facts: m-ae, b-ae, b-adam.",
+      "ru": "Слайд 2: Автокодировщик содержит 255,873,676 параметров и занимает 3.813 ГиБ памяти вместе с состояниями Adam. (255,873,676 * 16 Б = 3.813 ГиБ состояния Adam в fp32.) Факты: m-ae, b-ae, b-adam."
+    },
+    "3": {
+      "en": "Stop 3: The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values. (512 * 256 * 4 B = 524,288 B (0.5 MiB) in fp32.) Facts: m-latent, b-ae.",
+      "ru": "Слайд 3: Кодировщик переводит атомы в скрытую сетку 512 на 256 из 131,072 непрерывных величин. (512 * 256 * 4 Б = 524,288 Б (0.5 МиБ) в fp32.) Факты: m-latent, b-ae."
+    },
+    "4": {
+      "en": "Stop 4: During training, a point moves along a straight segment from Gaussian noise to the encoded complex. (Linear transport x_t = (1 - t)*x_0 + t*x_1.) Facts: b-path, b-flow-matching.",
+      "ru": "Слайд 4: При обучении точка движется по прямому отрезку от гауссова шума к закодированному комплексу. (Линейный перенос x_t = (1 - t)*x_0 + t*x_1.) Факты: b-path, b-flow-matching."
+    },
+    "5": {
+      "en": "Stop 5: The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t. (153,102,091 * 16 B = 2.281 GiB Adam state in fp32.) Facts: m-dn, b-flow-matching, b-adam.",
+      "ru": "Слайд 5: Модуль снятия шума содержит 153,102,091 параметров и предсказывает вектор скорости в момент t. (153,102,091 * 16 Б = 2.281 ГиБ состояния Adam в fp32.) Факты: m-dn, b-flow-matching, b-adam."
+    },
+    "6": {
+      "en": "Stop 6: Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers. (512 * 512 * 8 * 4 B = 8.0 MiB per layer (96.0 MiB for 12 layers).) Facts: b-attention.",
+      "ru": "Слайд 6: Восемь голов внимания на сетке 512 на 512 хранят 2,097,152 чисел, или 96 МиБ на 12 слоев. (512 * 512 * 8 * 4 Б = 8.0 МиБ на слой (96.0 МиБ на 12 слоев).) Факты: b-attention."
+    },
+    "7": {
+      "en": "Stop 7: Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card. (6.094 GiB / 80 GiB = 7.62%; 73.9 GiB remains for batches.) Facts: h-a100, b-adam.",
+      "ru": "Слайд 7: Веса и буферы Adam занимают 6.094 ГиБ, то есть 7.62 процента памяти ускорителя A100 на 80 ГиБ. (6.094 ГиБ / 80 ГиБ = 7.62%; 73.9 ГиБ остается под пакеты.) Факты: h-a100, b-adam."
+    },
+    "8": {
+      "en": "Stop 8: Decoded nanobody candidates are scored against the target and off-target panel to choose N designs. (Solver selects N diverse candidates after off-target check.) Facts: m-judge.",
+      "ru": "Слайд 8: Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N конструкций. (Модуль отбора выбирает N различных кандидатов.) Факты: m-judge."
+    },
+    "9": {
+      "en": "Stop 9: Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet. (Honest boundary: architecture only; 0 trained weights.) Facts: m-status.",
+      "ru": "Слайд 9: Оба сетевых модуля написаны в коде с проверенными размерами; обученных весов пока 0 и образцов 0. (Граница утверждений: только архитектура; 0 обученных весов.) Факты: m-status."
+    }
+  },
+  "storyboard": {
+    "approvedAt": "2026-11-09T00:00:00Z",
+    "note": "Approved 10-stop storyboard for Arc Science ML architecture explainer"
+  }
+}

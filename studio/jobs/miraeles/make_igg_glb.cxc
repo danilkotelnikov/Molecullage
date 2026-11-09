@@ -1,0 +1,8 @@
+# Builds igg.glb for studio/jobs/miraeles from ../../../data/pdb/1IGT.pdb.
+# Run from studio/jobs/miraeles with ChimeraX --nogui --offscreen make_igg_glb.cxc.
+open ../../../data/pdb/1IGT.pdb
+delete solvent
+hide #1 target abpc
+surface #1 resolution 4.5 gridSpacing 1.5
+save igg.glb
+exit

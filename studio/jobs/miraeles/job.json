@@ -1,0 +1,2575 @@
+{
+  "brief": {
+    "idea": "Miraeles is a field kit for plant fungal DNA detection in a warm insulated thermos, with isothermal amplification and lateral-flow strip readout.",
+    "details": "A 12-slide product and pilot deck. Lenses: journal and cinematic. Check-ins: one storyboard stop. Outputs: live deck, MP4, PDF, web link.",
+    "concepts": [
+      "hidden fungal infection on the farm",
+      "five kit parts in order of use",
+      "alkaline lysis and warm thermos bath",
+      "isothermal amplification at molecular scale",
+      "complete binding sandwich on the strip",
+      "target unit cost and pilot verification"
+    ],
+    "audience": "agronomists, seed-testing laboratories, investors, and grant reviewers",
+    "product": "miraeles",
+    "langs": [
+      "en",
+      "ru"
+    ],
+    "timeBudget": {
+      "hours": 8
+    },
+    "files": []
+  },
+  "facts": [
+    {
+      "id": "f-problem",
+      "text": {
+        "en": "Fungal pathogens colonize leaf tissue days before visible lesions appear, while laboratory testing requires sample shipping.",
+        "ru": "Грибные патогены заселяют ткань листа за несколько дней до появления пятен, а лабораторный анализ требует пересылки проб."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s01-field"
+      },
+      "usedBy": [
+        "s00-title",
+        "s00-label-1",
+        "s01-title",
+        "s01-label-1"
+      ]
+    },
+    {
+      "id": "f-kit",
+      "text": {
+        "en": "Five kit parts in order of use: sample pestle, alkaline lysis tube, 300 mL thermos, amplification tube, and lateral-flow strip.",
+        "ru": "Пять частей набора по порядку работы: пестик, пробирка щелочного лизиса, термос 300 мл, пробирка реакции и тест-полоска."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s03-kit"
+      },
+      "usedBy": [
+        "s02-title",
+        "s02-label-1",
+        "thermos",
+        "tube",
+        "liquid",
+        "strip-body",
+        "v-kit-order"
+      ]
+    },
+    {
+      "id": "f-extraction",
+      "text": {
+        "en": "Crude plant DNA extraction and isothermal lateral-flow assay complete on site in under 25 minutes, with 5-minute alkaline lysis.",
+        "ru": "Выделение ДНК растений и изотермический анализ на полоске проходят в поле быстрее 25 минут при 5 минутах щелочного лизиса."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.3390/bios13010082"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s03-title",
+        "s03-label-1"
+      ]
+    },
+    {
+      "id": "f-field-fungal",
+      "text": {
+        "en": "Field nucleic-acid testing detects fungal infection directly from leaf tissue extracts.",
+        "ru": "Полевой анализ нуклеиновых кислот выявляет грибную инфекцию прямо в экстракте ткани листа."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.1186/s42483-026-00442-9"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s01-label-1",
+        "s03-label-1"
+      ]
+    },
+    {
+      "id": "f-thermos-scale",
+      "text": {
+        "en": "Bench thermos illustration uses CC0 Poly Haven plastic thermos scaled by 0.484 from 320.4 mm to 155 mm body height.",
+        "ru": "Модель термоса на столе — пластиковый термос Poly Haven CC0, уменьшенный с 320.4 мм до 155 мм (множитель 0.484)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/library/references.json#model-plastic-thermos-polyhaven"
+      },
+      "usedBy": [
+        "s04-title",
+        "s04-label-1",
+        "s04-note",
+        "thermos"
+      ]
+    },
+    {
+      "id": "f-thermos-sim",
+      "text": {
+        "en": "Simulated 3-node thermal model (start 42.0 C, air 15 C) keeps the bath inside 37-42 C for 36 min and at 38.7 C at 20 min (simulated model; unmeasured).",
+        "ru": "Расчетная 3-узловая тепловая модель (старт 42.0 C, воздух 15 C) держит баню в пределах 37-42 C 36 мин и 38.7 C на 20-й минуте (расчет модели)."
+      },
+      "level": "simulated",
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s08-thermal"
+      },
+      "usedBy": [
+        "s04-label-1",
+        "s05-title",
+        "s05-label-1",
+        "s05-note",
+        "v-thermal-curve"
+      ]
+    },
+    {
+      "id": "f-rpa",
+      "text": {
+        "en": "Recombinase polymerase amplification copies target DNA isothermally at 37-42 C in a 20-minute window.",
+        "ru": "Рекомбиназная полимеразная амплификация копирует участок ДНК при постоянной температуре 37-42 C за 20 минут."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.1016/j.foodchem.2020.127608"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s06-title",
+        "s06-label-1",
+        "amplicon"
+      ]
+    },
+    {
+      "id": "f-1igt",
+      "text": {
+        "en": "Whole mouse IgG2a crystal structure PDB 1IGT (12,530 atoms, 14.8 nm span) represents the antibody binders on 40 nm gold.",
+        "ru": "Кристаллическая структура целого антитела IgG2a PDB 1IGT (12,530 атомов, размах 14.8 нм) показывает связывающие белки на золоте 40 нм."
+      },
+      "level": "published",
+      "source": {
+        "kind": "pdb",
+        "ref": "1IGT"
+      },
+      "usedBy": [
+        "s07-title",
+        "s07-label-1",
+        "s07-note",
+        "igg",
+        "igg-capture",
+        "gold-main"
+      ]
+    },
+    {
+      "id": "f-strip-sandwich",
+      "text": {
+        "en": "Dual-tagged DNA amplicon (FAM and biotin) links the anti-FAM antibody on 40 nm gold to the immobilized test-line binder, while excess gold binds the control line.",
+        "ru": "Двухмеченый ампликон ДНК (FAM и биотин) соединяет антитело к FAM на частице золота 40 нм со связывающим белком тестовой линии, а избыток золота садится на контрольную линию."
+      },
+      "level": "published",
+      "source": {
+        "kind": "doi",
+        "ref": "10.1016/j.mex.2023.102372"
+      },
+      "checked": "2026-11-09",
+      "usedBy": [
+        "s07-label-1",
+        "s08-title",
+        "s08-label-1",
+        "v-sandwich-schema"
+      ]
+    },
+    {
+      "id": "f-readout",
+      "text": {
+        "en": "Strip interpretation: 2 lines indicate target DNA detected, 1 control line indicates negative sample, and 0 control lines mark an invalid strip.",
+        "ru": "Чтение полоски: 2 линии означают наличие ДНК мишени, 1 контрольная линия означает отрицательную пробу, отсутствие контрольной линии — брак полоски."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s10-readout"
+      },
+      "usedBy": [
+        "s09-title",
+        "s09-label-1",
+        "v-readout-grid"
+      ]
+    },
+    {
+      "id": "f-cost",
+      "text": {
+        "en": "Target bill of materials is 220-350 RUB per disposable reaction and strip set at pilot batch volume.",
+        "ru": "Целевая себестоимость материалов составляет 220-350 рублей на один одноразовый комплект пробирки и полоски в малой серии."
+      },
+      "level": "target",
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s11-economics"
+      },
+      "usedBy": [
+        "s10-title",
+        "s10-label-1",
+        "v-bom-bars"
+      ]
+    },
+    {
+      "id": "f-status",
+      "text": {
+        "en": "Current state: thermal simulation, primer selection code, and kit geometry exist; wet-lab limit of detection and field validation are planned for the 2-stage pilot.",
+        "ru": "Текущее состояние: тепловой расчет, код подбора праймеров и чертежи готовы; предел обнаружения в лаборатории и полевые испытания запланированы в 2 этапа."
+      },
+      "level": "target",
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s12-pilot"
+      },
+      "usedBy": [
+        "s11-title",
+        "s11-label-1",
+        "s11-note"
+      ]
+    }
+  ],
+  "story": [
+    {
+      "stop": 0,
+      "title": {
+        "en": "Miraeles",
+        "ru": "Miraeles"
+      },
+      "say": {
+        "en": "Miraeles is a field nucleic-acid kit for detecting plant fungal pathogens on the farm.",
+        "ru": "Miraeles — полевой набор для выявления ДНК грибных патогенов растений прямо в хозяйстве."
+      },
+      "facts": [
+        "f-problem",
+        "f-kit"
+      ]
+    },
+    {
+      "stop": 1,
+      "title": {
+        "en": "Hidden infection in leaf tissue",
+        "ru": "Скрытая инфекция в ткани листа"
+      },
+      "say": {
+        "en": "Fungal mycelium spreads inside the leaf days before spots appear to the eye.",
+        "ru": "Грибница распространяется внутри листа за несколько дней до появления видимых пятен."
+      },
+      "facts": [
+        "f-problem",
+        "f-field-fungal"
+      ]
+    },
+    {
+      "stop": 2,
+      "title": {
+        "en": "The complete kit in order of use",
+        "ru": "Весь набор по порядку работы"
+      },
+      "say": {
+        "en": "Every kit holds five parts in order: pestle, lysis tube, thermos bath, reaction tube and strip.",
+        "ru": "Набор включает пять частей по порядку: пестик, пробирку лизиса, термос, пробирку реакции и полоску."
+      },
+      "facts": [
+        "f-kit"
+      ]
+    },
+    {
+      "stop": 3,
+      "title": {
+        "en": "Crude DNA lysis without a centrifuge",
+        "ru": "Щелочной лизис без центрифуги"
+      },
+      "say": {
+        "en": "Crushed leaf tissue in alkaline buffer releases template DNA in 5 minutes on the bench.",
+        "ru": "Растертый лист в щелочном буфере отдает матричную ДНК за 5 минут на полевом столе."
+      },
+      "facts": [
+        "f-extraction",
+        "f-field-fungal"
+      ]
+    },
+    {
+      "stop": 4,
+      "title": {
+        "en": "Warm water bath inside the thermos",
+        "ru": "Теплая водяная баня в термосе"
+      },
+      "say": {
+        "en": "A 300 mL insulated thermos holds the reaction tube in warm water without batteries or mains power.",
+        "ru": "Теплоизолированный термос объемом 300 мл греет пробирку в теплой воде без батарей и сети."
+      },
+      "facts": [
+        "f-thermos-scale",
+        "f-thermos-sim"
+      ]
+    },
+    {
+      "stop": 5,
+      "title": {
+        "en": "Simulated temperature curve",
+        "ru": "Расчетная кривая остывания"
+      },
+      "say": {
+        "en": "In the 3-node thermal model, water starting at 42 C stays at 38.7 C after 20 minutes in 15 C air.",
+        "ru": "В 3-узловой тепловой модели вода со стартом 42 C сохраняет 38.7 C через 20 минут при воздухе 15 C."
+      },
+      "facts": [
+        "f-thermos-sim"
+      ]
+    },
+    {
+      "stop": 6,
+      "title": {
+        "en": "Isothermal amplification in the drop",
+        "ru": "Изотермическая амплификация в капле"
+      },
+      "say": {
+        "en": "Inside the liquid at 37 to 42 C, recombinase enzymes copy target DNA into tagged strands over 20 minutes.",
+        "ru": "Внутри капли при 37–42 C ферменты копируют участок ДНК в меченые цепи за 20 минут."
+      },
+      "facts": [
+        "f-rpa"
+      ]
+    },
+    {
+      "stop": 7,
+      "title": {
+        "en": "Whole binding sandwich at true scale",
+        "ru": "Полный комплекс связывания в масштабе"
+      },
+      "say": {
+        "en": "Both binders, both end tags, the DNA duplex between them and the 40 nm gold particle form one bridge.",
+        "ru": "Оба связывающих белка, обе концевые метки, спираль ДНК между ними и частица золота 40 нм образуют мост."
+      },
+      "facts": [
+        "f-1igt",
+        "f-strip-sandwich"
+      ]
+    },
+    {
+      "stop": 8,
+      "title": {
+        "en": "Test line and control line capture",
+        "ru": "Захват на тестовой и контрольной линиях"
+      },
+      "say": {
+        "en": "Bridged gold stops at the test line, while unbound antibody gold continues to the control line.",
+        "ru": "Связанное золото останавливается на тестовой линии, а свободный конъюгат доходит до контрольной линии."
+      },
+      "facts": [
+        "f-strip-sandwich"
+      ]
+    },
+    {
+      "stop": 9,
+      "title": {
+        "en": "Visual strip readout rules",
+        "ru": "Правила чтения полоски"
+      },
+      "say": {
+        "en": "Two coloured lines show target DNA; one control line shows a clean leaf; no control line rejects the run.",
+        "ru": "Две линии показывают ДНК патогена, одна контрольная линия — чистую пробу, отсутствие контроля — брак."
+      },
+      "facts": [
+        "f-readout"
+      ]
+    },
+    {
+      "stop": 10,
+      "title": {
+        "en": "Target unit economics",
+        "ru": "Целевая экономика одного теста"
+      },
+      "say": {
+        "en": "The target bill of materials is 220 to 350 rubles per disposable tube and lateral-flow strip.",
+        "ru": "Целевая стоимость материалов составляет от 220 до 350 рублей на одноразовую пробирку и полоску."
+      },
+      "facts": [
+        "f-cost"
+      ]
+    },
+    {
+      "stop": 11,
+      "title": {
+        "en": "Current state and pilot verification",
+        "ru": "Текущий статус и план проверки"
+      },
+      "say": {
+        "en": "Thermal simulation and primer code are built; wet-lab sensitivity and field trials are the next two steps.",
+        "ru": "Тепловая модель и подбор праймеров готовы; проверка чувствительности в лаборатории и поле — два следующих шага."
+      },
+      "facts": [
+        "f-status"
+      ]
+    }
+  ],
+  "lens": "journal",
+  "langs": [
+    "en",
+    "ru"
+  ],
+  "world": {
+    "id": "miraeles",
+    "duration": 72,
+    "frames": [
+      {
+        "id": "bench",
+        "parent": null,
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "tube",
+        "parent": "bench",
+        "unit": 0.001,
+        "origin": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "nano",
+        "parent": "tube",
+        "unit": 1e-9,
+        "origin": [
+          0,
+          -7.2,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "igg",
+        "kind": "molecule",
+        "frame": "nano",
+        "position": [
+          -14,
+          0,
+          0
+        ],
+        "size": 1.48e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "igg.glb",
+        "standIn": {
+          "asset": "builtin:sphere",
+          "swapAt": 2e-7
+        }
+      },
+      {
+        "id": "igg-capture",
+        "kind": "molecule",
+        "frame": "nano",
+        "position": [
+          18,
+          0,
+          0
+        ],
+        "size": 1.48e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "antibody"
+        ],
+        "asset": "igg.glb",
+        "rotation": [
+          0,
+          0,
+          3.1416
+        ]
+      },
+      {
+        "id": "gold-main",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -41,
+          0,
+          0
+        ],
+        "size": 4e-8,
+        "source": {
+          "kind": "pdb",
+          "ref": "1IGT"
+        },
+        "evidence": "published",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "amplicon",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "size": 1.8e-8,
+        "source": {
+          "kind": "file",
+          "ref": "motion/miraeles/miraeles.film.json#s09-sandwich"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "amplicon.glb"
+      },
+      {
+        "id": "tag-fam",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -7,
+          1.4,
+          0
+        ],
+        "size": 2.8e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "tag-biotin",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          11,
+          -1.4,
+          0
+        ],
+        "size": 2.8e-9,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-01",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -18000,
+          9000,
+          -12000
+        ],
+        "size": 0.00000328,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-02",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          21000,
+          -11000,
+          -15000
+        ],
+        "size": 0.000003927,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-03",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -14000,
+          -15000,
+          8000
+        ],
+        "size": 0.000003083,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-04",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          16000,
+          14000,
+          -9000
+        ],
+        "size": 0.000003232,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-05",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -9000,
+          6000,
+          -6000
+        ],
+        "size": 0.000001732,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-06",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          11000,
+          -7000,
+          -5000
+        ],
+        "size": 0.000001955,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-07",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -3500,
+          2200,
+          -2800
+        ],
+        "size": 6.99e-7,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-08",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          3800,
+          -2400,
+          -3200
+        ],
+        "size": 7.724e-7,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-09",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -1200,
+          750,
+          -900
+        ],
+        "size": 2.348e-7,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-10",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          1350,
+          -820,
+          -1100
+        ],
+        "size": 2.695e-7,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-11",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          -420,
+          260,
+          -340
+        ],
+        "size": 8.395e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "gold"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "solute-12",
+        "kind": "mesh",
+        "frame": "nano",
+        "position": [
+          460,
+          -290,
+          -380
+        ],
+        "size": 9.288e-8,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "nucleic-acid"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "thermos",
+        "kind": "mesh",
+        "frame": "bench",
+        "position": [
+          -64,
+          14,
+          -18
+        ],
+        "size": 0.155,
+        "source": {
+          "kind": "file",
+          "ref": "studio/library/references.json#model-plastic-thermos-polyhaven"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "strip"
+        ],
+        "asset": "thermos.glb"
+      },
+      {
+        "id": "tube",
+        "kind": "mesh",
+        "frame": "tube",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "size": 0.0208,
+        "source": {
+          "kind": "file",
+          "ref": "motion/miraeles/miraeles.film.json#s03-kit"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "plastic"
+        ],
+        "asset": "builtin:tube"
+      },
+      {
+        "id": "liquid",
+        "kind": "mesh",
+        "frame": "tube",
+        "position": [
+          0,
+          -6.75,
+          0
+        ],
+        "size": 0.0055,
+        "source": {
+          "kind": "file",
+          "ref": "motion/miraeles/miraeles.film.json#s03-kit"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "liquid"
+        ],
+        "asset": "builtin:liquid"
+      },
+      {
+        "id": "strip-body",
+        "kind": "mesh",
+        "frame": "bench",
+        "position": [
+          52,
+          -6,
+          10
+        ],
+        "size": 0.06,
+        "source": {
+          "kind": "file",
+          "ref": "motion/miraeles/miraeles.film.json#s03-kit"
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          72
+        ],
+        "roles": [
+          "strip"
+        ],
+        "asset": "strip.glb",
+        "rotation": [
+          0.35,
+          -0.32,
+          0
+        ]
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "id": "v-kit-order",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        120,
+        880,
+        140
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s03-kit"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        18
+      ]
+    },
+    {
+      "id": "v-thermal-curve",
+      "type": "path",
+      "frame": null,
+      "box": [
+        96,
+        140,
+        760,
+        260
+      ],
+      "d": "M 120 180 L 280 205 L 440 232 L 600 264 L 760 298",
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s08-thermal"
+      },
+      "evidence": "simulated",
+      "window": [
+        30,
+        36
+      ]
+    },
+    {
+      "id": "v-sandwich-schema",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        110,
+        920,
+        68
+      ],
+      "roles": [
+        "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s09-sandwich"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        54
+      ]
+    },
+    {
+      "id": "v-readout-grid",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        130,
+        820,
+        220
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s10-readout"
+      },
+      "evidence": "architecture",
+      "window": [
+        54,
+        60
+      ]
+    },
+    {
+      "id": "v-bom-bars",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        96,
+        140,
+        760,
+        200
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/miraeles/miraeles.film.json#s11-economics"
+      },
+      "evidence": "target",
+      "window": [
+        60,
+        66
+      ]
+    }
+  ],
+  "timeline": {
+    "tracks": []
+  },
+  "paths": [
+    {
+      "id": "deck-main",
+      "kind": "deck",
+      "stops": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              18,
+              52,
+              260
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              2,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.out"
+        },
+        {
+          "t": 6,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              36,
+              38,
+              210
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -4,
+              0,
+              -2
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 12,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              0,
+              48,
+              280
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 18,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              12,
+              6,
+              48
+            ]
+          },
+          "target": {
+            "frame": "tube",
+            "pos": [
+              0,
+              -4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 24,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              -22,
+              34,
+              220
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -32,
+              8,
+              -10
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 30,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              6,
+              2,
+              44
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 36,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              2,
+              10,
+              78
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              2,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 42,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              -6,
+              8,
+              86
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              -4,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 48,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              4,
+              6,
+              84
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 51.5,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              8,
+              4,
+              46
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 54,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              34,
+              34,
+              195
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              8,
+              -4,
+              2
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 60,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              -14,
+              44,
+              245
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 66,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              12,
+              46,
+              255
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 72,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              16,
+              46,
+              255
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "sine.inOut"
+        }
+      ]
+    },
+    {
+      "id": "film-main",
+      "kind": "film",
+      "stops": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        54,
+        60,
+        66
+      ],
+      "keys": [
+        {
+          "t": 0,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              18,
+              52,
+              260
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              2,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.out"
+        },
+        {
+          "t": 6,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              36,
+              38,
+              210
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -4,
+              0,
+              -2
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 12,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              0,
+              48,
+              280
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 18,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              12,
+              6,
+              48
+            ]
+          },
+          "target": {
+            "frame": "tube",
+            "pos": [
+              0,
+              -4,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 24,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              -22,
+              34,
+              220
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -32,
+              8,
+              -10
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 30,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              6,
+              2,
+              44
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 36,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              2,
+              10,
+              78
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              2,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 42,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              -6,
+              8,
+              86
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              -4,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 48,
+          "at": {
+            "frame": "nano",
+            "pos": [
+              4,
+              6,
+              84
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 51.5,
+          "at": {
+            "frame": "tube",
+            "pos": [
+              8,
+              4,
+              46
+            ]
+          },
+          "target": {
+            "frame": "nano",
+            "pos": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 54,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              34,
+              34,
+              195
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              8,
+              -4,
+              2
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 60,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              -14,
+              44,
+              245
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 66,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              12,
+              46,
+              255
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 72,
+          "at": {
+            "frame": "bench",
+            "pos": [
+              16,
+              46,
+              255
+            ]
+          },
+          "target": {
+            "frame": "bench",
+            "pos": [
+              -6,
+              4,
+              -4
+            ]
+          },
+          "fov": 40,
+          "ease": "sine.inOut"
+        }
+      ]
+    }
+  ],
+  "layout": [
+    {
+      "stop": 0,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s00-title",
+          "role": "title",
+          "text": "Miraeles",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s00-label-1",
+          "role": "label",
+          "text": "Miraeles is a field nucleic-acid kit for detecting plant fungal pathogens on the farm.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 0,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s00-title",
+          "role": "title",
+          "text": "Miraeles",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s00-label-1",
+          "role": "label",
+          "text": "Miraeles — полевой набор для выявления ДНК грибных патогенов растений прямо в хозяйстве.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Hidden infection in leaf tissue",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s01-label-1",
+          "role": "label",
+          "text": "Fungal mycelium spreads inside the leaf days before spots appear to the eye.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 1,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s01-title",
+          "role": "title",
+          "text": "Скрытая инфекция в ткани листа",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s01-label-1",
+          "role": "label",
+          "text": "Грибница распространяется внутри листа за несколько дней до появления видимых пятен.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "The complete kit in order of use",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s02-label-1",
+          "role": "label",
+          "text": "Every kit holds five parts in order: pestle, lysis tube, thermos bath, reaction tube and strip.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 2,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s02-title",
+          "role": "title",
+          "text": "Весь набор по порядку работы",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s02-label-1",
+          "role": "label",
+          "text": "Набор включает пять частей по порядку: пестик, пробирку лизиса, термос, пробирку реакции и полоску.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 3,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Crude DNA lysis without a centrifuge",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s03-label-1",
+          "role": "label",
+          "text": "Crushed leaf tissue in alkaline buffer releases template DNA in 5 minutes on the bench.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 3,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s03-title",
+          "role": "title",
+          "text": "Щелочной лизис без центрифуги",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s03-label-1",
+          "role": "label",
+          "text": "Растертый лист в щелочном буфере отдает матричную ДНК за 5 минут на полевом столе.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 4,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s04-title",
+          "role": "title",
+          "text": "Warm water bath inside the thermos",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s04-label-1",
+          "role": "label",
+          "text": "A 300 mL insulated thermos holds the reaction tube in warm water without batteries or mains power.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s04-note",
+          "role": "note",
+          "text": "Illustration scale: Poly Haven CC0 thermos scaled by 0.484 to 155 mm kit body.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 4,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s04-title",
+          "role": "title",
+          "text": "Теплая водяная баня в термосе",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s04-label-1",
+          "role": "label",
+          "text": "Теплоизолированный термос объемом 300 мл греет пробирку в теплой воде без батарей и сети.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s04-note",
+          "role": "note",
+          "text": "Масштаб иллюстрации: термос Poly Haven CC0 с коэффициентом 0.484 (высота 155 мм).",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 5,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s05-title",
+          "role": "title",
+          "text": "Simulated temperature curve",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s05-label-1",
+          "role": "label",
+          "text": "In the 3-node thermal model, water starting at 42 C stays at 38.7 C after 20 minutes in 15 C air.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s05-note",
+          "role": "note",
+          "text": "Simulated 3-node thermal model (42.0 C start, 15 C air); wet-lab curve unmeasured.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 5,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s05-title",
+          "role": "title",
+          "text": "Расчетная кривая остывания",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s05-label-1",
+          "role": "label",
+          "text": "В 3-узловой тепловой модели вода со стартом 42 C сохраняет 38.7 C через 20 минут при воздухе 15 C.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s05-note",
+          "role": "note",
+          "text": "Расчет 3-узловой тепловой модели (старт 42.0 C, воздух 15 C); без измерений.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 6,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s06-title",
+          "role": "title",
+          "text": "Isothermal amplification in the drop",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s06-label-1",
+          "role": "label",
+          "text": "Inside the liquid at 37 to 42 C, recombinase enzymes copy target DNA into tagged strands over 20 minutes.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 6,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s06-title",
+          "role": "title",
+          "text": "Изотермическая амплификация в капле",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s06-label-1",
+          "role": "label",
+          "text": "Внутри капли при 37–42 C ферменты копируют участок ДНК в меченые цепи за 20 минут.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 7,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s07-title",
+          "role": "title",
+          "text": "Whole binding sandwich at true scale",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s07-label-1",
+          "role": "label",
+          "text": "Both binders, both end tags, the DNA duplex between them and the 40 nm gold particle form one bridge.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s07-note",
+          "role": "note",
+          "text": "Plain-shape row above matches 40 nm gold, PDB 1IGT (14.8 nm), FAM-DNA-biotin, and capture IgG.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 7,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s07-title",
+          "role": "title",
+          "text": "Полный комплекс связывания в масштабе",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s07-label-1",
+          "role": "label",
+          "text": "Оба связывающих белка, обе концевые метки, спираль ДНК между ними и частица золота 40 нм образуют мост.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s07-note",
+          "role": "note",
+          "text": "Ряд простых фигур выше повторяет золото 40 нм, PDB 1IGT (14.8 нм), ДНК с метками и второе IgG.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 8,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s08-title",
+          "role": "title",
+          "text": "Test line and control line capture",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s08-label-1",
+          "role": "label",
+          "text": "Bridged gold stops at the test line, while unbound antibody gold continues to the control line.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 8,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s08-title",
+          "role": "title",
+          "text": "Захват на тестовой и контрольной линиях",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s08-label-1",
+          "role": "label",
+          "text": "Связанное золото останавливается на тестовой линии, а свободный конъюгат доходит до контрольной линии.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 9,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s09-title",
+          "role": "title",
+          "text": "Visual strip readout rules",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s09-label-1",
+          "role": "label",
+          "text": "Two coloured lines show target DNA; one control line shows a clean leaf; no control line rejects the run.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 9,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s09-title",
+          "role": "title",
+          "text": "Правила чтения полоски",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s09-label-1",
+          "role": "label",
+          "text": "Две линии показывают ДНК патогена, одна контрольная линия — чистую пробу, отсутствие контроля — брак.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 10,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s10-title",
+          "role": "title",
+          "text": "Target unit economics",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s10-label-1",
+          "role": "label",
+          "text": "The target bill of materials is 220 to 350 rubles per disposable tube and lateral-flow strip.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 10,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s10-title",
+          "role": "title",
+          "text": "Целевая экономика одного теста",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s10-label-1",
+          "role": "label",
+          "text": "Целевая стоимость материалов составляет от 220 до 350 рублей на одноразовую пробирку и полоску.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 11,
+      "lang": "en",
+      "blocks": [
+        {
+          "id": "s11-title",
+          "role": "title",
+          "text": "Current state and pilot verification",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s11-label-1",
+          "role": "label",
+          "text": "Thermal simulation and primer code are built; wet-lab sensitivity and field trials are the next two steps.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s11-note",
+          "role": "note",
+          "text": "Pilot stages: Stage 1 laboratory LoD and hold check; Stage 2 field leaf sampling.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "stop": 11,
+      "lang": "ru",
+      "blocks": [
+        {
+          "id": "s11-title",
+          "role": "title",
+          "text": "Текущий статус и план проверки",
+          "box": [
+            96,
+            760,
+            1440,
+            64
+          ]
+        },
+        {
+          "id": "s11-label-1",
+          "role": "label",
+          "text": "Тепловая модель и подбор праймеров готовы; проверка чувствительности в лаборатории и поле — два следующих шага.",
+          "box": [
+            96,
+            832,
+            1620,
+            112
+          ]
+        },
+        {
+          "id": "s11-note",
+          "role": "note",
+          "text": "Этапы проверки: этап 1 — предел обнаружения и баня в лаборатории; этап 2 — полевые пробы.",
+          "box": [
+            96,
+            952,
+            1620,
+            64
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "0": {
+      "en": "Stop 0: Miraeles is a field nucleic-acid kit for detecting plant fungal pathogens on the farm. Facts: f-problem, f-kit.",
+      "ru": "Слайд 0: Miraeles — полевой набор для выявления ДНК грибных патогенов растений прямо в хозяйстве. Факты: f-problem, f-kit."
+    },
+    "1": {
+      "en": "Stop 1: Fungal mycelium spreads inside the leaf days before spots appear to the eye. Facts: f-problem, f-field-fungal.",
+      "ru": "Слайд 1: Грибница распространяется внутри листа за несколько дней до появления видимых пятен. Факты: f-problem, f-field-fungal."
+    },
+    "2": {
+      "en": "Stop 2: Every kit holds five parts in order: pestle, lysis tube, thermos bath, reaction tube and strip. Facts: f-kit.",
+      "ru": "Слайд 2: Набор включает пять частей по порядку: пестик, пробирку лизиса, термос, пробирку реакции и полоску. Факты: f-kit."
+    },
+    "3": {
+      "en": "Stop 3: Crushed leaf tissue in alkaline buffer releases template DNA in 5 minutes on the bench. Facts: f-extraction, f-field-fungal.",
+      "ru": "Слайд 3: Растертый лист в щелочном буфере отдает матричную ДНК за 5 минут на полевом столе. Факты: f-extraction, f-field-fungal."
+    },
+    "4": {
+      "en": "Stop 4: A 300 mL insulated thermos holds the reaction tube in warm water without batteries or mains power. Facts: f-thermos-scale, f-thermos-sim.",
+      "ru": "Слайд 4: Теплоизолированный термос объемом 300 мл греет пробирку в теплой воде без батарей и сети. Факты: f-thermos-scale, f-thermos-sim."
+    },
+    "5": {
+      "en": "Stop 5: In the 3-node thermal model, water starting at 42 C stays at 38.7 C after 20 minutes in 15 C air. Facts: f-thermos-sim.",
+      "ru": "Слайд 5: В 3-узловой тепловой модели вода со стартом 42 C сохраняет 38.7 C через 20 минут при воздухе 15 C. Факты: f-thermos-sim."
+    },
+    "6": {
+      "en": "Stop 6: Inside the liquid at 37 to 42 C, recombinase enzymes copy target DNA into tagged strands over 20 minutes. Facts: f-rpa.",
+      "ru": "Слайд 6: Внутри капли при 37–42 C ферменты копируют участок ДНК в меченые цепи за 20 минут. Факты: f-rpa."
+    },
+    "7": {
+      "en": "Stop 7: Both binders, both end tags, the DNA duplex between them and the 40 nm gold particle form one bridge. Facts: f-1igt, f-strip-sandwich.",
+      "ru": "Слайд 7: Оба связывающих белка, обе концевые метки, спираль ДНК между ними и частица золота 40 нм образуют мост. Факты: f-1igt, f-strip-sandwich."
+    },
+    "8": {
+      "en": "Stop 8: Bridged gold stops at the test line, while unbound antibody gold continues to the control line. Facts: f-strip-sandwich.",
+      "ru": "Слайд 8: Связанное золото останавливается на тестовой линии, а свободный конъюгат доходит до контрольной линии. Факты: f-strip-sandwich."
+    },
+    "9": {
+      "en": "Stop 9: Two coloured lines show target DNA; one control line shows a clean leaf; no control line rejects the run. Facts: f-readout.",
+      "ru": "Слайд 9: Две линии показывают ДНК патогена, одна контрольная линия — чистую пробу, отсутствие контроля — брак. Факты: f-readout."
+    },
+    "10": {
+      "en": "Stop 10: The target bill of materials is 220 to 350 rubles per disposable tube and lateral-flow strip. Facts: f-cost.",
+      "ru": "Слайд 10: Целевая стоимость материалов составляет от 220 до 350 рублей на одноразовую пробирку и полоску. Факты: f-cost."
+    },
+    "11": {
+      "en": "Stop 11: Thermal simulation and primer code are built; wet-lab sensitivity and field trials are the next two steps. Facts: f-status.",
+      "ru": "Слайд 11: Тепловая модель и подбор праймеров готовы; проверка чувствительности в лаборатории и поле — два следующих шага. Факты: f-status."
+    }
+  },
+  "storyboard": {
+    "approvedAt": "2026-11-09T00:00:00Z",
+    "note": "Approved 12-slide storyboard for Miraeles field kit pilot deck"
+  }
+}

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Storyboard — ml-explainer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      width: 1920px;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      font-family: Arial, Arial, sans-serif;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cell {
+      margin: 0;
+      border: 1px solid #0A0A0A33;
+      padding: 12px;
+    }
+    .cell img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .meta {
+      margin-top: 8px;
+    }
+    .stop-index {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+    .title-en {
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 4px;
+    }
+    .title-ru {
+      font-size: 15px;
+      opacity: 0.8;
+    }
+    .say {
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 6px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <figure class="cell">
+      <img src="stop-00.png" alt="Stop 0" />
+      <figcaption class="meta">
+        <div class="stop-index">1 · t = 0.0s</div>
+        <div class="title-en">Generative binder architecture</div>
+        <div class="title-ru">Архитектура генеративной модели</div>
+        <p class="say">The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-01.png" alt="Stop 1" />
+      <figcaption class="meta">
+        <div class="stop-index">2 · t = 6.0s</div>
+        <div class="title-en">Residue sequence and atom coordinates</div>
+        <div class="title-ru">Последовательность остатков и координаты атомов</div>
+        <p class="say">Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-02.png" alt="Stop 2" />
+      <figcaption class="meta">
+        <div class="stop-index">3 · t = 12.0s</div>
+        <div class="title-en">Autoencoder parameter footprint</div>
+        <div class="title-ru">Объем параметров автокодировщика</div>
+        <p class="say">The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-03.png" alt="Stop 3" />
+      <figcaption class="meta">
+        <div class="stop-index">4 · t = 18.0s</div>
+        <div class="title-en">Latent representation grid</div>
+        <div class="title-ru">Сетка скрытого представления</div>
+        <p class="say">The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-04.png" alt="Stop 4" />
+      <figcaption class="meta">
+        <div class="stop-index">5 · t = 24.0s</div>
+        <div class="title-en">Straight path from noise to data</div>
+        <div class="title-ru">Прямой путь от шума к данным</div>
+        <p class="say">During training, a point moves along a straight segment from Gaussian noise to the encoded complex.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-05.png" alt="Stop 5" />
+      <figcaption class="meta">
+        <div class="stop-index">6 · t = 30.0s</div>
+        <div class="title-en">Flow denoiser velocity module</div>
+        <div class="title-ru">Модуль скорости снятия шума</div>
+        <p class="say">The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-06.png" alt="Stop 6" />
+      <figcaption class="meta">
+        <div class="stop-index">7 · t = 36.0s</div>
+        <div class="title-en">Quadratic pair attention map</div>
+        <div class="title-ru">Квадратичная карта парного внимания</div>
+        <p class="say">Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-07.png" alt="Stop 7" />
+      <figcaption class="meta">
+        <div class="stop-index">8 · t = 42.0s</div>
+        <div class="title-en">Memory share on one A100 80 GiB</div>
+        <div class="title-ru">Доля памяти на ускорителе A100 80 ГиБ</div>
+        <p class="say">Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-08.png" alt="Stop 8" />
+      <figcaption class="meta">
+        <div class="stop-index">9 · t = 48.0s</div>
+        <div class="title-en">Candidate decoding and specificity judge</div>
+        <div class="title-ru">Декодирование кандидатов и проверка специфичности</div>
+        <p class="say">Decoded nanobody candidates are scored against the target and off-target panel to choose N designs.</p>
+      </figcaption>
+    </figure>
+    <figure class="cell">
+      <img src="stop-09.png" alt="Stop 9" />
+      <figcaption class="meta">
+        <div class="stop-index">10 · t = 54.0s</div>
+        <div class="title-en">Verified code and untrained weights</div>
+        <div class="title-ru">Проверенный код и необученные веса</div>
+        <p class="say">Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet.</p>
+      </figcaption>
+    </figure>
+  </div>
+</body>
+</html>

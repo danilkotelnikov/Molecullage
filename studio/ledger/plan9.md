@@ -1,0 +1,25 @@
+# Plan 9 Ledger: Generative Binder ML Architecture Explainer
+
+- **Date:** 2026-11-09
+- **DataCite / arXiv DOI Verification:**
+  - `10.48550/arXiv.1706.03762`: Vaswani A et al. (2017) — verified via DataCite (`checked: 2026-11-09`).
+  - `10.48550/arXiv.2209.03003`: Liu X, Gong C, Liu Q (2022) — verified via DataCite (`checked: 2026-11-09`).
+  - `10.48550/arXiv.2210.02747`: Lipman Y et al. (2022) — verified via DataCite (`checked: 2026-11-09`).
+  - `10.48550/arXiv.1412.6980`: Kingma DP, Ba J (2014) — verified via DataCite (`checked: 2026-11-09`).
+  - `10.48550/arXiv.1312.6114`: Kingma DP, Welling M (2013) — verified via DataCite (`checked: 2026-11-09`).
+- **Deterministic Size & Memory Calculations (`studio/jobs/ml-explainer/compute/sizes.mjs` -> `sizes.json`):**
+  - Autoencoder (`255,873,676` params): `511,747,352` B (`bf16`), `1,023,494,704` B (`fp32`), `4,093,978,816` B (`3.813 GiB` Adam training state).
+  - Denoiser (`153,102,091` params): `306,204,182` B (`bf16`), `612,408,364` B (`fp32`), `2,449,633,456` B (`2.281 GiB` Adam training state).
+  - Combined training state (`408,975,767` params * 16 B): `6,543,612,272` B (`6.094 GiB`, `7.62%` of 80 GiB NVIDIA A100 HBM2e).
+  - Latent grid (`512 x 256`): `131,072` values (`524,288` B = `0.5 MiB` `fp32`).
+  - Pair attention (`512 x 512 x 8` heads): `2,097,152` values (`8.0 MiB` `fp32` per layer, `96.0 MiB` across 12 layers).
+- **PDB 1MEL Meshes (`studio/jobs/ml-explainer/make_1mel_glb.cxc`):**
+  - `1mel.glb`: `2,541,328` bytes (camel VH + lysozyme surface from `data/pdb/1MEL.pdb`).
+  - `1mel_coarse.glb`: `294,548` bytes (coarse stand-in surface for smooth zoom crossfade at `swapAt = 12 nm`).
+- **Evidence Ceiling & Honesty Check (`checkFacts`):**
+  - Allowed levels used in `ml-explainer` (`arc-science`): `architecture`, `published` only.
+  - Explicitly states `0` weights are trained yet and `0` wet-lab binders exist.
+- **Checks & Deliverables:**
+  - `node tools/check.mjs ml-explainer` -> `check: clean`.
+  - `STUDIO_JOB=ml-explainer node --test tools/pixels.test.mjs` -> 9/9 pass.
+  - Storyboard (`studio/out/storyboard/ml-explainer/sheet.html`, `sheet.png` and `jobs/ml-explainer/review/`), 3 PDF handouts (`en`, `ru`, `en-notes`), and static site (`studio/out/site/ml-explainer/`) built and verified.

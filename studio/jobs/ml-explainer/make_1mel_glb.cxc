@@ -1,0 +1,16 @@
+# Builds 1mel.glb and 1mel_coarse.glb for studio/jobs/ml-explainer from ../../../data/pdb/1MEL.pdb.
+# Run from studio/jobs/ml-explainer with ChimeraX --nogui --offscreen make_1mel_glb.cxc.
+open ../../../data/pdb/1MEL.pdb
+delete solvent
+hide #1 target abpc
+surface #1 resolution 4.0 gridSpacing 1.0
+save 1mel.glb
+
+close all
+open ../../../data/pdb/1MEL.pdb
+delete solvent
+hide #1 target abpc
+surface #1 resolution 9.0 gridSpacing 2.2
+save 1mel_coarse.glb
+
+exit
