@@ -59,88 +59,88 @@
         <div class="stop-index">1 · t = 0.0s</div>
         <div class="title-en">Generative binder architecture</div>
         <div class="title-ru">Архитектура генеративной модели</div>
-        <p class="say">The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL.</p>
+        <p class="say">Omniverso pairs a structure autoencoder and flow denoiser around real complexes such as PDB 1MEL (132 VH residues).</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-01.png" alt="Stop 1" />
       <figcaption class="meta">
         <div class="stop-index">2 · t = 6.0s</div>
-        <div class="title-en">Residue sequence and atom coordinates</div>
-        <div class="title-ru">Последовательность остатков и координаты атомов</div>
-        <p class="say">Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site.</p>
+        <div class="title-en">Residue table and latent bottleneck</div>
+        <div class="title-ru">Таблица остатков и скрытый код</div>
+        <p class="say">Chain A of 1MEL enters as 132 by 169 numbers (22,308 values) and compresses into a 132 by 8 latent table (1,056 values).</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-02.png" alt="Stop 2" />
       <figcaption class="meta">
         <div class="stop-index">3 · t = 12.0s</div>
-        <div class="title-en">Autoencoder parameter footprint</div>
-        <div class="title-ru">Объем параметров автокодировщика</div>
-        <p class="say">The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states.</p>
+        <div class="title-en">Structure autoencoder module</div>
+        <div class="title-ru">Модуль структурного автокодировщика</div>
+        <p class="say">Twelve encoder blocks and twelve decoder blocks with a 3-coordinate bypass hold 255,873,676 parameters (0.51 GB bf16, 4.09 GB Adam).</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-03.png" alt="Stop 3" />
       <figcaption class="meta">
         <div class="stop-index">4 · t = 18.0s</div>
-        <div class="title-en">Latent representation grid</div>
-        <div class="title-ru">Сетка скрытого представления</div>
-        <p class="say">The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values.</p>
+        <div class="title-en">Flow denoiser network</div>
+        <div class="title-ru">Сеть потокового снятия шума</div>
+        <p class="say">Fourteen sequence blocks map noisy state 11 to width 768 with pair table 256 and time 256 across 153,102,091 parameters (2.45 GB Adam).</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-04.png" alt="Stop 4" />
       <figcaption class="meta">
         <div class="stop-index">5 · t = 24.0s</div>
-        <div class="title-en">Straight path from noise to data</div>
-        <div class="title-ru">Прямой путь от шума к данным</div>
-        <p class="say">During training, a point moves along a straight segment from Gaussian noise to the encoded complex.</p>
+        <div class="title-en">Sequence state and pair table</div>
+        <div class="title-ru">Состояние ряда и парная таблица</div>
+        <p class="say">One sequence tensor holds 101,376 numbers, while the 132 by 132 by 256 pair table holds 4,460,544 numbers (17.8 MB in fp32).</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-05.png" alt="Stop 5" />
       <figcaption class="meta">
         <div class="stop-index">6 · t = 30.0s</div>
-        <div class="title-en">Flow denoiser velocity module</div>
-        <div class="title-ru">Модуль скорости снятия шума</div>
-        <p class="say">The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t.</p>
+        <div class="title-en">Straight interpolation path</div>
+        <div class="title-ru">Прямая траектория переноса</div>
+        <p class="say">Training draws t in [0, 1], mixes (1 - t) times noise plus t times data, and regresses the constant velocity data minus noise.</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-06.png" alt="Stop 6" />
       <figcaption class="meta">
         <div class="stop-index">7 · t = 36.0s</div>
-        <div class="title-en">Quadratic pair attention map</div>
-        <div class="title-ru">Квадратичная карта парного внимания</div>
-        <p class="say">Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers.</p>
+        <div class="title-en">Iterative coordinate generation</div>
+        <div class="title-ru">Пошаговая генерация координат</div>
+        <p class="say">Starting from Gaussian noise at t = 0, integration steps move to t = 1 before the decoder reconstructs 3D atomic coordinates.</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-07.png" alt="Stop 7" />
       <figcaption class="meta">
         <div class="stop-index">8 · t = 42.0s</div>
-        <div class="title-en">Memory share on one A100 80 GiB</div>
-        <div class="title-ru">Доля памяти на ускорителе A100 80 ГиБ</div>
-        <p class="say">Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card.</p>
+        <div class="title-en">Specificity judge and subset pick</div>
+        <div class="title-ru">Оценка специфичности и отбор набора</div>
+        <p class="say">Decoded candidates are scored against the target complex and off-target panel so the solver picks N diverse binder designs.</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-08.png" alt="Stop 8" />
       <figcaption class="meta">
         <div class="stop-index">9 · t = 48.0s</div>
-        <div class="title-en">Candidate decoding and specificity judge</div>
-        <div class="title-ru">Декодирование кандидатов и проверка специфичности</div>
-        <p class="say">Decoded nanobody candidates are scored against the target and off-target panel to choose N designs.</p>
+        <div class="title-en">Memory share on the accelerator</div>
+        <div class="title-ru">Доля памяти на ускорителе</div>
+        <p class="say">Combined weights and Adam moments take 6.54 GB, or 8.2% of an 80 GB NVIDIA A100, leaving 73.5 GB for batched pair tables.</p>
       </figcaption>
     </figure>
     <figure class="cell">
       <img src="stop-09.png" alt="Stop 9" />
       <figcaption class="meta">
         <div class="stop-index">10 · t = 54.0s</div>
-        <div class="title-en">Verified code and untrained weights</div>
-        <div class="title-ru">Проверенный код и необученные веса</div>
-        <p class="say">Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet.</p>
+        <div class="title-en">Code boundary and untrained state</div>
+        <div class="title-ru">Граница кода и необученный статус</div>
+        <p class="say">Autoencoder and denoiser modules run shape checks in code today; 0 weights are trained yet and 0 wet-lab binders exist.</p>
       </figcaption>
     </figure>
   </div>

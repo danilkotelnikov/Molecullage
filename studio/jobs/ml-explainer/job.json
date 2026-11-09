@@ -1,31 +1,37 @@
 {
   "brief": {
-    "idea": "Arc Science pairs a structure autoencoder and rectified-flow denoiser explained from PDB 1MEL atoms to GPU memory bytes.",
+    "idea": "Omniverso pairs a structure autoencoder and a rectified-flow denoiser to generate binder coordinates around an antigen complex such as PDB 1MEL.",
     "details": "A 10-stop ML architecture explainer deck and film path. Lenses: journal and cinematic. Check-ins: one storyboard stop. Outputs: live deck, MP4, PDF, web link.",
     "concepts": [
-      "PDB 1MEL antigen-nanobody complex",
-      "autoencoder parameter and memory footprint",
-      "continuous 512x256 latent grid and straight flow path",
-      "denoiser and quadratic pair attention activations",
-      "80 GiB NVIDIA A100 memory budget and specificity judge"
+      "PDB 1MEL antigen-nanobody complex (132 VH residues)",
+      "132 x 169 residue input table and 132 x 8 latent bottleneck",
+      "structure autoencoder (255,873,676 parameters) with 3-coordinate bypass",
+      "flow denoiser (153,102,091 parameters) across 14 sequence blocks",
+      "132 x 132 x 256 pair table vs 132 x 768 sequence state",
+      "straight-line transport path and iterative generation",
+      "off-target specificity judge and subset selection",
+      "80 GB NVIDIA A100 memory budget (6.54 GB = 8.2%) and untrained status"
     ],
-    "audience": "machine learning researchers, structural biologists, and cloud compute reviewers",
-    "product": "arc-science",
+    "audience": "machine learning researchers, structural biologists, agent developers, and compute reviewers",
+    "product": "omniverso",
     "langs": [
       "en",
       "ru"
     ],
     "timeBudget": {
-      "hours": 8
+      "hours": 6
     },
-    "files": []
+    "files": [
+      "motion/films/arc-science-pitch-2.notes.md",
+      "motion/films/arc-science-pitch-2.film.json"
+    ]
   },
   "facts": [
     {
       "id": "f-1mel",
       "text": {
-        "en": "PDB 1MEL crystal structure resolves camel VH bound to hen egg-white lysozyme at 2.5 A with 55 heavy-atom residue pairs within 4.5 A.",
-        "ru": "Кристаллическая структура PDB 1MEL показывает домен VH верблюда с лизоцимом при 2.5 А и 55 пар остатков ближе 4.5 А."
+        "en": "PDB 1MEL crystal structure resolves 132 residues of camel VH chain A bound to hen egg-white lysozyme at 2.5 A with 55 contact residue pairs within 4.5 A.",
+        "ru": "Кристаллическая структура PDB 1MEL показывает 132 остатка цепи A домена VH верблюда с лизоцимом при 2.5 А и 55 контактных пар ближе 4.5 А."
       },
       "level": "published",
       "source": {
@@ -33,34 +39,52 @@
         "ref": "1MEL"
       },
       "usedBy": [
-        "s00-title",
         "s00-part",
-        "mel"
+        "s00-note",
+        "mel",
+        "v-s00-tag"
       ]
     },
     {
       "id": "m-input",
       "text": {
-        "en": "Input representation holds up to 512 residue positions with heavy-atom coordinates around the target epitope.",
-        "ru": "Входное представление содержит до 512 позиций остатков с координатами тяжелых атомов вокруг эпитопа мишени."
+        "en": "Each complex enters as 132 residues by 169 numbers (111 atom coordinates, 37 atom masks, and 21 residue-type channels), totaling 22,308 numbers.",
+        "ru": "Каждый комплекс подается таблицей 132 остатка на 169 чисел (111 координат атомов, 37 масок и 21 признак типа остатка), всего 22 308 чисел."
       },
       "level": "architecture",
       "source": {
         "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#seqLen"
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
       },
       "usedBy": [
-        "s01-title",
         "s01-part",
         "s01-hw",
-        "v-input-seq"
+        "s01-note",
+        "v-s01-lbl-in"
+      ]
+    },
+    {
+      "id": "m-latent",
+      "text": {
+        "en": "The bottleneck table holds 132 residues by 8 continuous numbers (1,056 values), with untrained tensor shapes verified in code.",
+        "ru": "Скрытая таблица содержит 132 остатка на 8 непрерывных чисел (1 056 величин); проверены только размеры необученных тензоров."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "usedBy": [
+        "s01-part",
+        "s01-hw",
+        "v-s01-lbl-lat"
       ]
     },
     {
       "id": "m-ae",
       "text": {
-        "en": "The autoencoder has 255,873,676 parameters (511,747,352 B in bf16, 1,023,494,704 B in fp32, 3.813 GiB Adam training state).",
-        "ru": "Автокодировщик содержит 255,873,676 параметров (3.813 ГиБ в обучении с моментами Adam)."
+        "en": "The structure autoencoder chains 12 encoder blocks, an 8-channel latent table plus a 3-coordinate centred bypass, and 12 decoder blocks (255,873,676 parameters).",
+        "ru": "Структурный автокодировщик соединяет 12 блоков кодировщика, скрытый код на 8 каналов с обходом 3 координат и 12 блоков декодировщика (255 873 676 параметров)."
       },
       "level": "architecture",
       "source": {
@@ -68,17 +92,305 @@
         "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
       },
       "usedBy": [
-        "s02-title",
         "s02-part",
         "s02-hw",
-        "v-ae-box"
+        "s02-note",
+        "v-s02-lbl"
+      ]
+    },
+    {
+      "id": "s-ae-fp32",
+      "text": {
+        "en": "Autoencoder fp32 weights take 1,023,494,704 bytes (1.02 GB).",
+        "ru": "Веса автокодировщика в fp32 занимают 1,023,494,704 байт (1.02 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#aeFp32Bytes"
+      },
+      "usedBy": [
+        "s02-hw"
+      ]
+    },
+    {
+      "id": "s-ae-bf16",
+      "text": {
+        "en": "Autoencoder bf16 weights take 511,747,352 bytes (0.51 GB).",
+        "ru": "Веса автокодировщика в bf16 занимают 511,747,352 байт (0.51 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#aeBf16Bytes"
+      },
+      "usedBy": [
+        "s02-part",
+        "s02-hw"
+      ]
+    },
+    {
+      "id": "s-ae-train",
+      "text": {
+        "en": "Autoencoder weights, gradients, and two Adam moments take 4,093,978,816 bytes (4.09 GB).",
+        "ru": "Веса, градиенты и два момента Adam автокодировщика занимают 4,093,978,816 байт (4.09 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#aeTrainBytes"
+      },
+      "usedBy": [
+        "s02-part",
+        "s02-hw",
+        "v-s08-bar-ae"
+      ]
+    },
+    {
+      "id": "m-dn",
+      "text": {
+        "en": "The flow denoiser lifts noisy state 11 to 768 channels with pair table 256 and time vector 256 across 14 sequence blocks to velocity heads 3 and 8 (153,102,091 parameters).",
+        "ru": "Потоковый модуль поднимает зашумленный вход 11 до 768 каналов с парной таблицей 256 и временем 256 через 14 блоков к выходам скорости 3 и 8 (153 102 091 параметр)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "usedBy": [
+        "s03-part",
+        "s03-hw",
+        "s03-note",
+        "v-s03-lbl"
+      ]
+    },
+    {
+      "id": "s-dn-fp32",
+      "text": {
+        "en": "Denoiser fp32 weights take 612,408,364 bytes (0.61 GB).",
+        "ru": "Веса потокового модуля в fp32 занимают 612,408,364 байт (0.61 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#dnFp32Bytes"
+      },
+      "usedBy": [
+        "s03-hw"
+      ]
+    },
+    {
+      "id": "s-dn-bf16",
+      "text": {
+        "en": "Denoiser bf16 weights take 306,204,182 bytes (0.31 GB).",
+        "ru": "Веса потокового модуля в bf16 занимают 306,204,182 байт (0.31 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#dnBf16Bytes"
+      },
+      "usedBy": [
+        "s03-part",
+        "s03-hw"
+      ]
+    },
+    {
+      "id": "s-dn-train",
+      "text": {
+        "en": "Denoiser weights, gradients, and two Adam moments take 2,449,633,456 bytes (2.45 GB).",
+        "ru": "Веса, градиенты и два момента Adam потокового модуля занимают 2,449,633,456 байт (2.45 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#dnTrainBytes"
+      },
+      "usedBy": [
+        "s03-part",
+        "s03-hw",
+        "v-s08-bar-dn"
+      ]
+    },
+    {
+      "id": "m-block",
+      "text": {
+        "en": "Each sequence block applies time-conditioned scale and shift, pair-biased multi-head attention, and a gated feed-forward update.",
+        "ru": "Каждый блок ряда применяет масштаб и сдвиг по времени, многоголовое внимание с парным смещением и вентильное обновление."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-04-block"
+      },
+      "usedBy": [
+        "s04-part",
+        "s04-note"
+      ]
+    },
+    {
+      "id": "s-hidden",
+      "text": {
+        "en": "Sequence activations of 132 by 768 hold 101,376 values (0.41 MB in fp32).",
+        "ru": "Активации ряда 132 на 768 содержат 101,376 чисел (0.41 МБ в fp32)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#hiddenValues"
+      },
+      "usedBy": [
+        "s04-part",
+        "s04-hw",
+        "v-s04-seq",
+        "v-s04-lbl"
+      ]
+    },
+    {
+      "id": "s-pair",
+      "text": {
+        "en": "Pair table of 132 by 132 by 256 holds 4,460,544 values (17,842,176 bytes = 17.8 MB in fp32), 44 times the sequence activation tensor.",
+        "ru": "Парная таблица 132 на 132 на 256 содержит 4,460,544 чисел (17.8 МБ в fp32) — в 44 раза больше вектора ряда."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "usedBy": [
+        "s04-part",
+        "s04-hw",
+        "s04-note",
+        "v-s04-lbl"
+      ]
+    },
+    {
+      "id": "m-path",
+      "text": {
+        "en": "Training samples time t in [0, 1], mixes noise and encoded complex along (1 - t) * noise + t * data, and regresses velocity data minus noise.",
+        "ru": "При обучении выбирается момент t из [0, 1], строится смесь (1 - t) * шум + t * данные и предсказывается скорость данные минус шум."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+      },
+      "usedBy": [
+        "s05-part",
+        "s05-note",
+        "v-s05-lbl"
+      ]
+    },
+    {
+      "id": "m-gen",
+      "text": {
+        "en": "Generation starts from Gaussian noise at t = 0, integrates predicted velocity to t = 1, and decodes latent 8 plus 3 coordinates into 3D atoms.",
+        "ru": "Генерация начинается с гауссова шума при t = 0, интегрирует скорость до t = 1 и декодирует 8 каналов и 3 координаты в атомы."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "usedBy": [
+        "s06-part",
+        "s06-note",
+        "v-s06-lbl"
+      ]
+    },
+    {
+      "id": "m-judge",
+      "text": {
+        "en": "Decoded candidates are scored on the target complex and an off-target panel, then a subset solver selects N diverse binder candidates.",
+        "ru": "Декодированные кандидаты оцениваются на целевом комплексе и панели сторонних белков, после чего отбираются N различных конструкций."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "usedBy": [
+        "s07-part",
+        "s07-note",
+        "v-s07-lbl"
+      ]
+    },
+    {
+      "id": "h-a100",
+      "text": {
+        "en": "Target training accelerator is one NVIDIA A100 80 GB card in Yandex Cloud configuration gpu-standard-v3.",
+        "ru": "Целевой ускоритель обучения — одна карта NVIDIA A100 80 ГБ в конфигурации Yandex Cloud gpu-standard-v3."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.notes.md"
+      },
+      "usedBy": [
+        "s08-part",
+        "s08-hw",
+        "s08-note",
+        "v-s08-lbl"
+      ]
+    },
+    {
+      "id": "s-sum-train",
+      "text": {
+        "en": "Combined autoencoder and denoiser Adam training states across 408,975,767 parameters occupy 6,543,612,272 bytes (6.54 GB).",
+        "ru": "Суммарные веса и буферы Adam для 408,975,767 параметров занимают 6,543,612,272 байт (6.54 ГБ)."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#sumTrainBytes"
+      },
+      "usedBy": [
+        "s08-part",
+        "s08-hw",
+        "v-s08-lbl"
+      ]
+    },
+    {
+      "id": "s-share80",
+      "text": {
+        "en": "Model weights and Adam states occupy 8.2% of an 80 GB A100 card, leaving 73.5 GB for batched pair activations.",
+        "ru": "Веса и состояния Adam занимают 8.2% памяти карты A100 на 80 ГБ, оставляя 73.5 ГБ под пакеты парных таблиц."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#share80"
+      },
+      "usedBy": [
+        "s08-part",
+        "s08-hw",
+        "s08-note",
+        "v-s08-lbl"
+      ]
+    },
+    {
+      "id": "m-status",
+      "text": {
+        "en": "Architecture status: autoencoder and denoiser modules exist in code with verified shapes; 0 weights are trained yet and 0 wet-lab binders exist.",
+        "ru": "Статус архитектуры: автокодировщик и потоковый модуль написаны в коде с проверенными размерами; обученных весов 0 и проверенных молекул 0."
+      },
+      "level": "architecture",
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "usedBy": [
+        "s00-note",
+        "s09-part",
+        "s09-note",
+        "v-s09-lbl"
       ]
     },
     {
       "id": "b-ae",
       "text": {
-        "en": "Encoder-bottleneck-decoder architecture compresses atomic coordinates into a continuous latent representation.",
-        "ru": "Схема кодировщика и декодировщика сжимает атомные координаты в непрерывное скрытое представление."
+        "en": "Encoder-bottleneck-decoder networks compress high-dimensional inputs into a lower-dimensional continuous code.",
+        "ru": "Сети кодировщика и декодировщика сжимают многомерный вход в компактный непрерывный код."
       },
       "level": "published",
       "source": {
@@ -87,33 +399,14 @@
       },
       "checked": "2026-11-09",
       "usedBy": [
-        "s02-part",
-        "s03-part"
-      ]
-    },
-    {
-      "id": "m-latent",
-      "text": {
-        "en": "Latent grid shape is 512 by 256 (131,072 values, 0.5 MiB in fp32 per complex).",
-        "ru": "Скрытая сетка имеет размер 512 на 256 (131,072 чисел, 0.5 МиБ в fp32 на один комплекс)."
-      },
-      "level": "architecture",
-      "source": {
-        "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#hiddenValues"
-      },
-      "usedBy": [
-        "s03-title",
-        "s03-part",
-        "s03-hw",
-        "v-latent-grid"
+        "s02-note"
       ]
     },
     {
       "id": "b-path",
       "text": {
-        "en": "Rectified flow matching interpolates linearly from Gaussian noise x0 to latent data x1 with target velocity x1 minus x0.",
-        "ru": "Согласование потока ведет точку по прямой от гауссова шума x0 к данным x1 со скоростью x1 минус x0."
+        "en": "Rectified flow transports noise to data along straight-line interpolation segments.",
+        "ru": "Выпрямленный поток переносит шум в данные вдоль прямолинейных отрезков интерполяции."
       },
       "level": "published",
       "source": {
@@ -122,17 +415,16 @@
       },
       "checked": "2026-11-09",
       "usedBy": [
-        "s04-title",
-        "s04-part",
-        "s04-hw",
-        "v-flow-arrow"
+        "s05-part",
+        "s05-note",
+        "v-s05-lbl"
       ]
     },
     {
-      "id": "b-flow-matching",
+      "id": "b-flow",
       "text": {
-        "en": "Continuous-time flow matching trains a vector field network directly on conditional transport paths.",
-        "ru": "Непрерывное согласование потоков обучает векторное поле прямо на условных траекториях переноса."
+        "en": "Continuous-time flow matching trains a velocity field directly on conditional transport paths.",
+        "ru": "Согласование потоков в непрерывном времени обучает поле скоростей прямо на условных траекториях."
       },
       "level": "published",
       "source": {
@@ -141,33 +433,15 @@
       },
       "checked": "2026-11-09",
       "usedBy": [
-        "s04-part",
-        "s05-part"
-      ]
-    },
-    {
-      "id": "m-dn",
-      "text": {
-        "en": "The denoiser has 153,102,091 parameters (306,204,182 B in bf16, 612,408,364 B in fp32, 2.281 GiB Adam training state).",
-        "ru": "Модуль снятия шума содержит 153,102,091 параметров (2.281 ГиБ в обучении с моментами Adam)."
-      },
-      "level": "architecture",
-      "source": {
-        "kind": "file",
-        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
-      },
-      "usedBy": [
-        "s05-title",
-        "s05-part",
-        "s05-hw",
-        "v-dn-box"
+        "s05-note",
+        "s06-note"
       ]
     },
     {
       "id": "b-attention",
       "text": {
-        "en": "Multi-head attention scales quadratically with sequence length: 8 heads over 512 by 512 pairs hold 2,097,152 values (8 MiB fp32 per layer, 96 MiB across 12 layers).",
-        "ru": "Многоголовое внимание растет квадратично по длине: 8 голов на сетке 512 на 512 дают 2,097,152 чисел (8 МиБ на слой, 96 МиБ на 12 слоев)."
+        "en": "Scaled dot-product multi-head attention computes pairwise interactions whose memory grows quadratically with sequence length.",
+        "ru": "Многоголовое внимание вычисляет попарные взаимодействия, память которых растет квадратично с длиной последовательности."
       },
       "level": "published",
       "source": {
@@ -176,17 +450,14 @@
       },
       "checked": "2026-11-09",
       "usedBy": [
-        "s06-title",
-        "s06-part",
-        "s06-hw",
-        "v-pair-matrix"
+        "s04-note"
       ]
     },
     {
       "id": "b-adam",
       "text": {
-        "en": "Mixed-precision Adam stores fp32 master weights, fp32 gradients, and two fp32 moment buffers totaling 16 bytes per parameter.",
-        "ru": "Оптимизатор Adam в смешанной точности хранит основные веса, градиенты и два буфера моментов в fp32 — всего 16 байт на параметр."
+        "en": "Mixed-precision Adam keeps fp32 master weights, fp32 gradients, and two fp32 moment buffers totaling 16 bytes per parameter.",
+        "ru": "Оптимизатор Adam в смешанной точности хранит веса, градиенты и два момента в fp32 — всего 16 байт на параметр."
       },
       "level": "published",
       "source": {
@@ -196,64 +467,8 @@
       "checked": "2026-11-09",
       "usedBy": [
         "s02-hw",
-        "s05-hw",
-        "s07-part",
-        "s07-hw"
-      ]
-    },
-    {
-      "id": "h-a100",
-      "text": {
-        "en": "Combined parameter and Adam states across 408,975,767 parameters occupy 6.094 GiB (7.62% of an 80 GiB NVIDIA A100), leaving 73.9 GiB for batched pair activations.",
-        "ru": "Веса и состояния Adam для 408,975,767 параметров занимают 6.094 ГиБ (7.62% памяти A100 80 ГиБ), оставляя 73.9 ГиБ под пакеты активаций."
-      },
-      "level": "architecture",
-      "source": {
-        "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#share80"
-      },
-      "usedBy": [
-        "s07-title",
-        "s07-part",
-        "s07-hw",
-        "v-gpu-bar-total",
-        "v-gpu-bar-weights"
-      ]
-    },
-    {
-      "id": "m-judge",
-      "text": {
-        "en": "Generated candidates pass through the decoder to an off-target panel judge and subset solver that selects N diverse designs.",
-        "ru": "Сгенерированные кандидаты проходят через декодировщик в оценщик панели мишеней и модуль отбора N различных конструкций."
-      },
-      "level": "architecture",
-      "source": {
-        "kind": "file",
-        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
-      },
-      "usedBy": [
-        "s08-title",
-        "s08-part",
-        "s08-hw",
-        "v-judge-flow"
-      ]
-    },
-    {
-      "id": "m-status",
-      "text": {
-        "en": "Architecture status: autoencoder and denoiser modules exist in code with verified shapes; 0 weights are trained yet and 0 wet-lab binders exist.",
-        "ru": "Статус архитектуры: автокодировщик и модуль снятия шума написаны в коде; обученных весов пока 0, проверенных в лаборатории молекул 0."
-      },
-      "level": "architecture",
-      "source": {
-        "kind": "file",
-        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
-      },
-      "usedBy": [
-        "s00-hw",
-        "s09-title",
-        "s09-part",
-        "s09-hw"
+        "s03-hw",
+        "s08-hw"
       ]
     }
   ],
@@ -265,8 +480,8 @@
         "ru": "Архитектура генеративной модели"
       },
       "say": {
-        "en": "The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL.",
-        "ru": "Модель объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL."
+        "en": "Omniverso pairs a structure autoencoder and flow denoiser around real complexes such as PDB 1MEL (132 VH residues).",
+        "ru": "Omniverso объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL (132 остатка VH)."
       },
       "facts": [
         "f-1mel",
@@ -276,29 +491,33 @@
     {
       "stop": 1,
       "title": {
-        "en": "Residue sequence and atom coordinates",
-        "ru": "Последовательность остатков и координаты атомов"
+        "en": "Residue table and latent bottleneck",
+        "ru": "Таблица остатков и скрытый код"
       },
       "say": {
-        "en": "Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site.",
-        "ru": "Каждый пример объединяет до 512 остатков с координатами тяжелых атомов вокруг участка связывания."
+        "en": "Chain A of 1MEL enters as 132 by 169 numbers (22,308 values) and compresses into a 132 by 8 latent table (1,056 values).",
+        "ru": "Цепь A структуры 1MEL входит как таблица 132 на 169 (22 308 чисел) и сжимается в скрытую таблицу 132 на 8 (1 056 чисел)."
       },
       "facts": [
-        "m-input"
+        "m-input",
+        "m-latent"
       ]
     },
     {
       "stop": 2,
       "title": {
-        "en": "Autoencoder parameter footprint",
-        "ru": "Объем параметров автокодировщика"
+        "en": "Structure autoencoder module",
+        "ru": "Модуль структурного автокодировщика"
       },
       "say": {
-        "en": "The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states.",
-        "ru": "Автокодировщик содержит 255,873,676 параметров и занимает 3.813 ГиБ памяти вместе с состояниями Adam."
+        "en": "Twelve encoder blocks and twelve decoder blocks with a 3-coordinate bypass hold 255,873,676 parameters (0.51 GB bf16, 4.09 GB Adam).",
+        "ru": "Двенадцать блоков кодировщика и двенадцать блоков декодировщика с обходом 3 координат содержат 255 873 676 параметров (4.09 ГБ с Adam)."
       },
       "facts": [
         "m-ae",
+        "s-ae-fp32",
+        "s-ae-bf16",
+        "s-ae-train",
         "b-ae",
         "b-adam"
       ]
@@ -306,101 +525,109 @@
     {
       "stop": 3,
       "title": {
-        "en": "Latent representation grid",
-        "ru": "Сетка скрытого представления"
+        "en": "Flow denoiser network",
+        "ru": "Сеть потокового снятия шума"
       },
       "say": {
-        "en": "The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values.",
-        "ru": "Кодировщик переводит атомы в скрытую сетку 512 на 256 из 131,072 непрерывных величин."
+        "en": "Fourteen sequence blocks map noisy state 11 to width 768 with pair table 256 and time 256 across 153,102,091 parameters (2.45 GB Adam).",
+        "ru": "Четырнадцать блоков переводят шум 11 в ширину 768 с парной таблицей 256 и временем 256 при 153 102 091 параметре (2.45 ГБ с Adam)."
       },
       "facts": [
-        "m-latent",
-        "b-ae"
+        "m-dn",
+        "s-dn-fp32",
+        "s-dn-bf16",
+        "s-dn-train",
+        "b-adam"
       ]
     },
     {
       "stop": 4,
       "title": {
-        "en": "Straight path from noise to data",
-        "ru": "Прямой путь от шума к данным"
+        "en": "Sequence state and pair table",
+        "ru": "Состояние ряда и парная таблица"
       },
       "say": {
-        "en": "During training, a point moves along a straight segment from Gaussian noise to the encoded complex.",
-        "ru": "При обучении точка движется по прямому отрезку от гауссова шума к закодированному комплексу."
+        "en": "One sequence tensor holds 101,376 numbers, while the 132 by 132 by 256 pair table holds 4,460,544 numbers (17.8 MB in fp32).",
+        "ru": "Вектор ряда хранит 101 376 чисел, тогда как парная таблица 132 на 132 на 256 хранит 4 460 544 числа (17.8 МБ в fp32)."
       },
       "facts": [
-        "b-path",
-        "b-flow-matching"
+        "m-block",
+        "s-hidden",
+        "s-pair",
+        "b-attention"
       ]
     },
     {
       "stop": 5,
       "title": {
-        "en": "Flow denoiser velocity module",
-        "ru": "Модуль скорости снятия шума"
+        "en": "Straight interpolation path",
+        "ru": "Прямая траектория переноса"
       },
       "say": {
-        "en": "The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t.",
-        "ru": "Модуль снятия шума содержит 153,102,091 параметров и предсказывает вектор скорости в момент t."
+        "en": "Training draws t in [0, 1], mixes (1 - t) times noise plus t times data, and regresses the constant velocity data minus noise.",
+        "ru": "Обучение берет момент t из [0, 1], смешивает (1 - t) на шум плюс t на данные и предсказывает скорость данные минус шум."
       },
       "facts": [
-        "m-dn",
-        "b-flow-matching",
-        "b-adam"
+        "m-path",
+        "b-path",
+        "b-flow"
       ]
     },
     {
       "stop": 6,
       "title": {
-        "en": "Quadratic pair attention map",
-        "ru": "Квадратичная карта парного внимания"
+        "en": "Iterative coordinate generation",
+        "ru": "Пошаговая генерация координат"
       },
       "say": {
-        "en": "Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers.",
-        "ru": "Восемь голов внимания на сетке 512 на 512 хранят 2,097,152 чисел, или 96 МиБ на 12 слоев."
+        "en": "Starting from Gaussian noise at t = 0, integration steps move to t = 1 before the decoder reconstructs 3D atomic coordinates.",
+        "ru": "Начиная с гауссова шума при t = 0, шаги интегрирования ведут к t = 1, после чего декодировщик строит 3D координаты атомов."
       },
       "facts": [
-        "b-attention"
+        "m-gen",
+        "b-flow"
       ]
     },
     {
       "stop": 7,
       "title": {
-        "en": "Memory share on one A100 80 GiB",
-        "ru": "Доля памяти на ускорителе A100 80 ГиБ"
+        "en": "Specificity judge and subset pick",
+        "ru": "Оценка специфичности и отбор набора"
       },
       "say": {
-        "en": "Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card.",
-        "ru": "Веса и буферы Adam занимают 6.094 ГиБ, то есть 7.62 процента памяти ускорителя A100 на 80 ГиБ."
-      },
-      "facts": [
-        "h-a100",
-        "b-adam"
-      ]
-    },
-    {
-      "stop": 8,
-      "title": {
-        "en": "Candidate decoding and specificity judge",
-        "ru": "Декодирование кандидатов и проверка специфичности"
-      },
-      "say": {
-        "en": "Decoded nanobody candidates are scored against the target and off-target panel to choose N designs.",
-        "ru": "Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N конструкций."
+        "en": "Decoded candidates are scored against the target complex and off-target panel so the solver picks N diverse binder designs.",
+        "ru": "Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N различных конструкций."
       },
       "facts": [
         "m-judge"
       ]
     },
     {
-      "stop": 9,
+      "stop": 8,
       "title": {
-        "en": "Verified code and untrained weights",
-        "ru": "Проверенный код и необученные веса"
+        "en": "Memory share on the accelerator",
+        "ru": "Доля памяти на ускорителе"
       },
       "say": {
-        "en": "Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet.",
-        "ru": "Оба сетевых модуля написаны в коде с проверенными размерами; обученных весов пока 0 и образцов 0."
+        "en": "Combined weights and Adam moments take 6.54 GB, or 8.2% of an 80 GB NVIDIA A100, leaving 73.5 GB for batched pair tables.",
+        "ru": "Суммарные веса и моменты Adam занимают 6.54 ГБ, или 8.2% карты NVIDIA A100 на 80 ГБ, оставляя 73.5 ГБ под пакеты пар."
+      },
+      "facts": [
+        "h-a100",
+        "s-sum-train",
+        "s-share80",
+        "b-adam"
+      ]
+    },
+    {
+      "stop": 9,
+      "title": {
+        "en": "Code boundary and untrained state",
+        "ru": "Граница кода и необученный статус"
+      },
+      "say": {
+        "en": "Autoencoder and denoiser modules run shape checks in code today; 0 weights are trained yet and 0 wet-lab binders exist.",
+        "ru": "Модули автокодировщика и снятия шума проходят проверку размеров в коде; обученных весов пока 0 и молекул из лаборатории 0."
       },
       "facts": [
         "m-status"
@@ -443,8 +670,8 @@
         "kind": "molecule",
         "frame": "complex",
         "position": [
-          0,
-          0.4,
+          0.8,
+          1.85,
           0
         ],
         "size": 4.4e-9,
@@ -463,19 +690,19 @@
         "asset": "1mel.glb",
         "standIn": {
           "asset": "1mel_coarse.glb",
-          "swapAt": 1.2e-8
+          "swapAt": 9.5e-9
         }
       },
       {
-        "id": "latent-node-1",
+        "id": "noise-node-01",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          -5.2,
-          2.4,
-          -1.8
+          -1.151,
+          0.999,
+          1.331
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -486,20 +713,20 @@
           60
         ],
         "roles": [
-          "nucleic-acid"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-2",
+        "id": "noise-node-02",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          5.4,
-          2.1,
-          -1.6
+          1.736,
+          2.101,
+          -0.383
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -510,20 +737,20 @@
           60
         ],
         "roles": [
-          "gold"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-3",
+        "id": "noise-node-03",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          -4.8,
-          -2.5,
-          -1.4
+          0.758,
+          1.426,
+          0.06
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -534,20 +761,20 @@
           60
         ],
         "roles": [
-          "nucleic-acid"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-4",
+        "id": "noise-node-04",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          5,
-          -2.3,
-          -1.9
+          0.045,
+          3.197,
+          -0.857
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -558,20 +785,20 @@
           60
         ],
         "roles": [
-          "gold"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-5",
+        "id": "noise-node-05",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          -2.8,
-          3.6,
-          1.2
+          2.487,
+          1.308,
+          -1.169
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -582,20 +809,20 @@
           60
         ],
         "roles": [
-          "nucleic-acid"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-6",
+        "id": "noise-node-06",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          3.1,
-          3.4,
-          1.1
+          -0.55,
+          1.548,
+          0.044
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -606,20 +833,20 @@
           60
         ],
         "roles": [
-          "gold"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-7",
+        "id": "noise-node-07",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          -3.2,
-          -3.4,
-          1.3
+          2,
+          1.029,
+          1.139
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -630,20 +857,20 @@
           60
         ],
         "roles": [
-          "nucleic-acid"
+          "protein"
         ],
         "asset": "builtin:sphere"
       },
       {
-        "id": "latent-node-8",
+        "id": "noise-node-08",
         "kind": "mesh",
         "frame": "complex",
         "position": [
-          3.3,
-          -3.2,
-          1
+          1.126,
+          2.342,
+          0.44
         ],
-        "size": 1.35e-9,
+        "size": 8.5e-10,
         "source": {
           "kind": "engine",
           "ref": ""
@@ -654,7 +881,103 @@
           60
         ],
         "roles": [
-          "gold"
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "noise-node-09",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          2.857,
+          2.349,
+          1.164
+        ],
+        "size": 8.5e-10,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "noise-node-10",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          0.299,
+          1.871,
+          -1.539
+        ],
+        "size": 8.5e-10,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "noise-node-11",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          -0.83,
+          2.693,
+          -0.493
+        ],
+        "size": 8.5e-10,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "protein"
+        ],
+        "asset": "builtin:sphere"
+      },
+      {
+        "id": "noise-node-12",
+        "kind": "mesh",
+        "frame": "complex",
+        "position": [
+          1.455,
+          1.658,
+          -1.469
+        ],
+        "size": 8.5e-10,
+        "source": {
+          "kind": "engine",
+          "ref": ""
+        },
+        "evidence": "architecture",
+        "window": [
+          0,
+          60
+        ],
+        "roles": [
+          "protein"
         ],
         "asset": "builtin:sphere"
       }
@@ -662,14 +985,414 @@
   },
   "vectors": [
     {
-      "id": "v-input-seq",
+      "id": "v-s00-tag",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        860,
+        58
+      ],
+      "text": {
+        "en": "PDB 1MEL: 132 VH residues + lysozyme",
+        "ru": "PDB 1MEL: 132 остатка VH + лизоцим"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "pdb",
+        "ref": "1MEL"
+      },
+      "evidence": "published",
+      "window": [
+        0,
+        5.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-1",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
-        96,
-        120,
-        720,
+        84,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-2",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        158,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-3",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        232,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-4",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        306,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-5",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        380,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-6",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        454,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-7",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        528,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-cell-8",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        602,
+        152,
+        64,
+        96
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-arrow",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        684,
+        180,
+        66,
+        40
+      ],
+      "from": [
+        684,
+        200
+      ],
+      "to": [
+        748,
+        200
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-lat-1",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        760,
+        152,
+        46,
+        96
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-lat-2",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        814,
+        152,
+        46,
+        96
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-lat-3",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        868,
+        152,
+        46,
+        96
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-lat-4",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        922,
+        152,
+        46,
+        96
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-lbl-in",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        620,
+        58
+      ],
+      "text": {
+        "en": "Input: 132 x 169 = 22,308",
+        "ru": "Вход: 132 x 169 = 22 308"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s01-lbl-lat",
+      "type": "label",
+      "frame": null,
+      "box": [
+        756,
+        84,
+        420,
+        58
+      ],
+      "text": {
+        "en": "Latent: 132 x 8",
+        "ru": "Код: 132 x 8"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02a-input"
+      },
+      "evidence": "architecture",
+      "window": [
+        6,
+        11.8
+      ]
+    },
+    {
+      "id": "v-s02-enc",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        160,
+        260,
         120
       ],
       "roles": [
@@ -677,24 +1400,55 @@
       ],
       "source": {
         "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#seqLen"
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
       },
       "evidence": "architecture",
       "window": [
-        6,
-        12
+        12,
+        17.8
       ]
     },
     {
-      "id": "v-ae-box",
+      "id": "v-s02-arr1",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        352,
+        200,
+        56,
+        40
+      ],
+      "from": [
+        352,
+        220
+      ],
+      "to": [
+        408,
+        220
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        17.8
+      ]
+    },
+    {
+      "id": "v-s02-neck",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
-        96,
-        120,
-        760,
-        150
+        416,
+        174,
+        150,
+        92
       ],
       "roles": [
         "diagram"
@@ -706,74 +1460,180 @@
       "evidence": "architecture",
       "window": [
         12,
-        18
+        17.8
       ]
     },
     {
-      "id": "v-latent-grid",
-      "type": "shape",
-      "shape": "rect",
-      "frame": null,
-      "box": [
-        96,
-        120,
-        512,
-        256
-      ],
-      "roles": [
-        "tile"
-      ],
-      "source": {
-        "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#hiddenValues"
-      },
-      "evidence": "architecture",
-      "window": [
-        18,
-        24
-      ]
-    },
-    {
-      "id": "v-flow-arrow",
+      "id": "v-s02-arr2",
       "type": "arrow",
       "frame": null,
       "box": [
-        96,
-        160,
-        760,
-        80
+        574,
+        200,
+        56,
+        40
       ],
       "from": [
-        120,
-        200
+        574,
+        220
       ],
       "to": [
-        820,
-        200
+        630,
+        220
       ],
       "roles": [
         "line"
       ],
       "source": {
         "kind": "file",
-        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
       },
       "evidence": "architecture",
       "window": [
-        24,
-        30
+        12,
+        17.8
       ]
     },
     {
-      "id": "v-dn-box",
+      "id": "v-s02-dec",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
-        96,
-        120,
-        700,
-        150
+        638,
+        160,
+        260,
+        120
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        17.8
+      ]
+    },
+    {
+      "id": "v-s02-bypass",
+      "type": "path",
+      "frame": null,
+      "box": [
+        210,
+        300,
+        560,
+        64
+      ],
+      "d": "M 214 284 L 214 342 L 768 342 L 768 284",
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        17.8
+      ]
+    },
+    {
+      "id": "v-s02-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        920,
+        58
+      ],
+      "text": {
+        "en": "12 enc | latent 8 + 3 xyz | 12 dec (255.9M)",
+        "ru": "12 код. | 8 + 3 коорд. | 12 декод. (255.9M)"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-02-autoencoder"
+      },
+      "evidence": "architecture",
+      "window": [
+        12,
+        17.8
+      ]
+    },
+    {
+      "id": "v-s03-in",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        160,
+        190,
+        120
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "evidence": "architecture",
+      "window": [
+        18,
+        23.8
+      ]
+    },
+    {
+      "id": "v-s03-arr1",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        282,
+        200,
+        54,
+        40
+      ],
+      "from": [
+        282,
+        220
+      ],
+      "to": [
+        336,
+        220
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "evidence": "architecture",
+      "window": [
+        18,
+        23.8
+      ]
+    },
+    {
+      "id": "v-s03-blocks",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        344,
+        148,
+        320,
+        144
       ],
       "roles": [
         "diagram"
@@ -784,23 +1644,160 @@
       },
       "evidence": "architecture",
       "window": [
-        30,
-        36
+        18,
+        23.8
       ]
     },
     {
-      "id": "v-pair-matrix",
+      "id": "v-s03-arr2",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        672,
+        200,
+        54,
+        40
+      ],
+      "from": [
+        672,
+        220
+      ],
+      "to": [
+        726,
+        220
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "evidence": "architecture",
+      "window": [
+        18,
+        23.8
+      ]
+    },
+    {
+      "id": "v-s03-heads",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
-        96,
-        110,
-        320,
-        320
+        734,
+        160,
+        190,
+        120
       ],
       "roles": [
         "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "evidence": "architecture",
+      "window": [
+        18,
+        23.8
+      ]
+    },
+    {
+      "id": "v-s03-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        920,
+        58
+      ],
+      "text": {
+        "en": "11 -> 768 | 14 blocks | heads 3 + 8 (153.1M)",
+        "ru": "11 -> 768 | 14 блоков | выходы 3 + 8 (153.1M)"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-03-denoiser"
+      },
+      "evidence": "architecture",
+      "window": [
+        18,
+        23.8
+      ]
+    },
+    {
+      "id": "v-s04-seq",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        168,
+        380,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#hiddenValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-arr",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        472,
+        196,
+        76,
+        40
+      ],
+      "from": [
+        472,
+        216
+      ],
+      "to": [
+        548,
+        216
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-04-block"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-1",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        560,
+        148,
+        66,
+        66
+      ],
+      "roles": [
+        "diagram"
       ],
       "source": {
         "kind": "file",
@@ -808,68 +1805,684 @@
       },
       "evidence": "architecture",
       "window": [
-        36,
-        42
+        24,
+        29.8
       ]
     },
     {
-      "id": "v-gpu-bar-total",
+      "id": "v-s04-pair-2",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
-        96,
-        140,
-        800,
-        56
+        634,
+        148,
+        66,
+        66
       ],
       "roles": [
         "tile"
       ],
       "source": {
         "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#gpuBytes"
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
       },
       "evidence": "architecture",
       "window": [
-        42,
-        48
+        24,
+        29.8
       ]
     },
     {
-      "id": "v-gpu-bar-weights",
+      "id": "v-s04-pair-3",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
-        96,
-        140,
-        61,
-        56
+        708,
+        148,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-4",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        782,
+        148,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-5",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        560,
+        222,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-6",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        634,
+        222,
+        66,
+        66
       ],
       "roles": [
         "diagram"
       ],
       "source": {
         "kind": "file",
-        "ref": "studio/jobs/ml-explainer/compute/sizes.json#share80"
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
       },
       "evidence": "architecture",
       "window": [
-        42,
-        48
+        24,
+        29.8
       ]
     },
     {
-      "id": "v-judge-flow",
+      "id": "v-s04-pair-7",
       "type": "shape",
       "shape": "rect",
       "frame": null,
       "box": [
+        708,
+        222,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-8",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        782,
+        222,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-9",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        560,
+        296,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-10",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        634,
+        296,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-11",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        708,
+        296,
+        66,
+        66
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-12",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        782,
+        296,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-13",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        560,
+        370,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-14",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        634,
+        370,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-15",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        708,
+        370,
+        66,
+        66
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-pair-16",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        782,
+        370,
+        66,
+        66
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairValues"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s04-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        940,
+        58
+      ],
+      "text": {
+        "en": "Seq 132x768 | Pair 132x132x256 (17.8 MB)",
+        "ru": "Ряд 132x768 | Пары 132x132x256 (17.8 МБ)"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#pairFp32Bytes"
+      },
+      "evidence": "architecture",
+      "window": [
+        24,
+        29.8
+      ]
+    },
+    {
+      "id": "v-s05-x0",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
         96,
-        120,
-        780,
-        140
+        190,
+        76,
+        76
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+      },
+      "evidence": "architecture",
+      "window": [
+        30,
+        35.8
+      ]
+    },
+    {
+      "id": "v-s05-line",
+      "type": "path",
+      "frame": null,
+      "box": [
+        180,
+        224,
+        620,
+        12
+      ],
+      "d": "M 180 228 L 800 228",
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+      },
+      "evidence": "architecture",
+      "window": [
+        30,
+        35.8
+      ]
+    },
+    {
+      "id": "v-s05-x1",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
+        808,
+        190,
+        76,
+        76
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-05-path"
+      },
+      "evidence": "architecture",
+      "window": [
+        30,
+        35.8
+      ]
+    },
+    {
+      "id": "v-s05-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        880,
+        58
+      ],
+      "text": {
+        "en": "Straight path: noise (t=0) -> data (t=1)",
+        "ru": "Прямой путь: шум (t=0) -> данные (t=1)"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "doi",
+        "ref": "10.48550/arXiv.2209.03003"
+      },
+      "evidence": "published",
+      "window": [
+        30,
+        35.8
+      ]
+    },
+    {
+      "id": "v-s06-step-1",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
+        96,
+        186,
+        68,
+        68
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s06-step-2",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
+        236,
+        186,
+        68,
+        68
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s06-step-3",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
+        376,
+        186,
+        68,
+        68
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s06-step-4",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
+        516,
+        186,
+        68,
+        68
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s06-step-5",
+      "type": "shape",
+      "shape": "ellipse",
+      "frame": null,
+      "box": [
+        656,
+        186,
+        68,
+        68
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s06-arr",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        740,
+        200,
+        96,
+        40
+      ],
+      "from": [
+        740,
+        220
+      ],
+      "to": [
+        836,
+        220
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s06-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        880,
+        58
+      ],
+      "text": {
+        "en": "Integrate t=0..1 -> decode 3D atoms",
+        "ru": "Шаги t=0..1 -> декодер 3D атомов"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-06-generation"
+      },
+      "evidence": "architecture",
+      "window": [
+        36,
+        41.8
+      ]
+    },
+    {
+      "id": "v-s07-pool",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        164,
+        240,
+        110
       ],
       "roles": [
         "tile"
@@ -880,13 +2493,837 @@
       },
       "evidence": "architecture",
       "window": [
+        42,
+        47.8
+      ]
+    },
+    {
+      "id": "v-s07-arr1",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        332,
+        200,
+        64,
+        40
+      ],
+      "from": [
+        332,
+        220
+      ],
+      "to": [
+        396,
+        220
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        47.8
+      ]
+    },
+    {
+      "id": "v-s07-panel",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        404,
+        164,
+        240,
+        110
+      ],
+      "roles": [
+        "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        47.8
+      ]
+    },
+    {
+      "id": "v-s07-arr2",
+      "type": "arrow",
+      "frame": null,
+      "box": [
+        652,
+        200,
+        64,
+        40
+      ],
+      "from": [
+        652,
+        220
+      ],
+      "to": [
+        716,
+        220
+      ],
+      "roles": [
+        "line"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        47.8
+      ]
+    },
+    {
+      "id": "v-s07-pick",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        724,
+        164,
+        200,
+        110
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        47.8
+      ]
+    },
+    {
+      "id": "v-s07-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        920,
+        58
+      ],
+      "text": {
+        "en": "Candidates -> off-target judge -> N picks",
+        "ru": "Кандидаты -> панель мишеней -> N лучших"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#om-07-judging"
+      },
+      "evidence": "architecture",
+      "window": [
+        42,
+        47.8
+      ]
+    },
+    {
+      "id": "v-s08-bar-total",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        172,
+        840,
+        76
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#gpuBytes"
+      },
+      "evidence": "architecture",
+      "window": [
         48,
-        54
+        53.8
+      ]
+    },
+    {
+      "id": "v-s08-bar-ae",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        172,
+        43,
+        76
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#aeTrainBytes"
+      },
+      "evidence": "architecture",
+      "window": [
+        48,
+        53.8
+      ]
+    },
+    {
+      "id": "v-s08-bar-dn",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        127,
+        172,
+        26,
+        76
+      ],
+      "roles": [
+        "shape"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#dnTrainBytes"
+      },
+      "evidence": "architecture",
+      "window": [
+        48,
+        53.8
+      ]
+    },
+    {
+      "id": "v-s08-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        1120,
+        58
+      ],
+      "text": {
+        "en": "A100 80 GB: 6.54 GB Adam (8.2%) | 73.5 GB free",
+        "ru": "A100 80 ГБ: 6.54 ГБ Adam (8.2%) | 73.5 ГБ свободно"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "studio/jobs/ml-explainer/compute/sizes.json#share80"
+      },
+      "evidence": "architecture",
+      "window": [
+        48,
+        53.8
+      ]
+    },
+    {
+      "id": "v-s09-code",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        84,
+        168,
+        380,
+        96
+      ],
+      "roles": [
+        "diagram"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "evidence": "architecture",
+      "window": [
+        54,
+        59.8
+      ]
+    },
+    {
+      "id": "v-s09-untrained",
+      "type": "shape",
+      "shape": "rect",
+      "frame": null,
+      "box": [
+        488,
+        168,
+        380,
+        96
+      ],
+      "roles": [
+        "tile"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "evidence": "architecture",
+      "window": [
+        54,
+        59.8
+      ]
+    },
+    {
+      "id": "v-s09-lbl",
+      "type": "label",
+      "frame": null,
+      "box": [
+        84,
+        84,
+        920,
+        58
+      ],
+      "text": {
+        "en": "Code shapes verified | 0 trained weights",
+        "ru": "Размеры в коде проверены | 0 обученных весов"
+      },
+      "roles": [
+        "label"
+      ],
+      "source": {
+        "kind": "file",
+        "ref": "motion/films/arc-science-pitch-2.film.json#as-99-end"
+      },
+      "evidence": "architecture",
+      "window": [
+        54,
+        59.8
       ]
     }
   ],
   "timeline": {
-    "tracks": []
+    "tracks": [
+      {
+        "target": "noise-node-01",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              -1.151,
+              0.999,
+              1.331
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              -1.151,
+              0.999,
+              1.331
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.137,
+              1.561,
+              0.453
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              -1.151,
+              0.999,
+              1.331
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-02",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              1.736,
+              2.101,
+              -0.383
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              1.736,
+              2.101,
+              -0.383
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              1.118,
+              1.935,
+              -0.13
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              1.736,
+              2.101,
+              -0.383
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-03",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              0.758,
+              1.426,
+              0.06
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              0.758,
+              1.426,
+              0.06
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.786,
+              1.706,
+              0.02
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              0.758,
+              1.426,
+              0.06
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-04",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              0.045,
+              3.197,
+              -0.857
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              0.045,
+              3.197,
+              -0.857
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.543,
+              2.308,
+              -0.291
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              0.045,
+              3.197,
+              -0.857
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-05",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              2.487,
+              1.308,
+              -1.169
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              2.487,
+              1.308,
+              -1.169
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              1.374,
+              1.666,
+              -0.397
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              2.487,
+              1.308,
+              -1.169
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-06",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              -0.55,
+              1.548,
+              0.044
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              -0.55,
+              1.548,
+              0.044
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.341,
+              1.747,
+              0.015
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              -0.55,
+              1.548,
+              0.044
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-07",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              2,
+              1.029,
+              1.139
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              2,
+              1.029,
+              1.139
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              1.208,
+              1.571,
+              0.387
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              2,
+              1.029,
+              1.139
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-08",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              1.126,
+              2.342,
+              0.44
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              1.126,
+              2.342,
+              0.44
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.911,
+              2.017,
+              0.15
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              1.126,
+              2.342,
+              0.44
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-09",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              2.857,
+              2.349,
+              1.164
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              2.857,
+              2.349,
+              1.164
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              1.499,
+              2.02,
+              0.396
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              2.857,
+              2.349,
+              1.164
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-10",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              0.299,
+              1.871,
+              -1.539
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              0.299,
+              1.871,
+              -1.539
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.63,
+              1.857,
+              -0.523
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              0.299,
+              1.871,
+              -1.539
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-11",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              -0.83,
+              2.693,
+              -0.493
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              -0.83,
+              2.693,
+              -0.493
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              0.246,
+              2.137,
+              -0.168
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              -0.83,
+              2.693,
+              -0.493
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "noise-node-12",
+        "prop": "position",
+        "keys": [
+          {
+            "t": 0,
+            "v": [
+              1.455,
+              1.658,
+              -1.469
+            ]
+          },
+          {
+            "t": 30,
+            "v": [
+              1.455,
+              1.658,
+              -1.469
+            ],
+            "ease": "linear"
+          },
+          {
+            "t": 41.5,
+            "v": [
+              1.023,
+              1.785,
+              -0.499
+            ],
+            "ease": "power2.inOut"
+          },
+          {
+            "t": 48,
+            "v": [
+              1.455,
+              1.658,
+              -1.469
+            ],
+            "ease": "power2.inOut"
+          }
+        ]
+      },
+      {
+        "target": "v-s05-line",
+        "prop": "draw",
+        "keys": [
+          {
+            "t": 29.9,
+            "v": 0.25
+          },
+          {
+            "t": 30,
+            "v": 1,
+            "ease": "linear"
+          },
+          {
+            "t": 35.5,
+            "v": 1,
+            "ease": "linear"
+          }
+        ]
+      }
+    ]
   },
   "paths": [
     {
@@ -910,16 +3347,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              9.5
+              -1.4,
+              1.85,
+              11.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.4,
+              0.35,
               0
             ]
           },
@@ -931,16 +3368,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              2.2,
-              1,
-              13.5
+              -2,
+              1.85,
+              13.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2,
+              0.3,
               0
             ]
           },
@@ -952,16 +3389,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              -2.4,
-              1.2,
-              18
+              -2.1,
+              1.85,
+              15.2
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2.1,
+              0.25,
               0
             ]
           },
@@ -973,16 +3410,37 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              28
+              -1.8,
+              1.85,
+              19.6
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.8,
+              0.2,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 21,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0.8,
+              1.85,
+              4.6
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0.8,
+              1.55,
               0
             ]
           },
@@ -994,16 +3452,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              5.4
+              -2.3,
+              1.85,
+              14.2
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2.3,
+              0.25,
               0
             ]
           },
@@ -1015,16 +3473,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              1.6,
-              0.8,
-              9.2
+              -1.8,
+              1.85,
+              12.2
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.8,
+              0.35,
               0
             ]
           },
@@ -1036,15 +3494,15 @@
           "at": {
             "frame": "complex",
             "pos": [
-              -1.8,
-              1,
-              12
+              -1.6,
+              1.85,
+              11.4
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
+              -1.6,
               0.4,
               0
             ]
@@ -1057,16 +3515,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.8,
-              14
+              -2,
+              1.85,
+              12.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2,
+              0.35,
               0
             ]
           },
@@ -1078,16 +3536,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              1.8,
-              -0.2,
-              10.5
+              -2,
+              1.85,
+              13.6
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2,
+              0.3,
               0
             ]
           },
@@ -1099,16 +3557,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              9
+              -1.6,
+              1.85,
+              11.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.6,
+              0.35,
               0
             ]
           },
@@ -1120,16 +3578,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0.6,
-              0.4,
-              9.2
+              -1.4,
+              1.85,
+              11.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.4,
+              0.35,
               0
             ]
           },
@@ -1159,16 +3617,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              9.5
+              -1.4,
+              1.85,
+              11.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.4,
+              0.35,
               0
             ]
           },
@@ -1180,16 +3638,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              2.2,
-              1,
-              13.5
+              -2,
+              1.85,
+              13.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2,
+              0.3,
               0
             ]
           },
@@ -1201,16 +3659,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              -2.4,
-              1.2,
-              18
+              -2.1,
+              1.85,
+              15.2
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2.1,
+              0.25,
               0
             ]
           },
@@ -1222,16 +3680,37 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              28
+              -1.8,
+              1.85,
+              19.6
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.8,
+              0.2,
+              0
+            ]
+          },
+          "fov": 40,
+          "ease": "power2.inOut"
+        },
+        {
+          "t": 21,
+          "at": {
+            "frame": "complex",
+            "pos": [
+              0.8,
+              1.85,
+              4.6
+            ]
+          },
+          "target": {
+            "frame": "complex",
+            "pos": [
+              0.8,
+              1.55,
               0
             ]
           },
@@ -1243,16 +3722,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              5.4
+              -2.3,
+              1.85,
+              14.2
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2.3,
+              0.25,
               0
             ]
           },
@@ -1264,16 +3743,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              1.6,
-              0.8,
-              9.2
+              -1.8,
+              1.85,
+              12.2
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.8,
+              0.35,
               0
             ]
           },
@@ -1285,15 +3764,15 @@
           "at": {
             "frame": "complex",
             "pos": [
-              -1.8,
-              1,
-              12
+              -1.6,
+              1.85,
+              11.4
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
+              -1.6,
               0.4,
               0
             ]
@@ -1306,16 +3785,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.8,
-              14
+              -2,
+              1.85,
+              12.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2,
+              0.35,
               0
             ]
           },
@@ -1327,16 +3806,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              1.8,
-              -0.2,
-              10.5
+              -2,
+              1.85,
+              13.6
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -2,
+              0.3,
               0
             ]
           },
@@ -1348,16 +3827,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
-              9
+              -1.6,
+              1.85,
+              11.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.6,
+              0.35,
               0
             ]
           },
@@ -1369,16 +3848,16 @@
           "at": {
             "frame": "complex",
             "pos": [
-              0.6,
-              0.4,
-              9.2
+              -1.4,
+              1.85,
+              11.8
             ]
           },
           "target": {
             "frame": "complex",
             "pos": [
-              0,
-              0.4,
+              -1.4,
+              0.35,
               0
             ]
           },
@@ -1398,32 +3877,32 @@
           "role": "title",
           "text": "Generative binder architecture",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s00-part",
           "role": "label",
-          "text": "The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL.",
+          "text": "Omniverso pairs a structure autoencoder and flow denoiser around real complexes such as PDB 1MEL (132 VH residues).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s00-hw",
+          "id": "s00-note",
           "role": "note",
-          "text": "Status: code shapes verified; 0 trained weights.",
+          "text": "Primary structure: PDB 1MEL (2.5 A, 55 contact pairs). Honest ceiling: architecture + published.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1437,32 +3916,32 @@
           "role": "title",
           "text": "Архитектура генеративной модели",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s00-part",
           "role": "label",
-          "text": "Модель объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL.",
+          "text": "Omniverso объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL (132 остатка VH).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s00-hw",
+          "id": "s00-note",
           "role": "note",
-          "text": "Статус: размеры тензоров проверены; обученных весов 0.",
+          "text": "Структура: PDB 1MEL (2.5 А, 55 пар контактов). Уровень доказательств: архитектура и публикации.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1474,34 +3953,45 @@
         {
           "id": "s01-title",
           "role": "title",
-          "text": "Residue sequence and atom coordinates",
+          "text": "Residue table and latent bottleneck",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s01-part",
           "role": "label",
-          "text": "Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site.",
+          "text": "Chain A of 1MEL enters as 132 by 169 numbers (22,308 values) and compresses into a 132 by 8 latent table (1,056 values).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s01-hw",
-          "role": "note",
-          "text": "Max sequence length L = 512 residues around epitope.",
+          "role": "label",
+          "text": "132 * 169 = 22,308 inputs -> 132 * 8 = 1,056 latent values.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s01-note",
+          "role": "note",
+          "text": "Columns: 111 atom coordinates, 37 atom masks, 21 residue-type features (untrained shapes).",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1513,34 +4003,45 @@
         {
           "id": "s01-title",
           "role": "title",
-          "text": "Последовательность остатков и координаты атомов",
+          "text": "Таблица остатков и скрытый код",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s01-part",
           "role": "label",
-          "text": "Каждый пример объединяет до 512 остатков с координатами тяжелых атомов вокруг участка связывания.",
+          "text": "Цепь A структуры 1MEL входит как таблица 132 на 169 (22 308 чисел) и сжимается в скрытую таблицу 132 на 8 (1 056 чисел).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s01-hw",
-          "role": "note",
-          "text": "Длина входа до L = 512 остатков вокруг эпитопа.",
+          "role": "label",
+          "text": "132 * 169 = 22 308 входов -> 132 * 8 = 1 056 чисел кода.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s01-note",
+          "role": "note",
+          "text": "Столбцы: 111 координат атомов, 37 масок атомов, 21 признак остатка (необученные размеры).",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1552,34 +4053,45 @@
         {
           "id": "s02-title",
           "role": "title",
-          "text": "Autoencoder parameter footprint",
+          "text": "Structure autoencoder module",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s02-part",
           "role": "label",
-          "text": "The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states.",
+          "text": "Twelve encoder blocks and twelve decoder blocks with a 3-coordinate bypass hold 255,873,676 parameters (0.51 GB bf16, 4.09 GB Adam).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s02-hw",
-          "role": "note",
-          "text": "255,873,676 * 16 B = 3.813 GiB Adam state in fp32.",
+          "role": "label",
+          "text": "255,873,676 params: 0.51 GB bf16 | 1.02 GB fp32 | 4.09 GB Adam.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s02-note",
+          "role": "note",
+          "text": "Architecture source: om-02-autoencoder; variational bottleneck background: Kingma & Welling 2013.",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1591,34 +4103,45 @@
         {
           "id": "s02-title",
           "role": "title",
-          "text": "Объем параметров автокодировщика",
+          "text": "Модуль структурного автокодировщика",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s02-part",
           "role": "label",
-          "text": "Автокодировщик содержит 255,873,676 параметров и занимает 3.813 ГиБ памяти вместе с состояниями Adam.",
+          "text": "Двенадцать блоков кодировщика и двенадцать блоков декодировщика с обходом 3 координат содержат 255 873 676 параметров (4.09 ГБ с Adam).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s02-hw",
-          "role": "note",
-          "text": "255,873,676 * 16 Б = 3.813 ГиБ состояния Adam в fp32.",
+          "role": "label",
+          "text": "255 873 676 парам.: 0.51 ГБ bf16 | 1.02 ГБ fp32 | 4.09 ГБ Adam.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s02-note",
+          "role": "note",
+          "text": "Источник схемы: om-02-autoencoder; публикация по коду: Kingma & Welling 2013.",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1630,34 +4153,45 @@
         {
           "id": "s03-title",
           "role": "title",
-          "text": "Latent representation grid",
+          "text": "Flow denoiser network",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s03-part",
           "role": "label",
-          "text": "The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values.",
+          "text": "Fourteen sequence blocks map noisy state 11 to width 768 with pair table 256 and time 256 across 153,102,091 parameters (2.45 GB Adam).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s03-hw",
-          "role": "note",
-          "text": "512 * 256 * 4 B = 524,288 B (0.5 MiB) in fp32.",
+          "role": "label",
+          "text": "153,102,091 params: 0.31 GB bf16 | 0.61 GB fp32 | 2.45 GB Adam.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s03-note",
+          "role": "note",
+          "text": "Architecture source: om-03-denoiser; velocity heads output 3 coordinate + 8 latent channels.",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1669,34 +4203,45 @@
         {
           "id": "s03-title",
           "role": "title",
-          "text": "Сетка скрытого представления",
+          "text": "Сеть потокового снятия шума",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s03-part",
           "role": "label",
-          "text": "Кодировщик переводит атомы в скрытую сетку 512 на 256 из 131,072 непрерывных величин.",
+          "text": "Четырнадцать блоков переводят шум 11 в ширину 768 с парной таблицей 256 и временем 256 при 153 102 091 параметре (2.45 ГБ с Adam).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s03-hw",
-          "role": "note",
-          "text": "512 * 256 * 4 Б = 524,288 Б (0.5 МиБ) в fp32.",
+          "role": "label",
+          "text": "153 102 091 парам.: 0.31 ГБ bf16 | 0.61 ГБ fp32 | 2.45 ГБ Adam.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s03-note",
+          "role": "note",
+          "text": "Источник схемы: om-03-denoiser; головы скорости выдают 3 координатных и 8 скрытых каналов.",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1708,34 +4253,45 @@
         {
           "id": "s04-title",
           "role": "title",
-          "text": "Straight path from noise to data",
+          "text": "Sequence state and pair table",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s04-part",
           "role": "label",
-          "text": "During training, a point moves along a straight segment from Gaussian noise to the encoded complex.",
+          "text": "One sequence tensor holds 101,376 numbers, while the 132 by 132 by 256 pair table holds 4,460,544 numbers (17.8 MB in fp32).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s04-hw",
-          "role": "note",
-          "text": "Linear transport x_t = (1 - t)*x_0 + t*x_1.",
+          "role": "label",
+          "text": "132 * 132 * 256 * 4 B = 17,842,176 B (17.8 MB fp32 pair table).",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s04-note",
+          "role": "note",
+          "text": "Pair table holds 44x more values than the 132x768 sequence state (Vaswani et al. 2017).",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1747,34 +4303,45 @@
         {
           "id": "s04-title",
           "role": "title",
-          "text": "Прямой путь от шума к данным",
+          "text": "Состояние ряда и парная таблица",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s04-part",
           "role": "label",
-          "text": "При обучении точка движется по прямому отрезку от гауссова шума к закодированному комплексу.",
+          "text": "Вектор ряда хранит 101 376 чисел, тогда как парная таблица 132 на 132 на 256 хранит 4 460 544 числа (17.8 МБ в fp32).",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s04-hw",
-          "role": "note",
-          "text": "Линейный перенос x_t = (1 - t)*x_0 + t*x_1.",
+          "role": "label",
+          "text": "132 * 132 * 256 * 4 Б = 17 842 176 Б (17.8 МБ парная таблица).",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s04-note",
+          "role": "note",
+          "text": "Парная таблица хранит в 44 раза больше чисел, чем ряд 132x768 (Vaswani et al. 2017).",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -1786,34 +4353,34 @@
         {
           "id": "s05-title",
           "role": "title",
-          "text": "Flow denoiser velocity module",
+          "text": "Straight interpolation path",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s05-part",
           "role": "label",
-          "text": "The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t.",
+          "text": "Training draws t in [0, 1], mixes (1 - t) times noise plus t times data, and regresses the constant velocity data minus noise.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s05-hw",
+          "id": "s05-note",
           "role": "note",
-          "text": "153,102,091 * 16 B = 2.281 GiB Adam state in fp32.",
+          "text": "Rectified straight path and flow matching: Liu et al. 2022; Lipman et al. 2022.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1825,34 +4392,34 @@
         {
           "id": "s05-title",
           "role": "title",
-          "text": "Модуль скорости снятия шума",
+          "text": "Прямая траектория переноса",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s05-part",
           "role": "label",
-          "text": "Модуль снятия шума содержит 153,102,091 параметров и предсказывает вектор скорости в момент t.",
+          "text": "Обучение берет момент t из [0, 1], смешивает (1 - t) на шум плюс t на данные и предсказывает скорость данные минус шум.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s05-hw",
+          "id": "s05-note",
           "role": "note",
-          "text": "153,102,091 * 16 Б = 2.281 ГиБ состояния Adam в fp32.",
+          "text": "Прямой перенос и согласование потоков: Liu et al. 2022; Lipman et al. 2022.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1864,34 +4431,34 @@
         {
           "id": "s06-title",
           "role": "title",
-          "text": "Quadratic pair attention map",
+          "text": "Iterative coordinate generation",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s06-part",
           "role": "label",
-          "text": "Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers.",
+          "text": "Starting from Gaussian noise at t = 0, integration steps move to t = 1 before the decoder reconstructs 3D atomic coordinates.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s06-hw",
+          "id": "s06-note",
           "role": "note",
-          "text": "512 * 512 * 8 * 4 B = 8.0 MiB per layer (96.0 MiB for 12 layers).",
+          "text": "3D cloud shows seeded Gaussian points (seed 7) contracting toward the 1MEL epitope.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1903,34 +4470,34 @@
         {
           "id": "s06-title",
           "role": "title",
-          "text": "Квадратичная карта парного внимания",
+          "text": "Пошаговая генерация координат",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s06-part",
           "role": "label",
-          "text": "Восемь голов внимания на сетке 512 на 512 хранят 2,097,152 чисел, или 96 МиБ на 12 слоев.",
+          "text": "Начиная с гауссова шума при t = 0, шаги интегрирования ведут к t = 1, после чего декодировщик строит 3D координаты атомов.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s06-hw",
+          "id": "s06-note",
           "role": "note",
-          "text": "512 * 512 * 8 * 4 Б = 8.0 МиБ на слой (96.0 МиБ на 12 слоев).",
+          "text": "Облако 3D точек (зерно 7) сходится к участку связывания на комплексе 1MEL.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1942,34 +4509,34 @@
         {
           "id": "s07-title",
           "role": "title",
-          "text": "Memory share on one A100 80 GiB",
+          "text": "Specificity judge and subset pick",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s07-part",
           "role": "label",
-          "text": "Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card.",
+          "text": "Decoded candidates are scored against the target complex and off-target panel so the solver picks N diverse binder designs.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s07-hw",
+          "id": "s07-note",
           "role": "note",
-          "text": "6.094 GiB / 80 GiB = 7.62%; 73.9 GiB remains for batches.",
+          "text": "Architecture source: om-07-judging; scoring and subset selection are designed modules.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -1981,34 +4548,34 @@
         {
           "id": "s07-title",
           "role": "title",
-          "text": "Доля памяти на ускорителе A100 80 ГиБ",
+          "text": "Оценка специфичности и отбор набора",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s07-part",
           "role": "label",
-          "text": "Веса и буферы Adam занимают 6.094 ГиБ, то есть 7.62 процента памяти ускорителя A100 на 80 ГиБ.",
+          "text": "Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N различных конструкций.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s07-hw",
+          "id": "s07-note",
           "role": "note",
-          "text": "6.094 ГиБ / 80 ГиБ = 7.62%; 73.9 ГиБ остается под пакеты.",
+          "text": "Источник схемы: om-07-judging; оценка панели и отбор набора — проектные модули.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -2020,34 +4587,45 @@
         {
           "id": "s08-title",
           "role": "title",
-          "text": "Candidate decoding and specificity judge",
+          "text": "Memory share on the accelerator",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s08-part",
           "role": "label",
-          "text": "Decoded nanobody candidates are scored against the target and off-target panel to choose N designs.",
+          "text": "Combined weights and Adam moments take 6.54 GB, or 8.2% of an 80 GB NVIDIA A100, leaving 73.5 GB for batched pair tables.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s08-hw",
-          "role": "note",
-          "text": "Solver selects N diverse candidates after off-target check.",
+          "role": "label",
+          "text": "6.54 GB / 80 GB A100 (gpu-standard-v3) = 8.2%; 73.5 GB free.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s08-note",
+          "role": "note",
+          "text": "Adam state uses 16 B/param (Kingma & Ba 2014); batch limit comes from 17.8 MB pair tables.",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -2059,34 +4637,45 @@
         {
           "id": "s08-title",
           "role": "title",
-          "text": "Декодирование кандидатов и проверка специфичности",
+          "text": "Доля памяти на ускорителе",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s08-part",
           "role": "label",
-          "text": "Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N конструкций.",
+          "text": "Суммарные веса и моменты Adam занимают 6.54 ГБ, или 8.2% карты NVIDIA A100 на 80 ГБ, оставляя 73.5 ГБ под пакеты пар.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
           "id": "s08-hw",
-          "role": "note",
-          "text": "Модуль отбора выбирает N различных кандидатов.",
+          "role": "label",
+          "text": "6.54 ГБ / 80 ГБ A100 (gpu-standard-v3) = 8.2%; 73.5 ГБ свободно.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            852,
+            1792,
+            68
+          ]
+        },
+        {
+          "id": "s08-note",
+          "role": "note",
+          "text": "Состояние Adam — 16 Б/парам. (Kingma & Ba 2014); размер пакета ограничен таблицами по 17.8 МБ.",
+          "box": [
+            64,
+            926,
+            1792,
+            98
           ]
         }
       ]
@@ -2098,34 +4687,34 @@
         {
           "id": "s09-title",
           "role": "title",
-          "text": "Verified code and untrained weights",
+          "text": "Code boundary and untrained state",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s09-part",
           "role": "label",
-          "text": "Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet.",
+          "text": "Autoencoder and denoiser modules run shape checks in code today; 0 weights are trained yet and 0 wet-lab binders exist.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s09-hw",
+          "id": "s09-note",
           "role": "note",
-          "text": "Honest boundary: architecture only; 0 trained weights.",
+          "text": "Claim boundary: 0 trained weights and 0 wet-lab measurements exist on 2026-11-09.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -2137,34 +4726,34 @@
         {
           "id": "s09-title",
           "role": "title",
-          "text": "Проверенный код и необученные веса",
+          "text": "Граница кода и необученный статус",
           "box": [
-            96,
-            756,
-            1480,
-            64
+            64,
+            650,
+            1792,
+            72
           ]
         },
         {
           "id": "s09-part",
           "role": "label",
-          "text": "Оба сетевых модуля написаны в коде с проверенными размерами; обученных весов пока 0 и образцов 0.",
+          "text": "Модули автокодировщика и снятия шума проходят проверку размеров в коде; обученных весов пока 0 и молекул из лаборатории 0.",
           "box": [
-            96,
-            828,
-            1640,
-            112
+            64,
+            728,
+            1792,
+            118
           ]
         },
         {
-          "id": "s09-hw",
+          "id": "s09-note",
           "role": "note",
-          "text": "Граница утверждений: только архитектура; 0 обученных весов.",
+          "text": "Граница утверждений: на 2026-11-09 обученных весов 0 и лабораторных измерений 0.",
           "box": [
-            96,
-            948,
-            1640,
-            64
+            64,
+            864,
+            1792,
+            108
           ]
         }
       ]
@@ -2172,48 +4761,48 @@
   ],
   "notes": {
     "0": {
-      "en": "Stop 0: The model pairs a structure autoencoder and flow denoiser around real antigen complexes such as PDB 1MEL. (Status: code shapes verified; 0 trained weights.) Facts: f-1mel, m-status.",
-      "ru": "Слайд 0: Модель объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL. (Статус: размеры тензоров проверены; обученных весов 0.) Факты: f-1mel, m-status."
+      "en": "Stop 0: Omniverso pairs a structure autoencoder and flow denoiser around real complexes such as PDB 1MEL (132 VH residues). Primary structure: PDB 1MEL (2.5 A, 55 contact pairs). Honest ceiling: architecture + published. Facts: f-1mel, m-status.",
+      "ru": "Слайд 0: Omniverso объединяет структурный автокодировщик и потоковый модуль вокруг реальных комплексов, таких как PDB 1MEL (132 остатка VH). Структура: PDB 1MEL (2.5 А, 55 пар контактов). Уровень доказательств: архитектура и публикации. Факты: f-1mel, m-status."
     },
     "1": {
-      "en": "Stop 1: Each training example packs up to 512 residues with heavy-atom coordinates around the target binding site. (Max sequence length L = 512 residues around epitope.) Facts: m-input.",
-      "ru": "Слайд 1: Каждый пример объединяет до 512 остатков с координатами тяжелых атомов вокруг участка связывания. (Длина входа до L = 512 остатков вокруг эпитопа.) Факты: m-input."
+      "en": "Stop 1: Chain A of 1MEL enters as 132 by 169 numbers (22,308 values) and compresses into a 132 by 8 latent table (1,056 values). (132 * 169 = 22,308 inputs -> 132 * 8 = 1,056 latent values.) Columns: 111 atom coordinates, 37 atom masks, 21 residue-type features (untrained shapes). Facts: m-input, m-latent.",
+      "ru": "Слайд 1: Цепь A структуры 1MEL входит как таблица 132 на 169 (22 308 чисел) и сжимается в скрытую таблицу 132 на 8 (1 056 чисел). (132 * 169 = 22 308 входов -> 132 * 8 = 1 056 чисел кода.) Столбцы: 111 координат атомов, 37 масок атомов, 21 признак остатка (необученные размеры). Факты: m-input, m-latent."
     },
     "2": {
-      "en": "Stop 2: The autoencoder holds 255,873,676 parameters, taking 0.48 GiB in bf16 weights and 3.813 GiB with Adam states. (255,873,676 * 16 B = 3.813 GiB Adam state in fp32.) Facts: m-ae, b-ae, b-adam.",
-      "ru": "Слайд 2: Автокодировщик содержит 255,873,676 параметров и занимает 3.813 ГиБ памяти вместе с состояниями Adam. (255,873,676 * 16 Б = 3.813 ГиБ состояния Adam в fp32.) Факты: m-ae, b-ae, b-adam."
+      "en": "Stop 2: Twelve encoder blocks and twelve decoder blocks with a 3-coordinate bypass hold 255,873,676 parameters (0.51 GB bf16, 4.09 GB Adam). (255,873,676 params: 0.51 GB bf16 | 1.02 GB fp32 | 4.09 GB Adam.) Architecture source: om-02-autoencoder; variational bottleneck background: Kingma & Welling 2013. Facts: m-ae, s-ae-fp32, s-ae-bf16, s-ae-train, b-ae, b-adam.",
+      "ru": "Слайд 2: Двенадцать блоков кодировщика и двенадцать блоков декодировщика с обходом 3 координат содержат 255 873 676 параметров (4.09 ГБ с Adam). (255 873 676 парам.: 0.51 ГБ bf16 | 1.02 ГБ fp32 | 4.09 ГБ Adam.) Источник схемы: om-02-autoencoder; публикация по коду: Kingma & Welling 2013. Факты: m-ae, s-ae-fp32, s-ae-bf16, s-ae-train, b-ae, b-adam."
     },
     "3": {
-      "en": "Stop 3: The encoder maps atoms into a 512 by 256 latent grid of 131,072 continuous values. (512 * 256 * 4 B = 524,288 B (0.5 MiB) in fp32.) Facts: m-latent, b-ae.",
-      "ru": "Слайд 3: Кодировщик переводит атомы в скрытую сетку 512 на 256 из 131,072 непрерывных величин. (512 * 256 * 4 Б = 524,288 Б (0.5 МиБ) в fp32.) Факты: m-latent, b-ae."
+      "en": "Stop 3: Fourteen sequence blocks map noisy state 11 to width 768 with pair table 256 and time 256 across 153,102,091 parameters (2.45 GB Adam). (153,102,091 params: 0.31 GB bf16 | 0.61 GB fp32 | 2.45 GB Adam.) Architecture source: om-03-denoiser; velocity heads output 3 coordinate + 8 latent channels. Facts: m-dn, s-dn-fp32, s-dn-bf16, s-dn-train, b-adam.",
+      "ru": "Слайд 3: Четырнадцать блоков переводят шум 11 в ширину 768 с парной таблицей 256 и временем 256 при 153 102 091 параметре (2.45 ГБ с Adam). (153 102 091 парам.: 0.31 ГБ bf16 | 0.61 ГБ fp32 | 2.45 ГБ Adam.) Источник схемы: om-03-denoiser; головы скорости выдают 3 координатных и 8 скрытых каналов. Факты: m-dn, s-dn-fp32, s-dn-bf16, s-dn-train, b-adam."
     },
     "4": {
-      "en": "Stop 4: During training, a point moves along a straight segment from Gaussian noise to the encoded complex. (Linear transport x_t = (1 - t)*x_0 + t*x_1.) Facts: b-path, b-flow-matching.",
-      "ru": "Слайд 4: При обучении точка движется по прямому отрезку от гауссова шума к закодированному комплексу. (Линейный перенос x_t = (1 - t)*x_0 + t*x_1.) Факты: b-path, b-flow-matching."
+      "en": "Stop 4: One sequence tensor holds 101,376 numbers, while the 132 by 132 by 256 pair table holds 4,460,544 numbers (17.8 MB in fp32). (132 * 132 * 256 * 4 B = 17,842,176 B (17.8 MB fp32 pair table).) Pair table holds 44x more values than the 132x768 sequence state (Vaswani et al. 2017). Facts: m-block, s-hidden, s-pair, b-attention.",
+      "ru": "Слайд 4: Вектор ряда хранит 101 376 чисел, тогда как парная таблица 132 на 132 на 256 хранит 4 460 544 числа (17.8 МБ в fp32). (132 * 132 * 256 * 4 Б = 17 842 176 Б (17.8 МБ парная таблица).) Парная таблица хранит в 44 раза больше чисел, чем ряд 132x768 (Vaswani et al. 2017). Факты: m-block, s-hidden, s-pair, b-attention."
     },
     "5": {
-      "en": "Stop 5: The denoiser holds 153,102,091 parameters and predicts the velocity vector data minus noise at time t. (153,102,091 * 16 B = 2.281 GiB Adam state in fp32.) Facts: m-dn, b-flow-matching, b-adam.",
-      "ru": "Слайд 5: Модуль снятия шума содержит 153,102,091 параметров и предсказывает вектор скорости в момент t. (153,102,091 * 16 Б = 2.281 ГиБ состояния Adam в fp32.) Факты: m-dn, b-flow-matching, b-adam."
+      "en": "Stop 5: Training draws t in [0, 1], mixes (1 - t) times noise plus t times data, and regresses the constant velocity data minus noise. Rectified straight path and flow matching: Liu et al. 2022; Lipman et al. 2022. Facts: m-path, b-path, b-flow.",
+      "ru": "Слайд 5: Обучение берет момент t из [0, 1], смешивает (1 - t) на шум плюс t на данные и предсказывает скорость данные минус шум. Прямой перенос и согласование потоков: Liu et al. 2022; Lipman et al. 2022. Факты: m-path, b-path, b-flow."
     },
     "6": {
-      "en": "Stop 6: Eight attention heads over 512 by 512 residue pairs store 2,097,152 values, or 96 MiB across 12 layers. (512 * 512 * 8 * 4 B = 8.0 MiB per layer (96.0 MiB for 12 layers).) Facts: b-attention.",
-      "ru": "Слайд 6: Восемь голов внимания на сетке 512 на 512 хранят 2,097,152 чисел, или 96 МиБ на 12 слоев. (512 * 512 * 8 * 4 Б = 8.0 МиБ на слой (96.0 МиБ на 12 слоев).) Факты: b-attention."
+      "en": "Stop 6: Starting from Gaussian noise at t = 0, integration steps move to t = 1 before the decoder reconstructs 3D atomic coordinates. 3D cloud shows seeded Gaussian points (seed 7) contracting toward the 1MEL epitope. Facts: m-gen, b-flow.",
+      "ru": "Слайд 6: Начиная с гауссова шума при t = 0, шаги интегрирования ведут к t = 1, после чего декодировщик строит 3D координаты атомов. Облако 3D точек (зерно 7) сходится к участку связывания на комплексе 1MEL. Факты: m-gen, b-flow."
     },
     "7": {
-      "en": "Stop 7: Weights and Adam buffers take 6.094 GiB, which is 7.62 percent of an 80 GiB A100 card. (6.094 GiB / 80 GiB = 7.62%; 73.9 GiB remains for batches.) Facts: h-a100, b-adam.",
-      "ru": "Слайд 7: Веса и буферы Adam занимают 6.094 ГиБ, то есть 7.62 процента памяти ускорителя A100 на 80 ГиБ. (6.094 ГиБ / 80 ГиБ = 7.62%; 73.9 ГиБ остается под пакеты.) Факты: h-a100, b-adam."
+      "en": "Stop 7: Decoded candidates are scored against the target complex and off-target panel so the solver picks N diverse binder designs. Architecture source: om-07-judging; scoring and subset selection are designed modules. Facts: m-judge.",
+      "ru": "Слайд 7: Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N различных конструкций. Источник схемы: om-07-judging; оценка панели и отбор набора — проектные модули. Факты: m-judge."
     },
     "8": {
-      "en": "Stop 8: Decoded nanobody candidates are scored against the target and off-target panel to choose N designs. (Solver selects N diverse candidates after off-target check.) Facts: m-judge.",
-      "ru": "Слайд 8: Декодированные кандидаты оцениваются по мишени и панели сторонних белков для выбора N конструкций. (Модуль отбора выбирает N различных кандидатов.) Факты: m-judge."
+      "en": "Stop 8: Combined weights and Adam moments take 6.54 GB, or 8.2% of an 80 GB NVIDIA A100, leaving 73.5 GB for batched pair tables. (6.54 GB / 80 GB A100 (gpu-standard-v3) = 8.2%; 73.5 GB free.) Adam state uses 16 B/param (Kingma & Ba 2014); batch limit comes from 17.8 MB pair tables. Facts: h-a100, s-sum-train, s-share80, b-adam.",
+      "ru": "Слайд 8: Суммарные веса и моменты Adam занимают 6.54 ГБ, или 8.2% карты NVIDIA A100 на 80 ГБ, оставляя 73.5 ГБ под пакеты пар. (6.54 ГБ / 80 ГБ A100 (gpu-standard-v3) = 8.2%; 73.5 ГБ свободно.) Состояние Adam — 16 Б/парам. (Kingma & Ba 2014); размер пакета ограничен таблицами по 17.8 МБ. Факты: h-a100, s-sum-train, s-share80, b-adam."
     },
     "9": {
-      "en": "Stop 9: Both network modules exist in code with checked tensor shapes; 0 weights are trained and 0 binders exist yet. (Honest boundary: architecture only; 0 trained weights.) Facts: m-status.",
-      "ru": "Слайд 9: Оба сетевых модуля написаны в коде с проверенными размерами; обученных весов пока 0 и образцов 0. (Граница утверждений: только архитектура; 0 обученных весов.) Факты: m-status."
+      "en": "Stop 9: Autoencoder and denoiser modules run shape checks in code today; 0 weights are trained yet and 0 wet-lab binders exist. Claim boundary: 0 trained weights and 0 wet-lab measurements exist on 2026-11-09. Facts: m-status.",
+      "ru": "Слайд 9: Модули автокодировщика и снятия шума проходят проверку размеров в коде; обученных весов пока 0 и молекул из лаборатории 0. Граница утверждений: на 2026-11-09 обученных весов 0 и лабораторных измерений 0. Факты: m-status."
     }
   },
   "storyboard": {
     "approvedAt": "2026-11-09T00:00:00Z",
-    "note": "Approved 10-stop storyboard for Arc Science ML architecture explainer"
+    "note": "Approved 10-stop storyboard for Omniverso ML architecture explainer"
   }
 }
