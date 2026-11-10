@@ -145,7 +145,7 @@ For a schematic read by someone outside the field (rules 26 to 28): a one-line p
 
 In Nature mode the ladder is 8 pt for panel letters and 7 pt or less for everything else (floor 6.5 pt), the widths are 89, 120 to 136 and 183 mm, and rules 29 to 61 apply on top.
 
-All 61 rules, each with what goes wrong when it is broken: `references/grammar.md`. Type and colour: `references/type-ladder.md`, `references/palette.md`. Consolidated 2D, 3D and asset sources (231 sources, verified references, access list and 8-domain software atlas): `studio/library/POLICY.md`, `studio/library/sources.json`, `studio/library/references.json`, `studio/library/access.json` and `studio/library/atlas/`.
+All 99 rules, each with what goes wrong when it is broken: `references/grammar.md`. Decks, product renders, PowerPoint export and reports: `references/deck-handbook.md`. Type and colour: `references/type-ladder.md`, `references/palette.md`. Consolidated 2D, 3D and asset sources (231 sources, verified references, access list and 8-domain software atlas): `studio/library/POLICY.md`, `studio/library/sources.json`, `studio/library/references.json`, `studio/library/access.json` and `studio/library/atlas/`.
 
 ## Commands that matter
 
@@ -193,4 +193,4 @@ Every figure has `<key>.notes.md` with: the message in one sentence; what each p
 
 ## References
 
-`grammar.md` (the 61 drawing rules), `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`, `film.md`, `film-protocol.md` (rules and runbooks for the course films' voice and sound), `film-handbook.md` (what was measured and why). `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `film-protocol.md` and `film-handbook.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.
+`grammar.md` (the 99 drawing rules), `deck-handbook.md`, `type-ladder.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `qa-marks.md`, `templates.md`, `redesign-workflow.md`, `audit-rubric.md`, `brief-template.md`, `film.md`, `film-protocol.md` (rules and runbooks for the course films' voice and sound), `film-handbook.md` (what was measured and why). `grammar.md`, `palette.md`, `chimerax.md`, `kit.md`, `blind-read.md`, `overclaim-read.md`, `film-protocol.md` and `film-handbook.md` are copies of files in the repository's `docs/` and `qa/`. `node scripts/install.mjs --sync-refs` refreshes them, and `npm run check` reports when they are out of date. Do not edit those copies.
