@@ -1,0 +1,64 @@
+# Answers "@claude" in pull request comments. Only people with write access can start it. A plain issue is left out,
+# because a stranger can write its body and Claude would read that.
+# Set the variable CLAUDE_FIX_CHECK to the test command, so that Claude may run it.
+# Set one secret: CLAUDE_CODE_OAUTH_TOKEN (subscription) or ANTHROPIC_API_KEY. The Claude GitHub App must be installed.
+name: claude
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+permissions: {}
+
+jobs:
+  claude:
+    if: >-
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association || github.event.review.author_association)
+      && (contains(github.event.comment.body, '@claude') || contains(github.event.review.body, '@claude'))
+      && (github.event_name != 'issue_comment' || github.event.issue.pull_request != null)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      # A fork controls the test script, and this job holds secrets. A failed lookup stops the job too.
+      - name: Refuse a fork
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
+          IS_PR: ${{ github.event.issue.pull_request != null || github.event.pull_request != null }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$IS_PR" = "true" ]; then
+            head=$(gh api "repos/$REPO/pulls/$NUMBER" --jq .head.repo.full_name)
+            if [ "$head" != "$REPO" ]; then
+              echo "This pull request comes from a fork, so Claude does not run on it."
+              exit 1
+            fi
+          fi
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+      - uses: anthropics/claude-code-action@61a9c274fa7110a66dfafc1bbbced03833eb25fe # v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Anyone can comment here, and a comment can carry instructions. Claude reads only these authors.
+          include_comments_by_actor: ${{ github.repository_owner }},claude[bot],github-actions[bot],macroscopeapp[bot],copilot-pull-request-reviewer[bot]
+          claude_args: |
+            --model ${{ vars.CLAUDE_FIX_MODEL || 'claude-sonnet-5-5' }}
+            --effort high
+            --max-turns 25
+            --allowedTools "${{ vars.CLAUDE_FIX_CHECK && format('Bash({0}),', vars.CLAUDE_FIX_CHECK) || '' }}Bash(gh pr diff:*)"
+            --disallowedTools "Edit(.github/**),Write(.github/**),Read(.git/**),Read(//proc/**),Grep(.git/**)"
